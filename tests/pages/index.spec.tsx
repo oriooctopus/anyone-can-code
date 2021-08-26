@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { MockedProvider as ApolloMockedProvider } from '@apollo/client/testing';
 
-import Index from '../../src/pages/index';
+import Index from '../../src/pages/backupindex';
 import i18n, { initialI18nSettings, Language } from '../../src/lib/i18n';
 
 beforeAll(() => {

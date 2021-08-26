@@ -1,0 +1,8 @@
+query getExampleData {
+  lessons {
+    name
+    sublessons {
+      name
+    }
+  }
+}

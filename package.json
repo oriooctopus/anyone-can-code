@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "codegen": "graphql-codegen --config codegen.yml",
     "test": "jest"
   },
   "dependencies": {
@@ -32,6 +33,12 @@
     "typescript": "4.3.4"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "1.21.8",
+    "@graphql-codegen/import-types-preset": "1.18.6",
+    "@graphql-codegen/typescript": "1.23.0",
+    "@graphql-codegen/typescript-operations": "1.18.4",
+    "@graphql-codegen/typescript-react-apollo": "2.3.1",
+    "graphql-codegen-apollo-next-ssr": "^1.6.1",
     "prettier": "2.3.1"
   }
 }
