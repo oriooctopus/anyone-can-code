@@ -4,6 +4,9 @@ import client from './apollo-client';
 const styles = {};
 
 export async function getStaticProps() {
+  return {
+    props: {},
+  };
   const { data } = await client.query({
     query: gql`
       query Countries {

@@ -1,49 +1,31 @@
-import {
-  // ssrGetCountriesByCode,
-  // PageGetCountriesByCodeComp,
-  // ssrGetContinents,
-  ssrGetExampleData,
-  PageGetExampleDataComp,
-} from '../generated/page';
+import React from 'react';
+import EditorContainer from '../containers/EditorContainer';
+import { ChakraProvider, Grid, GridItem } from '@chakra-ui/react';
+import Layout from '../components/Layout/Layout';
+import LessonInstructionsContainer from '../containers/LessonInstructionsContainer';
+import LessonProgress from '../components/LessonProgress/LessonProgress';
+import theme from '../theme/chakra-theme';
 
-import { withApollo } from '../utils/withApollo';
-import { GetServerSideProps, GetStaticPaths } from 'next';
+function App() {
+  console.log('theme', theme);
 
-const Lesson: PageGetExampleDataComp = (props) => {
   return (
-    <div>
-      {props.data?.lessons?.map((lesson, k) => (
-        <div key={k}>{lesson.name}</div>
-      ))}
-    </div>
+    <ChakraProvider theme={theme}>
+      <Layout>
+        <Grid templateColumns="repeat(12, 1fr)" gap="20px">
+          <GridItem colSpan={4}>
+            <LessonInstructionsContainer />
+          </GridItem>
+          <GridItem colSpan={6} mt="20px">
+            <EditorContainer />
+          </GridItem>
+          <GridItem colSpan={2}>
+            <LessonProgress />
+          </GridItem>
+        </Grid>
+      </Layout>
+    </ChakraProvider>
   );
-};
+}
 
-export const getStaticProps: GetServerSideProps = async ({ params }) => {
-  const res = await ssrGetExampleData.getServerPage({
-    variables: {},
-    // variables: { code: params?.continent?.toString().toUpperCase() || '' },
-  });
-
-  if (res.props.error) {
-    return {
-      notFound: true,
-    };
-  }
-  return res;
-};
-
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const { props } = await ssrGetContinents.getServerPage({}, null);
-//   const paths =
-//     props?.data?.continents.map((continent) => ({
-//       params: { continent: continent.code },
-//     })) || [];
-//   paths.push({ params: { continent: 'WWW' } });
-//   return {
-//     paths,
-//     fallback: false,
-//   };
-// };
-
-export default withApollo(ssrGetExampleData.withPage(() => ({}))(Lesson));
+export default App;
