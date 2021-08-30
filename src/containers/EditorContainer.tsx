@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { setCode } from '../redux/actions';
 
-import Editor from '../components/Editor';
+import { Editor } from 'components/Editor/Editor';
 
 const mapStateToProps = ({ code }) => ({
   code,
