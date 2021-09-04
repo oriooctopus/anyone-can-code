@@ -1,0 +1,4 @@
+- each major section has capstones
+- to start a each capstone you have to complete all the required skills first (the lessons)
+- each capstone has warm ups (which are simplified versions of the capstones)
+- each capstone is like a circle with part of it filled based on how much of the required skills you have. So if you have 75% of the skills then it would be 75% full

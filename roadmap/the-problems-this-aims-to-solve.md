@@ -1,0 +1,6 @@
+- aims to not overwhelm the user (not teaching them unnecessary things like compound operators at the beginning) and focus on what's important
+- aims to reinforce what they learn to avoid forgetting
+- aims to have a clear sense of progress and goals
+- gamifies
+- has a gradual ramp. This means that it gives the user the opportunity (if they want) to gradually ramp up to more difficult things rather than jumping to each
+- reduces the language barrier by continuously defining every piece of coding jargon
