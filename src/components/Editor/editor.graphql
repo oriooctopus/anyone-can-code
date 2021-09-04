@@ -1,0 +1,9 @@
+query getEditorData {
+  editor @client {
+    code
+  }
+}
+
+mutation setEditorCode($code: String!) {
+  setEditorCode(code: $code) @client
+}

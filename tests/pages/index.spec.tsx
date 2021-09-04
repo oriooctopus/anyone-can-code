@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { MockedProvider as ApolloMockedProvider } from '@apollo/client/testing';
 
 import Index from '../../src/pages/backupindex';
-import i18n, { initialI18nSettings, Language } from '../../src/lib/i18n';
+import i18n, { initialI18nSettings, Language } from '../../src/libold/i18n';
 
 beforeAll(() => {
   i18n.init({

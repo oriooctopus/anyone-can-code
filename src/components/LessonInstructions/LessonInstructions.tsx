@@ -12,10 +12,14 @@ import TestCaseResult from '../TestCaseResult/TestCaseResult';
 import { runTests } from '../../CodeRunning';
 
 import '@fontsource/roboto';
+import { useReactiveVar } from '@apollo/client';
+import { codeEditorValueVar } from 'src/cache';
 
 interface IProps {}
 
-const LessonInstructions = ({ code }) => {
+const LessonInstructions = () => {
+  const codeEditorValue = useReactiveVar(codeEditorValueVar);
+
   return (
     <Flex
       align="baseline"
@@ -55,7 +59,7 @@ const LessonInstructions = ({ code }) => {
           mt="50px"
           mb="35px"
           onClick={() =>
-            runTests(code, [
+            runTests(codeEditorValue, [
               {
                 name: "the variable 'agwefwefwefe' is defined",
                 testString: "typeof agwefwefwefe !== 'undefined'",

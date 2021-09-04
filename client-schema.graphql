@@ -1,0 +1,11 @@
+extend type Query {
+  editor: Editor
+}
+
+extend type Mutation {
+  setEditorCode(code: String!): String
+}
+
+type Editor {
+  code: String
+}

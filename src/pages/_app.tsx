@@ -5,8 +5,8 @@ import store from '../redux/store';
 
 import './_app.scss';
 
-import i18n, { initialI18nSettings, Language } from '../lib/i18n';
-import { useApollo } from '../lib/apollo';
+import i18n, { initialI18nSettings, Language } from '../libold/i18n';
+import { useApollo } from '../libold/apollo';
 
 i18n.init({
   ...initialI18nSettings,

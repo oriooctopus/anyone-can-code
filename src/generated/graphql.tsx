@@ -4,6 +4,7 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions =  {}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -1574,6 +1575,11 @@ export type DocumentVersion = {
   data?: Maybe<Scalars['Json']>;
 };
 
+export type Editor = {
+  __typename?: 'Editor';
+  code?: Maybe<Scalars['String']>;
+};
+
 
 export enum ImageFit {
   /** Resizes the image to fit within the specified parameters without distorting, cropping, or changing the aspect ratio. */
@@ -2105,391 +2111,300 @@ export type LocationInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  /** Create one questionChallenge */
-  createQuestionChallenge?: Maybe<QuestionChallenge>;
-  /** Update one questionChallenge */
-  updateQuestionChallenge?: Maybe<QuestionChallenge>;
-  /** Delete one questionChallenge from _all_ existing stages. Returns deleted document. */
-  deleteQuestionChallenge?: Maybe<QuestionChallenge>;
-  /** Upsert one questionChallenge */
-  upsertQuestionChallenge?: Maybe<QuestionChallenge>;
-  /** Publish one questionChallenge */
-  publishQuestionChallenge?: Maybe<QuestionChallenge>;
-  /** Unpublish one questionChallenge from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  unpublishQuestionChallenge?: Maybe<QuestionChallenge>;
-  /** Update many QuestionChallenge documents */
-  updateManyQuestionChallengesConnection: QuestionChallengeConnection;
-  /** Delete many QuestionChallenge documents, return deleted documents */
-  deleteManyQuestionChallengesConnection: QuestionChallengeConnection;
-  /** Publish many QuestionChallenge documents */
-  publishManyQuestionChallengesConnection: QuestionChallengeConnection;
-  /** Find many QuestionChallenge documents that match criteria in specified stage and unpublish from target stages */
-  unpublishManyQuestionChallengesConnection: QuestionChallengeConnection;
-  /**
-   * Update many questionChallenges
-   * @deprecated Please use the new paginated many mutation (updateManyQuestionChallengesConnection)
-   */
-  updateManyQuestionChallenges: BatchPayload;
-  /**
-   * Delete many QuestionChallenge documents
-   * @deprecated Please use the new paginated many mutation (deleteManyQuestionChallengesConnection)
-   */
-  deleteManyQuestionChallenges: BatchPayload;
-  /**
-   * Publish many QuestionChallenge documents
-   * @deprecated Please use the new paginated many mutation (publishManyQuestionChallengesConnection)
-   */
-  publishManyQuestionChallenges: BatchPayload;
-  /**
-   * Unpublish many QuestionChallenge documents
-   * @deprecated Please use the new paginated many mutation (unpublishManyQuestionChallengesConnection)
-   */
-  unpublishManyQuestionChallenges: BatchPayload;
-  /** Create one codeChallengeCriteria */
-  createCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
-  /** Update one codeChallengeCriteria */
-  updateCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
-  /** Delete one codeChallengeCriteria from _all_ existing stages. Returns deleted document. */
-  deleteCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
-  /** Upsert one codeChallengeCriteria */
-  upsertCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
-  /** Publish one codeChallengeCriteria */
-  publishCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
-  /** Unpublish one codeChallengeCriteria from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  unpublishCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
-  /** Update many CodeChallengeCriteria documents */
-  updateManyCodeChallengeCriteriasConnection: CodeChallengeCriteriaConnection;
-  /** Delete many CodeChallengeCriteria documents, return deleted documents */
-  deleteManyCodeChallengeCriteriasConnection: CodeChallengeCriteriaConnection;
-  /** Publish many CodeChallengeCriteria documents */
-  publishManyCodeChallengeCriteriasConnection: CodeChallengeCriteriaConnection;
-  /** Find many CodeChallengeCriteria documents that match criteria in specified stage and unpublish from target stages */
-  unpublishManyCodeChallengeCriteriasConnection: CodeChallengeCriteriaConnection;
-  /**
-   * Update many codeChallengeCriterias
-   * @deprecated Please use the new paginated many mutation (updateManyCodeChallengeCriteriasConnection)
-   */
-  updateManyCodeChallengeCriterias: BatchPayload;
-  /**
-   * Delete many CodeChallengeCriteria documents
-   * @deprecated Please use the new paginated many mutation (deleteManyCodeChallengeCriteriasConnection)
-   */
-  deleteManyCodeChallengeCriterias: BatchPayload;
-  /**
-   * Publish many CodeChallengeCriteria documents
-   * @deprecated Please use the new paginated many mutation (publishManyCodeChallengeCriteriasConnection)
-   */
-  publishManyCodeChallengeCriterias: BatchPayload;
-  /**
-   * Unpublish many CodeChallengeCriteria documents
-   * @deprecated Please use the new paginated many mutation (unpublishManyCodeChallengeCriteriasConnection)
-   */
-  unpublishManyCodeChallengeCriterias: BatchPayload;
   /**
    * Create one asset
    * @deprecated Asset mutations will be overhauled soon
    */
   createAsset?: Maybe<Asset>;
-  /** Update one asset */
-  updateAsset?: Maybe<Asset>;
+  /** Create one codeChallenge */
+  createCodeChallenge?: Maybe<CodeChallenge>;
+  /** Create one codeChallengeCriteria */
+  createCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
+  /** Create one lesson */
+  createLesson?: Maybe<Lesson>;
+  /** Create one questionChallenge */
+  createQuestionChallenge?: Maybe<QuestionChallenge>;
+  /** Create one skill */
+  createSkill?: Maybe<Skill>;
+  /** Create one sublesson */
+  createSublesson?: Maybe<Sublesson>;
   /** Delete one asset from _all_ existing stages. Returns deleted document. */
   deleteAsset?: Maybe<Asset>;
-  /** Upsert one asset */
-  upsertAsset?: Maybe<Asset>;
-  /** Publish one asset */
-  publishAsset?: Maybe<Asset>;
-  /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  unpublishAsset?: Maybe<Asset>;
-  /** Update many Asset documents */
-  updateManyAssetsConnection: AssetConnection;
-  /** Delete many Asset documents, return deleted documents */
-  deleteManyAssetsConnection: AssetConnection;
-  /** Publish many Asset documents */
-  publishManyAssetsConnection: AssetConnection;
-  /** Find many Asset documents that match criteria in specified stage and unpublish from target stages */
-  unpublishManyAssetsConnection: AssetConnection;
-  /**
-   * Update many assets
-   * @deprecated Please use the new paginated many mutation (updateManyAssetsConnection)
-   */
-  updateManyAssets: BatchPayload;
+  /** Delete one codeChallenge from _all_ existing stages. Returns deleted document. */
+  deleteCodeChallenge?: Maybe<CodeChallenge>;
+  /** Delete one codeChallengeCriteria from _all_ existing stages. Returns deleted document. */
+  deleteCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
+  /** Delete one lesson from _all_ existing stages. Returns deleted document. */
+  deleteLesson?: Maybe<Lesson>;
   /**
    * Delete many Asset documents
    * @deprecated Please use the new paginated many mutation (deleteManyAssetsConnection)
    */
   deleteManyAssets: BatchPayload;
+  /** Delete many Asset documents, return deleted documents */
+  deleteManyAssetsConnection: AssetConnection;
   /**
-   * Publish many Asset documents
-   * @deprecated Please use the new paginated many mutation (publishManyAssetsConnection)
+   * Delete many CodeChallengeCriteria documents
+   * @deprecated Please use the new paginated many mutation (deleteManyCodeChallengeCriteriasConnection)
    */
-  publishManyAssets: BatchPayload;
-  /**
-   * Unpublish many Asset documents
-   * @deprecated Please use the new paginated many mutation (unpublishManyAssetsConnection)
-   */
-  unpublishManyAssets: BatchPayload;
-  /** Create one lesson */
-  createLesson?: Maybe<Lesson>;
-  /** Update one lesson */
-  updateLesson?: Maybe<Lesson>;
-  /** Delete one lesson from _all_ existing stages. Returns deleted document. */
-  deleteLesson?: Maybe<Lesson>;
-  /** Upsert one lesson */
-  upsertLesson?: Maybe<Lesson>;
-  /** Publish one lesson */
-  publishLesson?: Maybe<Lesson>;
-  /** Unpublish one lesson from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  unpublishLesson?: Maybe<Lesson>;
-  /** Update many Lesson documents */
-  updateManyLessonsConnection: LessonConnection;
-  /** Delete many Lesson documents, return deleted documents */
-  deleteManyLessonsConnection: LessonConnection;
-  /** Publish many Lesson documents */
-  publishManyLessonsConnection: LessonConnection;
-  /** Find many Lesson documents that match criteria in specified stage and unpublish from target stages */
-  unpublishManyLessonsConnection: LessonConnection;
-  /**
-   * Update many lessons
-   * @deprecated Please use the new paginated many mutation (updateManyLessonsConnection)
-   */
-  updateManyLessons: BatchPayload;
-  /**
-   * Delete many Lesson documents
-   * @deprecated Please use the new paginated many mutation (deleteManyLessonsConnection)
-   */
-  deleteManyLessons: BatchPayload;
-  /**
-   * Publish many Lesson documents
-   * @deprecated Please use the new paginated many mutation (publishManyLessonsConnection)
-   */
-  publishManyLessons: BatchPayload;
-  /**
-   * Unpublish many Lesson documents
-   * @deprecated Please use the new paginated many mutation (unpublishManyLessonsConnection)
-   */
-  unpublishManyLessons: BatchPayload;
-  /** Create one sublesson */
-  createSublesson?: Maybe<Sublesson>;
-  /** Update one sublesson */
-  updateSublesson?: Maybe<Sublesson>;
-  /** Delete one sublesson from _all_ existing stages. Returns deleted document. */
-  deleteSublesson?: Maybe<Sublesson>;
-  /** Upsert one sublesson */
-  upsertSublesson?: Maybe<Sublesson>;
-  /** Publish one sublesson */
-  publishSublesson?: Maybe<Sublesson>;
-  /** Unpublish one sublesson from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  unpublishSublesson?: Maybe<Sublesson>;
-  /** Update many Sublesson documents */
-  updateManySublessonsConnection: SublessonConnection;
-  /** Delete many Sublesson documents, return deleted documents */
-  deleteManySublessonsConnection: SublessonConnection;
-  /** Publish many Sublesson documents */
-  publishManySublessonsConnection: SublessonConnection;
-  /** Find many Sublesson documents that match criteria in specified stage and unpublish from target stages */
-  unpublishManySublessonsConnection: SublessonConnection;
-  /**
-   * Update many sublessons
-   * @deprecated Please use the new paginated many mutation (updateManySublessonsConnection)
-   */
-  updateManySublessons: BatchPayload;
-  /**
-   * Delete many Sublesson documents
-   * @deprecated Please use the new paginated many mutation (deleteManySublessonsConnection)
-   */
-  deleteManySublessons: BatchPayload;
-  /**
-   * Publish many Sublesson documents
-   * @deprecated Please use the new paginated many mutation (publishManySublessonsConnection)
-   */
-  publishManySublessons: BatchPayload;
-  /**
-   * Unpublish many Sublesson documents
-   * @deprecated Please use the new paginated many mutation (unpublishManySublessonsConnection)
-   */
-  unpublishManySublessons: BatchPayload;
-  /** Create one skill */
-  createSkill?: Maybe<Skill>;
-  /** Update one skill */
-  updateSkill?: Maybe<Skill>;
-  /** Delete one skill from _all_ existing stages. Returns deleted document. */
-  deleteSkill?: Maybe<Skill>;
-  /** Upsert one skill */
-  upsertSkill?: Maybe<Skill>;
-  /** Publish one skill */
-  publishSkill?: Maybe<Skill>;
-  /** Unpublish one skill from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  unpublishSkill?: Maybe<Skill>;
-  /** Update many Skill documents */
-  updateManySkillsConnection: SkillConnection;
-  /** Delete many Skill documents, return deleted documents */
-  deleteManySkillsConnection: SkillConnection;
-  /** Publish many Skill documents */
-  publishManySkillsConnection: SkillConnection;
-  /** Find many Skill documents that match criteria in specified stage and unpublish from target stages */
-  unpublishManySkillsConnection: SkillConnection;
-  /**
-   * Update many skills
-   * @deprecated Please use the new paginated many mutation (updateManySkillsConnection)
-   */
-  updateManySkills: BatchPayload;
-  /**
-   * Delete many Skill documents
-   * @deprecated Please use the new paginated many mutation (deleteManySkillsConnection)
-   */
-  deleteManySkills: BatchPayload;
-  /**
-   * Publish many Skill documents
-   * @deprecated Please use the new paginated many mutation (publishManySkillsConnection)
-   */
-  publishManySkills: BatchPayload;
-  /**
-   * Unpublish many Skill documents
-   * @deprecated Please use the new paginated many mutation (unpublishManySkillsConnection)
-   */
-  unpublishManySkills: BatchPayload;
-  /** Create one codeChallenge */
-  createCodeChallenge?: Maybe<CodeChallenge>;
-  /** Update one codeChallenge */
-  updateCodeChallenge?: Maybe<CodeChallenge>;
-  /** Delete one codeChallenge from _all_ existing stages. Returns deleted document. */
-  deleteCodeChallenge?: Maybe<CodeChallenge>;
-  /** Upsert one codeChallenge */
-  upsertCodeChallenge?: Maybe<CodeChallenge>;
-  /** Publish one codeChallenge */
-  publishCodeChallenge?: Maybe<CodeChallenge>;
-  /** Unpublish one codeChallenge from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  unpublishCodeChallenge?: Maybe<CodeChallenge>;
-  /** Update many CodeChallenge documents */
-  updateManyCodeChallengesConnection: CodeChallengeConnection;
-  /** Delete many CodeChallenge documents, return deleted documents */
-  deleteManyCodeChallengesConnection: CodeChallengeConnection;
-  /** Publish many CodeChallenge documents */
-  publishManyCodeChallengesConnection: CodeChallengeConnection;
-  /** Find many CodeChallenge documents that match criteria in specified stage and unpublish from target stages */
-  unpublishManyCodeChallengesConnection: CodeChallengeConnection;
-  /**
-   * Update many codeChallenges
-   * @deprecated Please use the new paginated many mutation (updateManyCodeChallengesConnection)
-   */
-  updateManyCodeChallenges: BatchPayload;
+  deleteManyCodeChallengeCriterias: BatchPayload;
+  /** Delete many CodeChallengeCriteria documents, return deleted documents */
+  deleteManyCodeChallengeCriteriasConnection: CodeChallengeCriteriaConnection;
   /**
    * Delete many CodeChallenge documents
    * @deprecated Please use the new paginated many mutation (deleteManyCodeChallengesConnection)
    */
   deleteManyCodeChallenges: BatchPayload;
+  /** Delete many CodeChallenge documents, return deleted documents */
+  deleteManyCodeChallengesConnection: CodeChallengeConnection;
+  /**
+   * Delete many Lesson documents
+   * @deprecated Please use the new paginated many mutation (deleteManyLessonsConnection)
+   */
+  deleteManyLessons: BatchPayload;
+  /** Delete many Lesson documents, return deleted documents */
+  deleteManyLessonsConnection: LessonConnection;
+  /**
+   * Delete many QuestionChallenge documents
+   * @deprecated Please use the new paginated many mutation (deleteManyQuestionChallengesConnection)
+   */
+  deleteManyQuestionChallenges: BatchPayload;
+  /** Delete many QuestionChallenge documents, return deleted documents */
+  deleteManyQuestionChallengesConnection: QuestionChallengeConnection;
+  /**
+   * Delete many Skill documents
+   * @deprecated Please use the new paginated many mutation (deleteManySkillsConnection)
+   */
+  deleteManySkills: BatchPayload;
+  /** Delete many Skill documents, return deleted documents */
+  deleteManySkillsConnection: SkillConnection;
+  /**
+   * Delete many Sublesson documents
+   * @deprecated Please use the new paginated many mutation (deleteManySublessonsConnection)
+   */
+  deleteManySublessons: BatchPayload;
+  /** Delete many Sublesson documents, return deleted documents */
+  deleteManySublessonsConnection: SublessonConnection;
+  /** Delete one questionChallenge from _all_ existing stages. Returns deleted document. */
+  deleteQuestionChallenge?: Maybe<QuestionChallenge>;
+  /** Delete one skill from _all_ existing stages. Returns deleted document. */
+  deleteSkill?: Maybe<Skill>;
+  /** Delete one sublesson from _all_ existing stages. Returns deleted document. */
+  deleteSublesson?: Maybe<Sublesson>;
+  /** Publish one asset */
+  publishAsset?: Maybe<Asset>;
+  /** Publish one codeChallenge */
+  publishCodeChallenge?: Maybe<CodeChallenge>;
+  /** Publish one codeChallengeCriteria */
+  publishCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
+  /** Publish one lesson */
+  publishLesson?: Maybe<Lesson>;
+  /**
+   * Publish many Asset documents
+   * @deprecated Please use the new paginated many mutation (publishManyAssetsConnection)
+   */
+  publishManyAssets: BatchPayload;
+  /** Publish many Asset documents */
+  publishManyAssetsConnection: AssetConnection;
+  /**
+   * Publish many CodeChallengeCriteria documents
+   * @deprecated Please use the new paginated many mutation (publishManyCodeChallengeCriteriasConnection)
+   */
+  publishManyCodeChallengeCriterias: BatchPayload;
+  /** Publish many CodeChallengeCriteria documents */
+  publishManyCodeChallengeCriteriasConnection: CodeChallengeCriteriaConnection;
   /**
    * Publish many CodeChallenge documents
    * @deprecated Please use the new paginated many mutation (publishManyCodeChallengesConnection)
    */
   publishManyCodeChallenges: BatchPayload;
+  /** Publish many CodeChallenge documents */
+  publishManyCodeChallengesConnection: CodeChallengeConnection;
+  /**
+   * Publish many Lesson documents
+   * @deprecated Please use the new paginated many mutation (publishManyLessonsConnection)
+   */
+  publishManyLessons: BatchPayload;
+  /** Publish many Lesson documents */
+  publishManyLessonsConnection: LessonConnection;
+  /**
+   * Publish many QuestionChallenge documents
+   * @deprecated Please use the new paginated many mutation (publishManyQuestionChallengesConnection)
+   */
+  publishManyQuestionChallenges: BatchPayload;
+  /** Publish many QuestionChallenge documents */
+  publishManyQuestionChallengesConnection: QuestionChallengeConnection;
+  /**
+   * Publish many Skill documents
+   * @deprecated Please use the new paginated many mutation (publishManySkillsConnection)
+   */
+  publishManySkills: BatchPayload;
+  /** Publish many Skill documents */
+  publishManySkillsConnection: SkillConnection;
+  /**
+   * Publish many Sublesson documents
+   * @deprecated Please use the new paginated many mutation (publishManySublessonsConnection)
+   */
+  publishManySublessons: BatchPayload;
+  /** Publish many Sublesson documents */
+  publishManySublessonsConnection: SublessonConnection;
+  /** Publish one questionChallenge */
+  publishQuestionChallenge?: Maybe<QuestionChallenge>;
+  /** Publish one skill */
+  publishSkill?: Maybe<Skill>;
+  /** Publish one sublesson */
+  publishSublesson?: Maybe<Sublesson>;
+  setEditorCode?: Maybe<Scalars['String']>;
+  /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishAsset?: Maybe<Asset>;
+  /** Unpublish one codeChallenge from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishCodeChallenge?: Maybe<CodeChallenge>;
+  /** Unpublish one codeChallengeCriteria from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
+  /** Unpublish one lesson from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishLesson?: Maybe<Lesson>;
+  /**
+   * Unpublish many Asset documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyAssetsConnection)
+   */
+  unpublishManyAssets: BatchPayload;
+  /** Find many Asset documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyAssetsConnection: AssetConnection;
+  /**
+   * Unpublish many CodeChallengeCriteria documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyCodeChallengeCriteriasConnection)
+   */
+  unpublishManyCodeChallengeCriterias: BatchPayload;
+  /** Find many CodeChallengeCriteria documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyCodeChallengeCriteriasConnection: CodeChallengeCriteriaConnection;
   /**
    * Unpublish many CodeChallenge documents
    * @deprecated Please use the new paginated many mutation (unpublishManyCodeChallengesConnection)
    */
   unpublishManyCodeChallenges: BatchPayload;
+  /** Find many CodeChallenge documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyCodeChallengesConnection: CodeChallengeConnection;
+  /**
+   * Unpublish many Lesson documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyLessonsConnection)
+   */
+  unpublishManyLessons: BatchPayload;
+  /** Find many Lesson documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyLessonsConnection: LessonConnection;
+  /**
+   * Unpublish many QuestionChallenge documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyQuestionChallengesConnection)
+   */
+  unpublishManyQuestionChallenges: BatchPayload;
+  /** Find many QuestionChallenge documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyQuestionChallengesConnection: QuestionChallengeConnection;
+  /**
+   * Unpublish many Skill documents
+   * @deprecated Please use the new paginated many mutation (unpublishManySkillsConnection)
+   */
+  unpublishManySkills: BatchPayload;
+  /** Find many Skill documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManySkillsConnection: SkillConnection;
+  /**
+   * Unpublish many Sublesson documents
+   * @deprecated Please use the new paginated many mutation (unpublishManySublessonsConnection)
+   */
+  unpublishManySublessons: BatchPayload;
+  /** Find many Sublesson documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManySublessonsConnection: SublessonConnection;
+  /** Unpublish one questionChallenge from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishQuestionChallenge?: Maybe<QuestionChallenge>;
+  /** Unpublish one skill from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishSkill?: Maybe<Skill>;
+  /** Unpublish one sublesson from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishSublesson?: Maybe<Sublesson>;
+  /** Update one asset */
+  updateAsset?: Maybe<Asset>;
+  /** Update one codeChallenge */
+  updateCodeChallenge?: Maybe<CodeChallenge>;
+  /** Update one codeChallengeCriteria */
+  updateCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
+  /** Update one lesson */
+  updateLesson?: Maybe<Lesson>;
+  /**
+   * Update many assets
+   * @deprecated Please use the new paginated many mutation (updateManyAssetsConnection)
+   */
+  updateManyAssets: BatchPayload;
+  /** Update many Asset documents */
+  updateManyAssetsConnection: AssetConnection;
+  /**
+   * Update many codeChallengeCriterias
+   * @deprecated Please use the new paginated many mutation (updateManyCodeChallengeCriteriasConnection)
+   */
+  updateManyCodeChallengeCriterias: BatchPayload;
+  /** Update many CodeChallengeCriteria documents */
+  updateManyCodeChallengeCriteriasConnection: CodeChallengeCriteriaConnection;
+  /**
+   * Update many codeChallenges
+   * @deprecated Please use the new paginated many mutation (updateManyCodeChallengesConnection)
+   */
+  updateManyCodeChallenges: BatchPayload;
+  /** Update many CodeChallenge documents */
+  updateManyCodeChallengesConnection: CodeChallengeConnection;
+  /**
+   * Update many lessons
+   * @deprecated Please use the new paginated many mutation (updateManyLessonsConnection)
+   */
+  updateManyLessons: BatchPayload;
+  /** Update many Lesson documents */
+  updateManyLessonsConnection: LessonConnection;
+  /**
+   * Update many questionChallenges
+   * @deprecated Please use the new paginated many mutation (updateManyQuestionChallengesConnection)
+   */
+  updateManyQuestionChallenges: BatchPayload;
+  /** Update many QuestionChallenge documents */
+  updateManyQuestionChallengesConnection: QuestionChallengeConnection;
+  /**
+   * Update many skills
+   * @deprecated Please use the new paginated many mutation (updateManySkillsConnection)
+   */
+  updateManySkills: BatchPayload;
+  /** Update many Skill documents */
+  updateManySkillsConnection: SkillConnection;
+  /**
+   * Update many sublessons
+   * @deprecated Please use the new paginated many mutation (updateManySublessonsConnection)
+   */
+  updateManySublessons: BatchPayload;
+  /** Update many Sublesson documents */
+  updateManySublessonsConnection: SublessonConnection;
+  /** Update one questionChallenge */
+  updateQuestionChallenge?: Maybe<QuestionChallenge>;
+  /** Update one skill */
+  updateSkill?: Maybe<Skill>;
+  /** Update one sublesson */
+  updateSublesson?: Maybe<Sublesson>;
+  /** Upsert one asset */
+  upsertAsset?: Maybe<Asset>;
+  /** Upsert one codeChallenge */
+  upsertCodeChallenge?: Maybe<CodeChallenge>;
+  /** Upsert one codeChallengeCriteria */
+  upsertCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
+  /** Upsert one lesson */
+  upsertLesson?: Maybe<Lesson>;
+  /** Upsert one questionChallenge */
+  upsertQuestionChallenge?: Maybe<QuestionChallenge>;
+  /** Upsert one skill */
+  upsertSkill?: Maybe<Skill>;
+  /** Upsert one sublesson */
+  upsertSublesson?: Maybe<Sublesson>;
 };
 
 
-export type MutationCreateQuestionChallengeArgs = {
-  data: QuestionChallengeCreateInput;
+export type MutationCreateAssetArgs = {
+  data: AssetCreateInput;
 };
 
 
-export type MutationUpdateQuestionChallengeArgs = {
-  where: QuestionChallengeWhereUniqueInput;
-  data: QuestionChallengeUpdateInput;
-};
-
-
-export type MutationDeleteQuestionChallengeArgs = {
-  where: QuestionChallengeWhereUniqueInput;
-};
-
-
-export type MutationUpsertQuestionChallengeArgs = {
-  where: QuestionChallengeWhereUniqueInput;
-  upsert: QuestionChallengeUpsertInput;
-};
-
-
-export type MutationPublishQuestionChallengeArgs = {
-  where: QuestionChallengeWhereUniqueInput;
-  to?: Array<Stage>;
-};
-
-
-export type MutationUnpublishQuestionChallengeArgs = {
-  where: QuestionChallengeWhereUniqueInput;
-  from?: Array<Stage>;
-};
-
-
-export type MutationUpdateManyQuestionChallengesConnectionArgs = {
-  where?: Maybe<QuestionChallengeManyWhereInput>;
-  data: QuestionChallengeUpdateManyInput;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
-};
-
-
-export type MutationDeleteManyQuestionChallengesConnectionArgs = {
-  where?: Maybe<QuestionChallengeManyWhereInput>;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
-};
-
-
-export type MutationPublishManyQuestionChallengesConnectionArgs = {
-  where?: Maybe<QuestionChallengeManyWhereInput>;
-  from?: Maybe<Stage>;
-  to?: Array<Stage>;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
-};
-
-
-export type MutationUnpublishManyQuestionChallengesConnectionArgs = {
-  where?: Maybe<QuestionChallengeManyWhereInput>;
-  stage?: Maybe<Stage>;
-  from?: Array<Stage>;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
-};
-
-
-export type MutationUpdateManyQuestionChallengesArgs = {
-  where?: Maybe<QuestionChallengeManyWhereInput>;
-  data: QuestionChallengeUpdateManyInput;
-};
-
-
-export type MutationDeleteManyQuestionChallengesArgs = {
-  where?: Maybe<QuestionChallengeManyWhereInput>;
-};
-
-
-export type MutationPublishManyQuestionChallengesArgs = {
-  where?: Maybe<QuestionChallengeManyWhereInput>;
-  to?: Array<Stage>;
-};
-
-
-export type MutationUnpublishManyQuestionChallengesArgs = {
-  where?: Maybe<QuestionChallengeManyWhereInput>;
-  from?: Array<Stage>;
+export type MutationCreateCodeChallengeArgs = {
+  data: CodeChallengeCreateInput;
 };
 
 
@@ -2498,9 +2413,33 @@ export type MutationCreateCodeChallengeCriteriaArgs = {
 };
 
 
-export type MutationUpdateCodeChallengeCriteriaArgs = {
-  where: CodeChallengeCriteriaWhereUniqueInput;
-  data: CodeChallengeCriteriaUpdateInput;
+export type MutationCreateLessonArgs = {
+  data: LessonCreateInput;
+};
+
+
+export type MutationCreateQuestionChallengeArgs = {
+  data: QuestionChallengeCreateInput;
+};
+
+
+export type MutationCreateSkillArgs = {
+  data: SkillCreateInput;
+};
+
+
+export type MutationCreateSublessonArgs = {
+  data: SublessonCreateInput;
+};
+
+
+export type MutationDeleteAssetArgs = {
+  where: AssetWhereUniqueInput;
+};
+
+
+export type MutationDeleteCodeChallengeArgs = {
+  where: CodeChallengeWhereUniqueInput;
 };
 
 
@@ -2509,37 +2448,28 @@ export type MutationDeleteCodeChallengeCriteriaArgs = {
 };
 
 
-export type MutationUpsertCodeChallengeCriteriaArgs = {
-  where: CodeChallengeCriteriaWhereUniqueInput;
-  upsert: CodeChallengeCriteriaUpsertInput;
+export type MutationDeleteLessonArgs = {
+  where: LessonWhereUniqueInput;
 };
 
 
-export type MutationPublishCodeChallengeCriteriaArgs = {
-  where: CodeChallengeCriteriaWhereUniqueInput;
-  locales?: Maybe<Array<Locale>>;
-  publishBase?: Maybe<Scalars['Boolean']>;
-  withDefaultLocale?: Maybe<Scalars['Boolean']>;
-  to?: Array<Stage>;
+export type MutationDeleteManyAssetsArgs = {
+  where?: Maybe<AssetManyWhereInput>;
 };
 
 
-export type MutationUnpublishCodeChallengeCriteriaArgs = {
-  where: CodeChallengeCriteriaWhereUniqueInput;
-  from?: Array<Stage>;
-  locales?: Maybe<Array<Locale>>;
-  unpublishBase?: Maybe<Scalars['Boolean']>;
-};
-
-
-export type MutationUpdateManyCodeChallengeCriteriasConnectionArgs = {
-  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
-  data: CodeChallengeCriteriaUpdateManyInput;
+export type MutationDeleteManyAssetsConnectionArgs = {
+  where?: Maybe<AssetManyWhereInput>;
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
   after?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationDeleteManyCodeChallengeCriteriasArgs = {
+  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
 };
 
 
@@ -2553,82 +2483,93 @@ export type MutationDeleteManyCodeChallengeCriteriasConnectionArgs = {
 };
 
 
-export type MutationPublishManyCodeChallengeCriteriasConnectionArgs = {
-  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
-  from?: Maybe<Stage>;
-  to?: Array<Stage>;
+export type MutationDeleteManyCodeChallengesArgs = {
+  where?: Maybe<CodeChallengeManyWhereInput>;
+};
+
+
+export type MutationDeleteManyCodeChallengesConnectionArgs = {
+  where?: Maybe<CodeChallengeManyWhereInput>;
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
   after?: Maybe<Scalars['ID']>;
-  locales?: Maybe<Array<Locale>>;
-  publishBase?: Maybe<Scalars['Boolean']>;
-  withDefaultLocale?: Maybe<Scalars['Boolean']>;
 };
 
 
-export type MutationUnpublishManyCodeChallengeCriteriasConnectionArgs = {
-  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
-  stage?: Maybe<Stage>;
-  from?: Array<Stage>;
+export type MutationDeleteManyLessonsArgs = {
+  where?: Maybe<LessonManyWhereInput>;
+};
+
+
+export type MutationDeleteManyLessonsConnectionArgs = {
+  where?: Maybe<LessonManyWhereInput>;
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
   after?: Maybe<Scalars['ID']>;
-  locales?: Maybe<Array<Locale>>;
-  unpublishBase?: Maybe<Scalars['Boolean']>;
 };
 
 
-export type MutationUpdateManyCodeChallengeCriteriasArgs = {
-  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
-  data: CodeChallengeCriteriaUpdateManyInput;
+export type MutationDeleteManyQuestionChallengesArgs = {
+  where?: Maybe<QuestionChallengeManyWhereInput>;
 };
 
 
-export type MutationDeleteManyCodeChallengeCriteriasArgs = {
-  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
+export type MutationDeleteManyQuestionChallengesConnectionArgs = {
+  where?: Maybe<QuestionChallengeManyWhereInput>;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 
-export type MutationPublishManyCodeChallengeCriteriasArgs = {
-  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
-  to?: Array<Stage>;
-  locales?: Maybe<Array<Locale>>;
-  publishBase?: Maybe<Scalars['Boolean']>;
-  withDefaultLocale?: Maybe<Scalars['Boolean']>;
+export type MutationDeleteManySkillsArgs = {
+  where?: Maybe<SkillManyWhereInput>;
 };
 
 
-export type MutationUnpublishManyCodeChallengeCriteriasArgs = {
-  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
-  from?: Array<Stage>;
-  locales?: Maybe<Array<Locale>>;
-  unpublishBase?: Maybe<Scalars['Boolean']>;
+export type MutationDeleteManySkillsConnectionArgs = {
+  where?: Maybe<SkillManyWhereInput>;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 
-export type MutationCreateAssetArgs = {
-  data: AssetCreateInput;
+export type MutationDeleteManySublessonsArgs = {
+  where?: Maybe<SublessonManyWhereInput>;
 };
 
 
-export type MutationUpdateAssetArgs = {
-  where: AssetWhereUniqueInput;
-  data: AssetUpdateInput;
+export type MutationDeleteManySublessonsConnectionArgs = {
+  where?: Maybe<SublessonManyWhereInput>;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 
-export type MutationDeleteAssetArgs = {
-  where: AssetWhereUniqueInput;
+export type MutationDeleteQuestionChallengeArgs = {
+  where: QuestionChallengeWhereUniqueInput;
 };
 
 
-export type MutationUpsertAssetArgs = {
-  where: AssetWhereUniqueInput;
-  upsert: AssetUpsertInput;
+export type MutationDeleteSkillArgs = {
+  where: SkillWhereUniqueInput;
+};
+
+
+export type MutationDeleteSublessonArgs = {
+  where: SublessonWhereUniqueInput;
 };
 
 
@@ -2641,32 +2582,36 @@ export type MutationPublishAssetArgs = {
 };
 
 
-export type MutationUnpublishAssetArgs = {
-  where: AssetWhereUniqueInput;
-  from?: Array<Stage>;
+export type MutationPublishCodeChallengeArgs = {
+  where: CodeChallengeWhereUniqueInput;
+  to?: Array<Stage>;
+};
+
+
+export type MutationPublishCodeChallengeCriteriaArgs = {
+  where: CodeChallengeCriteriaWhereUniqueInput;
   locales?: Maybe<Array<Locale>>;
-  unpublishBase?: Maybe<Scalars['Boolean']>;
+  publishBase?: Maybe<Scalars['Boolean']>;
+  withDefaultLocale?: Maybe<Scalars['Boolean']>;
+  to?: Array<Stage>;
 };
 
 
-export type MutationUpdateManyAssetsConnectionArgs = {
-  where?: Maybe<AssetManyWhereInput>;
-  data: AssetUpdateManyInput;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
+export type MutationPublishLessonArgs = {
+  where: LessonWhereUniqueInput;
+  locales?: Maybe<Array<Locale>>;
+  publishBase?: Maybe<Scalars['Boolean']>;
+  withDefaultLocale?: Maybe<Scalars['Boolean']>;
+  to?: Array<Stage>;
 };
 
 
-export type MutationDeleteManyAssetsConnectionArgs = {
+export type MutationPublishManyAssetsArgs = {
   where?: Maybe<AssetManyWhereInput>;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
+  to?: Array<Stage>;
+  locales?: Maybe<Array<Locale>>;
+  publishBase?: Maybe<Scalars['Boolean']>;
+  withDefaultLocale?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -2685,33 +2630,8 @@ export type MutationPublishManyAssetsConnectionArgs = {
 };
 
 
-export type MutationUnpublishManyAssetsConnectionArgs = {
-  where?: Maybe<AssetManyWhereInput>;
-  stage?: Maybe<Stage>;
-  from?: Array<Stage>;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
-  locales?: Maybe<Array<Locale>>;
-  unpublishBase?: Maybe<Scalars['Boolean']>;
-};
-
-
-export type MutationUpdateManyAssetsArgs = {
-  where?: Maybe<AssetManyWhereInput>;
-  data: AssetUpdateManyInput;
-};
-
-
-export type MutationDeleteManyAssetsArgs = {
-  where?: Maybe<AssetManyWhereInput>;
-};
-
-
-export type MutationPublishManyAssetsArgs = {
-  where?: Maybe<AssetManyWhereInput>;
+export type MutationPublishManyCodeChallengeCriteriasArgs = {
+  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
   to?: Array<Stage>;
   locales?: Maybe<Array<Locale>>;
   publishBase?: Maybe<Scalars['Boolean']>;
@@ -2719,71 +2639,45 @@ export type MutationPublishManyAssetsArgs = {
 };
 
 
-export type MutationUnpublishManyAssetsArgs = {
-  where?: Maybe<AssetManyWhereInput>;
-  from?: Array<Stage>;
-  locales?: Maybe<Array<Locale>>;
-  unpublishBase?: Maybe<Scalars['Boolean']>;
-};
-
-
-export type MutationCreateLessonArgs = {
-  data: LessonCreateInput;
-};
-
-
-export type MutationUpdateLessonArgs = {
-  where: LessonWhereUniqueInput;
-  data: LessonUpdateInput;
-};
-
-
-export type MutationDeleteLessonArgs = {
-  where: LessonWhereUniqueInput;
-};
-
-
-export type MutationUpsertLessonArgs = {
-  where: LessonWhereUniqueInput;
-  upsert: LessonUpsertInput;
-};
-
-
-export type MutationPublishLessonArgs = {
-  where: LessonWhereUniqueInput;
+export type MutationPublishManyCodeChallengeCriteriasConnectionArgs = {
+  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
+  from?: Maybe<Stage>;
+  to?: Array<Stage>;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
   locales?: Maybe<Array<Locale>>;
   publishBase?: Maybe<Scalars['Boolean']>;
   withDefaultLocale?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type MutationPublishManyCodeChallengesArgs = {
+  where?: Maybe<CodeChallengeManyWhereInput>;
   to?: Array<Stage>;
 };
 
 
-export type MutationUnpublishLessonArgs = {
-  where: LessonWhereUniqueInput;
-  from?: Array<Stage>;
+export type MutationPublishManyCodeChallengesConnectionArgs = {
+  where?: Maybe<CodeChallengeManyWhereInput>;
+  from?: Maybe<Stage>;
+  to?: Array<Stage>;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationPublishManyLessonsArgs = {
+  where?: Maybe<LessonManyWhereInput>;
+  to?: Array<Stage>;
   locales?: Maybe<Array<Locale>>;
-  unpublishBase?: Maybe<Scalars['Boolean']>;
-};
-
-
-export type MutationUpdateManyLessonsConnectionArgs = {
-  where?: Maybe<LessonManyWhereInput>;
-  data: LessonUpdateManyInput;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
-};
-
-
-export type MutationDeleteManyLessonsConnectionArgs = {
-  where?: Maybe<LessonManyWhereInput>;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
+  publishBase?: Maybe<Scalars['Boolean']>;
+  withDefaultLocale?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -2802,105 +2696,48 @@ export type MutationPublishManyLessonsConnectionArgs = {
 };
 
 
-export type MutationUnpublishManyLessonsConnectionArgs = {
-  where?: Maybe<LessonManyWhereInput>;
-  stage?: Maybe<Stage>;
-  from?: Array<Stage>;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
-  locales?: Maybe<Array<Locale>>;
-  unpublishBase?: Maybe<Scalars['Boolean']>;
-};
-
-
-export type MutationUpdateManyLessonsArgs = {
-  where?: Maybe<LessonManyWhereInput>;
-  data: LessonUpdateManyInput;
-};
-
-
-export type MutationDeleteManyLessonsArgs = {
-  where?: Maybe<LessonManyWhereInput>;
-};
-
-
-export type MutationPublishManyLessonsArgs = {
-  where?: Maybe<LessonManyWhereInput>;
-  to?: Array<Stage>;
-  locales?: Maybe<Array<Locale>>;
-  publishBase?: Maybe<Scalars['Boolean']>;
-  withDefaultLocale?: Maybe<Scalars['Boolean']>;
-};
-
-
-export type MutationUnpublishManyLessonsArgs = {
-  where?: Maybe<LessonManyWhereInput>;
-  from?: Array<Stage>;
-  locales?: Maybe<Array<Locale>>;
-  unpublishBase?: Maybe<Scalars['Boolean']>;
-};
-
-
-export type MutationCreateSublessonArgs = {
-  data: SublessonCreateInput;
-};
-
-
-export type MutationUpdateSublessonArgs = {
-  where: SublessonWhereUniqueInput;
-  data: SublessonUpdateInput;
-};
-
-
-export type MutationDeleteSublessonArgs = {
-  where: SublessonWhereUniqueInput;
-};
-
-
-export type MutationUpsertSublessonArgs = {
-  where: SublessonWhereUniqueInput;
-  upsert: SublessonUpsertInput;
-};
-
-
-export type MutationPublishSublessonArgs = {
-  where: SublessonWhereUniqueInput;
-  locales?: Maybe<Array<Locale>>;
-  publishBase?: Maybe<Scalars['Boolean']>;
-  withDefaultLocale?: Maybe<Scalars['Boolean']>;
+export type MutationPublishManyQuestionChallengesArgs = {
+  where?: Maybe<QuestionChallengeManyWhereInput>;
   to?: Array<Stage>;
 };
 
 
-export type MutationUnpublishSublessonArgs = {
-  where: SublessonWhereUniqueInput;
-  from?: Array<Stage>;
+export type MutationPublishManyQuestionChallengesConnectionArgs = {
+  where?: Maybe<QuestionChallengeManyWhereInput>;
+  from?: Maybe<Stage>;
+  to?: Array<Stage>;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationPublishManySkillsArgs = {
+  where?: Maybe<SkillManyWhereInput>;
+  to?: Array<Stage>;
+};
+
+
+export type MutationPublishManySkillsConnectionArgs = {
+  where?: Maybe<SkillManyWhereInput>;
+  from?: Maybe<Stage>;
+  to?: Array<Stage>;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationPublishManySublessonsArgs = {
+  where?: Maybe<SublessonManyWhereInput>;
+  to?: Array<Stage>;
   locales?: Maybe<Array<Locale>>;
-  unpublishBase?: Maybe<Scalars['Boolean']>;
-};
-
-
-export type MutationUpdateManySublessonsConnectionArgs = {
-  where?: Maybe<SublessonManyWhereInput>;
-  data: SublessonUpdateManyInput;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
-};
-
-
-export type MutationDeleteManySublessonsConnectionArgs = {
-  where?: Maybe<SublessonManyWhereInput>;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
+  publishBase?: Maybe<Scalars['Boolean']>;
+  withDefaultLocale?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -2919,67 +2756,9 @@ export type MutationPublishManySublessonsConnectionArgs = {
 };
 
 
-export type MutationUnpublishManySublessonsConnectionArgs = {
-  where?: Maybe<SublessonManyWhereInput>;
-  stage?: Maybe<Stage>;
-  from?: Array<Stage>;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
-  locales?: Maybe<Array<Locale>>;
-  unpublishBase?: Maybe<Scalars['Boolean']>;
-};
-
-
-export type MutationUpdateManySublessonsArgs = {
-  where?: Maybe<SublessonManyWhereInput>;
-  data: SublessonUpdateManyInput;
-};
-
-
-export type MutationDeleteManySublessonsArgs = {
-  where?: Maybe<SublessonManyWhereInput>;
-};
-
-
-export type MutationPublishManySublessonsArgs = {
-  where?: Maybe<SublessonManyWhereInput>;
+export type MutationPublishQuestionChallengeArgs = {
+  where: QuestionChallengeWhereUniqueInput;
   to?: Array<Stage>;
-  locales?: Maybe<Array<Locale>>;
-  publishBase?: Maybe<Scalars['Boolean']>;
-  withDefaultLocale?: Maybe<Scalars['Boolean']>;
-};
-
-
-export type MutationUnpublishManySublessonsArgs = {
-  where?: Maybe<SublessonManyWhereInput>;
-  from?: Array<Stage>;
-  locales?: Maybe<Array<Locale>>;
-  unpublishBase?: Maybe<Scalars['Boolean']>;
-};
-
-
-export type MutationCreateSkillArgs = {
-  data: SkillCreateInput;
-};
-
-
-export type MutationUpdateSkillArgs = {
-  where: SkillWhereUniqueInput;
-  data: SkillUpdateInput;
-};
-
-
-export type MutationDeleteSkillArgs = {
-  where: SkillWhereUniqueInput;
-};
-
-
-export type MutationUpsertSkillArgs = {
-  where: SkillWhereUniqueInput;
-  upsert: SkillUpsertInput;
 };
 
 
@@ -2989,105 +2768,25 @@ export type MutationPublishSkillArgs = {
 };
 
 
-export type MutationUnpublishSkillArgs = {
-  where: SkillWhereUniqueInput;
-  from?: Array<Stage>;
-};
-
-
-export type MutationUpdateManySkillsConnectionArgs = {
-  where?: Maybe<SkillManyWhereInput>;
-  data: SkillUpdateManyInput;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
-};
-
-
-export type MutationDeleteManySkillsConnectionArgs = {
-  where?: Maybe<SkillManyWhereInput>;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
-};
-
-
-export type MutationPublishManySkillsConnectionArgs = {
-  where?: Maybe<SkillManyWhereInput>;
-  from?: Maybe<Stage>;
-  to?: Array<Stage>;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
-};
-
-
-export type MutationUnpublishManySkillsConnectionArgs = {
-  where?: Maybe<SkillManyWhereInput>;
-  stage?: Maybe<Stage>;
-  from?: Array<Stage>;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
-};
-
-
-export type MutationUpdateManySkillsArgs = {
-  where?: Maybe<SkillManyWhereInput>;
-  data: SkillUpdateManyInput;
-};
-
-
-export type MutationDeleteManySkillsArgs = {
-  where?: Maybe<SkillManyWhereInput>;
-};
-
-
-export type MutationPublishManySkillsArgs = {
-  where?: Maybe<SkillManyWhereInput>;
+export type MutationPublishSublessonArgs = {
+  where: SublessonWhereUniqueInput;
+  locales?: Maybe<Array<Locale>>;
+  publishBase?: Maybe<Scalars['Boolean']>;
+  withDefaultLocale?: Maybe<Scalars['Boolean']>;
   to?: Array<Stage>;
 };
 
 
-export type MutationUnpublishManySkillsArgs = {
-  where?: Maybe<SkillManyWhereInput>;
+export type MutationSetEditorCodeArgs = {
+  code: Scalars['String'];
+};
+
+
+export type MutationUnpublishAssetArgs = {
+  where: AssetWhereUniqueInput;
   from?: Array<Stage>;
-};
-
-
-export type MutationCreateCodeChallengeArgs = {
-  data: CodeChallengeCreateInput;
-};
-
-
-export type MutationUpdateCodeChallengeArgs = {
-  where: CodeChallengeWhereUniqueInput;
-  data: CodeChallengeUpdateInput;
-};
-
-
-export type MutationDeleteCodeChallengeArgs = {
-  where: CodeChallengeWhereUniqueInput;
-};
-
-
-export type MutationUpsertCodeChallengeArgs = {
-  where: CodeChallengeWhereUniqueInput;
-  upsert: CodeChallengeUpsertInput;
-};
-
-
-export type MutationPublishCodeChallengeArgs = {
-  where: CodeChallengeWhereUniqueInput;
-  to?: Array<Stage>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -3097,36 +2796,69 @@ export type MutationUnpublishCodeChallengeArgs = {
 };
 
 
-export type MutationUpdateManyCodeChallengesConnectionArgs = {
-  where?: Maybe<CodeChallengeManyWhereInput>;
-  data: CodeChallengeUpdateManyInput;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
+export type MutationUnpublishCodeChallengeCriteriaArgs = {
+  where: CodeChallengeCriteriaWhereUniqueInput;
+  from?: Array<Stage>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
 };
 
 
-export type MutationDeleteManyCodeChallengesConnectionArgs = {
-  where?: Maybe<CodeChallengeManyWhereInput>;
-  skip?: Maybe<Scalars['Int']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['ID']>;
-  after?: Maybe<Scalars['ID']>;
+export type MutationUnpublishLessonArgs = {
+  where: LessonWhereUniqueInput;
+  from?: Array<Stage>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
 };
 
 
-export type MutationPublishManyCodeChallengesConnectionArgs = {
-  where?: Maybe<CodeChallengeManyWhereInput>;
-  from?: Maybe<Stage>;
-  to?: Array<Stage>;
+export type MutationUnpublishManyAssetsArgs = {
+  where?: Maybe<AssetManyWhereInput>;
+  from?: Array<Stage>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type MutationUnpublishManyAssetsConnectionArgs = {
+  where?: Maybe<AssetManyWhereInput>;
+  stage?: Maybe<Stage>;
+  from?: Array<Stage>;
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
   after?: Maybe<Scalars['ID']>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type MutationUnpublishManyCodeChallengeCriteriasArgs = {
+  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
+  from?: Array<Stage>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type MutationUnpublishManyCodeChallengeCriteriasConnectionArgs = {
+  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
+  stage?: Maybe<Stage>;
+  from?: Array<Stage>;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type MutationUnpublishManyCodeChallengesArgs = {
+  where?: Maybe<CodeChallengeManyWhereInput>;
+  from?: Array<Stage>;
 };
 
 
@@ -3142,26 +2874,306 @@ export type MutationUnpublishManyCodeChallengesConnectionArgs = {
 };
 
 
+export type MutationUnpublishManyLessonsArgs = {
+  where?: Maybe<LessonManyWhereInput>;
+  from?: Array<Stage>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type MutationUnpublishManyLessonsConnectionArgs = {
+  where?: Maybe<LessonManyWhereInput>;
+  stage?: Maybe<Stage>;
+  from?: Array<Stage>;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type MutationUnpublishManyQuestionChallengesArgs = {
+  where?: Maybe<QuestionChallengeManyWhereInput>;
+  from?: Array<Stage>;
+};
+
+
+export type MutationUnpublishManyQuestionChallengesConnectionArgs = {
+  where?: Maybe<QuestionChallengeManyWhereInput>;
+  stage?: Maybe<Stage>;
+  from?: Array<Stage>;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationUnpublishManySkillsArgs = {
+  where?: Maybe<SkillManyWhereInput>;
+  from?: Array<Stage>;
+};
+
+
+export type MutationUnpublishManySkillsConnectionArgs = {
+  where?: Maybe<SkillManyWhereInput>;
+  stage?: Maybe<Stage>;
+  from?: Array<Stage>;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationUnpublishManySublessonsArgs = {
+  where?: Maybe<SublessonManyWhereInput>;
+  from?: Array<Stage>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type MutationUnpublishManySublessonsConnectionArgs = {
+  where?: Maybe<SublessonManyWhereInput>;
+  stage?: Maybe<Stage>;
+  from?: Array<Stage>;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type MutationUnpublishQuestionChallengeArgs = {
+  where: QuestionChallengeWhereUniqueInput;
+  from?: Array<Stage>;
+};
+
+
+export type MutationUnpublishSkillArgs = {
+  where: SkillWhereUniqueInput;
+  from?: Array<Stage>;
+};
+
+
+export type MutationUnpublishSublessonArgs = {
+  where: SublessonWhereUniqueInput;
+  from?: Array<Stage>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type MutationUpdateAssetArgs = {
+  where: AssetWhereUniqueInput;
+  data: AssetUpdateInput;
+};
+
+
+export type MutationUpdateCodeChallengeArgs = {
+  where: CodeChallengeWhereUniqueInput;
+  data: CodeChallengeUpdateInput;
+};
+
+
+export type MutationUpdateCodeChallengeCriteriaArgs = {
+  where: CodeChallengeCriteriaWhereUniqueInput;
+  data: CodeChallengeCriteriaUpdateInput;
+};
+
+
+export type MutationUpdateLessonArgs = {
+  where: LessonWhereUniqueInput;
+  data: LessonUpdateInput;
+};
+
+
+export type MutationUpdateManyAssetsArgs = {
+  where?: Maybe<AssetManyWhereInput>;
+  data: AssetUpdateManyInput;
+};
+
+
+export type MutationUpdateManyAssetsConnectionArgs = {
+  where?: Maybe<AssetManyWhereInput>;
+  data: AssetUpdateManyInput;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationUpdateManyCodeChallengeCriteriasArgs = {
+  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
+  data: CodeChallengeCriteriaUpdateManyInput;
+};
+
+
+export type MutationUpdateManyCodeChallengeCriteriasConnectionArgs = {
+  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
+  data: CodeChallengeCriteriaUpdateManyInput;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+
 export type MutationUpdateManyCodeChallengesArgs = {
   where?: Maybe<CodeChallengeManyWhereInput>;
   data: CodeChallengeUpdateManyInput;
 };
 
 
-export type MutationDeleteManyCodeChallengesArgs = {
+export type MutationUpdateManyCodeChallengesConnectionArgs = {
   where?: Maybe<CodeChallengeManyWhereInput>;
+  data: CodeChallengeUpdateManyInput;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
 };
 
 
-export type MutationPublishManyCodeChallengesArgs = {
-  where?: Maybe<CodeChallengeManyWhereInput>;
-  to?: Array<Stage>;
+export type MutationUpdateManyLessonsArgs = {
+  where?: Maybe<LessonManyWhereInput>;
+  data: LessonUpdateManyInput;
 };
 
 
-export type MutationUnpublishManyCodeChallengesArgs = {
-  where?: Maybe<CodeChallengeManyWhereInput>;
-  from?: Array<Stage>;
+export type MutationUpdateManyLessonsConnectionArgs = {
+  where?: Maybe<LessonManyWhereInput>;
+  data: LessonUpdateManyInput;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationUpdateManyQuestionChallengesArgs = {
+  where?: Maybe<QuestionChallengeManyWhereInput>;
+  data: QuestionChallengeUpdateManyInput;
+};
+
+
+export type MutationUpdateManyQuestionChallengesConnectionArgs = {
+  where?: Maybe<QuestionChallengeManyWhereInput>;
+  data: QuestionChallengeUpdateManyInput;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationUpdateManySkillsArgs = {
+  where?: Maybe<SkillManyWhereInput>;
+  data: SkillUpdateManyInput;
+};
+
+
+export type MutationUpdateManySkillsConnectionArgs = {
+  where?: Maybe<SkillManyWhereInput>;
+  data: SkillUpdateManyInput;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationUpdateManySublessonsArgs = {
+  where?: Maybe<SublessonManyWhereInput>;
+  data: SublessonUpdateManyInput;
+};
+
+
+export type MutationUpdateManySublessonsConnectionArgs = {
+  where?: Maybe<SublessonManyWhereInput>;
+  data: SublessonUpdateManyInput;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationUpdateQuestionChallengeArgs = {
+  where: QuestionChallengeWhereUniqueInput;
+  data: QuestionChallengeUpdateInput;
+};
+
+
+export type MutationUpdateSkillArgs = {
+  where: SkillWhereUniqueInput;
+  data: SkillUpdateInput;
+};
+
+
+export type MutationUpdateSublessonArgs = {
+  where: SublessonWhereUniqueInput;
+  data: SublessonUpdateInput;
+};
+
+
+export type MutationUpsertAssetArgs = {
+  where: AssetWhereUniqueInput;
+  upsert: AssetUpsertInput;
+};
+
+
+export type MutationUpsertCodeChallengeArgs = {
+  where: CodeChallengeWhereUniqueInput;
+  upsert: CodeChallengeUpsertInput;
+};
+
+
+export type MutationUpsertCodeChallengeCriteriaArgs = {
+  where: CodeChallengeCriteriaWhereUniqueInput;
+  upsert: CodeChallengeCriteriaUpsertInput;
+};
+
+
+export type MutationUpsertLessonArgs = {
+  where: LessonWhereUniqueInput;
+  upsert: LessonUpsertInput;
+};
+
+
+export type MutationUpsertQuestionChallengeArgs = {
+  where: QuestionChallengeWhereUniqueInput;
+  upsert: QuestionChallengeUpsertInput;
+};
+
+
+export type MutationUpsertSkillArgs = {
+  where: SkillWhereUniqueInput;
+  upsert: SkillUpsertInput;
+};
+
+
+export type MutationUpsertSublessonArgs = {
+  where: SublessonWhereUniqueInput;
+  upsert: SublessonUpsertInput;
 };
 
 /** An object with an ID */
@@ -3196,186 +3208,83 @@ export type PublishLocaleInput = {
 
 export type Query = {
   __typename?: 'Query';
-  /** Fetches an object given its ID */
-  node?: Maybe<Node>;
-  /** Retrieve multiple questionChallenges */
-  questionChallenges: Array<QuestionChallenge>;
-  /** Retrieve a single questionChallenge */
-  questionChallenge?: Maybe<QuestionChallenge>;
-  /** Retrieve multiple questionChallenges using the Relay connection interface */
-  questionChallengesConnection: QuestionChallengeConnection;
+  /** Retrieve a single asset */
+  asset?: Maybe<Asset>;
   /** Retrieve document version */
-  questionChallengeVersion?: Maybe<DocumentVersion>;
-  /** Retrieve multiple codeChallengeCriterias */
-  codeChallengeCriterias: Array<CodeChallengeCriteria>;
+  assetVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple assets */
+  assets: Array<Asset>;
+  /** Retrieve multiple assets using the Relay connection interface */
+  assetsConnection: AssetConnection;
+  /** Retrieve a single codeChallenge */
+  codeChallenge?: Maybe<CodeChallenge>;
   /** Retrieve a single codeChallengeCriteria */
   codeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
+  /** Retrieve document version */
+  codeChallengeCriteriaVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple codeChallengeCriterias */
+  codeChallengeCriterias: Array<CodeChallengeCriteria>;
   /** Retrieve multiple codeChallengeCriterias using the Relay connection interface */
   codeChallengeCriteriasConnection: CodeChallengeCriteriaConnection;
   /** Retrieve document version */
-  codeChallengeCriteriaVersion?: Maybe<DocumentVersion>;
-  /** Retrieve multiple users */
-  users: Array<User>;
-  /** Retrieve a single user */
-  user?: Maybe<User>;
-  /** Retrieve multiple users using the Relay connection interface */
-  usersConnection: UserConnection;
-  /** Retrieve multiple assets */
-  assets: Array<Asset>;
-  /** Retrieve a single asset */
-  asset?: Maybe<Asset>;
-  /** Retrieve multiple assets using the Relay connection interface */
-  assetsConnection: AssetConnection;
-  /** Retrieve document version */
-  assetVersion?: Maybe<DocumentVersion>;
-  /** Retrieve multiple lessons */
-  lessons: Array<Lesson>;
-  /** Retrieve a single lesson */
-  lesson?: Maybe<Lesson>;
-  /** Retrieve multiple lessons using the Relay connection interface */
-  lessonsConnection: LessonConnection;
-  /** Retrieve document version */
-  lessonVersion?: Maybe<DocumentVersion>;
-  /** Retrieve multiple sublessons */
-  sublessons: Array<Sublesson>;
-  /** Retrieve a single sublesson */
-  sublesson?: Maybe<Sublesson>;
-  /** Retrieve multiple sublessons using the Relay connection interface */
-  sublessonsConnection: SublessonConnection;
-  /** Retrieve document version */
-  sublessonVersion?: Maybe<DocumentVersion>;
-  /** Retrieve multiple skills */
-  skills: Array<Skill>;
-  /** Retrieve a single skill */
-  skill?: Maybe<Skill>;
-  /** Retrieve multiple skills using the Relay connection interface */
-  skillsConnection: SkillConnection;
-  /** Retrieve document version */
-  skillVersion?: Maybe<DocumentVersion>;
+  codeChallengeVersion?: Maybe<DocumentVersion>;
   /** Retrieve multiple codeChallenges */
   codeChallenges: Array<CodeChallenge>;
-  /** Retrieve a single codeChallenge */
-  codeChallenge?: Maybe<CodeChallenge>;
   /** Retrieve multiple codeChallenges using the Relay connection interface */
   codeChallengesConnection: CodeChallengeConnection;
+  editor?: Maybe<Editor>;
+  /** Retrieve a single lesson */
+  lesson?: Maybe<Lesson>;
   /** Retrieve document version */
-  codeChallengeVersion?: Maybe<DocumentVersion>;
+  lessonVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple lessons */
+  lessons: Array<Lesson>;
+  /** Retrieve multiple lessons using the Relay connection interface */
+  lessonsConnection: LessonConnection;
+  /** Fetches an object given its ID */
+  node?: Maybe<Node>;
+  /** Retrieve a single questionChallenge */
+  questionChallenge?: Maybe<QuestionChallenge>;
+  /** Retrieve document version */
+  questionChallengeVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple questionChallenges */
+  questionChallenges: Array<QuestionChallenge>;
+  /** Retrieve multiple questionChallenges using the Relay connection interface */
+  questionChallengesConnection: QuestionChallengeConnection;
+  /** Retrieve a single skill */
+  skill?: Maybe<Skill>;
+  /** Retrieve document version */
+  skillVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple skills */
+  skills: Array<Skill>;
+  /** Retrieve multiple skills using the Relay connection interface */
+  skillsConnection: SkillConnection;
+  /** Retrieve a single sublesson */
+  sublesson?: Maybe<Sublesson>;
+  /** Retrieve document version */
+  sublessonVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple sublessons */
+  sublessons: Array<Sublesson>;
+  /** Retrieve multiple sublessons using the Relay connection interface */
+  sublessonsConnection: SublessonConnection;
+  /** Retrieve a single user */
+  user?: Maybe<User>;
+  /** Retrieve multiple users */
+  users: Array<User>;
+  /** Retrieve multiple users using the Relay connection interface */
+  usersConnection: UserConnection;
 };
 
 
-export type QueryNodeArgs = {
-  id: Scalars['ID'];
+export type QueryAssetArgs = {
+  where: AssetWhereUniqueInput;
   stage?: Stage;
   locales?: Array<Locale>;
 };
 
 
-export type QueryQuestionChallengesArgs = {
-  where?: Maybe<QuestionChallengeWhereInput>;
-  orderBy?: Maybe<QuestionChallengeOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QueryQuestionChallengeArgs = {
-  where: QuestionChallengeWhereUniqueInput;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QueryQuestionChallengesConnectionArgs = {
-  where?: Maybe<QuestionChallengeWhereInput>;
-  orderBy?: Maybe<QuestionChallengeOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QueryQuestionChallengeVersionArgs = {
+export type QueryAssetVersionArgs = {
   where: VersionWhereInput;
-};
-
-
-export type QueryCodeChallengeCriteriasArgs = {
-  where?: Maybe<CodeChallengeCriteriaWhereInput>;
-  orderBy?: Maybe<CodeChallengeCriteriaOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QueryCodeChallengeCriteriaArgs = {
-  where: CodeChallengeCriteriaWhereUniqueInput;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QueryCodeChallengeCriteriasConnectionArgs = {
-  where?: Maybe<CodeChallengeCriteriaWhereInput>;
-  orderBy?: Maybe<CodeChallengeCriteriaOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QueryCodeChallengeCriteriaVersionArgs = {
-  where: VersionWhereInput;
-};
-
-
-export type QueryUsersArgs = {
-  where?: Maybe<UserWhereInput>;
-  orderBy?: Maybe<UserOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QueryUserArgs = {
-  where: UserWhereUniqueInput;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QueryUsersConnectionArgs = {
-  where?: Maybe<UserWhereInput>;
-  orderBy?: Maybe<UserOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  stage?: Stage;
-  locales?: Array<Locale>;
 };
 
 
@@ -3387,13 +3296,6 @@ export type QueryAssetsArgs = {
   before?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QueryAssetArgs = {
-  where: AssetWhereUniqueInput;
   stage?: Stage;
   locales?: Array<Locale>;
 };
@@ -3412,14 +3314,28 @@ export type QueryAssetsConnectionArgs = {
 };
 
 
-export type QueryAssetVersionArgs = {
+export type QueryCodeChallengeArgs = {
+  where: CodeChallengeWhereUniqueInput;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QueryCodeChallengeCriteriaArgs = {
+  where: CodeChallengeCriteriaWhereUniqueInput;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QueryCodeChallengeCriteriaVersionArgs = {
   where: VersionWhereInput;
 };
 
 
-export type QueryLessonsArgs = {
-  where?: Maybe<LessonWhereInput>;
-  orderBy?: Maybe<LessonOrderByInput>;
+export type QueryCodeChallengeCriteriasArgs = {
+  where?: Maybe<CodeChallengeCriteriaWhereInput>;
+  orderBy?: Maybe<CodeChallengeCriteriaOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -3430,16 +3346,9 @@ export type QueryLessonsArgs = {
 };
 
 
-export type QueryLessonArgs = {
-  where: LessonWhereUniqueInput;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QueryLessonsConnectionArgs = {
-  where?: Maybe<LessonWhereInput>;
-  orderBy?: Maybe<LessonOrderByInput>;
+export type QueryCodeChallengeCriteriasConnectionArgs = {
+  where?: Maybe<CodeChallengeCriteriaWhereInput>;
+  orderBy?: Maybe<CodeChallengeCriteriaOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -3450,83 +3359,7 @@ export type QueryLessonsConnectionArgs = {
 };
 
 
-export type QueryLessonVersionArgs = {
-  where: VersionWhereInput;
-};
-
-
-export type QuerySublessonsArgs = {
-  where?: Maybe<SublessonWhereInput>;
-  orderBy?: Maybe<SublessonOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QuerySublessonArgs = {
-  where: SublessonWhereUniqueInput;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QuerySublessonsConnectionArgs = {
-  where?: Maybe<SublessonWhereInput>;
-  orderBy?: Maybe<SublessonOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QuerySublessonVersionArgs = {
-  where: VersionWhereInput;
-};
-
-
-export type QuerySkillsArgs = {
-  where?: Maybe<SkillWhereInput>;
-  orderBy?: Maybe<SkillOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QuerySkillArgs = {
-  where: SkillWhereUniqueInput;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QuerySkillsConnectionArgs = {
-  where?: Maybe<SkillWhereInput>;
-  orderBy?: Maybe<SkillOrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QuerySkillVersionArgs = {
+export type QueryCodeChallengeVersionArgs = {
   where: VersionWhereInput;
 };
 
@@ -3539,13 +3372,6 @@ export type QueryCodeChallengesArgs = {
   before?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QueryCodeChallengeArgs = {
-  where: CodeChallengeWhereUniqueInput;
   stage?: Stage;
   locales?: Array<Locale>;
 };
@@ -3564,8 +3390,195 @@ export type QueryCodeChallengesConnectionArgs = {
 };
 
 
-export type QueryCodeChallengeVersionArgs = {
+export type QueryLessonArgs = {
+  where: LessonWhereUniqueInput;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QueryLessonVersionArgs = {
   where: VersionWhereInput;
+};
+
+
+export type QueryLessonsArgs = {
+  where?: Maybe<LessonWhereInput>;
+  orderBy?: Maybe<LessonOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QueryLessonsConnectionArgs = {
+  where?: Maybe<LessonWhereInput>;
+  orderBy?: Maybe<LessonOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QueryNodeArgs = {
+  id: Scalars['ID'];
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QueryQuestionChallengeArgs = {
+  where: QuestionChallengeWhereUniqueInput;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QueryQuestionChallengeVersionArgs = {
+  where: VersionWhereInput;
+};
+
+
+export type QueryQuestionChallengesArgs = {
+  where?: Maybe<QuestionChallengeWhereInput>;
+  orderBy?: Maybe<QuestionChallengeOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QueryQuestionChallengesConnectionArgs = {
+  where?: Maybe<QuestionChallengeWhereInput>;
+  orderBy?: Maybe<QuestionChallengeOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QuerySkillArgs = {
+  where: SkillWhereUniqueInput;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QuerySkillVersionArgs = {
+  where: VersionWhereInput;
+};
+
+
+export type QuerySkillsArgs = {
+  where?: Maybe<SkillWhereInput>;
+  orderBy?: Maybe<SkillOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QuerySkillsConnectionArgs = {
+  where?: Maybe<SkillWhereInput>;
+  orderBy?: Maybe<SkillOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QuerySublessonArgs = {
+  where: SublessonWhereUniqueInput;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QuerySublessonVersionArgs = {
+  where: VersionWhereInput;
+};
+
+
+export type QuerySublessonsArgs = {
+  where?: Maybe<SublessonWhereInput>;
+  orderBy?: Maybe<SublessonOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QuerySublessonsConnectionArgs = {
+  where?: Maybe<SublessonWhereInput>;
+  orderBy?: Maybe<SublessonOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QueryUserArgs = {
+  where: UserWhereUniqueInput;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QueryUsersArgs = {
+  where?: Maybe<UserWhereInput>;
+  orderBy?: Maybe<UserOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QueryUsersConnectionArgs = {
+  where?: Maybe<UserWhereInput>;
+  orderBy?: Maybe<UserOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  stage?: Stage;
+  locales?: Array<Locale>;
 };
 
 export type QuestionChallenge = Node & {
@@ -5319,6 +5332,27 @@ export enum _SystemDateTimeFieldVariation {
   Combined = 'combined'
 }
 
+export type GetEditorDataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetEditorDataQuery = (
+  { __typename?: 'Query' }
+  & { editor?: Maybe<(
+    { __typename?: 'Editor' }
+    & Pick<Editor, 'code'>
+  )> }
+);
+
+export type SetEditorCodeMutationVariables = Exact<{
+  code: Scalars['String'];
+}>;
+
+
+export type SetEditorCodeMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'setEditorCode'>
+);
+
 export type GetExampleDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5335,6 +5369,71 @@ export type GetExampleDataQuery = (
 );
 
 
+export const GetEditorDataDocument = gql`
+    query getEditorData {
+  editor @client {
+    code
+  }
+}
+    `;
+
+/**
+ * __useGetEditorDataQuery__
+ *
+ * To run a query within a React component, call `useGetEditorDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEditorDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEditorDataQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetEditorDataQuery(baseOptions?: Apollo.QueryHookOptions<GetEditorDataQuery, GetEditorDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEditorDataQuery, GetEditorDataQueryVariables>(GetEditorDataDocument, options);
+      }
+export function useGetEditorDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEditorDataQuery, GetEditorDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEditorDataQuery, GetEditorDataQueryVariables>(GetEditorDataDocument, options);
+        }
+export type GetEditorDataQueryHookResult = ReturnType<typeof useGetEditorDataQuery>;
+export type GetEditorDataLazyQueryHookResult = ReturnType<typeof useGetEditorDataLazyQuery>;
+export type GetEditorDataQueryResult = Apollo.QueryResult<GetEditorDataQuery, GetEditorDataQueryVariables>;
+export const SetEditorCodeDocument = gql`
+    mutation setEditorCode($code: String!) {
+  setEditorCode(code: $code) @client
+}
+    `;
+export type SetEditorCodeMutationFn = Apollo.MutationFunction<SetEditorCodeMutation, SetEditorCodeMutationVariables>;
+
+/**
+ * __useSetEditorCodeMutation__
+ *
+ * To run a mutation, you first call `useSetEditorCodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetEditorCodeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setEditorCodeMutation, { data, loading, error }] = useSetEditorCodeMutation({
+ *   variables: {
+ *      code: // value for 'code'
+ *   },
+ * });
+ */
+export function useSetEditorCodeMutation(baseOptions?: Apollo.MutationHookOptions<SetEditorCodeMutation, SetEditorCodeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetEditorCodeMutation, SetEditorCodeMutationVariables>(SetEditorCodeDocument, options);
+      }
+export type SetEditorCodeMutationHookResult = ReturnType<typeof useSetEditorCodeMutation>;
+export type SetEditorCodeMutationResult = Apollo.MutationResult<SetEditorCodeMutation>;
+export type SetEditorCodeMutationOptions = Apollo.BaseMutationOptions<SetEditorCodeMutation, SetEditorCodeMutationVariables>;
 export const GetExampleDataDocument = gql`
     query getExampleData {
   lessons {
@@ -5345,4 +5444,30 @@ export const GetExampleDataDocument = gql`
   }
 }
     `;
+
+/**
+ * __useGetExampleDataQuery__
+ *
+ * To run a query within a React component, call `useGetExampleDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetExampleDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetExampleDataQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetExampleDataQuery(baseOptions?: Apollo.QueryHookOptions<GetExampleDataQuery, GetExampleDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetExampleDataQuery, GetExampleDataQueryVariables>(GetExampleDataDocument, options);
+      }
+export function useGetExampleDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetExampleDataQuery, GetExampleDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetExampleDataQuery, GetExampleDataQueryVariables>(GetExampleDataDocument, options);
+        }
+export type GetExampleDataQueryHookResult = ReturnType<typeof useGetExampleDataQuery>;
+export type GetExampleDataLazyQueryHookResult = ReturnType<typeof useGetExampleDataLazyQuery>;
 export type GetExampleDataQueryResult = Apollo.QueryResult<GetExampleDataQuery, GetExampleDataQueryVariables>;

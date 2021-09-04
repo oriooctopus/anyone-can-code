@@ -1,5 +1,5 @@
 import React from 'react';
-import EditorContainer from '../containers/EditorContainer';
+import Editor from '../components/Editor/Editor';
 import { ChakraProvider, Grid, GridItem } from '@chakra-ui/react';
 import Layout from '../components/Layout/Layout';
 import LessonInstructionsContainer from '../containers/LessonInstructionsContainer';
@@ -7,8 +7,6 @@ import LessonProgress from '../components/LessonProgress/LessonProgress';
 import theme from '../theme/chakra-theme';
 
 function App() {
-  console.log('theme', theme);
-
   return (
     <ChakraProvider theme={theme}>
       <Layout>
@@ -17,7 +15,7 @@ function App() {
             <LessonInstructionsContainer />
           </GridItem>
           <GridItem colSpan={6} mt="20px">
-            <EditorContainer />
+            <Editor />
           </GridItem>
           <GridItem colSpan={2}>
             <LessonProgress />

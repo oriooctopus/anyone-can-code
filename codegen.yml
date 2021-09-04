@@ -1,5 +1,7 @@
 overwrite: true
-schema: 'https://api-us-west-2.graphcms.com/v2/ckrdnv1hq15w701we3v72cga9/master'
+schema:
+  - client-schema.graphql
+  - https://api-us-west-2.graphcms.com/v2/ckrdnv1hq15w701we3v72cga9/master
 documents: 'src/**/*.graphql'
 generates:
   src/generated/graphql.tsx:
@@ -9,7 +11,7 @@ generates:
       - 'typescript-react-apollo'
     config:
       reactApolloVersion: 3
-      withHooks: false
+      withHooks: true
       withHOC: false
       withComponent: false
       exportFragmentSpreadSubTypes: true
