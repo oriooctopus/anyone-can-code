@@ -58,9 +58,6 @@ const __utils = (() => {
 
 /* Run the test if there is one.  If not just evaluate the user code */
 self.onmessage = async (e) => {
-  console.log('the event data!!', JSON.stringify(e.data));
-  console.log('the build?', e.data.build);
-  console.log('code contents', e.data?.code?.contents);
   /* eslint-disable no-unused-vars */
   let code = (e.data?.code?.contents || '').slice();
   code = e.data?.removeComments ? removeJSComments(code) : code;
@@ -73,7 +70,6 @@ self.onmessage = async (e) => {
   const __helpers = curriculumHelpers;
   // Fake Deep Equal dependency
   const DeepEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
-  debugger;
 
   // Build errors should be reported, but only once:
   __utils.toggleProxyLogger(e.data.firstTest);
@@ -88,24 +84,20 @@ self.onmessage = async (e) => {
       // generated during testing.
       testResult = eval(`${
         // e.data?.removeComments ? removeJSComments(e.data.build) : e.data.build
+        // runs the user's inputted code first
         e.data.code.content
       }
 __utils.flushLogs();
 __userCodeWasExecuted = true;
 __utils.toggleProxyLogger(true);
 ${e.data.code.contents};
-var result = eval(${e.data.testString})
-console.log('what is the result', result);
+var result = eval(${e.data.testString}) // evaluates the user's code
+console.log('what is result', result);
 if (!result) {
   throw new Error('did not pass')
 }
 `);
-      console.log('the test result', testResult);
-      debugger;
-      console.log('th!!!e test string??', e.data.testString);
-      console.log('assert', assert);
     } catch (err) {
-      console.log('is there an error?', err);
       if (__userCodeWasExecuted) {
         // rethrow error, since test failed.
         throw err;
@@ -123,7 +115,6 @@ if (!result) {
       // the user code does not get executed.
       testResult = eval(e.data.testString);
     }
-    debugger;
     /* eslint-enable no-eval */
     if (typeof testResult === 'function') {
       await testResult((fileName) => __toString(e.data.sources[fileName]));
@@ -133,7 +124,6 @@ if (!result) {
       test: 456,
     });
   } catch (err) {
-    console.log('does an error happen?', err);
     // Errors from testing go to the browser console only.
     __utils.toggleProxyLogger(false);
     // Report execution errors in case user code has errors that are only

@@ -1,5 +1,5 @@
-import { buildJSChallenge } from "./build";
-import createWorker from "./worker-executor";
+import { buildJSChallenge } from './build';
+import createWorker from './worker-executor';
 
 function getJSTestRunner(testString) {
   const code = {
@@ -7,19 +7,18 @@ function getJSTestRunner(testString) {
     editableContents: testString,
   };
 
-  const testWorker = createWorker("test-evaluator", {
+  const testWorker = createWorker('test-evaluator', {
     terminateWorker: true,
   });
 
   return (testString, testTimeout, firstTest = true) => {
     return testWorker
       .execute({ testString, code, firstTest }, 5000)
-      .on("LOG", (...args) => console.log("yo", args)).done;
+      .on('LOG', (...args) => console.log('yo', args)).done;
   };
 }
 
 async function executeTests(testRunner, tests, testTimeout = 5000) {
-  console.log("the tests yooooo");
   const testResults = [];
   for (let i = 0; i < tests.length; i++) {
     const { text, testString } = tests[i];
@@ -31,7 +30,7 @@ async function executeTests(testRunner, tests, testTimeout = 5000) {
         null,
         testString,
         testTimeout,
-        firstTest
+        firstTest,
       );
       const { pass, err } = result;
       if (pass) {
@@ -41,12 +40,12 @@ async function executeTests(testRunner, tests, testTimeout = 5000) {
       }
     } catch (err) {
       newTest.message = text;
-      if (err === "timeout") {
-        newTest.err = "Test timed out";
+      if (err === 'timeout') {
+        newTest.err = 'Test timed out';
         newTest.message = `${newTest.message} (${newTest.err})`;
       } else {
         const { message, stack } = err;
-        newTest.err = message + "\n" + stack;
+        newTest.err = message + '\n' + stack;
         newTest.stack = stack;
       }
       // yield put(updateConsole(newTest.message));
@@ -71,5 +70,9 @@ export async function runTests(testString, tests) {
 
   const results = await executeTests(testRunner, tests);
 
-  console.log("the results", results);
+  console.log('the results', results);
+  console.log('easier to read results');
+  results.map(({ err, pass }, index) =>
+    console.log(index, (err || '').substring(0, 20), pass),
+  );
 }
