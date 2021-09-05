@@ -42,7 +42,6 @@ export const getApolloClient = (
     uri: 'https://api-us-west-2.graphcms.com/v2/ckrdnv1hq15w701we3v72cga9/master',
     fetch,
   });
-  console.log('initial state', initialState);
   const cache = new InMemoryCache().restore(
     initialState || {
       editor: {
@@ -50,7 +49,6 @@ export const getApolloClient = (
       },
     },
   );
-  console.log('yo this does happen right?', cache);
   return new ApolloClient({
     resolvers,
     cache,

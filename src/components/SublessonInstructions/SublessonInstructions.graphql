@@ -1,0 +1,24 @@
+query getSublessonInstructionsData($id: ID!) {
+  sublesson(where: { id: $id }) {
+    description
+    name
+    sublessonChallenges {
+      challenge {
+        ... on CodeChallenge {
+          prompt
+          codeChallengeTests {
+            label
+            internalTest
+          }
+        }
+        ... on MultipleChoiceChallenge {
+          correctOptionIndex
+          options
+        }
+      }
+    }
+    lesson {
+      name
+    }
+  }
+}

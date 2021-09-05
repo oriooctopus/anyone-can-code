@@ -59,7 +59,7 @@ const SublessonCard = ({ children, active }: IProps) => {
     >
       <Triangle active={active} />
       {active && <Hexagon />}
-      <Text align="center" opacity={active ? '90%' : '62%'} c>
+      <Text align="center" opacity={active ? '90%' : '62%'}>
         {children}
       </Text>
     </Box>

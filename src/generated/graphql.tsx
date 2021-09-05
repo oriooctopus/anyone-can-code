@@ -654,6 +654,10 @@ export type CodeChallenge = Node & {
   __typename?: 'CodeChallenge';
   /** System stage field */
   stage: Stage;
+  /** System Locale field */
+  locale: Locale;
+  /** Get the other localizations for this document */
+  localizations: Array<CodeChallenge>;
   /** Get the document in other stages */
   documentInStages: Array<CodeChallenge>;
   /** The unique identifier */
@@ -664,16 +668,27 @@ export type CodeChallenge = Node & {
   updatedAt: Scalars['DateTime'];
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars['DateTime']>;
+  prompt: Scalars['String'];
+  startingCode?: Maybe<Scalars['String']>;
   /** User that created this document */
   createdBy?: Maybe<User>;
   /** User that last updated this document */
   updatedBy?: Maybe<User>;
   /** User that last published this document */
   publishedBy?: Maybe<User>;
-  codeChallengeCriterias: Array<CodeChallengeCriteria>;
-  sublesson?: Maybe<Sublesson>;
+  /** These are run to determine if the user has passed the challenge */
+  codeChallengeTests: Array<CodeChallengeTest>;
+  sublessonChallenge?: Maybe<SublessonChallenge>;
+  /** The skills required to know how to pass this code challenge */
+  skills: Array<Skill>;
   /** List of CodeChallenge versions */
   history: Array<Version>;
+};
+
+
+export type CodeChallengeLocalizationsArgs = {
+  locales?: Array<Locale>;
+  includeCurrent?: Scalars['Boolean'];
 };
 
 
@@ -681,6 +696,21 @@ export type CodeChallengeDocumentInStagesArgs = {
   stages?: Array<Stage>;
   includeCurrent?: Scalars['Boolean'];
   inheritLocale?: Scalars['Boolean'];
+};
+
+
+export type CodeChallengeCreatedAtArgs = {
+  variation?: SystemDateTimeFieldVariation;
+};
+
+
+export type CodeChallengeUpdatedAtArgs = {
+  variation?: SystemDateTimeFieldVariation;
+};
+
+
+export type CodeChallengePublishedAtArgs = {
+  variation?: SystemDateTimeFieldVariation;
 };
 
 
@@ -699,9 +729,9 @@ export type CodeChallengePublishedByArgs = {
 };
 
 
-export type CodeChallengeCodeChallengeCriteriasArgs = {
-  where?: Maybe<CodeChallengeCriteriaWhereInput>;
-  orderBy?: Maybe<CodeChallengeCriteriaOrderByInput>;
+export type CodeChallengeCodeChallengeTestsArgs = {
+  where?: Maybe<CodeChallengeTestWhereInput>;
+  orderBy?: Maybe<CodeChallengeTestOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -711,7 +741,17 @@ export type CodeChallengeCodeChallengeCriteriasArgs = {
 };
 
 
-export type CodeChallengeSublessonArgs = {
+export type CodeChallengeSublessonChallengeArgs = {
+  locales?: Maybe<Array<Locale>>;
+};
+
+
+export type CodeChallengeSkillsArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
   locales?: Maybe<Array<Locale>>;
 };
 
@@ -742,8 +782,31 @@ export type CodeChallengeConnection = {
 export type CodeChallengeCreateInput = {
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-  codeChallengeCriterias?: Maybe<CodeChallengeCriteriaCreateManyInlineInput>;
-  sublesson?: Maybe<SublessonCreateOneInlineInput>;
+  /** prompt input for default locale (en) */
+  prompt: Scalars['String'];
+  startingCode?: Maybe<Scalars['String']>;
+  codeChallengeTests?: Maybe<CodeChallengeTestCreateManyInlineInput>;
+  sublessonChallenge?: Maybe<SublessonChallengeCreateOneInlineInput>;
+  skills?: Maybe<SkillCreateManyInlineInput>;
+  /** Inline mutations for managing document localizations excluding the default locale */
+  localizations?: Maybe<CodeChallengeCreateLocalizationsInput>;
+};
+
+export type CodeChallengeCreateLocalizationDataInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  prompt: Scalars['String'];
+};
+
+export type CodeChallengeCreateLocalizationInput = {
+  /** Localization input */
+  data: CodeChallengeCreateLocalizationDataInput;
+  locale: Locale;
+};
+
+export type CodeChallengeCreateLocalizationsInput = {
+  /** Create localizations for the newly-created document */
+  create?: Maybe<Array<CodeChallengeCreateLocalizationInput>>;
 };
 
 export type CodeChallengeCreateManyInlineInput = {
@@ -758,469 +821,6 @@ export type CodeChallengeCreateOneInlineInput = {
   create?: Maybe<CodeChallengeCreateInput>;
   /** Connect one existing CodeChallenge document */
   connect?: Maybe<CodeChallengeWhereUniqueInput>;
-};
-
-export type CodeChallengeCriteria = Node & {
-  __typename?: 'CodeChallengeCriteria';
-  /** System stage field */
-  stage: Stage;
-  /** System Locale field */
-  locale: Locale;
-  /** Get the other localizations for this document */
-  localizations: Array<CodeChallengeCriteria>;
-  /** Get the document in other stages */
-  documentInStages: Array<CodeChallengeCriteria>;
-  /** The unique identifier */
-  id: Scalars['ID'];
-  /** The time the document was created */
-  createdAt: Scalars['DateTime'];
-  /** The time the document was updated */
-  updatedAt: Scalars['DateTime'];
-  /** The time the document was published. Null on documents in draft stage. */
-  publishedAt?: Maybe<Scalars['DateTime']>;
-  name?: Maybe<Scalars['String']>;
-  /** User that created this document */
-  createdBy?: Maybe<User>;
-  /** User that last updated this document */
-  updatedBy?: Maybe<User>;
-  /** User that last published this document */
-  publishedBy?: Maybe<User>;
-  codeChallenge?: Maybe<CodeChallenge>;
-  /** List of CodeChallengeCriteria versions */
-  history: Array<Version>;
-};
-
-
-export type CodeChallengeCriteriaLocalizationsArgs = {
-  locales?: Array<Locale>;
-  includeCurrent?: Scalars['Boolean'];
-};
-
-
-export type CodeChallengeCriteriaDocumentInStagesArgs = {
-  stages?: Array<Stage>;
-  includeCurrent?: Scalars['Boolean'];
-  inheritLocale?: Scalars['Boolean'];
-};
-
-
-export type CodeChallengeCriteriaCreatedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
-};
-
-
-export type CodeChallengeCriteriaUpdatedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
-};
-
-
-export type CodeChallengeCriteriaPublishedAtArgs = {
-  variation?: SystemDateTimeFieldVariation;
-};
-
-
-export type CodeChallengeCriteriaCreatedByArgs = {
-  locales?: Maybe<Array<Locale>>;
-};
-
-
-export type CodeChallengeCriteriaUpdatedByArgs = {
-  locales?: Maybe<Array<Locale>>;
-};
-
-
-export type CodeChallengeCriteriaPublishedByArgs = {
-  locales?: Maybe<Array<Locale>>;
-};
-
-
-export type CodeChallengeCriteriaCodeChallengeArgs = {
-  locales?: Maybe<Array<Locale>>;
-};
-
-
-export type CodeChallengeCriteriaHistoryArgs = {
-  limit?: Scalars['Int'];
-  skip?: Scalars['Int'];
-  stageOverride?: Maybe<Stage>;
-};
-
-export type CodeChallengeCriteriaConnectInput = {
-  /** Document to connect */
-  where: CodeChallengeCriteriaWhereUniqueInput;
-  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
-  position?: Maybe<ConnectPositionInput>;
-};
-
-/** A connection to a list of items. */
-export type CodeChallengeCriteriaConnection = {
-  __typename?: 'CodeChallengeCriteriaConnection';
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** A list of edges. */
-  edges: Array<CodeChallengeCriteriaEdge>;
-  aggregate: Aggregate;
-};
-
-export type CodeChallengeCriteriaCreateInput = {
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  /** name input for default locale (en) */
-  name?: Maybe<Scalars['String']>;
-  codeChallenge?: Maybe<CodeChallengeCreateOneInlineInput>;
-  /** Inline mutations for managing document localizations excluding the default locale */
-  localizations?: Maybe<CodeChallengeCriteriaCreateLocalizationsInput>;
-};
-
-export type CodeChallengeCriteriaCreateLocalizationDataInput = {
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  name?: Maybe<Scalars['String']>;
-};
-
-export type CodeChallengeCriteriaCreateLocalizationInput = {
-  /** Localization input */
-  data: CodeChallengeCriteriaCreateLocalizationDataInput;
-  locale: Locale;
-};
-
-export type CodeChallengeCriteriaCreateLocalizationsInput = {
-  /** Create localizations for the newly-created document */
-  create?: Maybe<Array<CodeChallengeCriteriaCreateLocalizationInput>>;
-};
-
-export type CodeChallengeCriteriaCreateManyInlineInput = {
-  /** Create and connect multiple existing CodeChallengeCriteria documents */
-  create?: Maybe<Array<CodeChallengeCriteriaCreateInput>>;
-  /** Connect multiple existing CodeChallengeCriteria documents */
-  connect?: Maybe<Array<CodeChallengeCriteriaWhereUniqueInput>>;
-};
-
-export type CodeChallengeCriteriaCreateOneInlineInput = {
-  /** Create and connect one CodeChallengeCriteria document */
-  create?: Maybe<CodeChallengeCriteriaCreateInput>;
-  /** Connect one existing CodeChallengeCriteria document */
-  connect?: Maybe<CodeChallengeCriteriaWhereUniqueInput>;
-};
-
-/** An edge in a connection. */
-export type CodeChallengeCriteriaEdge = {
-  __typename?: 'CodeChallengeCriteriaEdge';
-  /** The item at the end of the edge. */
-  node: CodeChallengeCriteria;
-  /** A cursor for use in pagination. */
-  cursor: Scalars['String'];
-};
-
-/** Identifies documents */
-export type CodeChallengeCriteriaManyWhereInput = {
-  /** Contains search across all appropriate fields. */
-  _search?: Maybe<Scalars['String']>;
-  /** Logical AND on all given filters. */
-  AND?: Maybe<Array<CodeChallengeCriteriaWhereInput>>;
-  /** Logical OR on all given filters. */
-  OR?: Maybe<Array<CodeChallengeCriteriaWhereInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: Maybe<Array<CodeChallengeCriteriaWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  /** All values that are not equal to given value. */
-  id_not?: Maybe<Scalars['ID']>;
-  /** All values that are contained in given list. */
-  id_in?: Maybe<Array<Scalars['ID']>>;
-  /** All values that are not contained in given list. */
-  id_not_in?: Maybe<Array<Scalars['ID']>>;
-  /** All values containing the given string. */
-  id_contains?: Maybe<Scalars['ID']>;
-  /** All values not containing the given string. */
-  id_not_contains?: Maybe<Scalars['ID']>;
-  /** All values starting with the given string. */
-  id_starts_with?: Maybe<Scalars['ID']>;
-  /** All values not starting with the given string. */
-  id_not_starts_with?: Maybe<Scalars['ID']>;
-  /** All values ending with the given string. */
-  id_ends_with?: Maybe<Scalars['ID']>;
-  /** All values not ending with the given string */
-  id_not_ends_with?: Maybe<Scalars['ID']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  /** All values that are not equal to given value. */
-  createdAt_not?: Maybe<Scalars['DateTime']>;
-  /** All values that are contained in given list. */
-  createdAt_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values that are not contained in given list. */
-  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values less than the given value. */
-  createdAt_lt?: Maybe<Scalars['DateTime']>;
-  /** All values less than or equal the given value. */
-  createdAt_lte?: Maybe<Scalars['DateTime']>;
-  /** All values greater than the given value. */
-  createdAt_gt?: Maybe<Scalars['DateTime']>;
-  /** All values greater than or equal the given value. */
-  createdAt_gte?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  /** All values that are not equal to given value. */
-  updatedAt_not?: Maybe<Scalars['DateTime']>;
-  /** All values that are contained in given list. */
-  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values that are not contained in given list. */
-  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values less than the given value. */
-  updatedAt_lt?: Maybe<Scalars['DateTime']>;
-  /** All values less than or equal the given value. */
-  updatedAt_lte?: Maybe<Scalars['DateTime']>;
-  /** All values greater than the given value. */
-  updatedAt_gt?: Maybe<Scalars['DateTime']>;
-  /** All values greater than or equal the given value. */
-  updatedAt_gte?: Maybe<Scalars['DateTime']>;
-  publishedAt?: Maybe<Scalars['DateTime']>;
-  /** All values that are not equal to given value. */
-  publishedAt_not?: Maybe<Scalars['DateTime']>;
-  /** All values that are contained in given list. */
-  publishedAt_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values that are not contained in given list. */
-  publishedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values less than the given value. */
-  publishedAt_lt?: Maybe<Scalars['DateTime']>;
-  /** All values less than or equal the given value. */
-  publishedAt_lte?: Maybe<Scalars['DateTime']>;
-  /** All values greater than the given value. */
-  publishedAt_gt?: Maybe<Scalars['DateTime']>;
-  /** All values greater than or equal the given value. */
-  publishedAt_gte?: Maybe<Scalars['DateTime']>;
-  createdBy?: Maybe<UserWhereInput>;
-  updatedBy?: Maybe<UserWhereInput>;
-  publishedBy?: Maybe<UserWhereInput>;
-  codeChallenge?: Maybe<CodeChallengeWhereInput>;
-};
-
-export enum CodeChallengeCriteriaOrderByInput {
-  IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC',
-  CreatedAtAsc = 'createdAt_ASC',
-  CreatedAtDesc = 'createdAt_DESC',
-  UpdatedAtAsc = 'updatedAt_ASC',
-  UpdatedAtDesc = 'updatedAt_DESC',
-  PublishedAtAsc = 'publishedAt_ASC',
-  PublishedAtDesc = 'publishedAt_DESC',
-  NameAsc = 'name_ASC',
-  NameDesc = 'name_DESC'
-}
-
-export type CodeChallengeCriteriaUpdateInput = {
-  /** name input for default locale (en) */
-  name?: Maybe<Scalars['String']>;
-  codeChallenge?: Maybe<CodeChallengeUpdateOneInlineInput>;
-  /** Manage document localizations */
-  localizations?: Maybe<CodeChallengeCriteriaUpdateLocalizationsInput>;
-};
-
-export type CodeChallengeCriteriaUpdateLocalizationDataInput = {
-  name?: Maybe<Scalars['String']>;
-};
-
-export type CodeChallengeCriteriaUpdateLocalizationInput = {
-  data: CodeChallengeCriteriaUpdateLocalizationDataInput;
-  locale: Locale;
-};
-
-export type CodeChallengeCriteriaUpdateLocalizationsInput = {
-  /** Localizations to create */
-  create?: Maybe<Array<CodeChallengeCriteriaCreateLocalizationInput>>;
-  /** Localizations to update */
-  update?: Maybe<Array<CodeChallengeCriteriaUpdateLocalizationInput>>;
-  upsert?: Maybe<Array<CodeChallengeCriteriaUpsertLocalizationInput>>;
-  /** Localizations to delete */
-  delete?: Maybe<Array<Locale>>;
-};
-
-export type CodeChallengeCriteriaUpdateManyInlineInput = {
-  /** Create and connect multiple CodeChallengeCriteria documents */
-  create?: Maybe<Array<CodeChallengeCriteriaCreateInput>>;
-  /** Connect multiple existing CodeChallengeCriteria documents */
-  connect?: Maybe<Array<CodeChallengeCriteriaConnectInput>>;
-  /** Override currently-connected documents with multiple existing CodeChallengeCriteria documents */
-  set?: Maybe<Array<CodeChallengeCriteriaWhereUniqueInput>>;
-  /** Update multiple CodeChallengeCriteria documents */
-  update?: Maybe<Array<CodeChallengeCriteriaUpdateWithNestedWhereUniqueInput>>;
-  /** Upsert multiple CodeChallengeCriteria documents */
-  upsert?: Maybe<Array<CodeChallengeCriteriaUpsertWithNestedWhereUniqueInput>>;
-  /** Disconnect multiple CodeChallengeCriteria documents */
-  disconnect?: Maybe<Array<CodeChallengeCriteriaWhereUniqueInput>>;
-  /** Delete multiple CodeChallengeCriteria documents */
-  delete?: Maybe<Array<CodeChallengeCriteriaWhereUniqueInput>>;
-};
-
-export type CodeChallengeCriteriaUpdateManyInput = {
-  /** name input for default locale (en) */
-  name?: Maybe<Scalars['String']>;
-  /** Optional updates to localizations */
-  localizations?: Maybe<CodeChallengeCriteriaUpdateManyLocalizationsInput>;
-};
-
-export type CodeChallengeCriteriaUpdateManyLocalizationDataInput = {
-  name?: Maybe<Scalars['String']>;
-};
-
-export type CodeChallengeCriteriaUpdateManyLocalizationInput = {
-  data: CodeChallengeCriteriaUpdateManyLocalizationDataInput;
-  locale: Locale;
-};
-
-export type CodeChallengeCriteriaUpdateManyLocalizationsInput = {
-  /** Localizations to update */
-  update?: Maybe<Array<CodeChallengeCriteriaUpdateManyLocalizationInput>>;
-};
-
-export type CodeChallengeCriteriaUpdateManyWithNestedWhereInput = {
-  /** Document search */
-  where: CodeChallengeCriteriaWhereInput;
-  /** Update many input */
-  data: CodeChallengeCriteriaUpdateManyInput;
-};
-
-export type CodeChallengeCriteriaUpdateOneInlineInput = {
-  /** Create and connect one CodeChallengeCriteria document */
-  create?: Maybe<CodeChallengeCriteriaCreateInput>;
-  /** Update single CodeChallengeCriteria document */
-  update?: Maybe<CodeChallengeCriteriaUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single CodeChallengeCriteria document */
-  upsert?: Maybe<CodeChallengeCriteriaUpsertWithNestedWhereUniqueInput>;
-  /** Connect existing CodeChallengeCriteria document */
-  connect?: Maybe<CodeChallengeCriteriaWhereUniqueInput>;
-  /** Disconnect currently connected CodeChallengeCriteria document */
-  disconnect?: Maybe<Scalars['Boolean']>;
-  /** Delete currently connected CodeChallengeCriteria document */
-  delete?: Maybe<Scalars['Boolean']>;
-};
-
-export type CodeChallengeCriteriaUpdateWithNestedWhereUniqueInput = {
-  /** Unique document search */
-  where: CodeChallengeCriteriaWhereUniqueInput;
-  /** Document to update */
-  data: CodeChallengeCriteriaUpdateInput;
-};
-
-export type CodeChallengeCriteriaUpsertInput = {
-  /** Create document if it didn't exist */
-  create: CodeChallengeCriteriaCreateInput;
-  /** Update document if it exists */
-  update: CodeChallengeCriteriaUpdateInput;
-};
-
-export type CodeChallengeCriteriaUpsertLocalizationInput = {
-  update: CodeChallengeCriteriaUpdateLocalizationDataInput;
-  create: CodeChallengeCriteriaCreateLocalizationDataInput;
-  locale: Locale;
-};
-
-export type CodeChallengeCriteriaUpsertWithNestedWhereUniqueInput = {
-  /** Unique document search */
-  where: CodeChallengeCriteriaWhereUniqueInput;
-  /** Upsert data */
-  data: CodeChallengeCriteriaUpsertInput;
-};
-
-/** Identifies documents */
-export type CodeChallengeCriteriaWhereInput = {
-  /** Contains search across all appropriate fields. */
-  _search?: Maybe<Scalars['String']>;
-  /** Logical AND on all given filters. */
-  AND?: Maybe<Array<CodeChallengeCriteriaWhereInput>>;
-  /** Logical OR on all given filters. */
-  OR?: Maybe<Array<CodeChallengeCriteriaWhereInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: Maybe<Array<CodeChallengeCriteriaWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  /** All values that are not equal to given value. */
-  id_not?: Maybe<Scalars['ID']>;
-  /** All values that are contained in given list. */
-  id_in?: Maybe<Array<Scalars['ID']>>;
-  /** All values that are not contained in given list. */
-  id_not_in?: Maybe<Array<Scalars['ID']>>;
-  /** All values containing the given string. */
-  id_contains?: Maybe<Scalars['ID']>;
-  /** All values not containing the given string. */
-  id_not_contains?: Maybe<Scalars['ID']>;
-  /** All values starting with the given string. */
-  id_starts_with?: Maybe<Scalars['ID']>;
-  /** All values not starting with the given string. */
-  id_not_starts_with?: Maybe<Scalars['ID']>;
-  /** All values ending with the given string. */
-  id_ends_with?: Maybe<Scalars['ID']>;
-  /** All values not ending with the given string */
-  id_not_ends_with?: Maybe<Scalars['ID']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  /** All values that are not equal to given value. */
-  createdAt_not?: Maybe<Scalars['DateTime']>;
-  /** All values that are contained in given list. */
-  createdAt_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values that are not contained in given list. */
-  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values less than the given value. */
-  createdAt_lt?: Maybe<Scalars['DateTime']>;
-  /** All values less than or equal the given value. */
-  createdAt_lte?: Maybe<Scalars['DateTime']>;
-  /** All values greater than the given value. */
-  createdAt_gt?: Maybe<Scalars['DateTime']>;
-  /** All values greater than or equal the given value. */
-  createdAt_gte?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  /** All values that are not equal to given value. */
-  updatedAt_not?: Maybe<Scalars['DateTime']>;
-  /** All values that are contained in given list. */
-  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values that are not contained in given list. */
-  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values less than the given value. */
-  updatedAt_lt?: Maybe<Scalars['DateTime']>;
-  /** All values less than or equal the given value. */
-  updatedAt_lte?: Maybe<Scalars['DateTime']>;
-  /** All values greater than the given value. */
-  updatedAt_gt?: Maybe<Scalars['DateTime']>;
-  /** All values greater than or equal the given value. */
-  updatedAt_gte?: Maybe<Scalars['DateTime']>;
-  publishedAt?: Maybe<Scalars['DateTime']>;
-  /** All values that are not equal to given value. */
-  publishedAt_not?: Maybe<Scalars['DateTime']>;
-  /** All values that are contained in given list. */
-  publishedAt_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values that are not contained in given list. */
-  publishedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values less than the given value. */
-  publishedAt_lt?: Maybe<Scalars['DateTime']>;
-  /** All values less than or equal the given value. */
-  publishedAt_lte?: Maybe<Scalars['DateTime']>;
-  /** All values greater than the given value. */
-  publishedAt_gt?: Maybe<Scalars['DateTime']>;
-  /** All values greater than or equal the given value. */
-  publishedAt_gte?: Maybe<Scalars['DateTime']>;
-  name?: Maybe<Scalars['String']>;
-  /** All values that are not equal to given value. */
-  name_not?: Maybe<Scalars['String']>;
-  /** All values that are contained in given list. */
-  name_in?: Maybe<Array<Scalars['String']>>;
-  /** All values that are not contained in given list. */
-  name_not_in?: Maybe<Array<Scalars['String']>>;
-  /** All values containing the given string. */
-  name_contains?: Maybe<Scalars['String']>;
-  /** All values not containing the given string. */
-  name_not_contains?: Maybe<Scalars['String']>;
-  /** All values starting with the given string. */
-  name_starts_with?: Maybe<Scalars['String']>;
-  /** All values not starting with the given string. */
-  name_not_starts_with?: Maybe<Scalars['String']>;
-  /** All values ending with the given string. */
-  name_ends_with?: Maybe<Scalars['String']>;
-  /** All values not ending with the given string */
-  name_not_ends_with?: Maybe<Scalars['String']>;
-  createdBy?: Maybe<UserWhereInput>;
-  updatedBy?: Maybe<UserWhereInput>;
-  publishedBy?: Maybe<UserWhereInput>;
-  codeChallenge?: Maybe<CodeChallengeWhereInput>;
-};
-
-/** References CodeChallengeCriteria record uniquely */
-export type CodeChallengeCriteriaWhereUniqueInput = {
-  id?: Maybe<Scalars['ID']>;
 };
 
 /** An edge in a connection. */
@@ -1306,13 +906,35 @@ export type CodeChallengeManyWhereInput = {
   publishedAt_gt?: Maybe<Scalars['DateTime']>;
   /** All values greater than or equal the given value. */
   publishedAt_gte?: Maybe<Scalars['DateTime']>;
+  startingCode?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  startingCode_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  startingCode_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  startingCode_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  startingCode_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  startingCode_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  startingCode_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  startingCode_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  startingCode_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  startingCode_not_ends_with?: Maybe<Scalars['String']>;
   createdBy?: Maybe<UserWhereInput>;
   updatedBy?: Maybe<UserWhereInput>;
   publishedBy?: Maybe<UserWhereInput>;
-  codeChallengeCriterias_every?: Maybe<CodeChallengeCriteriaWhereInput>;
-  codeChallengeCriterias_some?: Maybe<CodeChallengeCriteriaWhereInput>;
-  codeChallengeCriterias_none?: Maybe<CodeChallengeCriteriaWhereInput>;
-  sublesson?: Maybe<SublessonWhereInput>;
+  codeChallengeTests_every?: Maybe<CodeChallengeTestWhereInput>;
+  codeChallengeTests_some?: Maybe<CodeChallengeTestWhereInput>;
+  codeChallengeTests_none?: Maybe<CodeChallengeTestWhereInput>;
+  sublessonChallenge?: Maybe<SublessonChallengeWhereInput>;
+  skills_every?: Maybe<SkillWhereInput>;
+  skills_some?: Maybe<SkillWhereInput>;
+  skills_none?: Maybe<SkillWhereInput>;
 };
 
 export enum CodeChallengeOrderByInput {
@@ -1323,12 +945,551 @@ export enum CodeChallengeOrderByInput {
   UpdatedAtAsc = 'updatedAt_ASC',
   UpdatedAtDesc = 'updatedAt_DESC',
   PublishedAtAsc = 'publishedAt_ASC',
-  PublishedAtDesc = 'publishedAt_DESC'
+  PublishedAtDesc = 'publishedAt_DESC',
+  PromptAsc = 'prompt_ASC',
+  PromptDesc = 'prompt_DESC',
+  StartingCodeAsc = 'startingCode_ASC',
+  StartingCodeDesc = 'startingCode_DESC'
 }
 
+/** The criteria for the user to pass the code challenge */
+export type CodeChallengeTest = Node & {
+  __typename?: 'CodeChallengeTest';
+  /** System stage field */
+  stage: Stage;
+  /** System Locale field */
+  locale: Locale;
+  /** Get the other localizations for this document */
+  localizations: Array<CodeChallengeTest>;
+  /** Get the document in other stages */
+  documentInStages: Array<CodeChallengeTest>;
+  /** The unique identifier */
+  id: Scalars['ID'];
+  /** The time the document was created */
+  createdAt: Scalars['DateTime'];
+  /** The time the document was updated */
+  updatedAt: Scalars['DateTime'];
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  label: Scalars['String'];
+  /** Determines if the test passes or failes */
+  internalTest: Scalars['String'];
+  /** User that created this document */
+  createdBy?: Maybe<User>;
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>;
+  /** User that last published this document */
+  publishedBy?: Maybe<User>;
+  /** List of CodeChallengeTest versions */
+  history: Array<Version>;
+};
+
+
+/** The criteria for the user to pass the code challenge */
+export type CodeChallengeTestLocalizationsArgs = {
+  locales?: Array<Locale>;
+  includeCurrent?: Scalars['Boolean'];
+};
+
+
+/** The criteria for the user to pass the code challenge */
+export type CodeChallengeTestDocumentInStagesArgs = {
+  stages?: Array<Stage>;
+  includeCurrent?: Scalars['Boolean'];
+  inheritLocale?: Scalars['Boolean'];
+};
+
+
+/** The criteria for the user to pass the code challenge */
+export type CodeChallengeTestCreatedAtArgs = {
+  variation?: SystemDateTimeFieldVariation;
+};
+
+
+/** The criteria for the user to pass the code challenge */
+export type CodeChallengeTestUpdatedAtArgs = {
+  variation?: SystemDateTimeFieldVariation;
+};
+
+
+/** The criteria for the user to pass the code challenge */
+export type CodeChallengeTestPublishedAtArgs = {
+  variation?: SystemDateTimeFieldVariation;
+};
+
+
+/** The criteria for the user to pass the code challenge */
+export type CodeChallengeTestCreatedByArgs = {
+  locales?: Maybe<Array<Locale>>;
+};
+
+
+/** The criteria for the user to pass the code challenge */
+export type CodeChallengeTestUpdatedByArgs = {
+  locales?: Maybe<Array<Locale>>;
+};
+
+
+/** The criteria for the user to pass the code challenge */
+export type CodeChallengeTestPublishedByArgs = {
+  locales?: Maybe<Array<Locale>>;
+};
+
+
+/** The criteria for the user to pass the code challenge */
+export type CodeChallengeTestHistoryArgs = {
+  limit?: Scalars['Int'];
+  skip?: Scalars['Int'];
+  stageOverride?: Maybe<Stage>;
+};
+
+export type CodeChallengeTestConnectInput = {
+  /** Document to connect */
+  where: CodeChallengeTestWhereUniqueInput;
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: Maybe<ConnectPositionInput>;
+};
+
+/** A connection to a list of items. */
+export type CodeChallengeTestConnection = {
+  __typename?: 'CodeChallengeTestConnection';
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** A list of edges. */
+  edges: Array<CodeChallengeTestEdge>;
+  aggregate: Aggregate;
+};
+
+export type CodeChallengeTestCreateInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  /** label input for default locale (en) */
+  label: Scalars['String'];
+  internalTest: Scalars['String'];
+  ckt7jf2082cg901zbbwc7346u?: Maybe<CodeChallengeCreateManyInlineInput>;
+  /** Inline mutations for managing document localizations excluding the default locale */
+  localizations?: Maybe<CodeChallengeTestCreateLocalizationsInput>;
+};
+
+export type CodeChallengeTestCreateLocalizationDataInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  label: Scalars['String'];
+};
+
+export type CodeChallengeTestCreateLocalizationInput = {
+  /** Localization input */
+  data: CodeChallengeTestCreateLocalizationDataInput;
+  locale: Locale;
+};
+
+export type CodeChallengeTestCreateLocalizationsInput = {
+  /** Create localizations for the newly-created document */
+  create?: Maybe<Array<CodeChallengeTestCreateLocalizationInput>>;
+};
+
+export type CodeChallengeTestCreateManyInlineInput = {
+  /** Create and connect multiple existing CodeChallengeTest documents */
+  create?: Maybe<Array<CodeChallengeTestCreateInput>>;
+  /** Connect multiple existing CodeChallengeTest documents */
+  connect?: Maybe<Array<CodeChallengeTestWhereUniqueInput>>;
+};
+
+export type CodeChallengeTestCreateOneInlineInput = {
+  /** Create and connect one CodeChallengeTest document */
+  create?: Maybe<CodeChallengeTestCreateInput>;
+  /** Connect one existing CodeChallengeTest document */
+  connect?: Maybe<CodeChallengeTestWhereUniqueInput>;
+};
+
+/** An edge in a connection. */
+export type CodeChallengeTestEdge = {
+  __typename?: 'CodeChallengeTestEdge';
+  /** The item at the end of the edge. */
+  node: CodeChallengeTest;
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+};
+
+/** Identifies documents */
+export type CodeChallengeTestManyWhereInput = {
+  /** Contains search across all appropriate fields. */
+  _search?: Maybe<Scalars['String']>;
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<CodeChallengeTestWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<CodeChallengeTestWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<CodeChallengeTestWhereInput>>;
+  id?: Maybe<Scalars['ID']>;
+  /** All values that are not equal to given value. */
+  id_not?: Maybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values that are not contained in given list. */
+  id_not_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values containing the given string. */
+  id_contains?: Maybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: Maybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: Maybe<Scalars['ID']>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: Maybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: Maybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: Maybe<Scalars['ID']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  createdAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: Maybe<Scalars['DateTime']>;
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: Maybe<Scalars['DateTime']>;
+  internalTest?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  internalTest_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  internalTest_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  internalTest_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  internalTest_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  internalTest_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  internalTest_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  internalTest_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  internalTest_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  internalTest_not_ends_with?: Maybe<Scalars['String']>;
+  createdBy?: Maybe<UserWhereInput>;
+  updatedBy?: Maybe<UserWhereInput>;
+  publishedBy?: Maybe<UserWhereInput>;
+};
+
+export enum CodeChallengeTestOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC',
+  PublishedAtAsc = 'publishedAt_ASC',
+  PublishedAtDesc = 'publishedAt_DESC',
+  LabelAsc = 'label_ASC',
+  LabelDesc = 'label_DESC',
+  InternalTestAsc = 'internalTest_ASC',
+  InternalTestDesc = 'internalTest_DESC'
+}
+
+export type CodeChallengeTestUpdateInput = {
+  /** label input for default locale (en) */
+  label?: Maybe<Scalars['String']>;
+  internalTest?: Maybe<Scalars['String']>;
+  ckt7jf2082cg901zbbwc7346u?: Maybe<CodeChallengeUpdateManyInlineInput>;
+  /** Manage document localizations */
+  localizations?: Maybe<CodeChallengeTestUpdateLocalizationsInput>;
+};
+
+export type CodeChallengeTestUpdateLocalizationDataInput = {
+  label?: Maybe<Scalars['String']>;
+};
+
+export type CodeChallengeTestUpdateLocalizationInput = {
+  data: CodeChallengeTestUpdateLocalizationDataInput;
+  locale: Locale;
+};
+
+export type CodeChallengeTestUpdateLocalizationsInput = {
+  /** Localizations to create */
+  create?: Maybe<Array<CodeChallengeTestCreateLocalizationInput>>;
+  /** Localizations to update */
+  update?: Maybe<Array<CodeChallengeTestUpdateLocalizationInput>>;
+  upsert?: Maybe<Array<CodeChallengeTestUpsertLocalizationInput>>;
+  /** Localizations to delete */
+  delete?: Maybe<Array<Locale>>;
+};
+
+export type CodeChallengeTestUpdateManyInlineInput = {
+  /** Create and connect multiple CodeChallengeTest documents */
+  create?: Maybe<Array<CodeChallengeTestCreateInput>>;
+  /** Connect multiple existing CodeChallengeTest documents */
+  connect?: Maybe<Array<CodeChallengeTestConnectInput>>;
+  /** Override currently-connected documents with multiple existing CodeChallengeTest documents */
+  set?: Maybe<Array<CodeChallengeTestWhereUniqueInput>>;
+  /** Update multiple CodeChallengeTest documents */
+  update?: Maybe<Array<CodeChallengeTestUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple CodeChallengeTest documents */
+  upsert?: Maybe<Array<CodeChallengeTestUpsertWithNestedWhereUniqueInput>>;
+  /** Disconnect multiple CodeChallengeTest documents */
+  disconnect?: Maybe<Array<CodeChallengeTestWhereUniqueInput>>;
+  /** Delete multiple CodeChallengeTest documents */
+  delete?: Maybe<Array<CodeChallengeTestWhereUniqueInput>>;
+};
+
+export type CodeChallengeTestUpdateManyInput = {
+  /** label input for default locale (en) */
+  label?: Maybe<Scalars['String']>;
+  internalTest?: Maybe<Scalars['String']>;
+  /** Optional updates to localizations */
+  localizations?: Maybe<CodeChallengeTestUpdateManyLocalizationsInput>;
+};
+
+export type CodeChallengeTestUpdateManyLocalizationDataInput = {
+  label?: Maybe<Scalars['String']>;
+};
+
+export type CodeChallengeTestUpdateManyLocalizationInput = {
+  data: CodeChallengeTestUpdateManyLocalizationDataInput;
+  locale: Locale;
+};
+
+export type CodeChallengeTestUpdateManyLocalizationsInput = {
+  /** Localizations to update */
+  update?: Maybe<Array<CodeChallengeTestUpdateManyLocalizationInput>>;
+};
+
+export type CodeChallengeTestUpdateManyWithNestedWhereInput = {
+  /** Document search */
+  where: CodeChallengeTestWhereInput;
+  /** Update many input */
+  data: CodeChallengeTestUpdateManyInput;
+};
+
+export type CodeChallengeTestUpdateOneInlineInput = {
+  /** Create and connect one CodeChallengeTest document */
+  create?: Maybe<CodeChallengeTestCreateInput>;
+  /** Update single CodeChallengeTest document */
+  update?: Maybe<CodeChallengeTestUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single CodeChallengeTest document */
+  upsert?: Maybe<CodeChallengeTestUpsertWithNestedWhereUniqueInput>;
+  /** Connect existing CodeChallengeTest document */
+  connect?: Maybe<CodeChallengeTestWhereUniqueInput>;
+  /** Disconnect currently connected CodeChallengeTest document */
+  disconnect?: Maybe<Scalars['Boolean']>;
+  /** Delete currently connected CodeChallengeTest document */
+  delete?: Maybe<Scalars['Boolean']>;
+};
+
+export type CodeChallengeTestUpdateWithNestedWhereUniqueInput = {
+  /** Unique document search */
+  where: CodeChallengeTestWhereUniqueInput;
+  /** Document to update */
+  data: CodeChallengeTestUpdateInput;
+};
+
+export type CodeChallengeTestUpsertInput = {
+  /** Create document if it didn't exist */
+  create: CodeChallengeTestCreateInput;
+  /** Update document if it exists */
+  update: CodeChallengeTestUpdateInput;
+};
+
+export type CodeChallengeTestUpsertLocalizationInput = {
+  update: CodeChallengeTestUpdateLocalizationDataInput;
+  create: CodeChallengeTestCreateLocalizationDataInput;
+  locale: Locale;
+};
+
+export type CodeChallengeTestUpsertWithNestedWhereUniqueInput = {
+  /** Unique document search */
+  where: CodeChallengeTestWhereUniqueInput;
+  /** Upsert data */
+  data: CodeChallengeTestUpsertInput;
+};
+
+/** Identifies documents */
+export type CodeChallengeTestWhereInput = {
+  /** Contains search across all appropriate fields. */
+  _search?: Maybe<Scalars['String']>;
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<CodeChallengeTestWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<CodeChallengeTestWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<CodeChallengeTestWhereInput>>;
+  id?: Maybe<Scalars['ID']>;
+  /** All values that are not equal to given value. */
+  id_not?: Maybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values that are not contained in given list. */
+  id_not_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values containing the given string. */
+  id_contains?: Maybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: Maybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: Maybe<Scalars['ID']>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: Maybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: Maybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: Maybe<Scalars['ID']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  createdAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: Maybe<Scalars['DateTime']>;
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: Maybe<Scalars['DateTime']>;
+  label?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  label_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  label_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  label_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  label_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  label_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  label_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  label_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  label_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  label_not_ends_with?: Maybe<Scalars['String']>;
+  internalTest?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  internalTest_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  internalTest_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  internalTest_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  internalTest_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  internalTest_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  internalTest_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  internalTest_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  internalTest_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  internalTest_not_ends_with?: Maybe<Scalars['String']>;
+  createdBy?: Maybe<UserWhereInput>;
+  updatedBy?: Maybe<UserWhereInput>;
+  publishedBy?: Maybe<UserWhereInput>;
+};
+
+/** References CodeChallengeTest record uniquely */
+export type CodeChallengeTestWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>;
+};
+
 export type CodeChallengeUpdateInput = {
-  codeChallengeCriterias?: Maybe<CodeChallengeCriteriaUpdateManyInlineInput>;
-  sublesson?: Maybe<SublessonUpdateOneInlineInput>;
+  /** prompt input for default locale (en) */
+  prompt?: Maybe<Scalars['String']>;
+  startingCode?: Maybe<Scalars['String']>;
+  codeChallengeTests?: Maybe<CodeChallengeTestUpdateManyInlineInput>;
+  sublessonChallenge?: Maybe<SublessonChallengeUpdateOneInlineInput>;
+  skills?: Maybe<SkillUpdateManyInlineInput>;
+  /** Manage document localizations */
+  localizations?: Maybe<CodeChallengeUpdateLocalizationsInput>;
+};
+
+export type CodeChallengeUpdateLocalizationDataInput = {
+  prompt?: Maybe<Scalars['String']>;
+};
+
+export type CodeChallengeUpdateLocalizationInput = {
+  data: CodeChallengeUpdateLocalizationDataInput;
+  locale: Locale;
+};
+
+export type CodeChallengeUpdateLocalizationsInput = {
+  /** Localizations to create */
+  create?: Maybe<Array<CodeChallengeCreateLocalizationInput>>;
+  /** Localizations to update */
+  update?: Maybe<Array<CodeChallengeUpdateLocalizationInput>>;
+  upsert?: Maybe<Array<CodeChallengeUpsertLocalizationInput>>;
+  /** Localizations to delete */
+  delete?: Maybe<Array<Locale>>;
 };
 
 export type CodeChallengeUpdateManyInlineInput = {
@@ -1349,8 +1510,25 @@ export type CodeChallengeUpdateManyInlineInput = {
 };
 
 export type CodeChallengeUpdateManyInput = {
-  /** No fields in updateMany data input */
-  _?: Maybe<Scalars['String']>;
+  /** prompt input for default locale (en) */
+  prompt?: Maybe<Scalars['String']>;
+  startingCode?: Maybe<Scalars['String']>;
+  /** Optional updates to localizations */
+  localizations?: Maybe<CodeChallengeUpdateManyLocalizationsInput>;
+};
+
+export type CodeChallengeUpdateManyLocalizationDataInput = {
+  prompt?: Maybe<Scalars['String']>;
+};
+
+export type CodeChallengeUpdateManyLocalizationInput = {
+  data: CodeChallengeUpdateManyLocalizationDataInput;
+  locale: Locale;
+};
+
+export type CodeChallengeUpdateManyLocalizationsInput = {
+  /** Localizations to update */
+  update?: Maybe<Array<CodeChallengeUpdateManyLocalizationInput>>;
 };
 
 export type CodeChallengeUpdateManyWithNestedWhereInput = {
@@ -1387,6 +1565,12 @@ export type CodeChallengeUpsertInput = {
   create: CodeChallengeCreateInput;
   /** Update document if it exists */
   update: CodeChallengeUpdateInput;
+};
+
+export type CodeChallengeUpsertLocalizationInput = {
+  update: CodeChallengeUpdateLocalizationDataInput;
+  create: CodeChallengeCreateLocalizationDataInput;
+  locale: Locale;
 };
 
 export type CodeChallengeUpsertWithNestedWhereUniqueInput = {
@@ -1470,13 +1654,54 @@ export type CodeChallengeWhereInput = {
   publishedAt_gt?: Maybe<Scalars['DateTime']>;
   /** All values greater than or equal the given value. */
   publishedAt_gte?: Maybe<Scalars['DateTime']>;
+  prompt?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  prompt_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  prompt_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  prompt_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  prompt_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  prompt_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  prompt_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  prompt_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  prompt_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  prompt_not_ends_with?: Maybe<Scalars['String']>;
+  startingCode?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  startingCode_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  startingCode_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  startingCode_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  startingCode_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  startingCode_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  startingCode_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  startingCode_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  startingCode_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  startingCode_not_ends_with?: Maybe<Scalars['String']>;
   createdBy?: Maybe<UserWhereInput>;
   updatedBy?: Maybe<UserWhereInput>;
   publishedBy?: Maybe<UserWhereInput>;
-  codeChallengeCriterias_every?: Maybe<CodeChallengeCriteriaWhereInput>;
-  codeChallengeCriterias_some?: Maybe<CodeChallengeCriteriaWhereInput>;
-  codeChallengeCriterias_none?: Maybe<CodeChallengeCriteriaWhereInput>;
-  sublesson?: Maybe<SublessonWhereInput>;
+  codeChallengeTests_every?: Maybe<CodeChallengeTestWhereInput>;
+  codeChallengeTests_some?: Maybe<CodeChallengeTestWhereInput>;
+  codeChallengeTests_none?: Maybe<CodeChallengeTestWhereInput>;
+  sublessonChallenge?: Maybe<SublessonChallengeWhereInput>;
+  skills_every?: Maybe<SkillWhereInput>;
+  skills_some?: Maybe<SkillWhereInput>;
+  skills_none?: Maybe<SkillWhereInput>;
 };
 
 /** References CodeChallenge record uniquely */
@@ -1627,6 +1852,8 @@ export type Lesson = Node & {
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars['DateTime']>;
   name: Scalars['String'];
+  /** The url slug */
+  slug: Scalars['String'];
   /** User that created this document */
   createdBy?: Maybe<User>;
   /** User that last updated this document */
@@ -1722,6 +1949,7 @@ export type LessonCreateInput = {
   updatedAt?: Maybe<Scalars['DateTime']>;
   /** name input for default locale (en) */
   name: Scalars['String'];
+  slug: Scalars['String'];
   sublessons?: Maybe<SublessonCreateManyInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: Maybe<LessonCreateLocalizationsInput>;
@@ -1841,6 +2069,25 @@ export type LessonManyWhereInput = {
   publishedAt_gt?: Maybe<Scalars['DateTime']>;
   /** All values greater than or equal the given value. */
   publishedAt_gte?: Maybe<Scalars['DateTime']>;
+  slug?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  slug_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  slug_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  slug_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: Maybe<Scalars['String']>;
   createdBy?: Maybe<UserWhereInput>;
   updatedBy?: Maybe<UserWhereInput>;
   publishedBy?: Maybe<UserWhereInput>;
@@ -1859,12 +2106,15 @@ export enum LessonOrderByInput {
   PublishedAtAsc = 'publishedAt_ASC',
   PublishedAtDesc = 'publishedAt_DESC',
   NameAsc = 'name_ASC',
-  NameDesc = 'name_DESC'
+  NameDesc = 'name_DESC',
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC'
 }
 
 export type LessonUpdateInput = {
   /** name input for default locale (en) */
   name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
   sublessons?: Maybe<SublessonUpdateManyInlineInput>;
   /** Manage document localizations */
   localizations?: Maybe<LessonUpdateLocalizationsInput>;
@@ -2069,6 +2319,25 @@ export type LessonWhereInput = {
   name_ends_with?: Maybe<Scalars['String']>;
   /** All values not ending with the given string */
   name_not_ends_with?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  slug_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  slug_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  slug_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  slug_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  slug_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  slug_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  slug_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  slug_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  slug_not_ends_with?: Maybe<Scalars['String']>;
   createdBy?: Maybe<UserWhereInput>;
   updatedBy?: Maybe<UserWhereInput>;
   publishedBy?: Maybe<UserWhereInput>;
@@ -2080,6 +2349,7 @@ export type LessonWhereInput = {
 /** References Lesson record uniquely */
 export type LessonWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>;
+  slug?: Maybe<Scalars['String']>;
 };
 
 /** Locale system enumeration */
@@ -2109,6 +2379,547 @@ export type LocationInput = {
 };
 
 
+export type MultipleChoiceChallenge = Node & {
+  __typename?: 'MultipleChoiceChallenge';
+  /** System stage field */
+  stage: Stage;
+  /** System Locale field */
+  locale: Locale;
+  /** Get the other localizations for this document */
+  localizations: Array<MultipleChoiceChallenge>;
+  /** Get the document in other stages */
+  documentInStages: Array<MultipleChoiceChallenge>;
+  /** The unique identifier */
+  id: Scalars['ID'];
+  /** The time the document was created */
+  createdAt: Scalars['DateTime'];
+  /** The time the document was updated */
+  updatedAt: Scalars['DateTime'];
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  prompt: Scalars['String'];
+  options: Array<Scalars['String']>;
+  correctOptionIndex: Scalars['Int'];
+  /** User that created this document */
+  createdBy?: Maybe<User>;
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>;
+  /** User that last published this document */
+  publishedBy?: Maybe<User>;
+  sublessonChallenge?: Maybe<SublessonChallenge>;
+  /** The skills required to know how to pass this code challenge */
+  skills: Array<Skill>;
+  /** List of MultipleChoiceChallenge versions */
+  history: Array<Version>;
+};
+
+
+export type MultipleChoiceChallengeLocalizationsArgs = {
+  locales?: Array<Locale>;
+  includeCurrent?: Scalars['Boolean'];
+};
+
+
+export type MultipleChoiceChallengeDocumentInStagesArgs = {
+  stages?: Array<Stage>;
+  includeCurrent?: Scalars['Boolean'];
+  inheritLocale?: Scalars['Boolean'];
+};
+
+
+export type MultipleChoiceChallengeCreatedAtArgs = {
+  variation?: SystemDateTimeFieldVariation;
+};
+
+
+export type MultipleChoiceChallengeUpdatedAtArgs = {
+  variation?: SystemDateTimeFieldVariation;
+};
+
+
+export type MultipleChoiceChallengePublishedAtArgs = {
+  variation?: SystemDateTimeFieldVariation;
+};
+
+
+export type MultipleChoiceChallengeCreatedByArgs = {
+  locales?: Maybe<Array<Locale>>;
+};
+
+
+export type MultipleChoiceChallengeUpdatedByArgs = {
+  locales?: Maybe<Array<Locale>>;
+};
+
+
+export type MultipleChoiceChallengePublishedByArgs = {
+  locales?: Maybe<Array<Locale>>;
+};
+
+
+export type MultipleChoiceChallengeSublessonChallengeArgs = {
+  locales?: Maybe<Array<Locale>>;
+};
+
+
+export type MultipleChoiceChallengeSkillsArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  locales?: Maybe<Array<Locale>>;
+};
+
+
+export type MultipleChoiceChallengeHistoryArgs = {
+  limit?: Scalars['Int'];
+  skip?: Scalars['Int'];
+  stageOverride?: Maybe<Stage>;
+};
+
+export type MultipleChoiceChallengeConnectInput = {
+  /** Document to connect */
+  where: MultipleChoiceChallengeWhereUniqueInput;
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: Maybe<ConnectPositionInput>;
+};
+
+/** A connection to a list of items. */
+export type MultipleChoiceChallengeConnection = {
+  __typename?: 'MultipleChoiceChallengeConnection';
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** A list of edges. */
+  edges: Array<MultipleChoiceChallengeEdge>;
+  aggregate: Aggregate;
+};
+
+export type MultipleChoiceChallengeCreateInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  /** prompt input for default locale (en) */
+  prompt: Scalars['String'];
+  /** options input for default locale (en) */
+  options: Array<Scalars['String']>;
+  correctOptionIndex: Scalars['Int'];
+  sublessonChallenge?: Maybe<SublessonChallengeCreateOneInlineInput>;
+  skills?: Maybe<SkillCreateManyInlineInput>;
+  /** Inline mutations for managing document localizations excluding the default locale */
+  localizations?: Maybe<MultipleChoiceChallengeCreateLocalizationsInput>;
+};
+
+export type MultipleChoiceChallengeCreateLocalizationDataInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  prompt: Scalars['String'];
+  options: Array<Scalars['String']>;
+};
+
+export type MultipleChoiceChallengeCreateLocalizationInput = {
+  /** Localization input */
+  data: MultipleChoiceChallengeCreateLocalizationDataInput;
+  locale: Locale;
+};
+
+export type MultipleChoiceChallengeCreateLocalizationsInput = {
+  /** Create localizations for the newly-created document */
+  create?: Maybe<Array<MultipleChoiceChallengeCreateLocalizationInput>>;
+};
+
+export type MultipleChoiceChallengeCreateManyInlineInput = {
+  /** Create and connect multiple existing MultipleChoiceChallenge documents */
+  create?: Maybe<Array<MultipleChoiceChallengeCreateInput>>;
+  /** Connect multiple existing MultipleChoiceChallenge documents */
+  connect?: Maybe<Array<MultipleChoiceChallengeWhereUniqueInput>>;
+};
+
+export type MultipleChoiceChallengeCreateOneInlineInput = {
+  /** Create and connect one MultipleChoiceChallenge document */
+  create?: Maybe<MultipleChoiceChallengeCreateInput>;
+  /** Connect one existing MultipleChoiceChallenge document */
+  connect?: Maybe<MultipleChoiceChallengeWhereUniqueInput>;
+};
+
+/** An edge in a connection. */
+export type MultipleChoiceChallengeEdge = {
+  __typename?: 'MultipleChoiceChallengeEdge';
+  /** The item at the end of the edge. */
+  node: MultipleChoiceChallenge;
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+};
+
+/** Identifies documents */
+export type MultipleChoiceChallengeManyWhereInput = {
+  /** Contains search across all appropriate fields. */
+  _search?: Maybe<Scalars['String']>;
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<MultipleChoiceChallengeWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<MultipleChoiceChallengeWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<MultipleChoiceChallengeWhereInput>>;
+  id?: Maybe<Scalars['ID']>;
+  /** All values that are not equal to given value. */
+  id_not?: Maybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values that are not contained in given list. */
+  id_not_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values containing the given string. */
+  id_contains?: Maybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: Maybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: Maybe<Scalars['ID']>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: Maybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: Maybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: Maybe<Scalars['ID']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  createdAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: Maybe<Scalars['DateTime']>;
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: Maybe<Scalars['DateTime']>;
+  correctOptionIndex?: Maybe<Scalars['Int']>;
+  /** All values that are not equal to given value. */
+  correctOptionIndex_not?: Maybe<Scalars['Int']>;
+  /** All values that are contained in given list. */
+  correctOptionIndex_in?: Maybe<Array<Scalars['Int']>>;
+  /** All values that are not contained in given list. */
+  correctOptionIndex_not_in?: Maybe<Array<Scalars['Int']>>;
+  /** All values less than the given value. */
+  correctOptionIndex_lt?: Maybe<Scalars['Int']>;
+  /** All values less than or equal the given value. */
+  correctOptionIndex_lte?: Maybe<Scalars['Int']>;
+  /** All values greater than the given value. */
+  correctOptionIndex_gt?: Maybe<Scalars['Int']>;
+  /** All values greater than or equal the given value. */
+  correctOptionIndex_gte?: Maybe<Scalars['Int']>;
+  createdBy?: Maybe<UserWhereInput>;
+  updatedBy?: Maybe<UserWhereInput>;
+  publishedBy?: Maybe<UserWhereInput>;
+  sublessonChallenge?: Maybe<SublessonChallengeWhereInput>;
+  skills_every?: Maybe<SkillWhereInput>;
+  skills_some?: Maybe<SkillWhereInput>;
+  skills_none?: Maybe<SkillWhereInput>;
+};
+
+export enum MultipleChoiceChallengeOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC',
+  PublishedAtAsc = 'publishedAt_ASC',
+  PublishedAtDesc = 'publishedAt_DESC',
+  PromptAsc = 'prompt_ASC',
+  PromptDesc = 'prompt_DESC',
+  OptionsAsc = 'options_ASC',
+  OptionsDesc = 'options_DESC',
+  CorrectOptionIndexAsc = 'correctOptionIndex_ASC',
+  CorrectOptionIndexDesc = 'correctOptionIndex_DESC'
+}
+
+export type MultipleChoiceChallengeUpdateInput = {
+  /** prompt input for default locale (en) */
+  prompt?: Maybe<Scalars['String']>;
+  /** options input for default locale (en) */
+  options?: Maybe<Array<Scalars['String']>>;
+  correctOptionIndex?: Maybe<Scalars['Int']>;
+  sublessonChallenge?: Maybe<SublessonChallengeUpdateOneInlineInput>;
+  skills?: Maybe<SkillUpdateManyInlineInput>;
+  /** Manage document localizations */
+  localizations?: Maybe<MultipleChoiceChallengeUpdateLocalizationsInput>;
+};
+
+export type MultipleChoiceChallengeUpdateLocalizationDataInput = {
+  prompt?: Maybe<Scalars['String']>;
+  options?: Maybe<Array<Scalars['String']>>;
+};
+
+export type MultipleChoiceChallengeUpdateLocalizationInput = {
+  data: MultipleChoiceChallengeUpdateLocalizationDataInput;
+  locale: Locale;
+};
+
+export type MultipleChoiceChallengeUpdateLocalizationsInput = {
+  /** Localizations to create */
+  create?: Maybe<Array<MultipleChoiceChallengeCreateLocalizationInput>>;
+  /** Localizations to update */
+  update?: Maybe<Array<MultipleChoiceChallengeUpdateLocalizationInput>>;
+  upsert?: Maybe<Array<MultipleChoiceChallengeUpsertLocalizationInput>>;
+  /** Localizations to delete */
+  delete?: Maybe<Array<Locale>>;
+};
+
+export type MultipleChoiceChallengeUpdateManyInlineInput = {
+  /** Create and connect multiple MultipleChoiceChallenge documents */
+  create?: Maybe<Array<MultipleChoiceChallengeCreateInput>>;
+  /** Connect multiple existing MultipleChoiceChallenge documents */
+  connect?: Maybe<Array<MultipleChoiceChallengeConnectInput>>;
+  /** Override currently-connected documents with multiple existing MultipleChoiceChallenge documents */
+  set?: Maybe<Array<MultipleChoiceChallengeWhereUniqueInput>>;
+  /** Update multiple MultipleChoiceChallenge documents */
+  update?: Maybe<Array<MultipleChoiceChallengeUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple MultipleChoiceChallenge documents */
+  upsert?: Maybe<Array<MultipleChoiceChallengeUpsertWithNestedWhereUniqueInput>>;
+  /** Disconnect multiple MultipleChoiceChallenge documents */
+  disconnect?: Maybe<Array<MultipleChoiceChallengeWhereUniqueInput>>;
+  /** Delete multiple MultipleChoiceChallenge documents */
+  delete?: Maybe<Array<MultipleChoiceChallengeWhereUniqueInput>>;
+};
+
+export type MultipleChoiceChallengeUpdateManyInput = {
+  /** prompt input for default locale (en) */
+  prompt?: Maybe<Scalars['String']>;
+  /** options input for default locale (en) */
+  options?: Maybe<Array<Scalars['String']>>;
+  correctOptionIndex?: Maybe<Scalars['Int']>;
+  /** Optional updates to localizations */
+  localizations?: Maybe<MultipleChoiceChallengeUpdateManyLocalizationsInput>;
+};
+
+export type MultipleChoiceChallengeUpdateManyLocalizationDataInput = {
+  prompt?: Maybe<Scalars['String']>;
+  options?: Maybe<Array<Scalars['String']>>;
+};
+
+export type MultipleChoiceChallengeUpdateManyLocalizationInput = {
+  data: MultipleChoiceChallengeUpdateManyLocalizationDataInput;
+  locale: Locale;
+};
+
+export type MultipleChoiceChallengeUpdateManyLocalizationsInput = {
+  /** Localizations to update */
+  update?: Maybe<Array<MultipleChoiceChallengeUpdateManyLocalizationInput>>;
+};
+
+export type MultipleChoiceChallengeUpdateManyWithNestedWhereInput = {
+  /** Document search */
+  where: MultipleChoiceChallengeWhereInput;
+  /** Update many input */
+  data: MultipleChoiceChallengeUpdateManyInput;
+};
+
+export type MultipleChoiceChallengeUpdateOneInlineInput = {
+  /** Create and connect one MultipleChoiceChallenge document */
+  create?: Maybe<MultipleChoiceChallengeCreateInput>;
+  /** Update single MultipleChoiceChallenge document */
+  update?: Maybe<MultipleChoiceChallengeUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single MultipleChoiceChallenge document */
+  upsert?: Maybe<MultipleChoiceChallengeUpsertWithNestedWhereUniqueInput>;
+  /** Connect existing MultipleChoiceChallenge document */
+  connect?: Maybe<MultipleChoiceChallengeWhereUniqueInput>;
+  /** Disconnect currently connected MultipleChoiceChallenge document */
+  disconnect?: Maybe<Scalars['Boolean']>;
+  /** Delete currently connected MultipleChoiceChallenge document */
+  delete?: Maybe<Scalars['Boolean']>;
+};
+
+export type MultipleChoiceChallengeUpdateWithNestedWhereUniqueInput = {
+  /** Unique document search */
+  where: MultipleChoiceChallengeWhereUniqueInput;
+  /** Document to update */
+  data: MultipleChoiceChallengeUpdateInput;
+};
+
+export type MultipleChoiceChallengeUpsertInput = {
+  /** Create document if it didn't exist */
+  create: MultipleChoiceChallengeCreateInput;
+  /** Update document if it exists */
+  update: MultipleChoiceChallengeUpdateInput;
+};
+
+export type MultipleChoiceChallengeUpsertLocalizationInput = {
+  update: MultipleChoiceChallengeUpdateLocalizationDataInput;
+  create: MultipleChoiceChallengeCreateLocalizationDataInput;
+  locale: Locale;
+};
+
+export type MultipleChoiceChallengeUpsertWithNestedWhereUniqueInput = {
+  /** Unique document search */
+  where: MultipleChoiceChallengeWhereUniqueInput;
+  /** Upsert data */
+  data: MultipleChoiceChallengeUpsertInput;
+};
+
+/** Identifies documents */
+export type MultipleChoiceChallengeWhereInput = {
+  /** Contains search across all appropriate fields. */
+  _search?: Maybe<Scalars['String']>;
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<MultipleChoiceChallengeWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<MultipleChoiceChallengeWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<MultipleChoiceChallengeWhereInput>>;
+  id?: Maybe<Scalars['ID']>;
+  /** All values that are not equal to given value. */
+  id_not?: Maybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values that are not contained in given list. */
+  id_not_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values containing the given string. */
+  id_contains?: Maybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: Maybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: Maybe<Scalars['ID']>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: Maybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: Maybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: Maybe<Scalars['ID']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  createdAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: Maybe<Scalars['DateTime']>;
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: Maybe<Scalars['DateTime']>;
+  prompt?: Maybe<Scalars['String']>;
+  /** All values that are not equal to given value. */
+  prompt_not?: Maybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  prompt_in?: Maybe<Array<Scalars['String']>>;
+  /** All values that are not contained in given list. */
+  prompt_not_in?: Maybe<Array<Scalars['String']>>;
+  /** All values containing the given string. */
+  prompt_contains?: Maybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  prompt_not_contains?: Maybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  prompt_starts_with?: Maybe<Scalars['String']>;
+  /** All values not starting with the given string. */
+  prompt_not_starts_with?: Maybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  prompt_ends_with?: Maybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  prompt_not_ends_with?: Maybe<Scalars['String']>;
+  /** Matches if the field array contains *all* items provided to the filter and order does match */
+  options?: Maybe<Array<Scalars['String']>>;
+  /** Matches if the field array does not contains *all* items provided to the filter or order does not match */
+  options_not?: Maybe<Array<Scalars['String']>>;
+  /** Matches if the field array contains *all* items provided to the filter */
+  options_contains_all?: Maybe<Array<Scalars['String']>>;
+  /** Matches if the field array contains at least one item provided to the filter */
+  options_contains_some?: Maybe<Array<Scalars['String']>>;
+  /** Matches if the field array does not contain any of the items provided to the filter */
+  options_contains_none?: Maybe<Array<Scalars['String']>>;
+  correctOptionIndex?: Maybe<Scalars['Int']>;
+  /** All values that are not equal to given value. */
+  correctOptionIndex_not?: Maybe<Scalars['Int']>;
+  /** All values that are contained in given list. */
+  correctOptionIndex_in?: Maybe<Array<Scalars['Int']>>;
+  /** All values that are not contained in given list. */
+  correctOptionIndex_not_in?: Maybe<Array<Scalars['Int']>>;
+  /** All values less than the given value. */
+  correctOptionIndex_lt?: Maybe<Scalars['Int']>;
+  /** All values less than or equal the given value. */
+  correctOptionIndex_lte?: Maybe<Scalars['Int']>;
+  /** All values greater than the given value. */
+  correctOptionIndex_gt?: Maybe<Scalars['Int']>;
+  /** All values greater than or equal the given value. */
+  correctOptionIndex_gte?: Maybe<Scalars['Int']>;
+  createdBy?: Maybe<UserWhereInput>;
+  updatedBy?: Maybe<UserWhereInput>;
+  publishedBy?: Maybe<UserWhereInput>;
+  sublessonChallenge?: Maybe<SublessonChallengeWhereInput>;
+  skills_every?: Maybe<SkillWhereInput>;
+  skills_some?: Maybe<SkillWhereInput>;
+  skills_none?: Maybe<SkillWhereInput>;
+};
+
+/** References MultipleChoiceChallenge record uniquely */
+export type MultipleChoiceChallengeWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   /**
@@ -2118,22 +2929,24 @@ export type Mutation = {
   createAsset?: Maybe<Asset>;
   /** Create one codeChallenge */
   createCodeChallenge?: Maybe<CodeChallenge>;
-  /** Create one codeChallengeCriteria */
-  createCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
+  /** Create one codeChallengeTest */
+  createCodeChallengeTest?: Maybe<CodeChallengeTest>;
   /** Create one lesson */
   createLesson?: Maybe<Lesson>;
-  /** Create one questionChallenge */
-  createQuestionChallenge?: Maybe<QuestionChallenge>;
+  /** Create one multipleChoiceChallenge */
+  createMultipleChoiceChallenge?: Maybe<MultipleChoiceChallenge>;
   /** Create one skill */
   createSkill?: Maybe<Skill>;
   /** Create one sublesson */
   createSublesson?: Maybe<Sublesson>;
+  /** Create one sublessonChallenge */
+  createSublessonChallenge?: Maybe<SublessonChallenge>;
   /** Delete one asset from _all_ existing stages. Returns deleted document. */
   deleteAsset?: Maybe<Asset>;
   /** Delete one codeChallenge from _all_ existing stages. Returns deleted document. */
   deleteCodeChallenge?: Maybe<CodeChallenge>;
-  /** Delete one codeChallengeCriteria from _all_ existing stages. Returns deleted document. */
-  deleteCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
+  /** Delete one codeChallengeTest from _all_ existing stages. Returns deleted document. */
+  deleteCodeChallengeTest?: Maybe<CodeChallengeTest>;
   /** Delete one lesson from _all_ existing stages. Returns deleted document. */
   deleteLesson?: Maybe<Lesson>;
   /**
@@ -2144,12 +2957,12 @@ export type Mutation = {
   /** Delete many Asset documents, return deleted documents */
   deleteManyAssetsConnection: AssetConnection;
   /**
-   * Delete many CodeChallengeCriteria documents
-   * @deprecated Please use the new paginated many mutation (deleteManyCodeChallengeCriteriasConnection)
+   * Delete many CodeChallengeTest documents
+   * @deprecated Please use the new paginated many mutation (deleteManyCodeChallengeTestsConnection)
    */
-  deleteManyCodeChallengeCriterias: BatchPayload;
-  /** Delete many CodeChallengeCriteria documents, return deleted documents */
-  deleteManyCodeChallengeCriteriasConnection: CodeChallengeCriteriaConnection;
+  deleteManyCodeChallengeTests: BatchPayload;
+  /** Delete many CodeChallengeTest documents, return deleted documents */
+  deleteManyCodeChallengeTestsConnection: CodeChallengeTestConnection;
   /**
    * Delete many CodeChallenge documents
    * @deprecated Please use the new paginated many mutation (deleteManyCodeChallengesConnection)
@@ -2165,12 +2978,12 @@ export type Mutation = {
   /** Delete many Lesson documents, return deleted documents */
   deleteManyLessonsConnection: LessonConnection;
   /**
-   * Delete many QuestionChallenge documents
-   * @deprecated Please use the new paginated many mutation (deleteManyQuestionChallengesConnection)
+   * Delete many MultipleChoiceChallenge documents
+   * @deprecated Please use the new paginated many mutation (deleteManyMultipleChoiceChallengesConnection)
    */
-  deleteManyQuestionChallenges: BatchPayload;
-  /** Delete many QuestionChallenge documents, return deleted documents */
-  deleteManyQuestionChallengesConnection: QuestionChallengeConnection;
+  deleteManyMultipleChoiceChallenges: BatchPayload;
+  /** Delete many MultipleChoiceChallenge documents, return deleted documents */
+  deleteManyMultipleChoiceChallengesConnection: MultipleChoiceChallengeConnection;
   /**
    * Delete many Skill documents
    * @deprecated Please use the new paginated many mutation (deleteManySkillsConnection)
@@ -2179,24 +2992,33 @@ export type Mutation = {
   /** Delete many Skill documents, return deleted documents */
   deleteManySkillsConnection: SkillConnection;
   /**
+   * Delete many SublessonChallenge documents
+   * @deprecated Please use the new paginated many mutation (deleteManySublessonChallengesConnection)
+   */
+  deleteManySublessonChallenges: BatchPayload;
+  /** Delete many SublessonChallenge documents, return deleted documents */
+  deleteManySublessonChallengesConnection: SublessonChallengeConnection;
+  /**
    * Delete many Sublesson documents
    * @deprecated Please use the new paginated many mutation (deleteManySublessonsConnection)
    */
   deleteManySublessons: BatchPayload;
   /** Delete many Sublesson documents, return deleted documents */
   deleteManySublessonsConnection: SublessonConnection;
-  /** Delete one questionChallenge from _all_ existing stages. Returns deleted document. */
-  deleteQuestionChallenge?: Maybe<QuestionChallenge>;
+  /** Delete one multipleChoiceChallenge from _all_ existing stages. Returns deleted document. */
+  deleteMultipleChoiceChallenge?: Maybe<MultipleChoiceChallenge>;
   /** Delete one skill from _all_ existing stages. Returns deleted document. */
   deleteSkill?: Maybe<Skill>;
   /** Delete one sublesson from _all_ existing stages. Returns deleted document. */
   deleteSublesson?: Maybe<Sublesson>;
+  /** Delete one sublessonChallenge from _all_ existing stages. Returns deleted document. */
+  deleteSublessonChallenge?: Maybe<SublessonChallenge>;
   /** Publish one asset */
   publishAsset?: Maybe<Asset>;
   /** Publish one codeChallenge */
   publishCodeChallenge?: Maybe<CodeChallenge>;
-  /** Publish one codeChallengeCriteria */
-  publishCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
+  /** Publish one codeChallengeTest */
+  publishCodeChallengeTest?: Maybe<CodeChallengeTest>;
   /** Publish one lesson */
   publishLesson?: Maybe<Lesson>;
   /**
@@ -2207,12 +3029,12 @@ export type Mutation = {
   /** Publish many Asset documents */
   publishManyAssetsConnection: AssetConnection;
   /**
-   * Publish many CodeChallengeCriteria documents
-   * @deprecated Please use the new paginated many mutation (publishManyCodeChallengeCriteriasConnection)
+   * Publish many CodeChallengeTest documents
+   * @deprecated Please use the new paginated many mutation (publishManyCodeChallengeTestsConnection)
    */
-  publishManyCodeChallengeCriterias: BatchPayload;
-  /** Publish many CodeChallengeCriteria documents */
-  publishManyCodeChallengeCriteriasConnection: CodeChallengeCriteriaConnection;
+  publishManyCodeChallengeTests: BatchPayload;
+  /** Publish many CodeChallengeTest documents */
+  publishManyCodeChallengeTestsConnection: CodeChallengeTestConnection;
   /**
    * Publish many CodeChallenge documents
    * @deprecated Please use the new paginated many mutation (publishManyCodeChallengesConnection)
@@ -2228,12 +3050,12 @@ export type Mutation = {
   /** Publish many Lesson documents */
   publishManyLessonsConnection: LessonConnection;
   /**
-   * Publish many QuestionChallenge documents
-   * @deprecated Please use the new paginated many mutation (publishManyQuestionChallengesConnection)
+   * Publish many MultipleChoiceChallenge documents
+   * @deprecated Please use the new paginated many mutation (publishManyMultipleChoiceChallengesConnection)
    */
-  publishManyQuestionChallenges: BatchPayload;
-  /** Publish many QuestionChallenge documents */
-  publishManyQuestionChallengesConnection: QuestionChallengeConnection;
+  publishManyMultipleChoiceChallenges: BatchPayload;
+  /** Publish many MultipleChoiceChallenge documents */
+  publishManyMultipleChoiceChallengesConnection: MultipleChoiceChallengeConnection;
   /**
    * Publish many Skill documents
    * @deprecated Please use the new paginated many mutation (publishManySkillsConnection)
@@ -2242,25 +3064,34 @@ export type Mutation = {
   /** Publish many Skill documents */
   publishManySkillsConnection: SkillConnection;
   /**
+   * Publish many SublessonChallenge documents
+   * @deprecated Please use the new paginated many mutation (publishManySublessonChallengesConnection)
+   */
+  publishManySublessonChallenges: BatchPayload;
+  /** Publish many SublessonChallenge documents */
+  publishManySublessonChallengesConnection: SublessonChallengeConnection;
+  /**
    * Publish many Sublesson documents
    * @deprecated Please use the new paginated many mutation (publishManySublessonsConnection)
    */
   publishManySublessons: BatchPayload;
   /** Publish many Sublesson documents */
   publishManySublessonsConnection: SublessonConnection;
-  /** Publish one questionChallenge */
-  publishQuestionChallenge?: Maybe<QuestionChallenge>;
+  /** Publish one multipleChoiceChallenge */
+  publishMultipleChoiceChallenge?: Maybe<MultipleChoiceChallenge>;
   /** Publish one skill */
   publishSkill?: Maybe<Skill>;
   /** Publish one sublesson */
   publishSublesson?: Maybe<Sublesson>;
+  /** Publish one sublessonChallenge */
+  publishSublessonChallenge?: Maybe<SublessonChallenge>;
   setEditorCode?: Maybe<Scalars['String']>;
   /** Unpublish one asset from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishAsset?: Maybe<Asset>;
   /** Unpublish one codeChallenge from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishCodeChallenge?: Maybe<CodeChallenge>;
-  /** Unpublish one codeChallengeCriteria from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  unpublishCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
+  /** Unpublish one codeChallengeTest from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishCodeChallengeTest?: Maybe<CodeChallengeTest>;
   /** Unpublish one lesson from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishLesson?: Maybe<Lesson>;
   /**
@@ -2271,12 +3102,12 @@ export type Mutation = {
   /** Find many Asset documents that match criteria in specified stage and unpublish from target stages */
   unpublishManyAssetsConnection: AssetConnection;
   /**
-   * Unpublish many CodeChallengeCriteria documents
-   * @deprecated Please use the new paginated many mutation (unpublishManyCodeChallengeCriteriasConnection)
+   * Unpublish many CodeChallengeTest documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyCodeChallengeTestsConnection)
    */
-  unpublishManyCodeChallengeCriterias: BatchPayload;
-  /** Find many CodeChallengeCriteria documents that match criteria in specified stage and unpublish from target stages */
-  unpublishManyCodeChallengeCriteriasConnection: CodeChallengeCriteriaConnection;
+  unpublishManyCodeChallengeTests: BatchPayload;
+  /** Find many CodeChallengeTest documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyCodeChallengeTestsConnection: CodeChallengeTestConnection;
   /**
    * Unpublish many CodeChallenge documents
    * @deprecated Please use the new paginated many mutation (unpublishManyCodeChallengesConnection)
@@ -2292,12 +3123,12 @@ export type Mutation = {
   /** Find many Lesson documents that match criteria in specified stage and unpublish from target stages */
   unpublishManyLessonsConnection: LessonConnection;
   /**
-   * Unpublish many QuestionChallenge documents
-   * @deprecated Please use the new paginated many mutation (unpublishManyQuestionChallengesConnection)
+   * Unpublish many MultipleChoiceChallenge documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyMultipleChoiceChallengesConnection)
    */
-  unpublishManyQuestionChallenges: BatchPayload;
-  /** Find many QuestionChallenge documents that match criteria in specified stage and unpublish from target stages */
-  unpublishManyQuestionChallengesConnection: QuestionChallengeConnection;
+  unpublishManyMultipleChoiceChallenges: BatchPayload;
+  /** Find many MultipleChoiceChallenge documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyMultipleChoiceChallengesConnection: MultipleChoiceChallengeConnection;
   /**
    * Unpublish many Skill documents
    * @deprecated Please use the new paginated many mutation (unpublishManySkillsConnection)
@@ -2306,24 +3137,33 @@ export type Mutation = {
   /** Find many Skill documents that match criteria in specified stage and unpublish from target stages */
   unpublishManySkillsConnection: SkillConnection;
   /**
+   * Unpublish many SublessonChallenge documents
+   * @deprecated Please use the new paginated many mutation (unpublishManySublessonChallengesConnection)
+   */
+  unpublishManySublessonChallenges: BatchPayload;
+  /** Find many SublessonChallenge documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManySublessonChallengesConnection: SublessonChallengeConnection;
+  /**
    * Unpublish many Sublesson documents
    * @deprecated Please use the new paginated many mutation (unpublishManySublessonsConnection)
    */
   unpublishManySublessons: BatchPayload;
   /** Find many Sublesson documents that match criteria in specified stage and unpublish from target stages */
   unpublishManySublessonsConnection: SublessonConnection;
-  /** Unpublish one questionChallenge from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
-  unpublishQuestionChallenge?: Maybe<QuestionChallenge>;
+  /** Unpublish one multipleChoiceChallenge from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishMultipleChoiceChallenge?: Maybe<MultipleChoiceChallenge>;
   /** Unpublish one skill from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishSkill?: Maybe<Skill>;
   /** Unpublish one sublesson from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishSublesson?: Maybe<Sublesson>;
+  /** Unpublish one sublessonChallenge from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishSublessonChallenge?: Maybe<SublessonChallenge>;
   /** Update one asset */
   updateAsset?: Maybe<Asset>;
   /** Update one codeChallenge */
   updateCodeChallenge?: Maybe<CodeChallenge>;
-  /** Update one codeChallengeCriteria */
-  updateCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
+  /** Update one codeChallengeTest */
+  updateCodeChallengeTest?: Maybe<CodeChallengeTest>;
   /** Update one lesson */
   updateLesson?: Maybe<Lesson>;
   /**
@@ -2334,12 +3174,12 @@ export type Mutation = {
   /** Update many Asset documents */
   updateManyAssetsConnection: AssetConnection;
   /**
-   * Update many codeChallengeCriterias
-   * @deprecated Please use the new paginated many mutation (updateManyCodeChallengeCriteriasConnection)
+   * Update many codeChallengeTests
+   * @deprecated Please use the new paginated many mutation (updateManyCodeChallengeTestsConnection)
    */
-  updateManyCodeChallengeCriterias: BatchPayload;
-  /** Update many CodeChallengeCriteria documents */
-  updateManyCodeChallengeCriteriasConnection: CodeChallengeCriteriaConnection;
+  updateManyCodeChallengeTests: BatchPayload;
+  /** Update many CodeChallengeTest documents */
+  updateManyCodeChallengeTestsConnection: CodeChallengeTestConnection;
   /**
    * Update many codeChallenges
    * @deprecated Please use the new paginated many mutation (updateManyCodeChallengesConnection)
@@ -2355,12 +3195,12 @@ export type Mutation = {
   /** Update many Lesson documents */
   updateManyLessonsConnection: LessonConnection;
   /**
-   * Update many questionChallenges
-   * @deprecated Please use the new paginated many mutation (updateManyQuestionChallengesConnection)
+   * Update many multipleChoiceChallenges
+   * @deprecated Please use the new paginated many mutation (updateManyMultipleChoiceChallengesConnection)
    */
-  updateManyQuestionChallenges: BatchPayload;
-  /** Update many QuestionChallenge documents */
-  updateManyQuestionChallengesConnection: QuestionChallengeConnection;
+  updateManyMultipleChoiceChallenges: BatchPayload;
+  /** Update many MultipleChoiceChallenge documents */
+  updateManyMultipleChoiceChallengesConnection: MultipleChoiceChallengeConnection;
   /**
    * Update many skills
    * @deprecated Please use the new paginated many mutation (updateManySkillsConnection)
@@ -2369,32 +3209,43 @@ export type Mutation = {
   /** Update many Skill documents */
   updateManySkillsConnection: SkillConnection;
   /**
+   * Update many sublessonChallenges
+   * @deprecated Please use the new paginated many mutation (updateManySublessonChallengesConnection)
+   */
+  updateManySublessonChallenges: BatchPayload;
+  /** Update many SublessonChallenge documents */
+  updateManySublessonChallengesConnection: SublessonChallengeConnection;
+  /**
    * Update many sublessons
    * @deprecated Please use the new paginated many mutation (updateManySublessonsConnection)
    */
   updateManySublessons: BatchPayload;
   /** Update many Sublesson documents */
   updateManySublessonsConnection: SublessonConnection;
-  /** Update one questionChallenge */
-  updateQuestionChallenge?: Maybe<QuestionChallenge>;
+  /** Update one multipleChoiceChallenge */
+  updateMultipleChoiceChallenge?: Maybe<MultipleChoiceChallenge>;
   /** Update one skill */
   updateSkill?: Maybe<Skill>;
   /** Update one sublesson */
   updateSublesson?: Maybe<Sublesson>;
+  /** Update one sublessonChallenge */
+  updateSublessonChallenge?: Maybe<SublessonChallenge>;
   /** Upsert one asset */
   upsertAsset?: Maybe<Asset>;
   /** Upsert one codeChallenge */
   upsertCodeChallenge?: Maybe<CodeChallenge>;
-  /** Upsert one codeChallengeCriteria */
-  upsertCodeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
+  /** Upsert one codeChallengeTest */
+  upsertCodeChallengeTest?: Maybe<CodeChallengeTest>;
   /** Upsert one lesson */
   upsertLesson?: Maybe<Lesson>;
-  /** Upsert one questionChallenge */
-  upsertQuestionChallenge?: Maybe<QuestionChallenge>;
+  /** Upsert one multipleChoiceChallenge */
+  upsertMultipleChoiceChallenge?: Maybe<MultipleChoiceChallenge>;
   /** Upsert one skill */
   upsertSkill?: Maybe<Skill>;
   /** Upsert one sublesson */
   upsertSublesson?: Maybe<Sublesson>;
+  /** Upsert one sublessonChallenge */
+  upsertSublessonChallenge?: Maybe<SublessonChallenge>;
 };
 
 
@@ -2408,8 +3259,8 @@ export type MutationCreateCodeChallengeArgs = {
 };
 
 
-export type MutationCreateCodeChallengeCriteriaArgs = {
-  data: CodeChallengeCriteriaCreateInput;
+export type MutationCreateCodeChallengeTestArgs = {
+  data: CodeChallengeTestCreateInput;
 };
 
 
@@ -2418,8 +3269,8 @@ export type MutationCreateLessonArgs = {
 };
 
 
-export type MutationCreateQuestionChallengeArgs = {
-  data: QuestionChallengeCreateInput;
+export type MutationCreateMultipleChoiceChallengeArgs = {
+  data: MultipleChoiceChallengeCreateInput;
 };
 
 
@@ -2433,6 +3284,11 @@ export type MutationCreateSublessonArgs = {
 };
 
 
+export type MutationCreateSublessonChallengeArgs = {
+  data: SublessonChallengeCreateInput;
+};
+
+
 export type MutationDeleteAssetArgs = {
   where: AssetWhereUniqueInput;
 };
@@ -2443,8 +3299,8 @@ export type MutationDeleteCodeChallengeArgs = {
 };
 
 
-export type MutationDeleteCodeChallengeCriteriaArgs = {
-  where: CodeChallengeCriteriaWhereUniqueInput;
+export type MutationDeleteCodeChallengeTestArgs = {
+  where: CodeChallengeTestWhereUniqueInput;
 };
 
 
@@ -2468,13 +3324,13 @@ export type MutationDeleteManyAssetsConnectionArgs = {
 };
 
 
-export type MutationDeleteManyCodeChallengeCriteriasArgs = {
-  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
+export type MutationDeleteManyCodeChallengeTestsArgs = {
+  where?: Maybe<CodeChallengeTestManyWhereInput>;
 };
 
 
-export type MutationDeleteManyCodeChallengeCriteriasConnectionArgs = {
-  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
+export type MutationDeleteManyCodeChallengeTestsConnectionArgs = {
+  where?: Maybe<CodeChallengeTestManyWhereInput>;
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
@@ -2513,13 +3369,13 @@ export type MutationDeleteManyLessonsConnectionArgs = {
 };
 
 
-export type MutationDeleteManyQuestionChallengesArgs = {
-  where?: Maybe<QuestionChallengeManyWhereInput>;
+export type MutationDeleteManyMultipleChoiceChallengesArgs = {
+  where?: Maybe<MultipleChoiceChallengeManyWhereInput>;
 };
 
 
-export type MutationDeleteManyQuestionChallengesConnectionArgs = {
-  where?: Maybe<QuestionChallengeManyWhereInput>;
+export type MutationDeleteManyMultipleChoiceChallengesConnectionArgs = {
+  where?: Maybe<MultipleChoiceChallengeManyWhereInput>;
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
@@ -2543,6 +3399,21 @@ export type MutationDeleteManySkillsConnectionArgs = {
 };
 
 
+export type MutationDeleteManySublessonChallengesArgs = {
+  where?: Maybe<SublessonChallengeManyWhereInput>;
+};
+
+
+export type MutationDeleteManySublessonChallengesConnectionArgs = {
+  where?: Maybe<SublessonChallengeManyWhereInput>;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+
 export type MutationDeleteManySublessonsArgs = {
   where?: Maybe<SublessonManyWhereInput>;
 };
@@ -2558,8 +3429,8 @@ export type MutationDeleteManySublessonsConnectionArgs = {
 };
 
 
-export type MutationDeleteQuestionChallengeArgs = {
-  where: QuestionChallengeWhereUniqueInput;
+export type MutationDeleteMultipleChoiceChallengeArgs = {
+  where: MultipleChoiceChallengeWhereUniqueInput;
 };
 
 
@@ -2570,6 +3441,11 @@ export type MutationDeleteSkillArgs = {
 
 export type MutationDeleteSublessonArgs = {
   where: SublessonWhereUniqueInput;
+};
+
+
+export type MutationDeleteSublessonChallengeArgs = {
+  where: SublessonChallengeWhereUniqueInput;
 };
 
 
@@ -2584,12 +3460,15 @@ export type MutationPublishAssetArgs = {
 
 export type MutationPublishCodeChallengeArgs = {
   where: CodeChallengeWhereUniqueInput;
+  locales?: Maybe<Array<Locale>>;
+  publishBase?: Maybe<Scalars['Boolean']>;
+  withDefaultLocale?: Maybe<Scalars['Boolean']>;
   to?: Array<Stage>;
 };
 
 
-export type MutationPublishCodeChallengeCriteriaArgs = {
-  where: CodeChallengeCriteriaWhereUniqueInput;
+export type MutationPublishCodeChallengeTestArgs = {
+  where: CodeChallengeTestWhereUniqueInput;
   locales?: Maybe<Array<Locale>>;
   publishBase?: Maybe<Scalars['Boolean']>;
   withDefaultLocale?: Maybe<Scalars['Boolean']>;
@@ -2630,8 +3509,8 @@ export type MutationPublishManyAssetsConnectionArgs = {
 };
 
 
-export type MutationPublishManyCodeChallengeCriteriasArgs = {
-  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
+export type MutationPublishManyCodeChallengeTestsArgs = {
+  where?: Maybe<CodeChallengeTestManyWhereInput>;
   to?: Array<Stage>;
   locales?: Maybe<Array<Locale>>;
   publishBase?: Maybe<Scalars['Boolean']>;
@@ -2639,8 +3518,8 @@ export type MutationPublishManyCodeChallengeCriteriasArgs = {
 };
 
 
-export type MutationPublishManyCodeChallengeCriteriasConnectionArgs = {
-  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
+export type MutationPublishManyCodeChallengeTestsConnectionArgs = {
+  where?: Maybe<CodeChallengeTestManyWhereInput>;
   from?: Maybe<Stage>;
   to?: Array<Stage>;
   skip?: Maybe<Scalars['Int']>;
@@ -2657,6 +3536,9 @@ export type MutationPublishManyCodeChallengeCriteriasConnectionArgs = {
 export type MutationPublishManyCodeChallengesArgs = {
   where?: Maybe<CodeChallengeManyWhereInput>;
   to?: Array<Stage>;
+  locales?: Maybe<Array<Locale>>;
+  publishBase?: Maybe<Scalars['Boolean']>;
+  withDefaultLocale?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -2669,6 +3551,9 @@ export type MutationPublishManyCodeChallengesConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
   after?: Maybe<Scalars['ID']>;
+  locales?: Maybe<Array<Locale>>;
+  publishBase?: Maybe<Scalars['Boolean']>;
+  withDefaultLocale?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -2696,14 +3581,17 @@ export type MutationPublishManyLessonsConnectionArgs = {
 };
 
 
-export type MutationPublishManyQuestionChallengesArgs = {
-  where?: Maybe<QuestionChallengeManyWhereInput>;
+export type MutationPublishManyMultipleChoiceChallengesArgs = {
+  where?: Maybe<MultipleChoiceChallengeManyWhereInput>;
   to?: Array<Stage>;
+  locales?: Maybe<Array<Locale>>;
+  publishBase?: Maybe<Scalars['Boolean']>;
+  withDefaultLocale?: Maybe<Scalars['Boolean']>;
 };
 
 
-export type MutationPublishManyQuestionChallengesConnectionArgs = {
-  where?: Maybe<QuestionChallengeManyWhereInput>;
+export type MutationPublishManyMultipleChoiceChallengesConnectionArgs = {
+  where?: Maybe<MultipleChoiceChallengeManyWhereInput>;
   from?: Maybe<Stage>;
   to?: Array<Stage>;
   skip?: Maybe<Scalars['Int']>;
@@ -2711,6 +3599,9 @@ export type MutationPublishManyQuestionChallengesConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
   after?: Maybe<Scalars['ID']>;
+  locales?: Maybe<Array<Locale>>;
+  publishBase?: Maybe<Scalars['Boolean']>;
+  withDefaultLocale?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -2722,6 +3613,24 @@ export type MutationPublishManySkillsArgs = {
 
 export type MutationPublishManySkillsConnectionArgs = {
   where?: Maybe<SkillManyWhereInput>;
+  from?: Maybe<Stage>;
+  to?: Array<Stage>;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationPublishManySublessonChallengesArgs = {
+  where?: Maybe<SublessonChallengeManyWhereInput>;
+  to?: Array<Stage>;
+};
+
+
+export type MutationPublishManySublessonChallengesConnectionArgs = {
+  where?: Maybe<SublessonChallengeManyWhereInput>;
   from?: Maybe<Stage>;
   to?: Array<Stage>;
   skip?: Maybe<Scalars['Int']>;
@@ -2756,8 +3665,11 @@ export type MutationPublishManySublessonsConnectionArgs = {
 };
 
 
-export type MutationPublishQuestionChallengeArgs = {
-  where: QuestionChallengeWhereUniqueInput;
+export type MutationPublishMultipleChoiceChallengeArgs = {
+  where: MultipleChoiceChallengeWhereUniqueInput;
+  locales?: Maybe<Array<Locale>>;
+  publishBase?: Maybe<Scalars['Boolean']>;
+  withDefaultLocale?: Maybe<Scalars['Boolean']>;
   to?: Array<Stage>;
 };
 
@@ -2773,6 +3685,12 @@ export type MutationPublishSublessonArgs = {
   locales?: Maybe<Array<Locale>>;
   publishBase?: Maybe<Scalars['Boolean']>;
   withDefaultLocale?: Maybe<Scalars['Boolean']>;
+  to?: Array<Stage>;
+};
+
+
+export type MutationPublishSublessonChallengeArgs = {
+  where: SublessonChallengeWhereUniqueInput;
   to?: Array<Stage>;
 };
 
@@ -2793,11 +3711,13 @@ export type MutationUnpublishAssetArgs = {
 export type MutationUnpublishCodeChallengeArgs = {
   where: CodeChallengeWhereUniqueInput;
   from?: Array<Stage>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
 };
 
 
-export type MutationUnpublishCodeChallengeCriteriaArgs = {
-  where: CodeChallengeCriteriaWhereUniqueInput;
+export type MutationUnpublishCodeChallengeTestArgs = {
+  where: CodeChallengeTestWhereUniqueInput;
   from?: Array<Stage>;
   locales?: Maybe<Array<Locale>>;
   unpublishBase?: Maybe<Scalars['Boolean']>;
@@ -2834,16 +3754,16 @@ export type MutationUnpublishManyAssetsConnectionArgs = {
 };
 
 
-export type MutationUnpublishManyCodeChallengeCriteriasArgs = {
-  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
+export type MutationUnpublishManyCodeChallengeTestsArgs = {
+  where?: Maybe<CodeChallengeTestManyWhereInput>;
   from?: Array<Stage>;
   locales?: Maybe<Array<Locale>>;
   unpublishBase?: Maybe<Scalars['Boolean']>;
 };
 
 
-export type MutationUnpublishManyCodeChallengeCriteriasConnectionArgs = {
-  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
+export type MutationUnpublishManyCodeChallengeTestsConnectionArgs = {
+  where?: Maybe<CodeChallengeTestManyWhereInput>;
   stage?: Maybe<Stage>;
   from?: Array<Stage>;
   skip?: Maybe<Scalars['Int']>;
@@ -2859,6 +3779,8 @@ export type MutationUnpublishManyCodeChallengeCriteriasConnectionArgs = {
 export type MutationUnpublishManyCodeChallengesArgs = {
   where?: Maybe<CodeChallengeManyWhereInput>;
   from?: Array<Stage>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -2871,6 +3793,8 @@ export type MutationUnpublishManyCodeChallengesConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
   after?: Maybe<Scalars['ID']>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -2896,14 +3820,16 @@ export type MutationUnpublishManyLessonsConnectionArgs = {
 };
 
 
-export type MutationUnpublishManyQuestionChallengesArgs = {
-  where?: Maybe<QuestionChallengeManyWhereInput>;
+export type MutationUnpublishManyMultipleChoiceChallengesArgs = {
+  where?: Maybe<MultipleChoiceChallengeManyWhereInput>;
   from?: Array<Stage>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
 };
 
 
-export type MutationUnpublishManyQuestionChallengesConnectionArgs = {
-  where?: Maybe<QuestionChallengeManyWhereInput>;
+export type MutationUnpublishManyMultipleChoiceChallengesConnectionArgs = {
+  where?: Maybe<MultipleChoiceChallengeManyWhereInput>;
   stage?: Maybe<Stage>;
   from?: Array<Stage>;
   skip?: Maybe<Scalars['Int']>;
@@ -2911,6 +3837,8 @@ export type MutationUnpublishManyQuestionChallengesConnectionArgs = {
   last?: Maybe<Scalars['Int']>;
   before?: Maybe<Scalars['ID']>;
   after?: Maybe<Scalars['ID']>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -2922,6 +3850,24 @@ export type MutationUnpublishManySkillsArgs = {
 
 export type MutationUnpublishManySkillsConnectionArgs = {
   where?: Maybe<SkillManyWhereInput>;
+  stage?: Maybe<Stage>;
+  from?: Array<Stage>;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationUnpublishManySublessonChallengesArgs = {
+  where?: Maybe<SublessonChallengeManyWhereInput>;
+  from?: Array<Stage>;
+};
+
+
+export type MutationUnpublishManySublessonChallengesConnectionArgs = {
+  where?: Maybe<SublessonChallengeManyWhereInput>;
   stage?: Maybe<Stage>;
   from?: Array<Stage>;
   skip?: Maybe<Scalars['Int']>;
@@ -2954,9 +3900,11 @@ export type MutationUnpublishManySublessonsConnectionArgs = {
 };
 
 
-export type MutationUnpublishQuestionChallengeArgs = {
-  where: QuestionChallengeWhereUniqueInput;
+export type MutationUnpublishMultipleChoiceChallengeArgs = {
+  where: MultipleChoiceChallengeWhereUniqueInput;
   from?: Array<Stage>;
+  locales?: Maybe<Array<Locale>>;
+  unpublishBase?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -2974,6 +3922,12 @@ export type MutationUnpublishSublessonArgs = {
 };
 
 
+export type MutationUnpublishSublessonChallengeArgs = {
+  where: SublessonChallengeWhereUniqueInput;
+  from?: Array<Stage>;
+};
+
+
 export type MutationUpdateAssetArgs = {
   where: AssetWhereUniqueInput;
   data: AssetUpdateInput;
@@ -2986,9 +3940,9 @@ export type MutationUpdateCodeChallengeArgs = {
 };
 
 
-export type MutationUpdateCodeChallengeCriteriaArgs = {
-  where: CodeChallengeCriteriaWhereUniqueInput;
-  data: CodeChallengeCriteriaUpdateInput;
+export type MutationUpdateCodeChallengeTestArgs = {
+  where: CodeChallengeTestWhereUniqueInput;
+  data: CodeChallengeTestUpdateInput;
 };
 
 
@@ -3015,15 +3969,15 @@ export type MutationUpdateManyAssetsConnectionArgs = {
 };
 
 
-export type MutationUpdateManyCodeChallengeCriteriasArgs = {
-  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
-  data: CodeChallengeCriteriaUpdateManyInput;
+export type MutationUpdateManyCodeChallengeTestsArgs = {
+  where?: Maybe<CodeChallengeTestManyWhereInput>;
+  data: CodeChallengeTestUpdateManyInput;
 };
 
 
-export type MutationUpdateManyCodeChallengeCriteriasConnectionArgs = {
-  where?: Maybe<CodeChallengeCriteriaManyWhereInput>;
-  data: CodeChallengeCriteriaUpdateManyInput;
+export type MutationUpdateManyCodeChallengeTestsConnectionArgs = {
+  where?: Maybe<CodeChallengeTestManyWhereInput>;
+  data: CodeChallengeTestUpdateManyInput;
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
@@ -3066,15 +4020,15 @@ export type MutationUpdateManyLessonsConnectionArgs = {
 };
 
 
-export type MutationUpdateManyQuestionChallengesArgs = {
-  where?: Maybe<QuestionChallengeManyWhereInput>;
-  data: QuestionChallengeUpdateManyInput;
+export type MutationUpdateManyMultipleChoiceChallengesArgs = {
+  where?: Maybe<MultipleChoiceChallengeManyWhereInput>;
+  data: MultipleChoiceChallengeUpdateManyInput;
 };
 
 
-export type MutationUpdateManyQuestionChallengesConnectionArgs = {
-  where?: Maybe<QuestionChallengeManyWhereInput>;
-  data: QuestionChallengeUpdateManyInput;
+export type MutationUpdateManyMultipleChoiceChallengesConnectionArgs = {
+  where?: Maybe<MultipleChoiceChallengeManyWhereInput>;
+  data: MultipleChoiceChallengeUpdateManyInput;
   skip?: Maybe<Scalars['Int']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
@@ -3100,6 +4054,23 @@ export type MutationUpdateManySkillsConnectionArgs = {
 };
 
 
+export type MutationUpdateManySublessonChallengesArgs = {
+  where?: Maybe<SublessonChallengeManyWhereInput>;
+  data: SublessonChallengeUpdateManyInput;
+};
+
+
+export type MutationUpdateManySublessonChallengesConnectionArgs = {
+  where?: Maybe<SublessonChallengeManyWhereInput>;
+  data: SublessonChallengeUpdateManyInput;
+  skip?: Maybe<Scalars['Int']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  before?: Maybe<Scalars['ID']>;
+  after?: Maybe<Scalars['ID']>;
+};
+
+
 export type MutationUpdateManySublessonsArgs = {
   where?: Maybe<SublessonManyWhereInput>;
   data: SublessonUpdateManyInput;
@@ -3117,9 +4088,9 @@ export type MutationUpdateManySublessonsConnectionArgs = {
 };
 
 
-export type MutationUpdateQuestionChallengeArgs = {
-  where: QuestionChallengeWhereUniqueInput;
-  data: QuestionChallengeUpdateInput;
+export type MutationUpdateMultipleChoiceChallengeArgs = {
+  where: MultipleChoiceChallengeWhereUniqueInput;
+  data: MultipleChoiceChallengeUpdateInput;
 };
 
 
@@ -3135,6 +4106,12 @@ export type MutationUpdateSublessonArgs = {
 };
 
 
+export type MutationUpdateSublessonChallengeArgs = {
+  where: SublessonChallengeWhereUniqueInput;
+  data: SublessonChallengeUpdateInput;
+};
+
+
 export type MutationUpsertAssetArgs = {
   where: AssetWhereUniqueInput;
   upsert: AssetUpsertInput;
@@ -3147,9 +4124,9 @@ export type MutationUpsertCodeChallengeArgs = {
 };
 
 
-export type MutationUpsertCodeChallengeCriteriaArgs = {
-  where: CodeChallengeCriteriaWhereUniqueInput;
-  upsert: CodeChallengeCriteriaUpsertInput;
+export type MutationUpsertCodeChallengeTestArgs = {
+  where: CodeChallengeTestWhereUniqueInput;
+  upsert: CodeChallengeTestUpsertInput;
 };
 
 
@@ -3159,9 +4136,9 @@ export type MutationUpsertLessonArgs = {
 };
 
 
-export type MutationUpsertQuestionChallengeArgs = {
-  where: QuestionChallengeWhereUniqueInput;
-  upsert: QuestionChallengeUpsertInput;
+export type MutationUpsertMultipleChoiceChallengeArgs = {
+  where: MultipleChoiceChallengeWhereUniqueInput;
+  upsert: MultipleChoiceChallengeUpsertInput;
 };
 
 
@@ -3174,6 +4151,12 @@ export type MutationUpsertSkillArgs = {
 export type MutationUpsertSublessonArgs = {
   where: SublessonWhereUniqueInput;
   upsert: SublessonUpsertInput;
+};
+
+
+export type MutationUpsertSublessonChallengeArgs = {
+  where: SublessonChallengeWhereUniqueInput;
+  upsert: SublessonChallengeUpsertInput;
 };
 
 /** An object with an ID */
@@ -3218,14 +4201,14 @@ export type Query = {
   assetsConnection: AssetConnection;
   /** Retrieve a single codeChallenge */
   codeChallenge?: Maybe<CodeChallenge>;
-  /** Retrieve a single codeChallengeCriteria */
-  codeChallengeCriteria?: Maybe<CodeChallengeCriteria>;
+  /** Retrieve a single codeChallengeTest */
+  codeChallengeTest?: Maybe<CodeChallengeTest>;
   /** Retrieve document version */
-  codeChallengeCriteriaVersion?: Maybe<DocumentVersion>;
-  /** Retrieve multiple codeChallengeCriterias */
-  codeChallengeCriterias: Array<CodeChallengeCriteria>;
-  /** Retrieve multiple codeChallengeCriterias using the Relay connection interface */
-  codeChallengeCriteriasConnection: CodeChallengeCriteriaConnection;
+  codeChallengeTestVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple codeChallengeTests */
+  codeChallengeTests: Array<CodeChallengeTest>;
+  /** Retrieve multiple codeChallengeTests using the Relay connection interface */
+  codeChallengeTestsConnection: CodeChallengeTestConnection;
   /** Retrieve document version */
   codeChallengeVersion?: Maybe<DocumentVersion>;
   /** Retrieve multiple codeChallenges */
@@ -3241,16 +4224,16 @@ export type Query = {
   lessons: Array<Lesson>;
   /** Retrieve multiple lessons using the Relay connection interface */
   lessonsConnection: LessonConnection;
+  /** Retrieve a single multipleChoiceChallenge */
+  multipleChoiceChallenge?: Maybe<MultipleChoiceChallenge>;
+  /** Retrieve document version */
+  multipleChoiceChallengeVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple multipleChoiceChallenges */
+  multipleChoiceChallenges: Array<MultipleChoiceChallenge>;
+  /** Retrieve multiple multipleChoiceChallenges using the Relay connection interface */
+  multipleChoiceChallengesConnection: MultipleChoiceChallengeConnection;
   /** Fetches an object given its ID */
   node?: Maybe<Node>;
-  /** Retrieve a single questionChallenge */
-  questionChallenge?: Maybe<QuestionChallenge>;
-  /** Retrieve document version */
-  questionChallengeVersion?: Maybe<DocumentVersion>;
-  /** Retrieve multiple questionChallenges */
-  questionChallenges: Array<QuestionChallenge>;
-  /** Retrieve multiple questionChallenges using the Relay connection interface */
-  questionChallengesConnection: QuestionChallengeConnection;
   /** Retrieve a single skill */
   skill?: Maybe<Skill>;
   /** Retrieve document version */
@@ -3261,6 +4244,14 @@ export type Query = {
   skillsConnection: SkillConnection;
   /** Retrieve a single sublesson */
   sublesson?: Maybe<Sublesson>;
+  /** Retrieve a single sublessonChallenge */
+  sublessonChallenge?: Maybe<SublessonChallenge>;
+  /** Retrieve document version */
+  sublessonChallengeVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple sublessonChallenges */
+  sublessonChallenges: Array<SublessonChallenge>;
+  /** Retrieve multiple sublessonChallenges using the Relay connection interface */
+  sublessonChallengesConnection: SublessonChallengeConnection;
   /** Retrieve document version */
   sublessonVersion?: Maybe<DocumentVersion>;
   /** Retrieve multiple sublessons */
@@ -3321,21 +4312,21 @@ export type QueryCodeChallengeArgs = {
 };
 
 
-export type QueryCodeChallengeCriteriaArgs = {
-  where: CodeChallengeCriteriaWhereUniqueInput;
+export type QueryCodeChallengeTestArgs = {
+  where: CodeChallengeTestWhereUniqueInput;
   stage?: Stage;
   locales?: Array<Locale>;
 };
 
 
-export type QueryCodeChallengeCriteriaVersionArgs = {
+export type QueryCodeChallengeTestVersionArgs = {
   where: VersionWhereInput;
 };
 
 
-export type QueryCodeChallengeCriteriasArgs = {
-  where?: Maybe<CodeChallengeCriteriaWhereInput>;
-  orderBy?: Maybe<CodeChallengeCriteriaOrderByInput>;
+export type QueryCodeChallengeTestsArgs = {
+  where?: Maybe<CodeChallengeTestWhereInput>;
+  orderBy?: Maybe<CodeChallengeTestOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -3346,9 +4337,9 @@ export type QueryCodeChallengeCriteriasArgs = {
 };
 
 
-export type QueryCodeChallengeCriteriasConnectionArgs = {
-  where?: Maybe<CodeChallengeCriteriaWhereInput>;
-  orderBy?: Maybe<CodeChallengeCriteriaOrderByInput>;
+export type QueryCodeChallengeTestsConnectionArgs = {
+  where?: Maybe<CodeChallengeTestWhereInput>;
+  orderBy?: Maybe<CodeChallengeTestOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -3428,28 +4419,21 @@ export type QueryLessonsConnectionArgs = {
 };
 
 
-export type QueryNodeArgs = {
-  id: Scalars['ID'];
+export type QueryMultipleChoiceChallengeArgs = {
+  where: MultipleChoiceChallengeWhereUniqueInput;
   stage?: Stage;
   locales?: Array<Locale>;
 };
 
 
-export type QueryQuestionChallengeArgs = {
-  where: QuestionChallengeWhereUniqueInput;
-  stage?: Stage;
-  locales?: Array<Locale>;
-};
-
-
-export type QueryQuestionChallengeVersionArgs = {
+export type QueryMultipleChoiceChallengeVersionArgs = {
   where: VersionWhereInput;
 };
 
 
-export type QueryQuestionChallengesArgs = {
-  where?: Maybe<QuestionChallengeWhereInput>;
-  orderBy?: Maybe<QuestionChallengeOrderByInput>;
+export type QueryMultipleChoiceChallengesArgs = {
+  where?: Maybe<MultipleChoiceChallengeWhereInput>;
+  orderBy?: Maybe<MultipleChoiceChallengeOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -3460,14 +4444,21 @@ export type QueryQuestionChallengesArgs = {
 };
 
 
-export type QueryQuestionChallengesConnectionArgs = {
-  where?: Maybe<QuestionChallengeWhereInput>;
-  orderBy?: Maybe<QuestionChallengeOrderByInput>;
+export type QueryMultipleChoiceChallengesConnectionArgs = {
+  where?: Maybe<MultipleChoiceChallengeWhereInput>;
+  orderBy?: Maybe<MultipleChoiceChallengeOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QueryNodeArgs = {
+  id: Scalars['ID'];
   stage?: Stage;
   locales?: Array<Locale>;
 };
@@ -3513,6 +4504,44 @@ export type QuerySkillsConnectionArgs = {
 
 export type QuerySublessonArgs = {
   where: SublessonWhereUniqueInput;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QuerySublessonChallengeArgs = {
+  where: SublessonChallengeWhereUniqueInput;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QuerySublessonChallengeVersionArgs = {
+  where: VersionWhereInput;
+};
+
+
+export type QuerySublessonChallengesArgs = {
+  where?: Maybe<SublessonChallengeWhereInput>;
+  orderBy?: Maybe<SublessonChallengeOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  stage?: Stage;
+  locales?: Array<Locale>;
+};
+
+
+export type QuerySublessonChallengesConnectionArgs = {
+  where?: Maybe<SublessonChallengeWhereInput>;
+  orderBy?: Maybe<SublessonChallengeOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
   stage?: Stage;
   locales?: Array<Locale>;
 };
@@ -3581,348 +4610,6 @@ export type QueryUsersConnectionArgs = {
   locales?: Array<Locale>;
 };
 
-export type QuestionChallenge = Node & {
-  __typename?: 'QuestionChallenge';
-  /** System stage field */
-  stage: Stage;
-  /** Get the document in other stages */
-  documentInStages: Array<QuestionChallenge>;
-  /** The unique identifier */
-  id: Scalars['ID'];
-  /** The time the document was created */
-  createdAt: Scalars['DateTime'];
-  /** The time the document was updated */
-  updatedAt: Scalars['DateTime'];
-  /** The time the document was published. Null on documents in draft stage. */
-  publishedAt?: Maybe<Scalars['DateTime']>;
-  /** User that created this document */
-  createdBy?: Maybe<User>;
-  /** User that last updated this document */
-  updatedBy?: Maybe<User>;
-  /** User that last published this document */
-  publishedBy?: Maybe<User>;
-  /** List of QuestionChallenge versions */
-  history: Array<Version>;
-};
-
-
-export type QuestionChallengeDocumentInStagesArgs = {
-  stages?: Array<Stage>;
-  includeCurrent?: Scalars['Boolean'];
-  inheritLocale?: Scalars['Boolean'];
-};
-
-
-export type QuestionChallengeCreatedByArgs = {
-  locales?: Maybe<Array<Locale>>;
-};
-
-
-export type QuestionChallengeUpdatedByArgs = {
-  locales?: Maybe<Array<Locale>>;
-};
-
-
-export type QuestionChallengePublishedByArgs = {
-  locales?: Maybe<Array<Locale>>;
-};
-
-
-export type QuestionChallengeHistoryArgs = {
-  limit?: Scalars['Int'];
-  skip?: Scalars['Int'];
-  stageOverride?: Maybe<Stage>;
-};
-
-export type QuestionChallengeConnectInput = {
-  /** Document to connect */
-  where: QuestionChallengeWhereUniqueInput;
-  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
-  position?: Maybe<ConnectPositionInput>;
-};
-
-/** A connection to a list of items. */
-export type QuestionChallengeConnection = {
-  __typename?: 'QuestionChallengeConnection';
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** A list of edges. */
-  edges: Array<QuestionChallengeEdge>;
-  aggregate: Aggregate;
-};
-
-export type QuestionChallengeCreateInput = {
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-};
-
-export type QuestionChallengeCreateManyInlineInput = {
-  /** Create and connect multiple existing QuestionChallenge documents */
-  create?: Maybe<Array<QuestionChallengeCreateInput>>;
-  /** Connect multiple existing QuestionChallenge documents */
-  connect?: Maybe<Array<QuestionChallengeWhereUniqueInput>>;
-};
-
-export type QuestionChallengeCreateOneInlineInput = {
-  /** Create and connect one QuestionChallenge document */
-  create?: Maybe<QuestionChallengeCreateInput>;
-  /** Connect one existing QuestionChallenge document */
-  connect?: Maybe<QuestionChallengeWhereUniqueInput>;
-};
-
-/** An edge in a connection. */
-export type QuestionChallengeEdge = {
-  __typename?: 'QuestionChallengeEdge';
-  /** The item at the end of the edge. */
-  node: QuestionChallenge;
-  /** A cursor for use in pagination. */
-  cursor: Scalars['String'];
-};
-
-/** Identifies documents */
-export type QuestionChallengeManyWhereInput = {
-  /** Contains search across all appropriate fields. */
-  _search?: Maybe<Scalars['String']>;
-  /** Logical AND on all given filters. */
-  AND?: Maybe<Array<QuestionChallengeWhereInput>>;
-  /** Logical OR on all given filters. */
-  OR?: Maybe<Array<QuestionChallengeWhereInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: Maybe<Array<QuestionChallengeWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  /** All values that are not equal to given value. */
-  id_not?: Maybe<Scalars['ID']>;
-  /** All values that are contained in given list. */
-  id_in?: Maybe<Array<Scalars['ID']>>;
-  /** All values that are not contained in given list. */
-  id_not_in?: Maybe<Array<Scalars['ID']>>;
-  /** All values containing the given string. */
-  id_contains?: Maybe<Scalars['ID']>;
-  /** All values not containing the given string. */
-  id_not_contains?: Maybe<Scalars['ID']>;
-  /** All values starting with the given string. */
-  id_starts_with?: Maybe<Scalars['ID']>;
-  /** All values not starting with the given string. */
-  id_not_starts_with?: Maybe<Scalars['ID']>;
-  /** All values ending with the given string. */
-  id_ends_with?: Maybe<Scalars['ID']>;
-  /** All values not ending with the given string */
-  id_not_ends_with?: Maybe<Scalars['ID']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  /** All values that are not equal to given value. */
-  createdAt_not?: Maybe<Scalars['DateTime']>;
-  /** All values that are contained in given list. */
-  createdAt_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values that are not contained in given list. */
-  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values less than the given value. */
-  createdAt_lt?: Maybe<Scalars['DateTime']>;
-  /** All values less than or equal the given value. */
-  createdAt_lte?: Maybe<Scalars['DateTime']>;
-  /** All values greater than the given value. */
-  createdAt_gt?: Maybe<Scalars['DateTime']>;
-  /** All values greater than or equal the given value. */
-  createdAt_gte?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  /** All values that are not equal to given value. */
-  updatedAt_not?: Maybe<Scalars['DateTime']>;
-  /** All values that are contained in given list. */
-  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values that are not contained in given list. */
-  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values less than the given value. */
-  updatedAt_lt?: Maybe<Scalars['DateTime']>;
-  /** All values less than or equal the given value. */
-  updatedAt_lte?: Maybe<Scalars['DateTime']>;
-  /** All values greater than the given value. */
-  updatedAt_gt?: Maybe<Scalars['DateTime']>;
-  /** All values greater than or equal the given value. */
-  updatedAt_gte?: Maybe<Scalars['DateTime']>;
-  publishedAt?: Maybe<Scalars['DateTime']>;
-  /** All values that are not equal to given value. */
-  publishedAt_not?: Maybe<Scalars['DateTime']>;
-  /** All values that are contained in given list. */
-  publishedAt_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values that are not contained in given list. */
-  publishedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values less than the given value. */
-  publishedAt_lt?: Maybe<Scalars['DateTime']>;
-  /** All values less than or equal the given value. */
-  publishedAt_lte?: Maybe<Scalars['DateTime']>;
-  /** All values greater than the given value. */
-  publishedAt_gt?: Maybe<Scalars['DateTime']>;
-  /** All values greater than or equal the given value. */
-  publishedAt_gte?: Maybe<Scalars['DateTime']>;
-  createdBy?: Maybe<UserWhereInput>;
-  updatedBy?: Maybe<UserWhereInput>;
-  publishedBy?: Maybe<UserWhereInput>;
-};
-
-export enum QuestionChallengeOrderByInput {
-  IdAsc = 'id_ASC',
-  IdDesc = 'id_DESC',
-  CreatedAtAsc = 'createdAt_ASC',
-  CreatedAtDesc = 'createdAt_DESC',
-  UpdatedAtAsc = 'updatedAt_ASC',
-  UpdatedAtDesc = 'updatedAt_DESC',
-  PublishedAtAsc = 'publishedAt_ASC',
-  PublishedAtDesc = 'publishedAt_DESC'
-}
-
-export type QuestionChallengeUpdateInput = {
-  /** No fields in update input */
-  _?: Maybe<Scalars['String']>;
-};
-
-export type QuestionChallengeUpdateManyInlineInput = {
-  /** Create and connect multiple QuestionChallenge documents */
-  create?: Maybe<Array<QuestionChallengeCreateInput>>;
-  /** Connect multiple existing QuestionChallenge documents */
-  connect?: Maybe<Array<QuestionChallengeConnectInput>>;
-  /** Override currently-connected documents with multiple existing QuestionChallenge documents */
-  set?: Maybe<Array<QuestionChallengeWhereUniqueInput>>;
-  /** Update multiple QuestionChallenge documents */
-  update?: Maybe<Array<QuestionChallengeUpdateWithNestedWhereUniqueInput>>;
-  /** Upsert multiple QuestionChallenge documents */
-  upsert?: Maybe<Array<QuestionChallengeUpsertWithNestedWhereUniqueInput>>;
-  /** Disconnect multiple QuestionChallenge documents */
-  disconnect?: Maybe<Array<QuestionChallengeWhereUniqueInput>>;
-  /** Delete multiple QuestionChallenge documents */
-  delete?: Maybe<Array<QuestionChallengeWhereUniqueInput>>;
-};
-
-export type QuestionChallengeUpdateManyInput = {
-  /** No fields in updateMany data input */
-  _?: Maybe<Scalars['String']>;
-};
-
-export type QuestionChallengeUpdateManyWithNestedWhereInput = {
-  /** Document search */
-  where: QuestionChallengeWhereInput;
-  /** Update many input */
-  data: QuestionChallengeUpdateManyInput;
-};
-
-export type QuestionChallengeUpdateOneInlineInput = {
-  /** Create and connect one QuestionChallenge document */
-  create?: Maybe<QuestionChallengeCreateInput>;
-  /** Update single QuestionChallenge document */
-  update?: Maybe<QuestionChallengeUpdateWithNestedWhereUniqueInput>;
-  /** Upsert single QuestionChallenge document */
-  upsert?: Maybe<QuestionChallengeUpsertWithNestedWhereUniqueInput>;
-  /** Connect existing QuestionChallenge document */
-  connect?: Maybe<QuestionChallengeWhereUniqueInput>;
-  /** Disconnect currently connected QuestionChallenge document */
-  disconnect?: Maybe<Scalars['Boolean']>;
-  /** Delete currently connected QuestionChallenge document */
-  delete?: Maybe<Scalars['Boolean']>;
-};
-
-export type QuestionChallengeUpdateWithNestedWhereUniqueInput = {
-  /** Unique document search */
-  where: QuestionChallengeWhereUniqueInput;
-  /** Document to update */
-  data: QuestionChallengeUpdateInput;
-};
-
-export type QuestionChallengeUpsertInput = {
-  /** Create document if it didn't exist */
-  create: QuestionChallengeCreateInput;
-  /** Update document if it exists */
-  update: QuestionChallengeUpdateInput;
-};
-
-export type QuestionChallengeUpsertWithNestedWhereUniqueInput = {
-  /** Unique document search */
-  where: QuestionChallengeWhereUniqueInput;
-  /** Upsert data */
-  data: QuestionChallengeUpsertInput;
-};
-
-/** Identifies documents */
-export type QuestionChallengeWhereInput = {
-  /** Contains search across all appropriate fields. */
-  _search?: Maybe<Scalars['String']>;
-  /** Logical AND on all given filters. */
-  AND?: Maybe<Array<QuestionChallengeWhereInput>>;
-  /** Logical OR on all given filters. */
-  OR?: Maybe<Array<QuestionChallengeWhereInput>>;
-  /** Logical NOT on all given filters combined by AND. */
-  NOT?: Maybe<Array<QuestionChallengeWhereInput>>;
-  id?: Maybe<Scalars['ID']>;
-  /** All values that are not equal to given value. */
-  id_not?: Maybe<Scalars['ID']>;
-  /** All values that are contained in given list. */
-  id_in?: Maybe<Array<Scalars['ID']>>;
-  /** All values that are not contained in given list. */
-  id_not_in?: Maybe<Array<Scalars['ID']>>;
-  /** All values containing the given string. */
-  id_contains?: Maybe<Scalars['ID']>;
-  /** All values not containing the given string. */
-  id_not_contains?: Maybe<Scalars['ID']>;
-  /** All values starting with the given string. */
-  id_starts_with?: Maybe<Scalars['ID']>;
-  /** All values not starting with the given string. */
-  id_not_starts_with?: Maybe<Scalars['ID']>;
-  /** All values ending with the given string. */
-  id_ends_with?: Maybe<Scalars['ID']>;
-  /** All values not ending with the given string */
-  id_not_ends_with?: Maybe<Scalars['ID']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  /** All values that are not equal to given value. */
-  createdAt_not?: Maybe<Scalars['DateTime']>;
-  /** All values that are contained in given list. */
-  createdAt_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values that are not contained in given list. */
-  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values less than the given value. */
-  createdAt_lt?: Maybe<Scalars['DateTime']>;
-  /** All values less than or equal the given value. */
-  createdAt_lte?: Maybe<Scalars['DateTime']>;
-  /** All values greater than the given value. */
-  createdAt_gt?: Maybe<Scalars['DateTime']>;
-  /** All values greater than or equal the given value. */
-  createdAt_gte?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  /** All values that are not equal to given value. */
-  updatedAt_not?: Maybe<Scalars['DateTime']>;
-  /** All values that are contained in given list. */
-  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values that are not contained in given list. */
-  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values less than the given value. */
-  updatedAt_lt?: Maybe<Scalars['DateTime']>;
-  /** All values less than or equal the given value. */
-  updatedAt_lte?: Maybe<Scalars['DateTime']>;
-  /** All values greater than the given value. */
-  updatedAt_gt?: Maybe<Scalars['DateTime']>;
-  /** All values greater than or equal the given value. */
-  updatedAt_gte?: Maybe<Scalars['DateTime']>;
-  publishedAt?: Maybe<Scalars['DateTime']>;
-  /** All values that are not equal to given value. */
-  publishedAt_not?: Maybe<Scalars['DateTime']>;
-  /** All values that are contained in given list. */
-  publishedAt_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values that are not contained in given list. */
-  publishedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
-  /** All values less than the given value. */
-  publishedAt_lt?: Maybe<Scalars['DateTime']>;
-  /** All values less than or equal the given value. */
-  publishedAt_lte?: Maybe<Scalars['DateTime']>;
-  /** All values greater than the given value. */
-  publishedAt_gt?: Maybe<Scalars['DateTime']>;
-  /** All values greater than or equal the given value. */
-  publishedAt_gte?: Maybe<Scalars['DateTime']>;
-  createdBy?: Maybe<UserWhereInput>;
-  updatedBy?: Maybe<UserWhereInput>;
-  publishedBy?: Maybe<UserWhereInput>;
-};
-
-/** References QuestionChallenge record uniquely */
-export type QuestionChallengeWhereUniqueInput = {
-  id?: Maybe<Scalars['ID']>;
-};
-
 /** Representing a RGBA color value: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#rgb()_and_rgba() */
 export type Rgba = {
   __typename?: 'RGBA';
@@ -3977,6 +4664,7 @@ export type Skill = Node & {
   updatedBy?: Maybe<User>;
   /** User that last published this document */
   publishedBy?: Maybe<User>;
+  challenge: Array<SkillChallenge>;
   /** List of Skill versions */
   history: Array<Version>;
 };
@@ -4004,10 +4692,108 @@ export type SkillPublishedByArgs = {
 };
 
 
+export type SkillChallengeArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  locales?: Maybe<Array<Locale>>;
+};
+
+
 export type SkillHistoryArgs = {
   limit?: Scalars['Int'];
   skip?: Scalars['Int'];
   stageOverride?: Maybe<Stage>;
+};
+
+export type SkillChallenge = CodeChallenge | MultipleChoiceChallenge;
+
+export type SkillChallengeConnectInput = {
+  MultipleChoiceChallenge?: Maybe<MultipleChoiceChallengeConnectInput>;
+  CodeChallenge?: Maybe<CodeChallengeConnectInput>;
+};
+
+export type SkillChallengeCreateInput = {
+  MultipleChoiceChallenge?: Maybe<MultipleChoiceChallengeCreateInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateInput>;
+};
+
+export type SkillChallengeCreateManyInlineInput = {
+  /** Create and connect multiple existing SkillChallenge documents */
+  create?: Maybe<Array<SkillChallengeCreateInput>>;
+  /** Connect multiple existing SkillChallenge documents */
+  connect?: Maybe<Array<SkillChallengeWhereUniqueInput>>;
+};
+
+export type SkillChallengeCreateOneInlineInput = {
+  /** Create and connect one SkillChallenge document */
+  create?: Maybe<SkillChallengeCreateInput>;
+  /** Connect one existing SkillChallenge document */
+  connect?: Maybe<SkillChallengeWhereUniqueInput>;
+};
+
+export type SkillChallengeUpdateInput = {
+  MultipleChoiceChallenge?: Maybe<MultipleChoiceChallengeUpdateInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateInput>;
+};
+
+export type SkillChallengeUpdateManyInlineInput = {
+  /** Create and connect multiple SkillChallenge documents */
+  create?: Maybe<Array<SkillChallengeCreateInput>>;
+  /** Connect multiple existing SkillChallenge documents */
+  connect?: Maybe<Array<SkillChallengeConnectInput>>;
+  /** Override currently-connected documents with multiple existing SkillChallenge documents */
+  set?: Maybe<Array<SkillChallengeWhereUniqueInput>>;
+  /** Update multiple SkillChallenge documents */
+  update?: Maybe<Array<SkillChallengeUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple SkillChallenge documents */
+  upsert?: Maybe<Array<SkillChallengeUpsertWithNestedWhereUniqueInput>>;
+  /** Disconnect multiple SkillChallenge documents */
+  disconnect?: Maybe<Array<SkillChallengeWhereUniqueInput>>;
+  /** Delete multiple SkillChallenge documents */
+  delete?: Maybe<Array<SkillChallengeWhereUniqueInput>>;
+};
+
+export type SkillChallengeUpdateManyWithNestedWhereInput = {
+  MultipleChoiceChallenge?: Maybe<MultipleChoiceChallengeUpdateManyWithNestedWhereInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateManyWithNestedWhereInput>;
+};
+
+export type SkillChallengeUpdateOneInlineInput = {
+  /** Create and connect one SkillChallenge document */
+  create?: Maybe<SkillChallengeCreateInput>;
+  /** Update single SkillChallenge document */
+  update?: Maybe<SkillChallengeUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single SkillChallenge document */
+  upsert?: Maybe<SkillChallengeUpsertWithNestedWhereUniqueInput>;
+  /** Connect existing SkillChallenge document */
+  connect?: Maybe<SkillChallengeWhereUniqueInput>;
+  /** Disconnect currently connected SkillChallenge document */
+  disconnect?: Maybe<Scalars['Boolean']>;
+  /** Delete currently connected SkillChallenge document */
+  delete?: Maybe<Scalars['Boolean']>;
+};
+
+export type SkillChallengeUpdateWithNestedWhereUniqueInput = {
+  MultipleChoiceChallenge?: Maybe<MultipleChoiceChallengeUpdateWithNestedWhereUniqueInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateWithNestedWhereUniqueInput>;
+};
+
+export type SkillChallengeUpsertWithNestedWhereUniqueInput = {
+  MultipleChoiceChallenge?: Maybe<MultipleChoiceChallengeUpsertWithNestedWhereUniqueInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpsertWithNestedWhereUniqueInput>;
+};
+
+export type SkillChallengeWhereInput = {
+  MultipleChoiceChallenge?: Maybe<MultipleChoiceChallengeWhereInput>;
+  CodeChallenge?: Maybe<CodeChallengeWhereInput>;
+};
+
+export type SkillChallengeWhereUniqueInput = {
+  MultipleChoiceChallenge?: Maybe<MultipleChoiceChallengeWhereUniqueInput>;
+  CodeChallenge?: Maybe<CodeChallengeWhereUniqueInput>;
 };
 
 export type SkillConnectInput = {
@@ -4031,6 +4817,7 @@ export type SkillCreateInput = {
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   name: Scalars['String'];
+  challenge?: Maybe<SkillChallengeCreateManyInlineInput>;
 };
 
 export type SkillCreateManyInlineInput = {
@@ -4169,6 +4956,7 @@ export enum SkillOrderByInput {
 
 export type SkillUpdateInput = {
   name?: Maybe<Scalars['String']>;
+  challenge?: Maybe<SkillChallengeUpdateManyInlineInput>;
 };
 
 export type SkillUpdateManyInlineInput = {
@@ -4374,8 +5162,8 @@ export type Sublesson = Node & {
   updatedBy?: Maybe<User>;
   /** User that last published this document */
   publishedBy?: Maybe<User>;
+  sublessonChallenges: Array<SublessonChallenge>;
   lesson?: Maybe<Lesson>;
-  codeChallenges: Array<CodeChallenge>;
   /** List of Sublesson versions */
   history: Array<Version>;
 };
@@ -4424,14 +5212,9 @@ export type SublessonPublishedByArgs = {
 };
 
 
-export type SublessonLessonArgs = {
-  locales?: Maybe<Array<Locale>>;
-};
-
-
-export type SublessonCodeChallengesArgs = {
-  where?: Maybe<CodeChallengeWhereInput>;
-  orderBy?: Maybe<CodeChallengeOrderByInput>;
+export type SublessonSublessonChallengesArgs = {
+  where?: Maybe<SublessonChallengeWhereInput>;
+  orderBy?: Maybe<SublessonChallengeOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -4441,10 +5224,495 @@ export type SublessonCodeChallengesArgs = {
 };
 
 
+export type SublessonLessonArgs = {
+  locales?: Maybe<Array<Locale>>;
+};
+
+
 export type SublessonHistoryArgs = {
   limit?: Scalars['Int'];
   skip?: Scalars['Int'];
   stageOverride?: Maybe<Stage>;
+};
+
+/** The association model between a Sublesson and a Challenge */
+export type SublessonChallenge = Node & {
+  __typename?: 'SublessonChallenge';
+  /** System stage field */
+  stage: Stage;
+  /** Get the document in other stages */
+  documentInStages: Array<SublessonChallenge>;
+  /** The unique identifier */
+  id: Scalars['ID'];
+  /** The time the document was created */
+  createdAt: Scalars['DateTime'];
+  /** The time the document was updated */
+  updatedAt: Scalars['DateTime'];
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  /** User that created this document */
+  createdBy?: Maybe<User>;
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>;
+  /** User that last published this document */
+  publishedBy?: Maybe<User>;
+  sublesson?: Maybe<Sublesson>;
+  /** Whether or not to display this challenge to the user based on their frequency preference */
+  frequencyCriteria: SublessonChallengeFrequencyPreference;
+  challenge?: Maybe<SublessonChallengeChallenge>;
+  /** List of SublessonChallenge versions */
+  history: Array<Version>;
+};
+
+
+/** The association model between a Sublesson and a Challenge */
+export type SublessonChallengeDocumentInStagesArgs = {
+  stages?: Array<Stage>;
+  includeCurrent?: Scalars['Boolean'];
+  inheritLocale?: Scalars['Boolean'];
+};
+
+
+/** The association model between a Sublesson and a Challenge */
+export type SublessonChallengeCreatedByArgs = {
+  locales?: Maybe<Array<Locale>>;
+};
+
+
+/** The association model between a Sublesson and a Challenge */
+export type SublessonChallengeUpdatedByArgs = {
+  locales?: Maybe<Array<Locale>>;
+};
+
+
+/** The association model between a Sublesson and a Challenge */
+export type SublessonChallengePublishedByArgs = {
+  locales?: Maybe<Array<Locale>>;
+};
+
+
+/** The association model between a Sublesson and a Challenge */
+export type SublessonChallengeSublessonArgs = {
+  locales?: Maybe<Array<Locale>>;
+};
+
+
+/** The association model between a Sublesson and a Challenge */
+export type SublessonChallengeChallengeArgs = {
+  locales?: Maybe<Array<Locale>>;
+};
+
+
+/** The association model between a Sublesson and a Challenge */
+export type SublessonChallengeHistoryArgs = {
+  limit?: Scalars['Int'];
+  skip?: Scalars['Int'];
+  stageOverride?: Maybe<Stage>;
+};
+
+export type SublessonChallengeChallenge = CodeChallenge | MultipleChoiceChallenge;
+
+export type SublessonChallengeChallengeConnectInput = {
+  MultipleChoiceChallenge?: Maybe<MultipleChoiceChallengeConnectInput>;
+  CodeChallenge?: Maybe<CodeChallengeConnectInput>;
+};
+
+export type SublessonChallengeChallengeCreateInput = {
+  MultipleChoiceChallenge?: Maybe<MultipleChoiceChallengeCreateInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateInput>;
+};
+
+export type SublessonChallengeChallengeCreateManyInlineInput = {
+  /** Create and connect multiple existing SublessonChallengeChallenge documents */
+  create?: Maybe<Array<SublessonChallengeChallengeCreateInput>>;
+  /** Connect multiple existing SublessonChallengeChallenge documents */
+  connect?: Maybe<Array<SublessonChallengeChallengeWhereUniqueInput>>;
+};
+
+export type SublessonChallengeChallengeCreateOneInlineInput = {
+  /** Create and connect one SublessonChallengeChallenge document */
+  create?: Maybe<SublessonChallengeChallengeCreateInput>;
+  /** Connect one existing SublessonChallengeChallenge document */
+  connect?: Maybe<SublessonChallengeChallengeWhereUniqueInput>;
+};
+
+export type SublessonChallengeChallengeUpdateInput = {
+  MultipleChoiceChallenge?: Maybe<MultipleChoiceChallengeUpdateInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateInput>;
+};
+
+export type SublessonChallengeChallengeUpdateManyInlineInput = {
+  /** Create and connect multiple SublessonChallengeChallenge documents */
+  create?: Maybe<Array<SublessonChallengeChallengeCreateInput>>;
+  /** Connect multiple existing SublessonChallengeChallenge documents */
+  connect?: Maybe<Array<SublessonChallengeChallengeConnectInput>>;
+  /** Override currently-connected documents with multiple existing SublessonChallengeChallenge documents */
+  set?: Maybe<Array<SublessonChallengeChallengeWhereUniqueInput>>;
+  /** Update multiple SublessonChallengeChallenge documents */
+  update?: Maybe<Array<SublessonChallengeChallengeUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple SublessonChallengeChallenge documents */
+  upsert?: Maybe<Array<SublessonChallengeChallengeUpsertWithNestedWhereUniqueInput>>;
+  /** Disconnect multiple SublessonChallengeChallenge documents */
+  disconnect?: Maybe<Array<SublessonChallengeChallengeWhereUniqueInput>>;
+  /** Delete multiple SublessonChallengeChallenge documents */
+  delete?: Maybe<Array<SublessonChallengeChallengeWhereUniqueInput>>;
+};
+
+export type SublessonChallengeChallengeUpdateManyWithNestedWhereInput = {
+  MultipleChoiceChallenge?: Maybe<MultipleChoiceChallengeUpdateManyWithNestedWhereInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateManyWithNestedWhereInput>;
+};
+
+export type SublessonChallengeChallengeUpdateOneInlineInput = {
+  /** Create and connect one SublessonChallengeChallenge document */
+  create?: Maybe<SublessonChallengeChallengeCreateInput>;
+  /** Update single SublessonChallengeChallenge document */
+  update?: Maybe<SublessonChallengeChallengeUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single SublessonChallengeChallenge document */
+  upsert?: Maybe<SublessonChallengeChallengeUpsertWithNestedWhereUniqueInput>;
+  /** Connect existing SublessonChallengeChallenge document */
+  connect?: Maybe<SublessonChallengeChallengeWhereUniqueInput>;
+  /** Disconnect currently connected SublessonChallengeChallenge document */
+  disconnect?: Maybe<Scalars['Boolean']>;
+  /** Delete currently connected SublessonChallengeChallenge document */
+  delete?: Maybe<Scalars['Boolean']>;
+};
+
+export type SublessonChallengeChallengeUpdateWithNestedWhereUniqueInput = {
+  MultipleChoiceChallenge?: Maybe<MultipleChoiceChallengeUpdateWithNestedWhereUniqueInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateWithNestedWhereUniqueInput>;
+};
+
+export type SublessonChallengeChallengeUpsertWithNestedWhereUniqueInput = {
+  MultipleChoiceChallenge?: Maybe<MultipleChoiceChallengeUpsertWithNestedWhereUniqueInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpsertWithNestedWhereUniqueInput>;
+};
+
+export type SublessonChallengeChallengeWhereInput = {
+  MultipleChoiceChallenge?: Maybe<MultipleChoiceChallengeWhereInput>;
+  CodeChallenge?: Maybe<CodeChallengeWhereInput>;
+};
+
+export type SublessonChallengeChallengeWhereUniqueInput = {
+  MultipleChoiceChallenge?: Maybe<MultipleChoiceChallengeWhereUniqueInput>;
+  CodeChallenge?: Maybe<CodeChallengeWhereUniqueInput>;
+};
+
+export type SublessonChallengeConnectInput = {
+  /** Document to connect */
+  where: SublessonChallengeWhereUniqueInput;
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: Maybe<ConnectPositionInput>;
+};
+
+/** A connection to a list of items. */
+export type SublessonChallengeConnection = {
+  __typename?: 'SublessonChallengeConnection';
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** A list of edges. */
+  edges: Array<SublessonChallengeEdge>;
+  aggregate: Aggregate;
+};
+
+export type SublessonChallengeCreateInput = {
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  sublesson?: Maybe<SublessonCreateOneInlineInput>;
+  frequencyCriteria: SublessonChallengeFrequencyPreference;
+  challenge?: Maybe<SublessonChallengeChallengeCreateOneInlineInput>;
+};
+
+export type SublessonChallengeCreateManyInlineInput = {
+  /** Create and connect multiple existing SublessonChallenge documents */
+  create?: Maybe<Array<SublessonChallengeCreateInput>>;
+  /** Connect multiple existing SublessonChallenge documents */
+  connect?: Maybe<Array<SublessonChallengeWhereUniqueInput>>;
+};
+
+export type SublessonChallengeCreateOneInlineInput = {
+  /** Create and connect one SublessonChallenge document */
+  create?: Maybe<SublessonChallengeCreateInput>;
+  /** Connect one existing SublessonChallenge document */
+  connect?: Maybe<SublessonChallengeWhereUniqueInput>;
+};
+
+/** An edge in a connection. */
+export type SublessonChallengeEdge = {
+  __typename?: 'SublessonChallengeEdge';
+  /** The item at the end of the edge. */
+  node: SublessonChallenge;
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+};
+
+/** A higher frequency means more challenges per sublesson */
+export enum SublessonChallengeFrequencyPreference {
+  Low = 'low',
+  Medium = 'medium',
+  High = 'high'
+}
+
+/** Identifies documents */
+export type SublessonChallengeManyWhereInput = {
+  /** Contains search across all appropriate fields. */
+  _search?: Maybe<Scalars['String']>;
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<SublessonChallengeWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<SublessonChallengeWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<SublessonChallengeWhereInput>>;
+  id?: Maybe<Scalars['ID']>;
+  /** All values that are not equal to given value. */
+  id_not?: Maybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values that are not contained in given list. */
+  id_not_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values containing the given string. */
+  id_contains?: Maybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: Maybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: Maybe<Scalars['ID']>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: Maybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: Maybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: Maybe<Scalars['ID']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  createdAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: Maybe<Scalars['DateTime']>;
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<UserWhereInput>;
+  updatedBy?: Maybe<UserWhereInput>;
+  publishedBy?: Maybe<UserWhereInput>;
+  sublesson?: Maybe<SublessonWhereInput>;
+  frequencyCriteria?: Maybe<SublessonChallengeFrequencyPreference>;
+  /** All values that are not equal to given value. */
+  frequencyCriteria_not?: Maybe<SublessonChallengeFrequencyPreference>;
+  /** All values that are contained in given list. */
+  frequencyCriteria_in?: Maybe<Array<SublessonChallengeFrequencyPreference>>;
+  /** All values that are not contained in given list. */
+  frequencyCriteria_not_in?: Maybe<Array<SublessonChallengeFrequencyPreference>>;
+};
+
+export enum SublessonChallengeOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC',
+  PublishedAtAsc = 'publishedAt_ASC',
+  PublishedAtDesc = 'publishedAt_DESC',
+  FrequencyCriteriaAsc = 'frequencyCriteria_ASC',
+  FrequencyCriteriaDesc = 'frequencyCriteria_DESC'
+}
+
+export type SublessonChallengeUpdateInput = {
+  sublesson?: Maybe<SublessonUpdateOneInlineInput>;
+  frequencyCriteria?: Maybe<SublessonChallengeFrequencyPreference>;
+  challenge?: Maybe<SublessonChallengeChallengeUpdateOneInlineInput>;
+};
+
+export type SublessonChallengeUpdateManyInlineInput = {
+  /** Create and connect multiple SublessonChallenge documents */
+  create?: Maybe<Array<SublessonChallengeCreateInput>>;
+  /** Connect multiple existing SublessonChallenge documents */
+  connect?: Maybe<Array<SublessonChallengeConnectInput>>;
+  /** Override currently-connected documents with multiple existing SublessonChallenge documents */
+  set?: Maybe<Array<SublessonChallengeWhereUniqueInput>>;
+  /** Update multiple SublessonChallenge documents */
+  update?: Maybe<Array<SublessonChallengeUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple SublessonChallenge documents */
+  upsert?: Maybe<Array<SublessonChallengeUpsertWithNestedWhereUniqueInput>>;
+  /** Disconnect multiple SublessonChallenge documents */
+  disconnect?: Maybe<Array<SublessonChallengeWhereUniqueInput>>;
+  /** Delete multiple SublessonChallenge documents */
+  delete?: Maybe<Array<SublessonChallengeWhereUniqueInput>>;
+};
+
+export type SublessonChallengeUpdateManyInput = {
+  frequencyCriteria?: Maybe<SublessonChallengeFrequencyPreference>;
+};
+
+export type SublessonChallengeUpdateManyWithNestedWhereInput = {
+  /** Document search */
+  where: SublessonChallengeWhereInput;
+  /** Update many input */
+  data: SublessonChallengeUpdateManyInput;
+};
+
+export type SublessonChallengeUpdateOneInlineInput = {
+  /** Create and connect one SublessonChallenge document */
+  create?: Maybe<SublessonChallengeCreateInput>;
+  /** Update single SublessonChallenge document */
+  update?: Maybe<SublessonChallengeUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single SublessonChallenge document */
+  upsert?: Maybe<SublessonChallengeUpsertWithNestedWhereUniqueInput>;
+  /** Connect existing SublessonChallenge document */
+  connect?: Maybe<SublessonChallengeWhereUniqueInput>;
+  /** Disconnect currently connected SublessonChallenge document */
+  disconnect?: Maybe<Scalars['Boolean']>;
+  /** Delete currently connected SublessonChallenge document */
+  delete?: Maybe<Scalars['Boolean']>;
+};
+
+export type SublessonChallengeUpdateWithNestedWhereUniqueInput = {
+  /** Unique document search */
+  where: SublessonChallengeWhereUniqueInput;
+  /** Document to update */
+  data: SublessonChallengeUpdateInput;
+};
+
+export type SublessonChallengeUpsertInput = {
+  /** Create document if it didn't exist */
+  create: SublessonChallengeCreateInput;
+  /** Update document if it exists */
+  update: SublessonChallengeUpdateInput;
+};
+
+export type SublessonChallengeUpsertWithNestedWhereUniqueInput = {
+  /** Unique document search */
+  where: SublessonChallengeWhereUniqueInput;
+  /** Upsert data */
+  data: SublessonChallengeUpsertInput;
+};
+
+/** Identifies documents */
+export type SublessonChallengeWhereInput = {
+  /** Contains search across all appropriate fields. */
+  _search?: Maybe<Scalars['String']>;
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<SublessonChallengeWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<SublessonChallengeWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<SublessonChallengeWhereInput>>;
+  id?: Maybe<Scalars['ID']>;
+  /** All values that are not equal to given value. */
+  id_not?: Maybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values that are not contained in given list. */
+  id_not_in?: Maybe<Array<Scalars['ID']>>;
+  /** All values containing the given string. */
+  id_contains?: Maybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: Maybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: Maybe<Scalars['ID']>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: Maybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: Maybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: Maybe<Scalars['ID']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  createdAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: Maybe<Scalars['DateTime']>;
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: Maybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: Maybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: Maybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: Maybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: Maybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<UserWhereInput>;
+  updatedBy?: Maybe<UserWhereInput>;
+  publishedBy?: Maybe<UserWhereInput>;
+  sublesson?: Maybe<SublessonWhereInput>;
+  frequencyCriteria?: Maybe<SublessonChallengeFrequencyPreference>;
+  /** All values that are not equal to given value. */
+  frequencyCriteria_not?: Maybe<SublessonChallengeFrequencyPreference>;
+  /** All values that are contained in given list. */
+  frequencyCriteria_in?: Maybe<Array<SublessonChallengeFrequencyPreference>>;
+  /** All values that are not contained in given list. */
+  frequencyCriteria_not_in?: Maybe<Array<SublessonChallengeFrequencyPreference>>;
+};
+
+/** References SublessonChallenge record uniquely */
+export type SublessonChallengeWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>;
 };
 
 export type SublessonConnectInput = {
@@ -4471,8 +5739,8 @@ export type SublessonCreateInput = {
   name: Scalars['String'];
   /** description input for default locale (en) */
   description: Scalars['String'];
+  sublessonChallenges?: Maybe<SublessonChallengeCreateManyInlineInput>;
   lesson?: Maybe<LessonCreateOneInlineInput>;
-  codeChallenges?: Maybe<CodeChallengeCreateManyInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: Maybe<SublessonCreateLocalizationsInput>;
 };
@@ -4595,10 +5863,10 @@ export type SublessonManyWhereInput = {
   createdBy?: Maybe<UserWhereInput>;
   updatedBy?: Maybe<UserWhereInput>;
   publishedBy?: Maybe<UserWhereInput>;
+  sublessonChallenges_every?: Maybe<SublessonChallengeWhereInput>;
+  sublessonChallenges_some?: Maybe<SublessonChallengeWhereInput>;
+  sublessonChallenges_none?: Maybe<SublessonChallengeWhereInput>;
   lesson?: Maybe<LessonWhereInput>;
-  codeChallenges_every?: Maybe<CodeChallengeWhereInput>;
-  codeChallenges_some?: Maybe<CodeChallengeWhereInput>;
-  codeChallenges_none?: Maybe<CodeChallengeWhereInput>;
 };
 
 export enum SublessonOrderByInput {
@@ -4621,8 +5889,8 @@ export type SublessonUpdateInput = {
   name?: Maybe<Scalars['String']>;
   /** description input for default locale (en) */
   description?: Maybe<Scalars['String']>;
+  sublessonChallenges?: Maybe<SublessonChallengeUpdateManyInlineInput>;
   lesson?: Maybe<LessonUpdateOneInlineInput>;
-  codeChallenges?: Maybe<CodeChallengeUpdateManyInlineInput>;
   /** Manage document localizations */
   localizations?: Maybe<SublessonUpdateLocalizationsInput>;
 };
@@ -4852,10 +6120,10 @@ export type SublessonWhereInput = {
   createdBy?: Maybe<UserWhereInput>;
   updatedBy?: Maybe<UserWhereInput>;
   publishedBy?: Maybe<UserWhereInput>;
+  sublessonChallenges_every?: Maybe<SublessonChallengeWhereInput>;
+  sublessonChallenges_some?: Maybe<SublessonChallengeWhereInput>;
+  sublessonChallenges_none?: Maybe<SublessonChallengeWhereInput>;
   lesson?: Maybe<LessonWhereInput>;
-  codeChallenges_every?: Maybe<CodeChallengeWhereInput>;
-  codeChallenges_some?: Maybe<CodeChallengeWhereInput>;
-  codeChallenges_none?: Maybe<CodeChallengeWhereInput>;
 };
 
 /** References Sublesson record uniquely */
@@ -5353,6 +6621,36 @@ export type SetEditorCodeMutation = (
   & Pick<Mutation, 'setEditorCode'>
 );
 
+export type GetSublessonInstructionsDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetSublessonInstructionsDataQuery = (
+  { __typename?: 'Query' }
+  & { sublesson?: Maybe<(
+    { __typename?: 'Sublesson' }
+    & Pick<Sublesson, 'description' | 'name'>
+    & { sublessonChallenges: Array<(
+      { __typename?: 'SublessonChallenge' }
+      & { challenge?: Maybe<(
+        { __typename?: 'CodeChallenge' }
+        & Pick<CodeChallenge, 'prompt'>
+        & { codeChallengeTests: Array<(
+          { __typename?: 'CodeChallengeTest' }
+          & Pick<CodeChallengeTest, 'label' | 'internalTest'>
+        )> }
+      ) | (
+        { __typename?: 'MultipleChoiceChallenge' }
+        & Pick<MultipleChoiceChallenge, 'correctOptionIndex' | 'options'>
+      )> }
+    )>, lesson?: Maybe<(
+      { __typename?: 'Lesson' }
+      & Pick<Lesson, 'name'>
+    )> }
+  )> }
+);
+
 export type GetExampleDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5434,6 +6732,60 @@ export function useSetEditorCodeMutation(baseOptions?: Apollo.MutationHookOption
 export type SetEditorCodeMutationHookResult = ReturnType<typeof useSetEditorCodeMutation>;
 export type SetEditorCodeMutationResult = Apollo.MutationResult<SetEditorCodeMutation>;
 export type SetEditorCodeMutationOptions = Apollo.BaseMutationOptions<SetEditorCodeMutation, SetEditorCodeMutationVariables>;
+export const GetSublessonInstructionsDataDocument = gql`
+    query getSublessonInstructionsData($id: ID!) {
+  sublesson(where: {id: $id}) {
+    description
+    name
+    sublessonChallenges {
+      challenge {
+        ... on CodeChallenge {
+          prompt
+          codeChallengeTests {
+            label
+            internalTest
+          }
+        }
+        ... on MultipleChoiceChallenge {
+          correctOptionIndex
+          options
+        }
+      }
+    }
+    lesson {
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetSublessonInstructionsDataQuery__
+ *
+ * To run a query within a React component, call `useGetSublessonInstructionsDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSublessonInstructionsDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSublessonInstructionsDataQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetSublessonInstructionsDataQuery(baseOptions: Apollo.QueryHookOptions<GetSublessonInstructionsDataQuery, GetSublessonInstructionsDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSublessonInstructionsDataQuery, GetSublessonInstructionsDataQueryVariables>(GetSublessonInstructionsDataDocument, options);
+      }
+export function useGetSublessonInstructionsDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSublessonInstructionsDataQuery, GetSublessonInstructionsDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSublessonInstructionsDataQuery, GetSublessonInstructionsDataQueryVariables>(GetSublessonInstructionsDataDocument, options);
+        }
+export type GetSublessonInstructionsDataQueryHookResult = ReturnType<typeof useGetSublessonInstructionsDataQuery>;
+export type GetSublessonInstructionsDataLazyQueryHookResult = ReturnType<typeof useGetSublessonInstructionsDataLazyQuery>;
+export type GetSublessonInstructionsDataQueryResult = Apollo.QueryResult<GetSublessonInstructionsDataQuery, GetSublessonInstructionsDataQueryVariables>;
 export const GetExampleDataDocument = gql`
     query getExampleData {
   lessons {

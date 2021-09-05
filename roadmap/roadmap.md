@@ -49,6 +49,10 @@
 
 - perhaps there are specfic debugging exercises, and users can set how many debugging exercises they'd like in their daily exercise settings
 
+- When you complete a sublesson/lesson, to the right of the 'Next' Button is a "Do more exercises" button
+
+  - in the data strucutre for a sublesson shoudl be a "additional recommended lessons" field
+
 - have a react foundations/prep course
 
 - every exercise shows you which things you improved on (so if you did something with objects, the objects module would be improved)
@@ -86,3 +90,5 @@
 - the tracker should also have like 3/10 thing at the bottom
 
 - Each lesson has a set of (probably hidden) tags that represent the skills learned
+
+- you can do a review for any lesson. By that I think I just mean review exercises. But WAIT. ACTUALLY IT WOULD BE AWESOME IF WHEN YOU REVIEW A LESSON YOU HAVE THE OPTION TO GO THROUGH IT AGAIN, OR SEE LIKE A SUMMARY SUBLESSON. AND MAYBE IT WOULD BE GOOD TO HAVE THE SUMMARY AT THE END OF EACH LESSON

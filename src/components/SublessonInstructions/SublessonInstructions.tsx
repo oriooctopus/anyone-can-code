@@ -14,10 +14,15 @@ import { runTests } from '../../CodeRunning';
 import '@fontsource/roboto';
 import { useReactiveVar } from '@apollo/client';
 import { codeEditorValueVar } from 'src/cache';
+import { PageGetSublessonInstructionsDataComp } from 'src/generated/page';
 
-interface IProps {}
-
-const LessonInstructions = () => {
+const SublessonInstructions: PageGetSublessonInstructionsDataComp = ({
+  data,
+}) => {
+  const {
+    sublesson: { description, name, lesson, sublessonChallenges },
+  } = data;
+  console.log('yo', sublessonChallenges);
   const codeEditorValue = useReactiveVar(codeEditorValueVar);
 
   return (
@@ -35,23 +40,23 @@ const LessonInstructions = () => {
         mb="10px"
         mt="20px"
       >
-        Variables
+        {lesson?.name}
       </Text>
       <Heading as="h1" fontSize="26px" fontWeight="400" mb="30px">
-        Find Length of String
+        {name}
       </Heading>
       <Box minH="300">
         <Text as="p" fontSize="18px">
-          In javascript, math operations work just like a calculator would. Two
-          add two numbers you can just write:
+          {description}
         </Text>
-        <Text as="pre" mt="15px">
+        {/* <Text as="pre" mt="15px">
           5 + 5
-        </Text>
+        </Text> */}
       </Box>
       <Box mt="auto" w="100%">
         <Divider color="#D0D0D5" opacity="1" />
-        <TestCaseResult passed label="Log 10 + 10 to the console" />
+        {}
+        {/* <TestCaseResult passed label="Log 10 + 10 to the console" /> */}
         <Button
           colorScheme="green"
           px="35px"
@@ -82,4 +87,4 @@ const LessonInstructions = () => {
   );
 };
 
-export default LessonInstructions;
+export default SublessonInstructions;

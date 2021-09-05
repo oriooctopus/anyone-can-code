@@ -18,7 +18,7 @@ You should now see `This is a very cool console message`. You may notice that th
 Exercise: Another exercise, Have them pass in a label and a value to console log. Have the code start with the previous exercise, and then ask them to refactor that to use a variable
 ```
 
-3. Where to find the console.log. Include a gif for each major browser. Say that this only applies to laptops and desktops, and that finding the console is more difficult on others
+3. Where to find the console. Include a gif for each major browser. Say that this only applies to laptops and desktops, and that finding the console is more difficult on others. Maybe include some shortcuts.
 
 4. Wrapping up - usefulness of console log
 

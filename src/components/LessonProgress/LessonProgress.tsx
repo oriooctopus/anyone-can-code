@@ -1,6 +1,6 @@
-import { Box, Divider, Flex } from "@chakra-ui/layout";
-import React from "react";
-import SublessonCard from "../SublessonCard/SublessonCard";
+import { Box, Divider, Flex } from '@chakra-ui/layout';
+import React from 'react';
+import SublessonCard from '../SublessonCard/SublessonCard';
 
 interface IProps {}
 
