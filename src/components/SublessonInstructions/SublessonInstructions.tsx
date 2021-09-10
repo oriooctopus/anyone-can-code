@@ -10,20 +10,22 @@ import {
 } from '@chakra-ui/react';
 import TestCaseResult from '../TestCaseResult/TestCaseResult';
 import { runTests } from '../../CodeRunning';
-
 import '@fontsource/roboto';
 import { useReactiveVar } from '@apollo/client';
 import { codeEditorValueVar } from 'src/cache';
-import { PageGetSublessonInstructionsDataComp } from 'src/generated/page';
+import { SublessonInstructionsDataFragment } from 'src/generated/graphql';
+import Markdown from 'components/core/Markdown';
 
-const SublessonInstructions: PageGetSublessonInstructionsDataComp = ({
-  data,
+type props = SublessonInstructionsDataFragment & {};
+
+const SublessonInstructions: React.FC<props> = ({
+  challenges,
+  description,
+  name,
+  lesson,
 }) => {
-  const {
-    sublesson: { description, name, lesson, sublessonChallenges },
-  } = data;
-  console.log('yo', sublessonChallenges);
   const codeEditorValue = useReactiveVar(codeEditorValueVar);
+  const currentChallenge = challenges[0];
 
   return (
     <Flex
@@ -46,17 +48,14 @@ const SublessonInstructions: PageGetSublessonInstructionsDataComp = ({
         {name}
       </Heading>
       <Box minH="300">
-        <Text as="p" fontSize="18px">
-          {description}
-        </Text>
+        <Markdown>{description}</Markdown>
         {/* <Text as="pre" mt="15px">
           5 + 5
         </Text> */}
       </Box>
       <Box mt="auto" w="100%">
         <Divider color="#D0D0D5" opacity="1" />
-        {}
-        {/* <TestCaseResult passed label="Log 10 + 10 to the console" /> */}
+        <TestCaseResult passed label="Log 10 + 10 to the console" />
         <Button
           colorScheme="green"
           px="35px"

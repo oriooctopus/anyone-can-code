@@ -1,8 +1,10 @@
 overwrite: true
 schema:
   - client-schema.graphql
-  - https://api-us-west-2.graphcms.com/v2/ckrdnv1hq15w701we3v72cga9/master
-documents: 'src/**/*.graphql'
+  - http://localhost:1337/graphql
+documents:
+  - 'src/**/*.graphql'
+  - 'src/**/*.query.tsx'
 generates:
   src/generated/graphql.tsx:
     plugins:

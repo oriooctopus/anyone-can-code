@@ -1,23 +1,14 @@
-fragment sublesson on Sublesson {
-  description
-  name
-  sublessonChallenges {
-    ...sublessonChallenge
-  }
-}
-
-fragment sublessonChallenge on SublessonChallenge {
-  challenge {
-    ... on CodeChallenge {
+fragment challenges on Sublesson {
+  challenges {
+    multiple_choice_challenge {
       prompt
-      codeChallengeTests {
-        label
-        internalTest
+      options {
+        text
+        isCorrect
       }
     }
-    ... on MultipleChoiceChallenge {
-      correctOptionIndex
-      options
+    code_challenge {
+      prompt
     }
   }
 }

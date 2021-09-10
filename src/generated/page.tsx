@@ -43,41 +43,6 @@ export const ssrGetEditorData = {
       usePage: useGetEditorData,
     }
 
-export async function getServerPageGetSublessonInstructionsData
-    (options: Omit<Apollo.QueryOptions<Types.GetSublessonInstructionsDataQueryVariables>, 'query'>, ctx? :any ){
-        const apolloClient = getApolloClient(ctx);
-        
-        const data = await apolloClient.query<Types.GetSublessonInstructionsDataQuery>({ ...options, query: Operations.GetSublessonInstructionsDataDocument });
-        
-        const apolloState = apolloClient.cache.extract();
-
-        return {
-            props: {
-                apolloState: apolloState,
-                data: data?.data,
-                error: data?.error ?? data?.errors ?? null,
-            },
-        };
-      }
-export const useGetSublessonInstructionsData = (
-  optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetSublessonInstructionsDataQuery, Types.GetSublessonInstructionsDataQueryVariables>) => {
-  const router = useRouter();
-  const options = optionsFunc ? optionsFunc(router) : {};
-  return useQuery(Operations.GetSublessonInstructionsDataDocument, options);
-};
-export type PageGetSublessonInstructionsDataComp = React.FC<{data?: Types.GetSublessonInstructionsDataQuery, error?: Apollo.ApolloError}>;
-export const withPageGetSublessonInstructionsData = (optionsFunc?: (router: NextRouter)=> QueryHookOptions<Types.GetSublessonInstructionsDataQuery, Types.GetSublessonInstructionsDataQueryVariables>) => (WrappedComponent:PageGetSublessonInstructionsDataComp) : NextPage  => (props) => {
-                const router = useRouter()
-                const options = optionsFunc ? optionsFunc(router) : {};
-                const {data, error } = useQuery(Operations.GetSublessonInstructionsDataDocument, options)    
-                return <WrappedComponent {...props} data={data} error={error} /> ;
-                   
-            }; 
-export const ssrGetSublessonInstructionsData = {
-      getServerPage: getServerPageGetSublessonInstructionsData,
-      withPage: withPageGetSublessonInstructionsData,
-      usePage: useGetSublessonInstructionsData,
-    }
 export async function getServerPageGetExampleData
     (options: Omit<Apollo.QueryOptions<Types.GetExampleDataQueryVariables>, 'query'>, ctx? :any ){
         const apolloClient = getApolloClient(ctx);

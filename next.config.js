@@ -2,11 +2,16 @@ const { merge } = require('webpack-merge');
 const fs = require('fs');
 const path = require('path');
 const { resolveTsAliases } = require('resolve-ts-aliases');
+const withTM = require('next-transpile-modules')(['react-markdown']);
 
 const appDirectory = fs.realpathSync(process.cwd());
 // const tsConfig = require('./tsconfig.json');
 
-module.exports = {
+/*
+ * the withTm is needed to fix an error with esmodule when importing
+ * react-markdown. For more info see https://github.com/vercel/next.js/issues/25454
+ */
+module.exports = withTM({
   webpack: (initialConfig) => {
     console.log;
     const customConfig = {
@@ -47,4 +52,4 @@ module.exports = {
 
     return merge(initialConfig, customConfig);
   },
-};
+});

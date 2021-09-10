@@ -10,6 +10,11 @@ const options: monaco.editor.IStandaloneEditorConstructionOptions = {
   minimap: {
     enabled: false,
   },
+  glyphMargin: false,
+  folding: false,
+  // "lineNumbers": "off",
+  lineDecorationsWidth: 20,
+  lineNumbersMinChars: 2,
   selectOnLineNumbers: true,
   wordWrap: 'on',
   scrollbar: {

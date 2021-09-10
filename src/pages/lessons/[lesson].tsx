@@ -5,26 +5,35 @@ import { ChakraProvider, Grid, GridItem } from '@chakra-ui/react';
 import Layout from 'src/components/Layout/Layout';
 import LessonProgress from 'src/components/LessonProgress/LessonProgress';
 import theme from 'src/theme/chakra-theme';
-// import SublessonInstructions from 'components/SublessonInstructions/SublessonInstructions';
-import SublessonInstructionsContainer from 'components/SublessonInstructions/SublessonInstructionsContainer';
+import SublessonInstructions from 'components/SublessonInstructions/SublessonInstructions';
+// import SublessonInstructionsContainer from 'components/SublessonInstructions/SublessonInstructionsContainer';
 import '@fontsource/roboto';
 import { PageGetLessonDataComp, ssrGetLessonData } from 'src/generated/page';
 import { withApollo } from 'src/utilsreal/withApollo';
 
 const App: PageGetLessonDataComp = (props) => {
+  const {
+    data: { lessons },
+  } = props;
   console.log('the props passed to page', props);
-  return <span>13456</span>;
+
+  const test = lessons[0].sublessons[0];
+
+  if (!test) {
+    return <span>no lesson</span>;
+  }
+
   return (
     <ChakraProvider theme={theme}>
       <Layout>
         <Grid templateColumns="repeat(12, 1fr)" gap="20px">
-          <GridItem colSpan={4}>
-            <SublessonInstructionsContainer />
+          <GridItem colSpan={{ md: 6, lg: 4 }}>
+            <SublessonInstructions {...test} />
           </GridItem>
           <GridItem colSpan={6} mt="20px">
             <Editor />
           </GridItem>
-          <GridItem colSpan={2}>
+          <GridItem colSpan={2} display={{ md: 'none', lg: 'block' }}>
             <LessonProgress />
           </GridItem>
         </Grid>
@@ -45,8 +54,13 @@ export const getServerSideProps: GetServerSideProps = async ({
 };
 
 export default withApollo(
-  ssrGetLessonData.withPage((arg) => ({
-    variables: { slug: 'getting-started-with-variables' },
-    // variables: { code: arg?.query?.continent?.toString().toUpperCase() || '' },
+  ssrGetLessonData.withPage(({ query }) => ({
+    variables: { slug: query.lesson as string },
   }))(App),
+  // ssrGetLessonData.withPage(({ query }) => {
+  //   console.log('query', query);
+  //   return {
+  //     variables: { slug: query.lesson as String },
+  //   };
+  // })(App),
 );
