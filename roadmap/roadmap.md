@@ -92,3 +92,7 @@
 - Each lesson has a set of (probably hidden) tags that represent the skills learned
 
 - you can do a review for any lesson. By that I think I just mean review exercises. But WAIT. ACTUALLY IT WOULD BE AWESOME IF WHEN YOU REVIEW A LESSON YOU HAVE THE OPTION TO GO THROUGH IT AGAIN, OR SEE LIKE A SUMMARY SUBLESSON. AND MAYBE IT WOULD BE GOOD TO HAVE THE SUMMARY AT THE END OF EACH LESSON
+
+- comments section for each exercises/sublesson... you can upvote comments
+
+- users can suggest changes to lesson

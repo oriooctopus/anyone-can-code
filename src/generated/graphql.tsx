@@ -6666,7 +6666,87 @@ export type GetExampleDataQuery = (
   )> }
 );
 
+export type SublessonFragment = (
+  { __typename?: 'Sublesson' }
+  & Pick<Sublesson, 'description' | 'name'>
+  & { sublessonChallenges: Array<(
+    { __typename?: 'SublessonChallenge' }
+    & SublessonChallengeFragment
+  )> }
+);
 
+export type SublessonChallengeFragment = (
+  { __typename?: 'SublessonChallenge' }
+  & { challenge?: Maybe<(
+    { __typename?: 'CodeChallenge' }
+    & Pick<CodeChallenge, 'prompt'>
+    & { codeChallengeTests: Array<(
+      { __typename?: 'CodeChallengeTest' }
+      & Pick<CodeChallengeTest, 'label' | 'internalTest'>
+    )> }
+  ) | (
+    { __typename?: 'MultipleChoiceChallenge' }
+    & Pick<MultipleChoiceChallenge, 'correctOptionIndex' | 'options'>
+  )> }
+);
+
+export type GetLessonDataQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type GetLessonDataQuery = (
+  { __typename?: 'Query' }
+  & { lesson?: Maybe<(
+    { __typename?: 'Lesson' }
+    & Pick<Lesson, 'name'>
+    & { sublessons: Array<(
+      { __typename?: 'Sublesson' }
+      & Pick<Sublesson, 'description' | 'name'>
+      & { sublessonChallenges: Array<(
+        { __typename?: 'SublessonChallenge' }
+        & { challenge?: Maybe<(
+          { __typename?: 'CodeChallenge' }
+          & Pick<CodeChallenge, 'prompt'>
+          & { codeChallengeTests: Array<(
+            { __typename?: 'CodeChallengeTest' }
+            & Pick<CodeChallengeTest, 'label' | 'internalTest'>
+          )> }
+        ) | (
+          { __typename?: 'MultipleChoiceChallenge' }
+          & Pick<MultipleChoiceChallenge, 'correctOptionIndex' | 'options'>
+        )> }
+      )> }
+    )> }
+  )> }
+);
+
+export const SublessonChallengeFragmentDoc = gql`
+    fragment sublessonChallenge on SublessonChallenge {
+  challenge {
+    ... on CodeChallenge {
+      prompt
+      codeChallengeTests {
+        label
+        internalTest
+      }
+    }
+    ... on MultipleChoiceChallenge {
+      correctOptionIndex
+      options
+    }
+  }
+}
+    `;
+export const SublessonFragmentDoc = gql`
+    fragment sublesson on Sublesson {
+  description
+  name
+  sublessonChallenges {
+    ...sublessonChallenge
+  }
+}
+    ${SublessonChallengeFragmentDoc}`;
 export const GetEditorDataDocument = gql`
     query getEditorData {
   editor @client {
@@ -6823,3 +6903,57 @@ export function useGetExampleDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetExampleDataQueryHookResult = ReturnType<typeof useGetExampleDataQuery>;
 export type GetExampleDataLazyQueryHookResult = ReturnType<typeof useGetExampleDataLazyQuery>;
 export type GetExampleDataQueryResult = Apollo.QueryResult<GetExampleDataQuery, GetExampleDataQueryVariables>;
+export const GetLessonDataDocument = gql`
+    query getLessonData($slug: String!) {
+  lesson(where: {slug: $slug}) {
+    name
+    sublessons {
+      description
+      name
+      sublessonChallenges {
+        challenge {
+          ... on CodeChallenge {
+            prompt
+            codeChallengeTests {
+              label
+              internalTest
+            }
+          }
+          ... on MultipleChoiceChallenge {
+            correctOptionIndex
+            options
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetLessonDataQuery__
+ *
+ * To run a query within a React component, call `useGetLessonDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLessonDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLessonDataQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useGetLessonDataQuery(baseOptions: Apollo.QueryHookOptions<GetLessonDataQuery, GetLessonDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLessonDataQuery, GetLessonDataQueryVariables>(GetLessonDataDocument, options);
+      }
+export function useGetLessonDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLessonDataQuery, GetLessonDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLessonDataQuery, GetLessonDataQueryVariables>(GetLessonDataDocument, options);
+        }
+export type GetLessonDataQueryHookResult = ReturnType<typeof useGetLessonDataQuery>;
+export type GetLessonDataLazyQueryHookResult = ReturnType<typeof useGetLessonDataLazyQuery>;
+export type GetLessonDataQueryResult = Apollo.QueryResult<GetLessonDataQuery, GetLessonDataQueryVariables>;

@@ -1,0 +1,24 @@
+query getLessonData($slug: String!) {
+  lesson(where: { slug: $slug }) {
+    name
+    sublessons {
+      description
+      name
+      sublessonChallenges {
+        challenge {
+          ... on CodeChallenge {
+            prompt
+            codeChallengeTests {
+              label
+              internalTest
+            }
+          }
+          ... on MultipleChoiceChallenge {
+            correctOptionIndex
+            options
+          }
+        }
+      }
+    }
+  }
+}

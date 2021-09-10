@@ -1,0 +1,23 @@
+fragment sublesson on Sublesson {
+  description
+  name
+  sublessonChallenges {
+    ...sublessonChallenge
+  }
+}
+
+fragment sublessonChallenge on SublessonChallenge {
+  challenge {
+    ... on CodeChallenge {
+      prompt
+      codeChallengeTests {
+        label
+        internalTest
+      }
+    }
+    ... on MultipleChoiceChallenge {
+      correctOptionIndex
+      options
+    }
+  }
+}
