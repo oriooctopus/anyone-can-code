@@ -16,6 +16,26 @@ import { codeEditorValueVar } from 'src/cache';
 import { SublessonInstructionsDataFragment } from 'src/generated/graphql';
 import Markdown from 'components/core/Markdown';
 
+import { styled } from 'linaria/react';
+import { useAppTheme, themeStyles } from 'src/theme/theme';
+import { ThemesEnum } from 'src/styles/themes/themes.types';
+
+type StyledButtonProps = {
+  backgroundColor: string;
+};
+
+type AnotherTestProps = {
+  color: string;
+};
+
+const AnotherTest = styled.h1<AnotherTestProps>`
+  text-transform: uppercase;
+
+  ${themeStyles((theme) => ({
+    color: theme.primaryColor,
+  }))};
+`;
+
 type props = SublessonInstructionsDataFragment & {};
 
 const SublessonInstructions: React.FC<props> = ({
@@ -27,6 +47,8 @@ const SublessonInstructions: React.FC<props> = ({
   const codeEditorValue = useReactiveVar(codeEditorValueVar);
   const currentChallenge = challenges[0];
 
+  const [currentTheme, setAppTheme] = useAppTheme();
+
   return (
     <Flex
       align="baseline"
@@ -35,6 +57,18 @@ const SublessonInstructions: React.FC<props> = ({
       px="20px"
       h="calc(100vh - 65px)"
     >
+      <AnotherTest color="red">this is a header test</AnotherTest>
+      <button
+        onClick={() =>
+          setAppTheme(
+            currentTheme === ThemesEnum.DARK
+              ? ThemesEnum.DEFAULT
+              : ThemesEnum.DARK,
+          )
+        }
+      >
+        change theme
+      </button>
       <Text
         casing="uppercase"
         color="#646466"
@@ -44,6 +78,7 @@ const SublessonInstructions: React.FC<props> = ({
       >
         {lesson?.name}
       </Text>
+      {console.log('the theme', currentTheme, currentTheme)}
       <Heading as="h1" fontSize="26px" fontWeight="400" mb="30px">
         {name}
       </Heading>
