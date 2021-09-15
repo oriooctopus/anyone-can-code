@@ -19,22 +19,11 @@ import Markdown from 'components/core/Markdown';
 import { styled } from 'linaria/react';
 import { useAppTheme, themeStyles } from 'src/theme/theme';
 import { ThemesEnum } from 'src/styles/themes/themes.types';
+import { AnotherTest } from './SublessonInstructions.styles';
 
 type StyledButtonProps = {
   backgroundColor: string;
 };
-
-type AnotherTestProps = {
-  color: string;
-};
-
-const AnotherTest = styled.h1<AnotherTestProps>`
-  text-transform: uppercase;
-
-  ${themeStyles((theme) => ({
-    color: theme.primaryColor,
-  }))};
-`;
 
 type props = SublessonInstructionsDataFragment & {};
 

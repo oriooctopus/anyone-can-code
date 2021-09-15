@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+# Linaria
+/.linaria-cache
+
 # Production
 /build
 
