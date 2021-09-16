@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-imports */ // Banning @material-ui does not apply to infrastructure
 import { useState, useEffect, useRef } from 'react';
-import { ThemeContext } from 'src/theme/theme';
+import { ThemeContext } from 'src/styles/themes/theme';
 import {
   getLocalStorageValue,
   removeLocalStorageValue,
@@ -47,6 +47,8 @@ export const ThemeProvider: React.FC = ({ children }) => {
     };
   }, [appTheme]);
 
+  console.log('ok so this actually happens right', appTheme);
+
   return (
     <ThemeContext.Provider value={{ appTheme, setAppTheme }}>
       <div className={`theme-${appTheme}`}>{children}</div>
@@ -58,7 +60,7 @@ export const ThemeProvider: React.FC = ({ children }) => {
  * Get the Operating System's preferred theme
  */
 const useOperatingSystemTheme = (): ThemesEnum => {
-  return ThemesEnum.DEFAULT;
+  return ThemesEnum.DEFAULT_DARK;
   if (typeof window === 'undefined') {
   }
 
@@ -76,5 +78,5 @@ const useOperatingSystemTheme = (): ThemesEnum => {
     return () => query.removeEventListener('change', listener);
   }, [queryRef]);
 
-  return isDarkPreferred ? ThemesEnum.DARK : ThemesEnum.DEFAULT;
+  return isDarkPreferred ? ThemesEnum.DEFAULT_DARK : ThemesEnum.DEFAULT_LIGHT;
 };

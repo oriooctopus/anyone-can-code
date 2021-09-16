@@ -14,10 +14,10 @@ import '@fontsource/roboto';
 import { useReactiveVar } from '@apollo/client';
 import { codeEditorValueVar } from 'src/cache';
 import { SublessonInstructionsDataFragment } from 'src/generated/graphql';
-import Markdown from 'components/core/Markdown';
+import Markdown from 'components/core/Markdown/Markdown';
 
 import { styled } from 'linaria/react';
-import { useAppTheme, themeStyles } from 'src/theme/theme';
+import { useTheme, themeStyles } from 'src/styles/themes/theme';
 import { ThemesEnum } from 'src/styles/themes/themes.types';
 import { AnotherTest } from './SublessonInstructions.styles';
 
@@ -33,10 +33,11 @@ const SublessonInstructions: React.FC<props> = ({
   name,
   lesson,
 }) => {
+  return <span />;
   const codeEditorValue = useReactiveVar(codeEditorValueVar);
   const currentChallenge = challenges[0];
 
-  const [currentTheme, setAppTheme] = useAppTheme();
+  const [currentTheme, setAppTheme] = useTheme();
 
   return (
     <Flex
@@ -50,9 +51,9 @@ const SublessonInstructions: React.FC<props> = ({
       <button
         onClick={() =>
           setAppTheme(
-            currentTheme === ThemesEnum.DARK
-              ? ThemesEnum.DEFAULT
-              : ThemesEnum.DARK,
+            currentTheme === ThemesEnum.DEFAULT_LIGHT
+              ? ThemesEnum.DEFAULT_DARK
+              : ThemesEnum.DEFAULT_LIGHT,
           )
         }
       >

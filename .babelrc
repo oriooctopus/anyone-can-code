@@ -1,4 +1,12 @@
 {
-  "presets": ["next/babel"],
-  "plugins": [["graphql-tag"]]
+  "presets": ["next/babel", "@linaria"],
+  "plugins": [
+    ["graphql-tag"],
+    [
+      "@babel/plugin-transform-react-jsx",
+      {
+        "runtime": "automatic"
+      }
+    ]
+  ]
 }

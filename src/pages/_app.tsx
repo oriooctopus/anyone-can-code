@@ -8,7 +8,7 @@ import './_app.scss';
 
 import i18n, { initialI18nSettings, Language } from '../libold/i18n';
 import { useApollo } from '../libold/apollo';
-import { ThemeProvider } from 'src/theme/ThemeProvider';
+import { ThemeProvider } from 'src/styles/themes/ThemeProvider';
 
 i18n.init({
   ...initialI18nSettings,

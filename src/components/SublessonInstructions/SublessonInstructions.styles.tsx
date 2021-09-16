@@ -1,5 +1,5 @@
 import { styled } from 'linaria/react';
-// import { useAppTheme, themeStyles } from '../../theme/theme.tsx';
+// import { useTheme, themeStyles } from '../../theme/theme.tsx';
 
 // type AnotherTestProps = {
 //   color: string;

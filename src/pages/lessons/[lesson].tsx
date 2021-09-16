@@ -14,7 +14,7 @@ const App: PageGetLessonDataComp = (props) => {
   const {
     data: { lessons },
   } = props;
-  console.log('the props passed to page', props);
+  console.log('the! props passed to page', props);
 
   const test = lessons[0].sublessons[0];
 
