@@ -5,12 +5,11 @@ export enum ThemesEnum {
   // DEFAULT_LIGHT = 'LIGHT',
 }
 
-export type TextThemeType = Record<
-  TextVariantsEnum,
-  {
-    color: string;
-  }
->;
+export type TextThemeVariantPropsType = {
+  color: string;
+};
+
+export type TextThemeType = Record<TextVariantsEnum, TextThemeVariantPropsType>;
 
 export type ThemeType = {
   primaryColor: string;

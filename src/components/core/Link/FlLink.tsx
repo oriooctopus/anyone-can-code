@@ -1,4 +1,5 @@
 import React from 'react';
+import { css } from '@linaria/core';
 import { useLinkStyles } from './FlLink.styles';
 import NextLink from 'next/link';
 import clsx from 'clsx';
@@ -12,6 +13,13 @@ export const FlLink: React.FC<IFlLinkProps> = ({
   ...otherProps
 }) => {
   const linkStyles = useLinkStyles();
+
+  // const title = css`
+  //   font-size: 118px;
+  //   font-weight: bold;
+  // `;
+
+  console.log('rir', className);
 
   return (
     <NextLink {...otherProps}>

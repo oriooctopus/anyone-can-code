@@ -1,4 +1,5 @@
 import * as CSS from 'csstype';
+import { styled } from 'linaria/react';
 import { flFontWeight } from './font';
 
 export type TextVariant = keyof typeof TextVariantsEnum;
@@ -9,7 +10,7 @@ export enum TextVariantsEnum {
   linkBody = 'linkBody',
 }
 
-export interface ITextPresets {
+export type ITextPresets = {
   // the property names match the design terminology in the Abstract collection
   readonly tag?: keyof JSX.IntrinsicElements;
   readonly fontWeight: number;
@@ -18,20 +19,20 @@ export interface ITextPresets {
   readonly lineHeight?: number;
   readonly decoration?: string;
   readonly textTransform?: CSS.Property.TextTransform;
-}
+};
 
 export const textVariants: Record<TextVariantsEnum, ITextPresets> = {
-  [TextVariantsEnum.navLink]: {
+  navLink: {
     fontWeight: flFontWeight.NORMAL_400,
-    fontSize: 16,
+    fontSize: 160,
     lineHeight: 18.75,
   },
-  [TextVariantsEnum.regularBody]: {
+  regularBody: {
     fontWeight: flFontWeight.NORMAL_400,
     fontSize: 14,
     lineHeight: 14,
   },
-  [TextVariantsEnum.linkBody]: {
+  linkBody: {
     fontWeight: flFontWeight.NORMAL_400,
     fontSize: 14,
     lineHeight: 14,
