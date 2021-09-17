@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Box,
-  BoxProps,
-  Button,
-  Divider,
-  Flex,
-  Heading,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Button, Divider, Flex, Heading, Text } from '@chakra-ui/react';
 import TestCaseResult from '../TestCaseResult/TestCaseResult';
 import { runTests } from '../../CodeRunning';
 import '@fontsource/roboto';
@@ -15,15 +7,12 @@ import { useReactiveVar } from '@apollo/client';
 import { codeEditorValueVar } from 'src/cache';
 import { SublessonInstructionsDataFragment } from 'src/generated/graphql';
 import Markdown from 'components/core/Markdown/Markdown';
-
-import { styled } from 'linaria/react';
-import { useTheme, themeStyles } from 'src/styles/themes/theme';
-import { ThemesEnum } from 'src/styles/themes/themes.types';
-import { AnotherTest } from './SublessonInstructions.styles';
-
-type StyledButtonProps = {
-  backgroundColor: string;
-};
+import { themify, useTheme } from 'src/styles/themes/theme';
+import { FlText } from 'components/core/Typography/FlText';
+import {
+  SublessonInstructionsContainer,
+  SublessonName,
+} from 'components/SublessonInstructions/SublessonInstructions.styles';
 
 type props = SublessonInstructionsDataFragment & {};
 
@@ -33,11 +22,21 @@ const SublessonInstructions: React.FC<props> = ({
   name,
   lesson,
 }) => {
-  return <span />;
   const codeEditorValue = useReactiveVar(codeEditorValueVar);
   const currentChallenge = challenges[0];
 
-  const [currentTheme, setAppTheme] = useTheme();
+  const appTheme = useTheme();
+
+  console.log('apptheme', appTheme);
+
+  themify((theme) => console.log('the theme??', theme));
+
+  return (
+    <SublessonInstructionsContainer>
+      <FlText variant="smallLabel">{lesson?.name}</FlText>
+      <SublessonName variant="h2">{name}</SublessonName>
+    </SublessonInstructionsContainer>
+  );
 
   return (
     <Flex
@@ -47,18 +46,6 @@ const SublessonInstructions: React.FC<props> = ({
       px="20px"
       h="calc(100vh - 65px)"
     >
-      <AnotherTest color="red">this is a header test</AnotherTest>
-      <button
-        onClick={() =>
-          setAppTheme(
-            currentTheme === ThemesEnum.DEFAULT_LIGHT
-              ? ThemesEnum.DEFAULT_DARK
-              : ThemesEnum.DEFAULT_LIGHT,
-          )
-        }
-      >
-        change theme
-      </button>
       <Text
         casing="uppercase"
         color="#646466"
@@ -68,15 +55,11 @@ const SublessonInstructions: React.FC<props> = ({
       >
         {lesson?.name}
       </Text>
-      {console.log('the theme', currentTheme, currentTheme)}
       <Heading as="h1" fontSize="26px" fontWeight="400" mb="30px">
         {name}
       </Heading>
       <Box minH="300">
         <Markdown>{description}</Markdown>
-        {/* <Text as="pre" mt="15px">
-          5 + 5
-        </Text> */}
       </Box>
       <Box mt="auto" w="100%">
         <Divider color="#D0D0D5" opacity="1" />

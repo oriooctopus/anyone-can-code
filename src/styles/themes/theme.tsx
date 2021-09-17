@@ -3,13 +3,13 @@ import { ThemesEnum, ThemeType } from 'src/styles/themes/themes.types';
 import { themeDefaultDark } from './defaultDark/defaultDark';
 
 const themes: Record<ThemesEnum, ThemeType> = {
-  [ThemesEnum.DEFAULT_DARK]: themeDefaultDark,
+  DEFAULT_DARK: themeDefaultDark,
   // [ThemesEnum.DEFAULT_LIGHT]: {
   //   primaryColor: 'pink',
   // },
 };
 
-export const themeStyles = (cb: (theme: ThemeType) => Record<any, any>) =>
+export const themify = (cb: (theme: ThemeType) => Record<any, any>) =>
   Object.keys(themes).reduce(
     (acc, name) =>
       Object.assign(acc, {

@@ -5,6 +5,7 @@ import {
   ITextPresets,
   textVariants,
 } from '../../../styles/typography/textVariants';
+import { flFontWeight } from 'src/styles/typography/font';
 
 /**
  * Generate style properties for the base text.
@@ -17,7 +18,7 @@ const generateTextStyles = (
   console.log('size', rem(fontSize));
 
   return {
-    fontWeight: fontWeight,
+    fontWeight: fontWeight || flFontWeight.NORMAL_400,
     fontSize: rem(fontSize),
     color,
     lineHeight: rem(lineHeight),

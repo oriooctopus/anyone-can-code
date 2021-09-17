@@ -8,12 +8,14 @@ export enum TextVariantsEnum {
   navLink = 'navLink',
   regularBody = 'regularBody',
   linkBody = 'linkBody',
+  smallLabel = 'smallLabel',
+  h2 = 'h2',
 }
 
 export type ITextPresets = {
   // the property names match the design terminology in the Abstract collection
   readonly tag?: keyof JSX.IntrinsicElements;
-  readonly fontWeight: number;
+  readonly fontWeight?: number;
   readonly style?: string;
   readonly fontSize: number;
   readonly lineHeight?: number;
@@ -23,18 +25,23 @@ export type ITextPresets = {
 
 export const textVariants: Record<TextVariantsEnum, ITextPresets> = {
   navLink: {
-    fontWeight: flFontWeight.NORMAL_400,
-    fontSize: 160,
+    fontSize: 16,
     lineHeight: 18.75,
   },
   regularBody: {
-    fontWeight: flFontWeight.NORMAL_400,
     fontSize: 14,
     lineHeight: 14,
   },
   linkBody: {
-    fontWeight: flFontWeight.NORMAL_400,
     fontSize: 14,
     lineHeight: 14,
+  },
+  smallLabel: {
+    fontWeight: flFontWeight.NORMAL_400,
+    fontSize: 13,
+    textTransform: 'uppercase',
+  },
+  h2: {
+    fontSize: 26,
   },
 };

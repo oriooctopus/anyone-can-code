@@ -5,4 +5,7 @@ export const text: TextThemeType = {
   [TextVariantsEnum.navLink]: {
     color: 'white',
   },
+  smallLabel: {
+    color: '#646466',
+  },
 };

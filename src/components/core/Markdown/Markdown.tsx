@@ -13,7 +13,6 @@ const Markdown = ({ children: test }) => (
       code({ node, inline, className, children, ...props }) {
         console.log('does this ever happen?');
         const match = /language-(\w+)/.exec(className || '');
-        debugger;
         return !inline ? (
           <SyntaxHighlighter
             children={String(children).replace(/\n$/, '')}
