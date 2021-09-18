@@ -1,5 +1,5 @@
 import * as CSS from 'csstype';
-import { styled } from 'linaria/react';
+import styled from '@emotion/styled';
 import { flFontWeight } from './font';
 
 export type TextVariant = keyof typeof TextVariantsEnum;

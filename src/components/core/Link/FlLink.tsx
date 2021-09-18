@@ -1,5 +1,4 @@
 import React from 'react';
-import { css } from '@linaria/core';
 import { useLinkStyles } from './FlLink.styles';
 import NextLink from 'next/link';
 import clsx from 'clsx';
@@ -12,7 +11,7 @@ export const FlLink: React.FC<IFlLinkProps> = ({
   variant = 'linkBody',
   ...otherProps
 }) => {
-  const linkStyles = useLinkStyles();
+  const linkStyles = useLinkStyles;
 
   // const title = css`
   //   font-size: 118px;
@@ -23,7 +22,7 @@ export const FlLink: React.FC<IFlLinkProps> = ({
 
   return (
     <NextLink {...otherProps}>
-      <FlText className={clsx(className, linkStyles)} variant={variant}>
+      <FlText className={clsx(className)} variant={variant} css={linkStyles}>
         {children}
       </FlText>
     </NextLink>

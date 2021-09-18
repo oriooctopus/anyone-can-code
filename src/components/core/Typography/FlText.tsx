@@ -8,7 +8,13 @@ export const FlText = (props: IFlTextProps) => {
   // const styles = useCoreTextStyles(props);
   console.log('variants', textVariants);
 
+  const Tag = textVariants[variant].tag ? textVariants[variant].tag : 'span';
+
   console.log('the specific variant', variant);
 
-  return <BaseText className={clsx(className, variant)}>{children}</BaseText>;
+  return (
+    <BaseText className={clsx(className, variant)} as={'h1'}>
+      {children}
+    </BaseText>
+  );
 };

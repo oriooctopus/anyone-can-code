@@ -1,4 +1,4 @@
-import { styled } from 'linaria/react';
+import styled from '@emotion/styled';
 import { BASE_FONT_FAMILY } from 'src/styles/typography/font';
 import { textVariants } from 'src/styles/typography/textVariants';
 import { useTheme } from 'src/styles/themes/theme';
@@ -15,8 +15,6 @@ export const useCoreTextStyles = ({
     ...theme.text[variant],
   };
 };
-
-console.log('base styles', flBaseTextVariantStyles);
 
 export const BaseText = styled.span`
   margin: 0;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from 'linaria/react';
+import styled from '@emotion/styled';
 import { rem } from 'src/styles/typography/font';
 import { FlLink } from '../Link/FlLink';
 import { IFlNavLinkProps } from './FlNavbar.types';

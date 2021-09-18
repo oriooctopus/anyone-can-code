@@ -1,12 +1,14 @@
 {
-  "presets": ["next/babel", "@linaria"],
-  "plugins": [
-    ["graphql-tag"],
+  "presets": [
     [
-      "@babel/plugin-transform-react-jsx",
+      "next/babel",
       {
-        "runtime": "automatic"
+        "preset-react": {
+          "runtime": "automatic",
+          "importSource": "@emotion/react"
+        }
       }
     ]
-  ]
+  ],
+  "plugins": ["@emotion/babel-plugin", "graphql-tag"]
 }

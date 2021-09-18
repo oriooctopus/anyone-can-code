@@ -6,5 +6,4 @@ export const themeDefaultDark: ThemeType = {
   primaryColor: 'red',
   text,
   sublessonInstructions,
-  aTest: 'green',
 };

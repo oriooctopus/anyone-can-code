@@ -1,5 +1,5 @@
 import { StackProps, TSpacing } from 'components/core/Stacks/Stack.types';
-import { styled } from 'linaria/react';
+import styled from '@emotion/styled';
 import { rem } from 'src/styles/typography/font';
 
 /**

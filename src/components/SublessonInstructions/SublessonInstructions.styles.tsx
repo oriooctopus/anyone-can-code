@@ -1,5 +1,5 @@
 import { FlText } from 'components/core/Typography/FlText';
-import { styled } from 'linaria/react';
+import styled from '@emotion/styled';
 import { themify } from 'src/styles/themes/theme';
 import { rem } from 'src/styles/typography/font';
 // import { useTheme, themeStyles } from '../../theme/theme.tsx';
@@ -14,17 +14,14 @@ export const AnotherTest = styled.h1`
 `;
 
 export const SublessonInstructionsContainer = styled.div`
-  margin-left: ${rem(20)};
+  padding-left: ${rem(20)};
+  height: 100%;
 
   ${themify((theme) => ({
-    aTest: 'ewfwe',
-    backgroundColor: theme.aTest,
+    backgroundColor: theme.sublessonInstructions.backgroundColor,
   }))}
 `;
 
 export const SublessonName = styled(FlText)`
   margin-top: ${rem(10)};
 `;
-// ${themeStyles((props) => ({
-//   color: props.theme?.primaryColor,
-// }))};

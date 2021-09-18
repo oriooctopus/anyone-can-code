@@ -8,6 +8,7 @@ import SublessonInstructions from 'components/SublessonInstructions/SublessonIns
 // import SublessonInstructionsContainer from 'components/SublessonInstructions/SublessonInstructionsContainer';
 import '@fontsource/roboto';
 import { PageGetLessonDataComp, ssrGetLessonData } from 'src/generated/page';
+import theme from 'src/theme/chakra-theme';
 import { withApollo } from 'src/utilsreal/withApollo';
 
 const App: PageGetLessonDataComp = (props) => {
@@ -23,19 +24,21 @@ const App: PageGetLessonDataComp = (props) => {
   }
 
   return (
-    <Layout>
-      <Grid templateColumns="repeat(12, 1fr)" gap="20px">
-        <GridItem colSpan={{ md: 6, lg: 4 }}>
-          <SublessonInstructions {...test} />
-        </GridItem>
-        <GridItem colSpan={6} mt="20px">
-          <Editor />
-        </GridItem>
-        <GridItem colSpan={2} display={{ md: 'none', lg: 'block' }}>
-          <LessonProgress />
-        </GridItem>
-      </Grid>
-    </Layout>
+    <ChakraProvider theme={theme}>
+      <Layout>
+        <Grid templateColumns="repeat(12, 1fr)" gap="20px">
+          <GridItem colSpan={{ md: 6, lg: 4 }}>
+            <SublessonInstructions {...test} />
+          </GridItem>
+          <GridItem colSpan={6} mt="20px">
+            <Editor />
+          </GridItem>
+          <GridItem colSpan={2} display={{ md: 'none', lg: 'block' }}>
+            <LessonProgress />
+          </GridItem>
+        </Grid>
+      </Layout>
+    </ChakraProvider>
   );
 };
 
