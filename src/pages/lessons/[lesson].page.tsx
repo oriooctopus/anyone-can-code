@@ -1,25 +1,43 @@
-import React from 'react';
 import { GetServerSideProps } from 'next';
-import Editor from 'components/Editor/Editor';
+import { Editor } from 'components/Editor/Editor';
 import { ChakraProvider, Grid, GridItem } from '@chakra-ui/react';
 import LessonProgress from 'src/components/LessonProgress/LessonProgress';
 import SublessonInstructions from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions';
-// import SublessonInstructionsContainer from 'components/SublessonInstructions/SublessonInstructionsContainer';
-import '@fontsource/roboto';
 import { PageGetLessonDataComp, ssrGetLessonData } from 'src/generated/page';
 import theme from 'src/theme/chakra-theme';
 import { withApollo } from 'src/utilsreal/withApollo';
 import Layout from 'components/Layout/Layout';
+import { getChallengesFromSublessonChallenges } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions.utils';
+import '@fontsource/roboto';
+import { useCodeChallengeTests } from 'components/Challenges/Challenge.utils';
 
 const App: PageGetLessonDataComp = (props) => {
   const {
     data: { lessons },
   } = props;
-  console.log('the! props passed to page', props);
 
-  const test = lessons[0].sublessons[0];
+  const currentSublessonIndex = 0; // comes from state
+  const currentChallengeIndex = 0; // comes from state
 
-  if (!test) {
+  const currentSublesson = lessons[0].sublessons[currentSublessonIndex];
+  const parsedChallenges = getChallengesFromSublessonChallenges(
+    currentSublesson.challenges,
+  );
+  const currentChallenge = parsedChallenges[currentChallengeIndex];
+
+  // I thought about abstracting away this logic.. but I don't think it's really necessary with typescript?
+  const isCodeChallenge = currentChallenge.__typename === 'CodeChallenge';
+  const isMultipleChoiceChallenge =
+    currentChallenge.__typename === 'MultipleChoiceChallenge';
+  const { runTests } = useCodeChallengeTests(
+    isCodeChallenge ? currentChallenge.tests : [],
+  );
+
+  const onMount = () => {
+    runTests();
+  };
+
+  if (!currentChallenge) {
     return <span>no lesson</span>;
   }
 
@@ -28,10 +46,12 @@ const App: PageGetLessonDataComp = (props) => {
       <Layout>
         <Grid templateColumns="repeat(12, 1fr)" gap="20px" h="100%">
           <GridItem colSpan={{ lg: 6, md: 7 }}>
-            <SublessonInstructions {...test} />
+            <SublessonInstructions {...currentSublesson} />
           </GridItem>
           <GridItem colSpan={{ md: 5, lg: 4 }} mt="20px">
-            <Editor />
+            {isCodeChallenge && (
+              <Editor challenge={currentChallenge} onMount={onMount} />
+            )}
           </GridItem>
           <GridItem colSpan={2} display={{ md: 'none', lg: 'block' }}>
             <LessonProgress />

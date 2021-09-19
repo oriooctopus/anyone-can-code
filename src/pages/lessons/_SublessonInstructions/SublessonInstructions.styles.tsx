@@ -18,7 +18,6 @@ export const SublessonInstructionsContainer = styled.div({
   height: 'calc(100vh - 65px)',
   overflowY: 'scroll',
   ...themify((theme) => {
-    console.log('the theme', theme);
     return {
       backgroundColor: theme.sublessonInstructions.backgroundColor,
     };

@@ -1,7 +1,5 @@
-import {
-  ChallengeDataFragment,
-  SublessonInstructionsDataFragment,
-} from 'src/generated/graphql';
+import { SublessonInstructionsDataFragment } from 'src/generated/graphql';
+import { ChallengeFragment } from 'src/types/generalTypes';
 
 /*
  * Because the CMS does not allow for proper union types we
@@ -11,8 +9,8 @@ import {
  */
 export const getChallengesFromSublessonChallenges = (
   sublessonChallenges: SublessonInstructionsDataFragment['challenges'],
-): Array<ChallengeDataFragment> => {
-  return sublessonChallenges.map((sublessonChallenge) => {
+): Array<ChallengeFragment> => {
+  return (sublessonChallenges || []).map((sublessonChallenge) => {
     if (sublessonChallenge.codeChallenge) {
       return sublessonChallenge.codeChallenge;
     } else if (sublessonChallenge.multipleChoiceChallenge) {

@@ -2161,7 +2161,7 @@ export type UpdateUserPayload = {
 
 export type CodeChallengeDataFragment = (
   { __typename?: 'CodeChallenge' }
-  & Pick<CodeChallenge, 'startingCode' | 'prompt'>
+  & Pick<CodeChallenge, 'id' | 'startingCode' | 'prompt'>
   & { tests?: Maybe<Array<Maybe<(
     { __typename?: 'ComponentCodeChallengeTests' }
     & Pick<ComponentCodeChallengeTests, 'internalTest' | 'label'>
@@ -2175,27 +2175,6 @@ export type MultipleChoiceChallengeDataFragment = (
     { __typename?: 'ComponentMultipleChoiceChallengeOptions' }
     & Pick<ComponentMultipleChoiceChallengeOptions, 'text' | 'isCorrect'>
   )>>> }
-);
-
-export type GetEditorDataQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetEditorDataQuery = (
-  { __typename?: 'Query' }
-  & { editor?: Maybe<(
-    { __typename?: 'Editor' }
-    & Pick<Editor, 'code'>
-  )> }
-);
-
-export type SetEditorCodeMutationVariables = Exact<{
-  code: Scalars['String'];
-}>;
-
-
-export type SetEditorCodeMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'setEditorCode'>
 );
 
 export type GetExampleDataQueryVariables = Exact<{ [key: string]: never; }>;
@@ -2250,6 +2229,7 @@ export type SublessonInstructionsDataFragment = (
 
 export const CodeChallengeDataFragmentDoc = gql`
     fragment codeChallengeData on CodeChallenge {
+  id
   tests {
     internalTest
     label
@@ -2285,71 +2265,6 @@ export const SublessonInstructionsDataFragmentDoc = gql`
 }
     ${CodeChallengeDataFragmentDoc}
 ${MultipleChoiceChallengeDataFragmentDoc}`;
-export const GetEditorDataDocument = gql`
-    query getEditorData {
-  editor @client {
-    code
-  }
-}
-    `;
-
-/**
- * __useGetEditorDataQuery__
- *
- * To run a query within a React component, call `useGetEditorDataQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetEditorDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetEditorDataQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetEditorDataQuery(baseOptions?: Apollo.QueryHookOptions<GetEditorDataQuery, GetEditorDataQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetEditorDataQuery, GetEditorDataQueryVariables>(GetEditorDataDocument, options);
-      }
-export function useGetEditorDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEditorDataQuery, GetEditorDataQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetEditorDataQuery, GetEditorDataQueryVariables>(GetEditorDataDocument, options);
-        }
-export type GetEditorDataQueryHookResult = ReturnType<typeof useGetEditorDataQuery>;
-export type GetEditorDataLazyQueryHookResult = ReturnType<typeof useGetEditorDataLazyQuery>;
-export type GetEditorDataQueryResult = Apollo.QueryResult<GetEditorDataQuery, GetEditorDataQueryVariables>;
-export const SetEditorCodeDocument = gql`
-    mutation setEditorCode($code: String!) {
-  setEditorCode(code: $code) @client
-}
-    `;
-export type SetEditorCodeMutationFn = Apollo.MutationFunction<SetEditorCodeMutation, SetEditorCodeMutationVariables>;
-
-/**
- * __useSetEditorCodeMutation__
- *
- * To run a mutation, you first call `useSetEditorCodeMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSetEditorCodeMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [setEditorCodeMutation, { data, loading, error }] = useSetEditorCodeMutation({
- *   variables: {
- *      code: // value for 'code'
- *   },
- * });
- */
-export function useSetEditorCodeMutation(baseOptions?: Apollo.MutationHookOptions<SetEditorCodeMutation, SetEditorCodeMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SetEditorCodeMutation, SetEditorCodeMutationVariables>(SetEditorCodeDocument, options);
-      }
-export type SetEditorCodeMutationHookResult = ReturnType<typeof useSetEditorCodeMutation>;
-export type SetEditorCodeMutationResult = Apollo.MutationResult<SetEditorCodeMutation>;
-export type SetEditorCodeMutationOptions = Apollo.BaseMutationOptions<SetEditorCodeMutation, SetEditorCodeMutationVariables>;
 export const GetExampleDataDocument = gql`
     query getExampleData {
   lessons {

@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 
 export const codeChallengeData = gql`
   fragment codeChallengeData on CodeChallenge {
+    id
     tests {
       internalTest
       label

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { CodeChallengeProps } from 'components/Challenges/Challenge.types';
 import { Button } from '@chakra-ui/button';
 import { Box } from '@chakra-ui/layout';
@@ -8,7 +9,8 @@ import { useCodeChallengeTests } from 'components/Challenges/Challenge.utils';
 export const CodeChallenge = ({
   challenge: { tests, prompt },
 }: CodeChallengeProps) => {
-  const { runTests, testResults } = useCodeChallengeTests(tests);
+  const { runTests, testResults, codeEditorValue } =
+    useCodeChallengeTests(tests);
 
   return (
     <Box>
