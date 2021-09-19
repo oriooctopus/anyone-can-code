@@ -4,6 +4,7 @@ const { resolveTsAliases } = require('resolve-ts-aliases');
 const withTM = require('next-transpile-modules')(['react-markdown']);
 
 module.exports = withTM({
+  pageExtensions: ['page.tsx'],
   webpack: (initialConfig) => {
     const customConfig = {
       resolve: {

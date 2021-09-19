@@ -11,10 +11,9 @@ module.exports = (env = {}) => {
     // mode: __DEV__ ? "development" : "production",
     entry: {
       'frame-runner': './src/workers/frame-runner.js',
-      'sass-compile': './src/workers/sass-compile.js',
       'test-evaluator': './src/workers/test-evaluator.js',
     },
-    devtool: __DEV__ ? 'inline-source-map' : 'source-map',
+    devtool: 'inline-source-map',
     output: {
       publicPath: '/js/',
       filename: (chunkData) => {
@@ -60,9 +59,9 @@ module.exports = (env = {}) => {
       ],
     },
     plugins: [
-      new CopyWebpackPlugin({
-        patterns: ['node_modules/sass.js/dist/sass.sync.js'],
-      }),
+      // new CopyWebpackPlugin({
+      //   patterns: ['node_modules/sass.js/dist/sass.sync.js'],
+      // }),
       new webpack.ProvidePlugin({
         process: 'process/browser',
       }),

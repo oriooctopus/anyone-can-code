@@ -29,8 +29,7 @@ export const textVariants: Record<TextVariantsEnum, ITextPresets> = {
     lineHeight: 18.75,
   },
   regularBody: {
-    fontSize: 14,
-    lineHeight: 14,
+    fontSize: 16,
   },
   linkBody: {
     fontSize: 14,
@@ -41,6 +40,10 @@ export const textVariants: Record<TextVariantsEnum, ITextPresets> = {
     fontSize: 13,
     textTransform: 'uppercase',
   },
+  // mediumLabel: {
+  //   fontSize: 18,
+
+  // }
   h2: {
     fontSize: 26,
   },

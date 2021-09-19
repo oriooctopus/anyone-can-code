@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { sublessonInstructionsData } from 'components/SublessonInstructions/SublessonInstructions.query';
+import { sublessonInstructionsData } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions.query';
 
 export const getLessonData = gql`
   query getLessonData($slug: String!) {

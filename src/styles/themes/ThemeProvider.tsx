@@ -47,8 +47,6 @@ export const ThemeProvider: React.FC = ({ children }) => {
     };
   }, [appTheme]);
 
-  console.log('ok so this actually happens right', appTheme);
-
   return (
     <ThemeContext.Provider value={{ appTheme, setAppTheme }}>
       <div className={`theme-${appTheme}`}>{children}</div>

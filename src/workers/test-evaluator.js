@@ -1,6 +1,4 @@
-import chai from 'chai';
-import '@babel/polyfill';
-import { toString as __toString } from 'lodash';
+// import '@babel/polyfill';
 import { format as __format } from '../utils/format';
 // import assert from "power-assert";
 import curriculumHelpers, {
@@ -37,10 +35,10 @@ const __utils = (() => {
   }
 
   function log(...msgs) {
-    if (msgs && msgs[0] && !(msgs[0] instanceof chai.AssertionError)) {
+    if (msgs && msgs[0] /* && !(msgs[0] instanceof chai.AssertionError) */) {
       // discards the stack trace via toString as it only useful to debug the
       // site, not a specific challenge.
-      console.log(...msgs.map((msg) => msg.toString()));
+      console.log(...msgs.map((msg) => String(msg)));
     }
   }
 
@@ -66,11 +64,6 @@ self.onmessage = async (e) => {
     ? removeJSComments(editableContents)
     : editableContents;
 
-  const assert = chai.assert;
-  const __helpers = curriculumHelpers;
-  // Fake Deep Equal dependency
-  const DeepEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
-
   // Build errors should be reported, but only once:
   __utils.toggleProxyLogger(e.data.firstTest);
   /* eslint-enable no-unused-vars */
@@ -78,52 +71,39 @@ self.onmessage = async (e) => {
     let testResult;
     let __userCodeWasExecuted = false;
     /* eslint-disable no-eval */
-    console.log();
     try {
+      console.log('data', e.data.code);
       // Logging is proxyed after the build to catch console.log messages
       // generated during testing.
-      testResult = eval(`${
-        // e.data?.removeComments ? removeJSComments(e.data.build) : e.data.build
-        // runs the user's inputted code first
-        e.data.code.content
-      }
-__utils.flushLogs();
-__userCodeWasExecuted = true;
-__utils.toggleProxyLogger(true);
-${e.data.code.contents};
-var result = eval(${e.data.testString}) // evaluates the user's code
-console.log('what is result', result);
-if (!result) {
-  throw new Error('did not pass')
-}
-`);
+      testResult = eval(`
+        __utils.flushLogs();
+        __userCodeWasExecuted = true;
+        __utils.toggleProxyLogger(true);
+        ${e.data.code.contents};
+        var result = eval(${e.data.internalTest}) // evaluates the user's code
+        if (!result) {
+          throw new Error('did not pass')
+        }
+      `);
     } catch (err) {
-      if (__userCodeWasExecuted) {
-        // rethrow error, since test failed.
-        throw err;
-      }
-      // log build errors unless they're related to import/export/require (there
-      // are challenges that use them and they should not trigger warnings)
-      if (
-        err.name !== 'ReferenceError' ||
-        (err.message !== 'require is not defined' &&
-          err.message !== 'exports is not defined')
-      ) {
-        __utils.log(err);
-      }
-      // the tests may not require working code, so they are evaluated even if
-      // the user code does not get executed.
-      testResult = eval(e.data.testString);
+      __utils.postResult({
+        pass: false,
+        err,
+      });
+      return;
     }
     /* eslint-enable no-eval */
     if (typeof testResult === 'function') {
-      await testResult((fileName) => __toString(e.data.sources[fileName]));
+      await testResult((fileName) => String(e.data.sources[fileName]));
     }
+    console.log('not here right');
+
     __utils.postResult({
       pass: true,
       test: 456,
     });
   } catch (err) {
+    console.log('maybe it happens here');
     // Errors from testing go to the browser console only.
     __utils.toggleProxyLogger(false);
     // Report execution errors in case user code has errors that are only
@@ -133,6 +113,7 @@ if (!result) {
     __utils.postResult({
       err: {
         message: err.message,
+        pass: false,
         stack: err.stack,
       },
     });

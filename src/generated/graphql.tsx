@@ -34,6 +34,8 @@ export type AdminUser = {
   lastname: Scalars['String'];
 };
 
+export type Challenge = CodeChallenge | MultipleChoiceChallenge;
+
 export type CodeChallenge = {
   __typename?: 'CodeChallenge';
   id: Scalars['ID'];
@@ -160,13 +162,13 @@ export type ComponentMultipleChoiceChallengeOptions = {
 export type ComponentSublessonchallengeChallenge = {
   __typename?: 'ComponentSublessonchallengeChallenge';
   id: Scalars['ID'];
-  code_challenge?: Maybe<CodeChallenge>;
-  multiple_choice_challenge?: Maybe<MultipleChoiceChallenge>;
+  codeChallenge?: Maybe<CodeChallenge>;
+  multipleChoiceChallenge?: Maybe<MultipleChoiceChallenge>;
 };
 
 export type ComponentSublessonchallengeChallengeInput = {
-  code_challenge?: Maybe<Scalars['ID']>;
-  multiple_choice_challenge?: Maybe<Scalars['ID']>;
+  codeChallenge?: Maybe<Scalars['ID']>;
+  multipleChoiceChallenge?: Maybe<Scalars['ID']>;
 };
 
 export type Course = {
@@ -1955,8 +1957,8 @@ export type EditComponentMultipleChoiceChallengeOptionInput = {
 
 export type EditComponentSublessonchallengeChallengeInput = {
   id?: Maybe<Scalars['ID']>;
-  code_challenge?: Maybe<Scalars['ID']>;
-  multiple_choice_challenge?: Maybe<Scalars['ID']>;
+  codeChallenge?: Maybe<Scalars['ID']>;
+  multipleChoiceChallenge?: Maybe<Scalars['ID']>;
 };
 
 export type EditCourseInput = {
@@ -2157,6 +2159,24 @@ export type UpdateUserPayload = {
   user?: Maybe<UsersPermissionsUser>;
 };
 
+export type CodeChallengeDataFragment = (
+  { __typename?: 'CodeChallenge' }
+  & Pick<CodeChallenge, 'startingCode' | 'prompt'>
+  & { tests?: Maybe<Array<Maybe<(
+    { __typename?: 'ComponentCodeChallengeTests' }
+    & Pick<ComponentCodeChallengeTests, 'internalTest' | 'label'>
+  )>>> }
+);
+
+export type MultipleChoiceChallengeDataFragment = (
+  { __typename?: 'MultipleChoiceChallenge' }
+  & Pick<MultipleChoiceChallenge, 'prompt'>
+  & { options?: Maybe<Array<Maybe<(
+    { __typename?: 'ComponentMultipleChoiceChallengeOptions' }
+    & Pick<ComponentMultipleChoiceChallengeOptions, 'text' | 'isCorrect'>
+  )>>> }
+);
+
 export type GetEditorDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2178,16 +2198,6 @@ export type SetEditorCodeMutation = (
   & Pick<Mutation, 'setEditorCode'>
 );
 
-export type SublessonInstructionsDataFragment = (
-  { __typename?: 'Sublesson' }
-  & Pick<Sublesson, 'description' | 'name'>
-  & { lesson?: Maybe<(
-    { __typename?: 'Lesson' }
-    & Pick<Lesson, 'name'>
-  )> }
-  & ChallengesFragment
-);
-
 export type GetExampleDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2200,24 +2210,6 @@ export type GetExampleDataQuery = (
       { __typename?: 'Sublesson' }
       & Pick<Sublesson, 'name'>
     )>>> }
-  )>>> }
-);
-
-export type ChallengesFragment = (
-  { __typename?: 'Sublesson' }
-  & { challenges?: Maybe<Array<Maybe<(
-    { __typename?: 'ComponentSublessonchallengeChallenge' }
-    & { multiple_choice_challenge?: Maybe<(
-      { __typename?: 'MultipleChoiceChallenge' }
-      & Pick<MultipleChoiceChallenge, 'prompt'>
-      & { options?: Maybe<Array<Maybe<(
-        { __typename?: 'ComponentMultipleChoiceChallengeOptions' }
-        & Pick<ComponentMultipleChoiceChallengeOptions, 'text' | 'isCorrect'>
-      )>>> }
-    )>, code_challenge?: Maybe<(
-      { __typename?: 'CodeChallenge' }
-      & Pick<CodeChallenge, 'prompt'>
-    )> }
   )>>> }
 );
 
@@ -2238,19 +2230,40 @@ export type GetLessonDataQuery = (
   )>>> }
 );
 
-export const ChallengesFragmentDoc = gql`
-    fragment challenges on Sublesson {
-  challenges {
-    multiple_choice_challenge {
-      prompt
-      options {
-        text
-        isCorrect
-      }
-    }
-    code_challenge {
-      prompt
-    }
+export type SublessonInstructionsDataFragment = (
+  { __typename?: 'Sublesson' }
+  & Pick<Sublesson, 'description' | 'name'>
+  & { lesson?: Maybe<(
+    { __typename?: 'Lesson' }
+    & Pick<Lesson, 'name'>
+  )>, challenges?: Maybe<Array<Maybe<(
+    { __typename?: 'ComponentSublessonchallengeChallenge' }
+    & { codeChallenge?: Maybe<(
+      { __typename?: 'CodeChallenge' }
+      & CodeChallengeDataFragment
+    )>, multipleChoiceChallenge?: Maybe<(
+      { __typename?: 'MultipleChoiceChallenge' }
+      & MultipleChoiceChallengeDataFragment
+    )> }
+  )>>> }
+);
+
+export const CodeChallengeDataFragmentDoc = gql`
+    fragment codeChallengeData on CodeChallenge {
+  tests {
+    internalTest
+    label
+  }
+  startingCode
+  prompt
+}
+    `;
+export const MultipleChoiceChallengeDataFragmentDoc = gql`
+    fragment multipleChoiceChallengeData on MultipleChoiceChallenge {
+  prompt
+  options {
+    text
+    isCorrect
   }
 }
     `;
@@ -2261,9 +2274,17 @@ export const SublessonInstructionsDataFragmentDoc = gql`
   lesson {
     name
   }
-  ...challenges
+  challenges {
+    codeChallenge {
+      ...codeChallengeData
+    }
+    multipleChoiceChallenge {
+      ...multipleChoiceChallengeData
+    }
+  }
 }
-    ${ChallengesFragmentDoc}`;
+    ${CodeChallengeDataFragmentDoc}
+${MultipleChoiceChallengeDataFragmentDoc}`;
 export const GetEditorDataDocument = gql`
     query getEditorData {
   editor @client {

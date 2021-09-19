@@ -29,6 +29,7 @@ const Editor: PageGetEditorDataComp = () => {
       value={codeEditorValue}
       options={editorOptions}
       onChange={codeEditorValueVar}
+      height={'80vh'}
     />
   );
 };

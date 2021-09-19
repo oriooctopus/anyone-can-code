@@ -1,19 +1,19 @@
 import { buildJSChallenge } from './build';
 import createWorker from './worker-executor';
 
-function getJSTestRunner(testString) {
+function getJSTestRunner(internalTest) {
   const code = {
-    contents: testString,
-    editableContents: testString,
+    contents: internalTest,
+    editableContents: internalTest,
   };
 
   const testWorker = createWorker('test-evaluator', {
     terminateWorker: true,
   });
 
-  return (testString, testTimeout, firstTest = true) => {
+  return (internalTest, testTimeout, firstTest = true) => {
     return testWorker
-      .execute({ testString, code, firstTest }, 5000)
+      .execute({ internalTest, code, firstTest }, 5000)
       .on('LOG', (...args) => console.log('yo', args)).done;
   };
 }
@@ -21,14 +21,15 @@ function getJSTestRunner(testString) {
 async function executeTests(testRunner, tests, testTimeout = 5000) {
   const testResults = [];
   for (let i = 0; i < tests.length; i++) {
-    const { text, testString } = tests[i];
-    const newTest = { text, testString };
+    const { label, internalTest } = tests[i];
+    const newTest = { label, internalTest };
     // only the last test outputs console.logs to avoid log duplication.
     const firstTest = i === 1;
+    debugger;
     try {
       const result = await testRunner.call(
         null,
-        testString,
+        internalTest,
         testTimeout,
         firstTest,
       );
@@ -39,7 +40,8 @@ async function executeTests(testRunner, tests, testTimeout = 5000) {
         throw err;
       }
     } catch (err) {
-      newTest.message = text;
+      newTest.pass = false;
+      newTest.message = label;
       if (err === 'timeout') {
         newTest.err = 'Test timed out';
         newTest.message = `${newTest.message} (${newTest.err})`;
@@ -48,7 +50,6 @@ async function executeTests(testRunner, tests, testTimeout = 5000) {
         newTest.err = message + '\n' + stack;
         newTest.stack = stack;
       }
-      // yield put(updateConsole(newTest.message));
     } finally {
       testResults.push(newTest);
     }
@@ -60,14 +61,8 @@ export async function buildChallenge(challengeData, options) {
   return buildJSChallenge(challengeData, options);
 }
 
-export async function runTests(testString, tests) {
-  // buildChallenge(challengeData, {
-  //   preview: true,
-  //   protect: false, // this could be changed later
-  // });
-
-  const testRunner = getJSTestRunner(testString);
-
+export async function runTests(internalTest, tests) {
+  const testRunner = getJSTestRunner(internalTest);
   const results = await executeTests(testRunner, tests);
 
   console.log('the results', results);
@@ -75,4 +70,5 @@ export async function runTests(testString, tests) {
   results.map(({ err, pass }, index) =>
     console.log(index, (err || '').substring(0, 20), pass),
   );
+  return results;
 }

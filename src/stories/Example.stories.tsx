@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { AnotherTest } from '../components/SublessonInstructions/SublessonInstructions.styles';
+import { AnotherTest } from '../pages/lessons/_SublessonInstructions/SublessonInstructions.styles';
 
 export default {
   title: 'Example/Example',

@@ -1,25 +1,6 @@
 import { getTransformers } from './transformers';
 import { cssToHtml, jsToHtml, concatHtml } from './builders.js';
 import { challengeTypes } from '../utils/challengeTypes';
-// import {
-//   createTestFramer,
-//   runTestInTestFrame,
-//   createMainFramer,
-// } from './frame';
-
-// the config files are created during the build, but not before linting
-// eslint-disable-next-line import/no-unresolved
-// import frameRunnerData from '../../../../../config/client/frame-runner.json';
-// eslint-disable-next-line import/no-unresolved
-// import testEvaluatorData from '../../../../../config/client/test-evaluator.json';
-
-// const { filename: testEvaluator } = testEvaluatorData;
-
-// const frameRunner = [
-//   {
-//     src: `/js/frame-runner.js`,
-//   },
-// ];
 
 const globalRequires = [
   {
@@ -74,75 +55,6 @@ function checkFilesErrors(files) {
   return files;
 }
 
-// const buildFunctions = {
-//   [challengeTypes.js]: buildJSChallenge,
-//   [challengeTypes.bonfire]: buildJSChallenge,
-//   [challengeTypes.html]: buildDOMChallenge,
-//   [challengeTypes.modern]: buildDOMChallenge,
-//   [challengeTypes.backend]: buildBackendChallenge,
-//   [challengeTypes.backEndProject]: buildBackendChallenge,
-//   [challengeTypes.pythonProject]: buildBackendChallenge,
-// };
-
-// export function canBuildChallenge(challengeData) {
-//   const { challengeType } = challengeData;
-//   return buildFunctions.hasOwnProperty(challengeType);
-// }
-
-// export async function buildChallenge(challengeData, options) {
-//   const { challengeType } = challengeData;
-//   // let build = buildFunctions[challengeType];
-
-//   // if (build) {
-//     return build(challengeData, options);
-//   // }
-//   throw new Error(`Cannot build challenge of type ${challengeType}`);
-// }
-
-// const testRunners = {
-//   [challengeTypes.js]: getJSTestRunner,
-//   [challengeTypes.html]: getDOMTestRunner,
-//   [challengeTypes.backend]: getDOMTestRunner,
-//   [challengeTypes.pythonProject]: getDOMTestRunner,
-// };
-// export function getTestRunner(buildData, runnerConfig, document) {
-//   const { challengeType } = buildData;
-//   const testRunner = testRunners[challengeType];
-//   if (testRunner) {
-//     return testRunner(buildData, runnerConfig, document);
-//   }
-//   throw new Error(`Cannot get test runner for challenge type ${challengeType}`);
-// }
-
-// function getJSTestRunner({ build, sources }, { proxyLogger, removeComments }) {
-//   const code = {
-//     contents: sources.index,
-//     editableContents: sources.editableContents,
-//   };
-//   debugger;
-
-//   const testWorker = createWorker("test-evaluator", {
-//     terminateWorker: true,
-//   });
-
-//   return (testString, testTimeout, firstTest = true) => {
-//     return testWorker
-//       .execute(
-//         { build, testString, code, sources, firstTest, removeComments },
-//         testTimeout
-//       )
-//       .on("LOG", proxyLogger).done;
-//   };
-// }
-
-// async function getDOMTestRunner(buildData, { proxyLogger }, document) {
-//   await new Promise((resolve) =>
-//     createTestFramer(document, resolve, proxyLogger)(buildData)
-//   );
-//   return (testString, testTimeout) =>
-//     runTestInTestFrame(document, testString, testTimeout);
-// }
-
 export function buildDOMChallenge({ files, required = [], template = '' }) {
   const finalRequires = [...globalRequires, ...required /*  ...frameRunner */];
   const loadEnzyme = Object.keys(files).some((key) => files[key].ext === 'jsx');
@@ -188,18 +100,6 @@ export function buildBackendChallenge({ url }) {
     sources: { url },
   };
 }
-
-// export async function updatePreview(buildData, document, proxyLogger) {
-//   const { challengeType } = buildData;
-
-//   if (challengeType === challengeTypes.html) {
-//     await new Promise((resolve) =>
-//       createMainFramer(document, resolve, proxyLogger)(buildData)
-//     );
-//   } else {
-//     throw new Error(`Cannot show preview for challenge type ${challengeType}`);
-//   }
-// }
 
 export function challengeHasPreview({ challengeType }) {
   return (
