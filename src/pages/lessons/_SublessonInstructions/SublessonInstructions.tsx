@@ -1,3 +1,5 @@
+import { useReactiveVar } from '@apollo/client';
+import { currentChallengeIndexVar } from 'src/cache';
 import React from 'react';
 import { Box, Button, Divider, Flex, Heading, Text } from '@chakra-ui/react';
 import '@fontsource/roboto';
@@ -21,6 +23,7 @@ type props = {
 
 const SublessonInstructions = React.memo(
   ({ sublesson, totalSublessons }: props) => {
+    const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
     const { challenges, description, name, lesson } = sublesson;
     const parsedChallenges = getChallengesFromSublessonChallenges(challenges);
     const onClickNext = useOnClickNext({ sublesson, totalSublessons });
@@ -36,7 +39,7 @@ const SublessonInstructions = React.memo(
             Challenge
           </Text>
           <Challenge
-            challenge={parsedChallenges[0]}
+            challenge={parsedChallenges[currentChallengeIndex]}
             onClickNext={onClickNext}
           />
         </Box>

@@ -24,7 +24,9 @@ export const getChallengesFromSublessonChallenges = (
       return sublessonChallenge.multipleChoiceChallenge;
     }
 
-    throw new Error('sublesson challenge did not contain any challenges');
+    throw new Error(
+      'sublesson challenge did not contain any challenges. Is the challenge/sublesson still a draft?',
+    );
   });
 };
 
