@@ -1,7 +1,12 @@
 class WorkerExecutor {
   constructor(
     workerName,
-    { location = "/js/", concurrency = 2, terminateWorker = false } = {}
+    {
+      location = '/js/',
+      concurrency = 2,
+      terminateWorker = false,
+      mockedWorker,
+    } = {},
   ) {
     this._workerName = workerName;
     this._workers = [];
@@ -22,7 +27,7 @@ class WorkerExecutor {
       worker = await new Promise((resolve, reject) => {
         const worker = new Worker(`${this._location}${this._workerName}.js`);
         worker.onmessage = (e) => {
-          if (e.data && e.data.type && e.data.type === "contentLoaded") {
+          if (e.data && e.data.type && e.data.type === 'contentLoaded') {
             resolve(worker);
           }
         };
@@ -72,7 +77,7 @@ class WorkerExecutor {
           const timeoutId = setTimeout(() => {
             task._worker.terminate();
             task._worker = null;
-            this.emit("error", { message: "timeout" });
+            this.emit('error', { message: 'timeout' });
           }, timeout);
 
           worker.onmessage = (e) => {
@@ -81,26 +86,26 @@ class WorkerExecutor {
               return;
             }
             clearTimeout(timeoutId);
-            this.emit("done", e.data);
+            this.emit('done', e.data);
           };
 
           worker.onerror = (e) => {
             clearTimeout(timeoutId);
-            this.emit("error", { message: e.message });
+            this.emit('error', { message: e.message });
           };
 
           // worker.postMessage("yotest");
           worker.postMessage(data);
         },
-        (err) => this.emit("error", err)
+        (err) => this.emit('error', err),
       );
       return this;
     };
 
     task.done = new Promise((resolve, reject) => {
       task
-        .once("done", (data) => resolve(data))
-        .once("error", (err) => reject(err.message));
+        .once('done', (data) => resolve(data))
+        .once('error', (err) => reject(err.message));
     });
 
     this._pushTask(task);
@@ -112,7 +117,7 @@ const eventify = (self) => {
   self._events = {};
 
   self.on = (event, listener) => {
-    if (typeof self._events[event] === "undefined") {
+    if (typeof self._events[event] === 'undefined') {
       self._events[event] = [];
     }
     self._events[event].push(listener);
@@ -120,7 +125,7 @@ const eventify = (self) => {
   };
 
   self.removeListener = (event, listener) => {
-    if (typeof self._events[event] !== "undefined") {
+    if (typeof self._events[event] !== 'undefined') {
       const index = self._events[event].indexOf(listener);
       if (index !== -1) {
         self._events[event].splice(index, 1);
@@ -130,7 +135,7 @@ const eventify = (self) => {
   };
 
   self.emit = (event, ...args) => {
-    if (typeof self._events[event] !== "undefined") {
+    if (typeof self._events[event] !== 'undefined') {
       self._events[event].forEach((listener) => {
         listener.apply(self, args);
       });

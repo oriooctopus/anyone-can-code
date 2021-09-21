@@ -1,5 +1,6 @@
 import { buildJSChallenge } from './build';
 import createWorker from './worker-executor';
+import { runTestEvaluator } from 'src/workers/test-evaluator';
 
 function getJSTestRunner(internalTest) {
   const code = {
@@ -7,14 +8,27 @@ function getJSTestRunner(internalTest) {
     editableContents: internalTest,
   };
 
-  const testWorker = createWorker('test-evaluator', {
-    terminateWorker: true,
-  });
+  const isProduction = false;
+
+  if (isProduction) {
+    const testWorker = createWorker('test-evaluator', {
+      terminateWorker: true,
+    });
+    return (internalTest, testTimeout, firstTest = true) => {
+      return testWorker
+        .execute({ internalTest, code, firstTest }, 5000)
+        .on('LOG', (...args) => console.log('yo', args)).done;
+    };
+  }
 
   return (internalTest, testTimeout, firstTest = true) => {
-    return testWorker
-      .execute({ internalTest, code, firstTest }, 5000)
-      .on('LOG', (...args) => console.log('yo', args)).done;
+    return runTestEvaluator({
+      data: {
+        internalTest,
+        code,
+        firstTest,
+      },
+    });
   };
 }
 
@@ -25,7 +39,6 @@ async function executeTests(testRunner, tests, testTimeout = 5000) {
     const newTest = { label, internalTest };
     // only the last test outputs console.logs to avoid log duplication.
     const firstTest = i === 1;
-    debugger;
     try {
       const result = await testRunner.call(
         null,

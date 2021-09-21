@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 4000",
     "build": "next build",
     "start": "next start",
     "codegen": "graphql-codegen --config codegen.yml",
@@ -13,6 +13,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.6.4",
     "@apollo/client": "3.3.20",
     "@babel/core": "^7.15.0",
     "@babel/plugin-transform-runtime": "^7.15.0",
@@ -27,6 +28,9 @@
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11",
     "@fontsource/roboto": "^4.4.5",
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.15",
     "@freecodecamp/loop-protect": "^2.2.1",
     "@freecodecamp/strip-comments": "^3.0.1",
     "@linaria/babel-preset": "^3.0.0-beta.12",
@@ -122,6 +126,7 @@
     "react-dev-utils": "^11.0.3",
     "react-dom": "17.0.2",
     "react-i18next": "11.11.0",
+    "react-icons": "^4.2.0",
     "react-markdown": "^7.0.1",
     "react-monaco-editor": "^0.43.0",
     "react-redux": "^7.2.4",

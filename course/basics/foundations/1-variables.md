@@ -27,7 +27,7 @@ Let's break down this line of code
 
 2. A variable can be any name
 
-Now the variable age refers to the number 23. Note that it was my choice to call it age. I could have called it myAge, I could have called it something silly like gobblegoop. In javascript, you can give your variable any name as long as it doesn't break these rules:
+In this case, the variable age refers to the number 23. Note that it was my choice to call it age. I could have called it myAge, I could have called it something silly like gobblegoop. In javascript, you can give your variable any name as long as it doesn't break these rules:
 
 - It should be one word - my age doesn't work because it is two words
 - The first character must be a letter or an underscore (\_). You can't use a number as the first character.
@@ -37,7 +37,7 @@ Now the variable age refers to the number 23. Note that it was my choice to call
 However, just because you _can_ give a variable any name doesn't mean you should. Good programming means writing helpful variable names. The variable `age` is much more useful than `gooblegop` because we imedietely understand what it's purpose is.
 
 ```
-Exercise: Have them change the name to any valid variable name
+Exercise: Have them change the name to any valid variable name. For example, myFunkyAge
 Exercise: Which of these variable names is invalid? Maybe have one or two of theses
 ```
 
@@ -71,7 +71,9 @@ The computer is a harsh task manager
 - then, show how a variable's value starts as undefined when its initialized on its own line, then becomes something
 - wrapping up
 
-6. The semicolon
+6. Camel Case: the preferred way to name variables
+
+7. The semicolon
 
 ### Map
 

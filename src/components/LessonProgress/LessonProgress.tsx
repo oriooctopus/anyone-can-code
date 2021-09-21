@@ -4,7 +4,7 @@ import SublessonCard from '../SublessonCard/SublessonCard';
 
 interface IProps {}
 
-const LessonProgress = ({}: IProps) => {
+const LessonProgress = React.memo(({}: IProps) => {
   return (
     <Box color="white" mr="30px" mt="15px">
       <Divider
@@ -26,6 +26,6 @@ const LessonProgress = ({}: IProps) => {
       <SublessonCard>Introduction to console</SublessonCard>
     </Box>
   );
-};
+});
 
 export default LessonProgress;

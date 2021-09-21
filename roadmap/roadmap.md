@@ -96,3 +96,9 @@
 - comments section for each exercises/sublesson... you can upvote comments
 
 - users can suggest changes to lesson
+
+- accountability buddy
+
+  - When you do a lesson you can maybe see how many exercises your buddy did or something
+
+- We can sometimes tie a part of a lesson to a flashcard, so for example, on the 'renaming variables' lesson we say the rules of naming a variable. It would be cool if the user would see like an 'add to flashcard' button and a flashcard is automatically made for that.

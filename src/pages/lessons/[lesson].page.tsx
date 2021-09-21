@@ -10,14 +10,16 @@ import Layout from 'components/Layout/Layout';
 import { getChallengesFromSublessonChallenges } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions.utils';
 import '@fontsource/roboto';
 import { useCodeChallengeTests } from 'components/Challenges/Challenge.utils';
+import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
+import { useReactiveVar } from '@apollo/client';
 
 const App: PageGetLessonDataComp = (props) => {
   const {
     data: { lessons },
   } = props;
 
-  const currentSublessonIndex = 0; // comes from state
-  const currentChallengeIndex = 0; // comes from state
+  const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
+  const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
 
   const currentSublesson = lessons[0].sublessons[currentSublessonIndex];
   const parsedChallenges = getChallengesFromSublessonChallenges(
@@ -34,6 +36,7 @@ const App: PageGetLessonDataComp = (props) => {
   );
 
   const onMount = () => {
+    console.log('mount is happening');
     runTests();
   };
 
@@ -41,12 +44,17 @@ const App: PageGetLessonDataComp = (props) => {
     return <span>no lesson</span>;
   }
 
+  console.log('is lesson page rerunning');
+
   return (
     <ChakraProvider theme={theme}>
       <Layout>
         <Grid templateColumns="repeat(12, 1fr)" gap="20px" h="100%">
           <GridItem colSpan={{ lg: 6, md: 7 }}>
-            <SublessonInstructions {...currentSublesson} />
+            <SublessonInstructions
+              sublesson={currentSublesson}
+              totalSublessons={lessons[0].sublessons.length}
+            />
           </GridItem>
           <GridItem colSpan={{ md: 5, lg: 4 }} mt="20px">
             {isCodeChallenge && (

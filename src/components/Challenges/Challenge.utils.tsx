@@ -23,9 +23,20 @@ export const useCodeChallengeTests = (
     testResultsVar(results);
   };
 
+  const resetTests = () => testResultsVar([]);
+
   return {
+    resetTests,
     runTests: handleRunTests,
-    codeEditorValue,
     testResults: testResultsValue,
   };
 };
+
+// need to properly type test results once things get solidified
+export const hasPassedCodeChallenge = (
+  tests: CodeChallengeDataFragment['tests'],
+  testResults: any[],
+) =>
+  tests.length === 0 ||
+  // if testResults.length and there are tests, that means the tests haven't ran yet
+  (testResults.length !== 0 && testResults.every(({ pass }) => pass));

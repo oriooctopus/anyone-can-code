@@ -5,7 +5,7 @@ import curriculumHelpers, {
   removeJSComments,
 } from '../utils/curriculum-helpers';
 
-const __utils = (() => {
+const __utils = ((self) => {
   const MAX_LOGS_SIZE = 64 * 1024;
 
   let logs = [];
@@ -54,8 +54,17 @@ const __utils = (() => {
   };
 })();
 
+const _helpers = {
+  removeWhitespace: (string, i = 0, res = '') => {
+    if (i >= string.length) return res;
+    else if (string[i] == ' ')
+      return _helpers.removeWhitespace(string, i + 1, res);
+    else return _helpers.removeWhitespace(string, i + 1, (res += string[i]));
+  },
+};
+
 /* Run the test if there is one.  If not just evaluate the user code */
-self.onmessage = async (e) => {
+export const onmessage = async (e) => {
   /* eslint-disable no-unused-vars */
   let code = (e.data?.code?.contents || '').slice();
   code = e.data?.removeComments ? removeJSComments(code) : code;
@@ -72,7 +81,6 @@ self.onmessage = async (e) => {
     let __userCodeWasExecuted = false;
     /* eslint-disable no-eval */
     try {
-      console.log('data', e.data.code);
       // Logging is proxyed after the build to catch console.log messages
       // generated during testing.
       testResult = eval(`
@@ -80,7 +88,9 @@ self.onmessage = async (e) => {
         __userCodeWasExecuted = true;
         __utils.toggleProxyLogger(true);
         ${e.data.code.contents};
-        var result = eval(${e.data.internalTest}) // evaluates the user's code
+        var _codeString = \`${e.data.code.contents}}\`;
+        var result = eval(\`${e.data.internalTest}\`) // evaluates the user's code
+        console.log('the code string', _codeString);
         if (!result) {
           throw new Error('did not pass')
         }
@@ -96,7 +106,6 @@ self.onmessage = async (e) => {
     if (typeof testResult === 'function') {
       await testResult((fileName) => String(e.data.sources[fileName]));
     }
-    console.log('not here right');
 
     __utils.postResult({
       pass: true,
@@ -119,5 +128,3 @@ self.onmessage = async (e) => {
     });
   }
 };
-
-self.postMessage({ type: 'contentLoaded' });

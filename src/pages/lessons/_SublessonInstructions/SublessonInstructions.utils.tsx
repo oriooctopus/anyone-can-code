@@ -1,3 +1,10 @@
+import { useReactiveVar } from '@apollo/client';
+import {
+  codeEditorValueVar,
+  currentChallengeIndexVar,
+  currentSublessonIndexVar,
+  testResultsVar,
+} from 'src/cache';
 import { SublessonInstructionsDataFragment } from 'src/generated/graphql';
 import { ChallengeFragment } from 'src/types/generalTypes';
 
@@ -19,4 +26,34 @@ export const getChallengesFromSublessonChallenges = (
 
     throw new Error('sublesson challenge did not contain any challenges');
   });
+};
+
+type useOnClickNextProps = {
+  sublesson: SublessonInstructionsDataFragment;
+  totalSublessons: number;
+};
+
+const resetSublessonProgress = () => {
+  currentChallengeIndexVar(0);
+  testResultsVar([]);
+};
+
+export const useOnClickNext = ({
+  sublesson: { challenges },
+  totalSublessons,
+}: useOnClickNextProps) => {
+  const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
+  const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
+
+  return () => {
+    if (currentChallengeIndex + 1 !== challenges.length) {
+      currentChallengeIndexVar(currentChallengeIndex + 1);
+      return;
+    } else if (currentSublessonIndex + 1 !== totalSublessons) {
+      currentSublessonIndexVar(currentSublessonIndex + 1);
+      resetSublessonProgress();
+    }
+
+    console.log('going to next lesson');
+  };
 };
