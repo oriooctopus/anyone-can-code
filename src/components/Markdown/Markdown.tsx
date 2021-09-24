@@ -1,43 +1,54 @@
 import { StyledMarkdown } from 'components/Markdown/Markdown.styles';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { funky } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { Box, BoxProps } from '@chakra-ui/layout';
 
-type MarkdownProps = {
+type MarkdownProps = BoxProps & {
   children: React.ReactNode;
+  codeTheme?: any;
 };
 
-const Markdown = ({ children: test }) => (
-  <StyledMarkdown
-    children={test}
-    components={{
-      code({ node, inline, className, children, ...props }) {
-        return !inline ? (
-          <SyntaxHighlighter
-            children={String(children).replace(/\n$/, '')}
-            language={'js'}
-            PreTag="div"
-            customStyle={{
-              borderRadius: 7,
-            }}
-            {...props}
-          />
-        ) : (
-          <code
-            style={{
-              border: '1.6px solid rgba(0,0,0,.1)',
-              borderRadius: '6.4px',
-              fontFamily: 'monospace',
-              backgroundColor: 'rgb(246, 247, 248)',
-              padding: '1.6px',
-            }}
-            className={className}
-            {...props}
-          >
-            {children}
-          </code>
-        );
-      },
-    }}
-  />
+const Markdown = ({
+  children: test,
+  codeTheme,
+  ...styleProps
+}: MarkdownProps) => (
+  <Box {...styleProps} className="test" w="100%">
+    <StyledMarkdown
+      children={test}
+      components={{
+        code({ node, inline, className, children, ...props }) {
+          return !inline ? (
+            <SyntaxHighlighter
+              children={String(children).replace(/\n$/, '')}
+              language={'js'}
+              PreTag="div"
+              customStyle={{
+                borderRadius: 7,
+                marginTop: 15,
+              }}
+              style={codeTheme}
+              {...props}
+            />
+          ) : (
+            <code
+              style={{
+                border: '1.6px solid rgba(0,0,0,.1)',
+                borderRadius: '6.4px',
+                fontFamily: 'monospace',
+                backgroundColor: 'rgb(246, 247, 248)',
+                padding: '1.6px',
+              }}
+              className={className}
+              {...props}
+            >
+              {children}
+            </code>
+          );
+        },
+      }}
+    />
+  </Box>
 );
 
 export default Markdown;

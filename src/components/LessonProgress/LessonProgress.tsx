@@ -1,10 +1,30 @@
+import { useReactiveVar } from '@apollo/client';
 import { Box, Divider, Flex } from '@chakra-ui/layout';
 import React from 'react';
+import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
+import { LessonProgressDataFragment } from 'src/generated/graphql';
 import SublessonCard from '../SublessonCard/SublessonCard';
 
-interface IProps {}
+interface IProps {
+  sublessons: Array<LessonProgressDataFragment>;
+}
 
-const LessonProgress = React.memo(({}: IProps) => {
+const LessonProgress = React.memo(({ sublessons }: IProps) => {
+  const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
+  const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
+  const currentSublesson = sublessons[currentSublessonIndex];
+
+  const currentSublessonPercentCompleted =
+    currentChallengeIndex < 1
+      ? 0
+      : (currentChallengeIndex / currentSublesson.challenges?.length) * 100;
+  console.log(
+    'completed',
+    currentSublessonPercentCompleted,
+    sublessons.length,
+    currentSublessonIndex,
+  );
+
   return (
     <Box color="white" mr="30px" mt="15px">
       <Divider
@@ -17,13 +37,14 @@ const LessonProgress = React.memo(({}: IProps) => {
         top="0"
         bottom="0"
       />
-      <SublessonCard>Introduction to console</SublessonCard>
-      <SublessonCard active>
-        Console log a variable in between paranthesis
-      </SublessonCard>
-      <SublessonCard>Introduction to console</SublessonCard>
-      <SublessonCard>Introduction to console</SublessonCard>
-      <SublessonCard>Introduction to console</SublessonCard>
+      {sublessons.map(({ name }, index) => (
+        <SublessonCard
+          active={index === currentSublessonIndex}
+          percentCompleted={currentSublessonPercentCompleted}
+        >
+          {name}
+        </SublessonCard>
+      ))}
     </Box>
   );
 });

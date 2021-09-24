@@ -4,9 +4,14 @@ import React from 'react';
 interface IProps {
   children: React.ReactNode;
   active?: boolean;
+  percentCompleted: number;
 }
 
-const Hexagon = () => (
+type HexagonProps = {
+  percentCompleted: number;
+};
+
+const Hexagon = ({ percentCompleted }: HexagonProps) => (
   <Box position="relative" mb="17px">
     <svg
       width="47"
@@ -30,7 +35,7 @@ const Hexagon = () => (
       left="50%"
       transform="translate(-50%, -50%)"
     >
-      75%
+      {Math.round(percentCompleted)}%
     </Text>
   </Box>
 );
@@ -47,7 +52,9 @@ const Triangle = ({ active }: { active?: boolean }) => (
   />
 );
 
-const SublessonCard = ({ children, active }: IProps) => {
+const SublessonCard = (props: IProps) => {
+  const { children, active, percentCompleted } = props;
+  console.log('percent completed', percentCompleted, props);
   return (
     <Box
       bgColor="#172A4E"
@@ -58,7 +65,7 @@ const SublessonCard = ({ children, active }: IProps) => {
       position="relative"
     >
       <Triangle active={active} />
-      {active && <Hexagon />}
+      {active && <Hexagon percentCompleted={percentCompleted} />}
       <Text align="center" opacity={active ? '90%' : '62%'}>
         {children}
       </Text>

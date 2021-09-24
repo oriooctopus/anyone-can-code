@@ -4,10 +4,10 @@ import editorTheme from './all-hallows-eve-theme.json';
 import editorOptions from './editor-options';
 import { codeEditorValueVar } from 'src/cache';
 import { useReactiveVar } from '@apollo/client';
-import { CodeChallengeDataFragment } from 'src/generated/graphql';
+import { ChallengeFragment } from 'src/generated/graphql';
 
 type EditorProps = {
-  challenge: CodeChallengeDataFragment;
+  challenge: ChallengeFragment | undefined;
   onMount: () => void;
 };
 
@@ -21,8 +21,8 @@ export const Editor: React.FC<EditorProps> = ({ challenge, onMount }) => {
   const codeEditorValue = useReactiveVar(codeEditorValueVar);
 
   useEffect(() => {
-    codeEditorValueVar(challenge.startingCode);
-  }, [challenge.id]);
+    codeEditorValueVar(challenge?.startingCode);
+  }, [challenge?.id]);
 
   return (
     <MonacoEditor

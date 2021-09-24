@@ -1,19 +1,16 @@
 // import { CodeChallengeProps } from 'components/Challenges/Challenge.types';
 import { Button, ButtonProps } from '@chakra-ui/button';
-import { Box, HStack } from '@chakra-ui/layout';
+import { Box, Flex, HStack, Text } from '@chakra-ui/layout';
 import TestCaseResult from 'components/TestCaseResult/TestCaseResult';
 import { FlText } from 'components/Typography/FlText';
 import {
+  ChallengeButton,
   hasPassedCodeChallenge,
   useCodeChallengeTests,
 } from 'components/Challenges/Challenge.utils';
 import { codeEditorValueVar, testResultsVar } from 'src/cache';
 import { useReactiveVar } from '@apollo/client';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
-
-const CodeChallengeButton = (props: ButtonProps) => (
-  <Button px="35px" py="25px" {...props} />
-);
 
 export type CodeChallengeProps = {
   challenge: CodeChallengeDataFragment;
@@ -34,7 +31,8 @@ export const CodeChallenge = ({
   const canProceed = hasPassedCodeChallenge(tests, testResultsValue);
 
   return (
-    <Box>
+    <>
+      <Box mt="15px" />
       <FlText variant="regularBody">{prompt}</FlText>
       {tests?.map(({ label }, index) => (
         <TestCaseResult
@@ -43,21 +41,23 @@ export const CodeChallenge = ({
           key={label}
         />
       ))}
-      <HStack spacing={6} mt="40px" mb="15px">
+      {/* <HStack spacing={6} mt="auto" mb="15px"> */}
+      <Flex spacing={6} mt="auto">
         {canProceed ? (
-          <CodeChallengeButton colorScheme="green" onClick={onClickNext}>
+          <ChallengeButton colorScheme="green" onClick={onClickNext} mr="20px">
             Next
-          </CodeChallengeButton>
+          </ChallengeButton>
         ) : (
-          <CodeChallengeButton colorScheme="green" onClick={runTests}>
+          <ChallengeButton colorScheme="green" onClick={runTests} mr="20px">
             Run Tests
-          </CodeChallengeButton>
+          </ChallengeButton>
         )}
 
-        <CodeChallengeButton colorScheme="red" onClick={resetCode}>
+        <ChallengeButton colorScheme="red" onClick={resetCode}>
           Reset
-        </CodeChallengeButton>
-      </HStack>
-    </Box>
+        </ChallengeButton>
+      </Flex>
+      {/* </HStack> */}
+    </>
   );
 };

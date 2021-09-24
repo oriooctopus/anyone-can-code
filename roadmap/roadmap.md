@@ -102,3 +102,9 @@
   - When you do a lesson you can maybe see how many exercises your buddy did or something
 
 - We can sometimes tie a part of a lesson to a flashcard, so for example, on the 'renaming variables' lesson we say the rules of naming a variable. It would be cool if the user would see like an 'add to flashcard' button and a flashcard is automatically made for that.
+
+- scratch paper? functionally no different than writing comments but I have a feeling like it will be adopted a lot more
+
+  - in that same vein there is an option to see a 'hint'. You can look at our pseudocode
+
+- should there be a skip button on challenges?

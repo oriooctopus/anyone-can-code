@@ -81,7 +81,6 @@ function evaluateWithContext(code, context = {}) {
       .map((key) => `${key} = this.${key}`)
       .join(',');
     const contextDef = contextStr ? `let ${contextStr};` : '';
-    debugger;
 
     const evalString = `${contextDef}${code}`;
 
@@ -107,7 +106,6 @@ export const runTestEvaluator = async (e, resolve) => {
   try {
     // Logging is proxyed after the build to catch console.log messages
     // generated during testing.
-    debugger;
     const context = {
       _codeEvaluationHelpers,
       _codeString: `${code}`,

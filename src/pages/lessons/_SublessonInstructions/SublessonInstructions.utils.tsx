@@ -36,7 +36,7 @@ type useOnClickNextProps = {
 };
 
 const resetSublessonProgress = () => {
-  currentChallengeIndexVar(0);
+  currentChallengeIndexVar(-1);
   testResultsVar([]);
 };
 
@@ -49,11 +49,14 @@ export const useOnClickNext = ({
 
   return () => {
     if (currentChallengeIndex + 1 !== challenges.length) {
+      console.log('next challenge');
       currentChallengeIndexVar(currentChallengeIndex + 1);
       return;
     } else if (currentSublessonIndex + 1 !== totalSublessons) {
+      console.log('next sublesson');
       currentSublessonIndexVar(currentSublessonIndex + 1);
       resetSublessonProgress();
+      return;
     }
 
     console.log('going to next lesson');

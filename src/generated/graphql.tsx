@@ -138,6 +138,7 @@ export type CodeChallengeInput = {
 export type ComponentCodeChallengeTestInput = {
   label: Scalars['String'];
   internalTest: Scalars['String'];
+  furtherExplanation?: Maybe<Scalars['String']>;
 };
 
 export type ComponentCodeChallengeTests = {
@@ -145,6 +146,7 @@ export type ComponentCodeChallengeTests = {
   id: Scalars['ID'];
   label: Scalars['String'];
   internalTest: Scalars['String'];
+  furtherExplanation?: Maybe<Scalars['String']>;
 };
 
 export type ComponentMultipleChoiceChallengeOptionInput = {
@@ -608,8 +610,8 @@ export type MultipleChoiceChallenge = {
   id: Scalars['ID'];
   created_at: Scalars['DateTime'];
   updated_at: Scalars['DateTime'];
-  prompt: Scalars['String'];
   options?: Maybe<Array<Maybe<ComponentMultipleChoiceChallengeOptions>>>;
+  prompt: Scalars['String'];
   published_at?: Maybe<Scalars['DateTime']>;
 };
 
@@ -666,8 +668,9 @@ export type MultipleChoiceChallengeGroupBy = {
 };
 
 export type MultipleChoiceChallengeInput = {
-  prompt: Scalars['String'];
   options?: Maybe<Array<Maybe<ComponentMultipleChoiceChallengeOptionInput>>>;
+  prompt: Scalars['String'];
+  InternalLabel?: Maybe<Scalars['String']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1947,6 +1950,7 @@ export type EditComponentCodeChallengeTestInput = {
   id?: Maybe<Scalars['ID']>;
   label?: Maybe<Scalars['String']>;
   internalTest?: Maybe<Scalars['String']>;
+  furtherExplanation?: Maybe<Scalars['String']>;
 };
 
 export type EditComponentMultipleChoiceChallengeOptionInput = {
@@ -2027,8 +2031,9 @@ export type EditModuleInput = {
 };
 
 export type EditMultipleChoiceChallengeInput = {
-  prompt?: Maybe<Scalars['String']>;
   options?: Maybe<Array<Maybe<EditComponentMultipleChoiceChallengeOptionInput>>>;
+  prompt?: Maybe<Scalars['String']>;
+  InternalLabel?: Maybe<Scalars['String']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -2177,6 +2182,12 @@ export type MultipleChoiceChallengeDataFragment = (
   )>>> }
 );
 
+export type LessonProgressDataFragment = (
+  { __typename?: 'Sublesson' }
+  & Pick<Sublesson, 'name'>
+  & { challenges?: Maybe<Array<Maybe<{ __typename: 'ComponentSublessonchallengeChallenge' }>>> }
+);
+
 export type GetExampleDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2188,23 +2199,6 @@ export type GetExampleDataQuery = (
     & { sublessons?: Maybe<Array<Maybe<(
       { __typename?: 'Sublesson' }
       & Pick<Sublesson, 'name'>
-    )>>> }
-  )>>> }
-);
-
-export type GetLessonDataQueryVariables = Exact<{
-  slug: Scalars['String'];
-}>;
-
-
-export type GetLessonDataQuery = (
-  { __typename?: 'Query' }
-  & { lessons?: Maybe<Array<Maybe<(
-    { __typename?: 'Lesson' }
-    & Pick<Lesson, 'name'>
-    & { sublessons?: Maybe<Array<Maybe<(
-      { __typename?: 'Sublesson' }
-      & SublessonInstructionsDataFragment
     )>>> }
   )>>> }
 );
@@ -2227,6 +2221,32 @@ export type SublessonInstructionsDataFragment = (
   )>>> }
 );
 
+export type GetLessonDataQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type GetLessonDataQuery = (
+  { __typename?: 'Query' }
+  & { lessons?: Maybe<Array<Maybe<(
+    { __typename?: 'Lesson' }
+    & Pick<Lesson, 'name'>
+    & { sublessons?: Maybe<Array<Maybe<(
+      { __typename?: 'Sublesson' }
+      & SublessonInstructionsDataFragment
+      & LessonProgressDataFragment
+    )>>> }
+  )>>> }
+);
+
+export const LessonProgressDataFragmentDoc = gql`
+    fragment lessonProgressData on Sublesson {
+  name
+  challenges {
+    __typename
+  }
+}
+    `;
 export const CodeChallengeDataFragmentDoc = gql`
     fragment codeChallengeData on CodeChallenge {
   id
@@ -2308,10 +2328,12 @@ export const GetLessonDataDocument = gql`
     name
     sublessons {
       ...sublessonInstructionsData
+      ...lessonProgressData
     }
   }
 }
-    ${SublessonInstructionsDataFragmentDoc}`;
+    ${SublessonInstructionsDataFragmentDoc}
+${LessonProgressDataFragmentDoc}`;
 
 /**
  * __useGetLessonDataQuery__

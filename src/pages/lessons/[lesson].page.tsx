@@ -12,6 +12,7 @@ import '@fontsource/roboto';
 import { useCodeChallengeTests } from 'components/Challenges/Challenge.utils';
 import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
 import { useReactiveVar } from '@apollo/client';
+import { MultipleChoiceChallenge } from 'components/Challenges/MultipleChoiceChallengeOld';
 
 const App: PageGetLessonDataComp = (props) => {
   const {
@@ -28,19 +29,24 @@ const App: PageGetLessonDataComp = (props) => {
   const currentChallenge = parsedChallenges[currentChallengeIndex];
 
   // I thought about abstracting away this logic.. but I don't think it's really necessary with typescript?
-  const isCodeChallenge = currentChallenge.__typename === 'CodeChallenge';
+  const isCodeChallenge = currentChallenge?.__typename === 'CodeChallenge';
   const isMultipleChoiceChallenge =
-    currentChallenge.__typename === 'MultipleChoiceChallenge';
+    currentChallenge?.__typename === 'MultipleChoiceChallenge';
   const { runTests } = useCodeChallengeTests(
     isCodeChallenge ? currentChallenge.tests : [],
   );
+  const totalSublessons = lessons[0].sublessons.length;
+  const lastChallengeIndexOfPreviousSublesson =
+    currentSublessonIndex > 0
+      ? lessons[0].sublessons[currentSublessonIndex - 1]?.challenges?.length - 1
+      : undefined;
 
   const onMount = () => {
     console.log('mount is happening');
     runTests();
   };
 
-  if (!currentChallenge) {
+  if (!currentSublesson) {
     return <span>no lesson</span>;
   }
 
@@ -49,20 +55,30 @@ const App: PageGetLessonDataComp = (props) => {
   return (
     <ChakraProvider theme={theme}>
       <Layout>
-        <Grid templateColumns="repeat(12, 1fr)" gap="20px" h="100%">
-          <GridItem colSpan={{ lg: 6, md: 7 }}>
+        <Grid
+          templateColumns="repeat(12, 1fr)"
+          gap={{ md: '20px', lg: '30px', xl: '40px' }}
+          h="100%"
+        >
+          <GridItem
+            colSpan={{
+              lg: true ? 5 : 7,
+              md: true ? 7 : 9,
+            }}
+          >
             <SublessonInstructions
               sublesson={currentSublesson}
-              totalSublessons={lessons[0].sublessons.length}
+              totalSublessons={totalSublessons}
+              lastChallengeIndexOfPreviousSublesson={
+                lastChallengeIndexOfPreviousSublesson
+              }
             />
           </GridItem>
-          <GridItem colSpan={{ md: 5, lg: 4 }} mt="20px">
-            {isCodeChallenge && (
-              <Editor challenge={currentChallenge} onMount={onMount} />
-            )}
+          <GridItem colSpan={true ? 5 : 3} mt="20px">
+            <Editor challenge={currentChallenge} onMount={onMount} />
           </GridItem>
           <GridItem colSpan={2} display={{ md: 'none', lg: 'block' }}>
-            <LessonProgress />
+            <LessonProgress sublessons={lessons[0].sublessons} />
           </GridItem>
         </Grid>
       </Layout>
