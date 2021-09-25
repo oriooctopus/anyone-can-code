@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import { Editor } from 'components/Editor/Editor';
 import { ChakraProvider, Grid, GridItem } from '@chakra-ui/react';
 import LessonProgress from 'src/components/LessonProgress/LessonProgress';
@@ -86,10 +86,14 @@ const App: PageGetLessonDataComp = (props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-  resolvedUrl,
-}) => {
-  console.log('yo this happens right', resolvedUrl);
+export const getStaticPaths = () => {
+  return {
+    paths: ['/lessons/getting-started-with-variables'],
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (props) => {
   return await ssrGetLessonData.getServerPage({
     variables: {
       slug: 'getting-started-with-variables',

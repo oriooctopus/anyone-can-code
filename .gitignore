@@ -12,8 +12,8 @@
 /.next/
 /out/
 
-# Linaria
-/.linaria-cache
+# Generated
+/src/generated
 
 # Production
 /build

@@ -17,7 +17,7 @@ type props = {
 };
 
 export const MultipleChoiceChallengeActions = ({
-  challenge: { options, prompt },
+  challenge: { canSelectMultipleOptions, options, prompt },
   onClickNext,
 }: props) => {
   const challengeAttemptStatus = useReactiveVar(challengeAttemptStatusVar);
@@ -41,10 +41,16 @@ export const MultipleChoiceChallengeActions = ({
   const onClickOption = (index: number) => {
     console.log('currently', challengeAttemptStatus);
     challengeAttemptStatusVar(ChallengeAttemptStatusEnum.notAttempted);
-    multipleChoiceOptionSelectionsVar({
-      ...optionSelections,
-      [index]: !optionSelections[index],
-    });
+    if (canSelectMultipleOptions) {
+      multipleChoiceOptionSelectionsVar({
+        ...optionSelections,
+        [index]: !optionSelections[index],
+      });
+    } else {
+      multipleChoiceOptionSelectionsVar({
+        [index]: !optionSelections[index],
+      });
+    }
   };
 
   const isOptionSelected = (index: number) => Boolean(optionSelections[index]);
