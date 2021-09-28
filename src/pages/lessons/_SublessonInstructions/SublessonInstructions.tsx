@@ -1,5 +1,10 @@
 import { useReactiveVar } from '@apollo/client';
-import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
+import {
+  currentChallengeIndexVar,
+  currentSublessonIndexVar,
+  SublessonTextLengthPreferenceEnum,
+  sublessonTextLengthPreferenceVar,
+} from 'src/cache';
 import React, { useState } from 'react';
 import { Box, Button, Divider, Flex, Heading, Text } from '@chakra-ui/react';
 import '@fontsource/roboto';
@@ -10,6 +15,7 @@ import {
 } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions.styles';
 import {
   getChallengesFromSublessonChallenges,
+  useGetLessonDescription,
   useOnClickNext,
 } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions.utils';
 import { FlText } from 'components/Typography/FlText';
@@ -17,6 +23,8 @@ import Markdown from 'components/Markdown/Markdown';
 import { Challenge } from 'components/Challenges/Challenge';
 import { ChallengeButton } from 'components/Challenges/Challenge.utils';
 import { PanelNavigationIndicators } from 'components/PanelNavigationIndicators/PanelNavigationIndicators';
+import { LessonSettings } from 'components/LessonSettings/LessonSettings';
+import { useTheme } from 'src/styles/themes/theme';
 
 type props = {
   sublesson: SublessonInstructionsDataFragment;
@@ -36,10 +44,14 @@ const SublessonInstructions = React.memo(
   }: props) => {
     const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
     const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
-    const { challenges, description, name, lesson } = sublesson;
-    const parsedChallenges = getChallengesFromSublessonChallenges(challenges);
+    const { sublessonChallenges, descriptions, name, lesson } = sublesson;
+    console.log('sublessonChallenges!!', sublessonChallenges);
+    const description = useGetLessonDescription(descriptions);
+    const parsedChallenges =
+      getChallengesFromSublessonChallenges(sublessonChallenges);
     const onClickNext = useOnClickNext({ sublesson, totalSublessons });
     const isLessonIntroduction = currentChallengeIndex === -1;
+    console.log('current challenge idnex', currentChallengeIndex);
 
     /*
      * TODO: Improve this indicator. It should be hidden unless the user is
@@ -52,7 +64,7 @@ const SublessonInstructions = React.memo(
     const sublessonText = (
       <>
         <SublessonName variant="h2">{name}</SublessonName>
-        <Markdown mb={!isLessonIntroduction && '35px'}>{description}</Markdown>
+        <Markdown mb="35px">{description}</Markdown>
         {isLessonIntroduction && (
           <ChallengeButton onClick={onClickNext}>
             Begin Challenges
@@ -71,7 +83,14 @@ const SublessonInstructions = React.memo(
     };
 
     return (
-      <SublessonInstructionsContainer>
+      <Box
+        bgColor="white"
+        p="20px 20px 0"
+        height="calc(100vh - 65px)"
+        overflowY="scroll"
+        position="relative"
+      >
+        <LessonSettings position="absolute" right="20px" top="15px" />
         <Box
           minHeight="calc(100vh - 80px)"
           d="flex"
@@ -99,7 +118,7 @@ const SublessonInstructions = React.memo(
             {sublessonText}
           </>
         )}
-      </SublessonInstructionsContainer>
+      </Box>
     );
   },
 );

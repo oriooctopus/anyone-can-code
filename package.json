@@ -86,6 +86,7 @@
     "eslint-plugin-testing-library": "^3.9.2",
     "eslint-webpack-plugin": "^2.5.2",
     "file-loader": "^6.2.0",
+    "formik": "^2.2.9",
     "framer-motion": "^4",
     "fs": "^0.0.1-security",
     "fs-extra": "^9.0.1",

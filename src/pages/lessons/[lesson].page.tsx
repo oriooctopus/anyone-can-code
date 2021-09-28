@@ -24,7 +24,7 @@ const App: PageGetLessonDataComp = (props) => {
 
   const currentSublesson = lessons[0].sublessons[currentSublessonIndex];
   const parsedChallenges = getChallengesFromSublessonChallenges(
-    currentSublesson.challenges,
+    currentSublesson.sublessonChallenges,
   );
   const currentChallenge = parsedChallenges[currentChallengeIndex];
 
@@ -38,7 +38,8 @@ const App: PageGetLessonDataComp = (props) => {
   const totalSublessons = lessons[0].sublessons.length;
   const lastChallengeIndexOfPreviousSublesson =
     currentSublessonIndex > 0
-      ? lessons[0].sublessons[currentSublessonIndex - 1]?.challenges?.length - 1
+      ? lessons[0].sublessons[currentSublessonIndex - 1]?.sublessonChallenges
+          ?.length - 1
       : undefined;
 
   const onMount = () => {
@@ -94,6 +95,7 @@ export const getStaticPaths = () => {
 };
 
 export const getStaticProps: GetStaticProps = async (props) => {
+  console.log('static props');
   return await ssrGetLessonData.getServerPage({
     variables: {
       slug: 'getting-started-with-variables',

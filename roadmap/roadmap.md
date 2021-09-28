@@ -108,3 +108,7 @@
   - in that same vein there is an option to see a 'hint'. You can look at our pseudocode
 
 - should there be a skip button on challenges?
+
+- faq for some sublessons. For example, on variables, some people might be like, 'why are they using var?'
+
+- you can highlight parts of a lesson and you'll see it in the recap

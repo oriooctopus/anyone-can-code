@@ -6,17 +6,23 @@ import {
 
 export const sublessonInstructionsData = gql`
   fragment sublessonInstructionsData on Sublesson {
-    description
+    descriptions {
+      short
+      medium
+      long
+    }
     name
     lesson {
       name
     }
-    challenges {
-      codeChallenge {
-        ...codeChallengeData
-      }
-      multipleChoiceChallenge {
-        ...multipleChoiceChallengeData
+    sublessonChallenges {
+      challenge {
+        codeChallenge {
+          ...codeChallengeData
+        }
+        multipleChoiceChallenge {
+          ...multipleChoiceChallengeData
+        }
       }
     }
   }

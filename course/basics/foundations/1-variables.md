@@ -34,7 +34,7 @@ In this case, the variable age refers to the number 23. Note that it was my choi
 - The rest of the variable name can include any letter, any number, or the underscore. You can't use any other characters, including spaces, symbols, and punctuation marks.
 - It cannot be any of [these](https://www.w3schools.com/js/js_reserved.asp) reserved names. No need to memorize this list, as this is almost never a problem.
 
-However, just because you _can_ give a variable any name doesn't mean you should. Good programming means writing helpful variable names. The variable `age` is much more useful than `gooblegop` because we imedietely understand what it's purpose is.
+However, just because you _can_ give a variable any name doesn't mean you should. Good programming means writing helpful variable names. The variable `age` is much more useful than `gooblegop` because we immedietly understand what it's purpose is.
 
 ```
 Exercise: Have them change the name to any valid variable name. For example, myFunkyAge

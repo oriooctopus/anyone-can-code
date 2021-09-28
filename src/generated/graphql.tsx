@@ -161,6 +161,20 @@ export type ComponentMultipleChoiceChallengeOptions = {
   isCorrect?: Maybe<Scalars['Boolean']>;
 };
 
+export type ComponentSublessonSublessonDescriptionInput = {
+  short?: Maybe<Scalars['String']>;
+  medium: Scalars['String'];
+  long?: Maybe<Scalars['String']>;
+};
+
+export type ComponentSublessonSublessonDescriptions = {
+  __typename?: 'ComponentSublessonSublessonDescriptions';
+  id: Scalars['ID'];
+  short?: Maybe<Scalars['String']>;
+  medium: Scalars['String'];
+  long?: Maybe<Scalars['String']>;
+};
+
 export type ComponentSublessonchallengeChallenge = {
   __typename?: 'ComponentSublessonchallengeChallenge';
   id: Scalars['ID'];
@@ -277,6 +291,18 @@ export enum Enum_Lessoncompletion_Confidence {
   LargeGaps = 'largeGaps',
   UnderstoodButWithGaps = 'understoodButWithGaps',
   CompleteUnderstanding = 'completeUnderstanding'
+}
+
+export enum Enum_Sublessonchallenge_Difficulty {
+  Easy = 'easy',
+  Medium = 'medium',
+  Hard = 'hard'
+}
+
+export enum Enum_Sublessonchallenge_Minimumfrequencypreference {
+  Low = 'low',
+  Medium = 'medium',
+  High = 'high'
 }
 
 export type Editor = {
@@ -603,7 +629,7 @@ export type ModulesGroupBy = {
   published_at?: Maybe<Array<Maybe<ModulesConnectionPublished_At>>>;
 };
 
-export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | CodeChallenge | CodeChallengeConnection | CodeChallengeAggregator | CodeChallengeGroupBy | CodeChallengeConnectionId | CodeChallengeConnectionCreated_At | CodeChallengeConnectionUpdated_At | CodeChallengeConnectionStartingCode | CodeChallengeConnectionPrompt | CodeChallengeConnectionLocale | CodeChallengeConnectionPublished_At | CreateCodeChallengePayload | UpdateCodeChallengePayload | DeleteCodeChallengePayload | Course | CourseConnection | CourseAggregator | CourseGroupBy | CourseConnectionId | CourseConnectionCreated_At | CourseConnectionUpdated_At | CourseConnectionName | CourseConnectionLocale | CourseConnectionPublished_At | CreateCoursePayload | UpdateCoursePayload | DeleteCoursePayload | LessonCompletion | LessonCompletionConnection | LessonCompletionAggregator | LessonCompletionGroupBy | LessonCompletionConnectionId | LessonCompletionConnectionCreated_At | LessonCompletionConnectionUpdated_At | LessonCompletionConnectionConfidence | LessonCompletionConnectionPublished_At | CreateLessonCompletionPayload | UpdateLessonCompletionPayload | DeleteLessonCompletionPayload | Lesson | LessonConnection | LessonAggregator | LessonGroupBy | LessonConnectionId | LessonConnectionCreated_At | LessonConnectionUpdated_At | LessonConnectionSlug | LessonConnectionName | LessonConnectionLocale | LessonConnectionPublished_At | CreateLessonPayload | UpdateLessonPayload | DeleteLessonPayload | Modules | ModulesConnection | ModulesAggregator | ModulesGroupBy | ModulesConnectionId | ModulesConnectionCreated_At | ModulesConnectionUpdated_At | ModulesConnectionName | ModulesConnectionLocale | ModulesConnectionPublished_At | CreateModulePayload | UpdateModulePayload | DeleteModulePayload | MultipleChoiceChallenge | MultipleChoiceChallengeConnection | MultipleChoiceChallengeAggregator | MultipleChoiceChallengeGroupBy | MultipleChoiceChallengeConnectionId | MultipleChoiceChallengeConnectionCreated_At | MultipleChoiceChallengeConnectionUpdated_At | MultipleChoiceChallengeConnectionPrompt | MultipleChoiceChallengeConnectionCanSelectMultipleOptions | MultipleChoiceChallengeConnectionPublished_At | CreateMultipleChoiceChallengePayload | UpdateMultipleChoiceChallengePayload | DeleteMultipleChoiceChallengePayload | Sublesson | SublessonConnection | SublessonAggregator | SublessonGroupBy | SublessonConnectionId | SublessonConnectionCreated_At | SublessonConnectionUpdated_At | SublessonConnectionSlug | SublessonConnectionLesson | SublessonConnectionDescription | SublessonConnectionName | SublessonConnectionPublished_At | CreateSublessonPayload | UpdateSublessonPayload | DeleteSublessonPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentCodeChallengeTests | ComponentMultipleChoiceChallengeOptions | ComponentSublessonchallengeChallenge;
+export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | CodeChallenge | CodeChallengeConnection | CodeChallengeAggregator | CodeChallengeGroupBy | CodeChallengeConnectionId | CodeChallengeConnectionCreated_At | CodeChallengeConnectionUpdated_At | CodeChallengeConnectionStartingCode | CodeChallengeConnectionPrompt | CodeChallengeConnectionLocale | CodeChallengeConnectionPublished_At | CreateCodeChallengePayload | UpdateCodeChallengePayload | DeleteCodeChallengePayload | Course | CourseConnection | CourseAggregator | CourseGroupBy | CourseConnectionId | CourseConnectionCreated_At | CourseConnectionUpdated_At | CourseConnectionName | CourseConnectionLocale | CourseConnectionPublished_At | CreateCoursePayload | UpdateCoursePayload | DeleteCoursePayload | LessonCompletion | LessonCompletionConnection | LessonCompletionAggregator | LessonCompletionGroupBy | LessonCompletionConnectionId | LessonCompletionConnectionCreated_At | LessonCompletionConnectionUpdated_At | LessonCompletionConnectionConfidence | LessonCompletionConnectionPublished_At | CreateLessonCompletionPayload | UpdateLessonCompletionPayload | DeleteLessonCompletionPayload | Lesson | LessonConnection | LessonAggregator | LessonGroupBy | LessonConnectionId | LessonConnectionCreated_At | LessonConnectionUpdated_At | LessonConnectionSlug | LessonConnectionName | LessonConnectionLocale | LessonConnectionPublished_At | CreateLessonPayload | UpdateLessonPayload | DeleteLessonPayload | Modules | ModulesConnection | ModulesAggregator | ModulesGroupBy | ModulesConnectionId | ModulesConnectionCreated_At | ModulesConnectionUpdated_At | ModulesConnectionName | ModulesConnectionLocale | ModulesConnectionPublished_At | CreateModulePayload | UpdateModulePayload | DeleteModulePayload | MultipleChoiceChallenge | MultipleChoiceChallengeConnection | MultipleChoiceChallengeAggregator | MultipleChoiceChallengeGroupBy | MultipleChoiceChallengeConnectionId | MultipleChoiceChallengeConnectionCreated_At | MultipleChoiceChallengeConnectionUpdated_At | MultipleChoiceChallengeConnectionPrompt | MultipleChoiceChallengeConnectionCanSelectMultipleOptions | MultipleChoiceChallengeConnectionPublished_At | CreateMultipleChoiceChallengePayload | UpdateMultipleChoiceChallengePayload | DeleteMultipleChoiceChallengePayload | SublessonChallenge | SublessonChallengeConnection | SublessonChallengeAggregator | SublessonChallengeGroupBy | SublessonChallengeConnectionId | SublessonChallengeConnectionCreated_At | SublessonChallengeConnectionUpdated_At | SublessonChallengeConnectionChallenge | SublessonChallengeConnectionMinimumFrequencyPreference | SublessonChallengeConnectionDifficulty | SublessonChallengeConnectionSublesson | SublessonChallengeConnectionPublished_At | CreateSublessonChallengePayload | UpdateSublessonChallengePayload | DeleteSublessonChallengePayload | Sublesson | SublessonConnection | SublessonAggregator | SublessonGroupBy | SublessonConnectionId | SublessonConnectionCreated_At | SublessonConnectionUpdated_At | SublessonConnectionSlug | SublessonConnectionLesson | SublessonConnectionName | SublessonConnectionDescriptions | SublessonConnectionPublished_At | CreateSublessonPayload | UpdateSublessonPayload | DeleteSublessonPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | CreateUserPayload | UpdateUserPayload | DeleteUserPayload | ComponentCodeChallengeTests | ComponentMultipleChoiceChallengeOptions | ComponentSublessonSublessonDescriptions | ComponentSublessonchallengeChallenge;
 
 export type MultipleChoiceChallenge = {
   __typename?: 'MultipleChoiceChallenge';
@@ -700,6 +726,7 @@ export type Mutation = {
   /** Create a new role */
   createRole?: Maybe<CreateRolePayload>;
   createSublesson?: Maybe<CreateSublessonPayload>;
+  createSublessonChallenge?: Maybe<CreateSublessonChallengePayload>;
   /** Create a new user */
   createUser?: Maybe<CreateUserPayload>;
   deleteCodeChallenge?: Maybe<DeleteCodeChallengePayload>;
@@ -713,6 +740,7 @@ export type Mutation = {
   /** Delete an existing role */
   deleteRole?: Maybe<DeleteRolePayload>;
   deleteSublesson?: Maybe<DeleteSublessonPayload>;
+  deleteSublessonChallenge?: Maybe<DeleteSublessonChallengePayload>;
   /** Delete an existing user */
   deleteUser?: Maybe<DeleteUserPayload>;
   emailConfirmation?: Maybe<UsersPermissionsLoginPayload>;
@@ -732,6 +760,7 @@ export type Mutation = {
   /** Update an existing role */
   updateRole?: Maybe<UpdateRolePayload>;
   updateSublesson?: Maybe<UpdateSublessonPayload>;
+  updateSublessonChallenge?: Maybe<UpdateSublessonChallengePayload>;
   /** Update an existing user */
   updateUser?: Maybe<UpdateUserPayload>;
   upload: UploadFile;
@@ -798,6 +827,11 @@ export type MutationCreateSublessonArgs = {
 };
 
 
+export type MutationCreateSublessonChallengeArgs = {
+  input?: Maybe<CreateSublessonChallengeInput>;
+};
+
+
 export type MutationCreateUserArgs = {
   input?: Maybe<CreateUserInput>;
 };
@@ -845,6 +879,11 @@ export type MutationDeleteRoleArgs = {
 
 export type MutationDeleteSublessonArgs = {
   input?: Maybe<DeleteSublessonInput>;
+};
+
+
+export type MutationDeleteSublessonChallengeArgs = {
+  input?: Maybe<DeleteSublessonChallengeInput>;
 };
 
 
@@ -940,6 +979,11 @@ export type MutationUpdateSublessonArgs = {
 };
 
 
+export type MutationUpdateSublessonChallengeArgs = {
+  input?: Maybe<UpdateSublessonChallengeInput>;
+};
+
+
 export type MutationUpdateUserArgs = {
   input?: Maybe<UpdateUserInput>;
 };
@@ -989,6 +1033,9 @@ export type Query = {
   roles?: Maybe<Array<Maybe<UsersPermissionsRole>>>;
   rolesConnection?: Maybe<UsersPermissionsRoleConnection>;
   sublesson?: Maybe<Sublesson>;
+  sublessonChallenge?: Maybe<SublessonChallenge>;
+  sublessonChallenges?: Maybe<Array<Maybe<SublessonChallenge>>>;
+  sublessonChallengesConnection?: Maybe<SublessonChallengeConnection>;
   sublessons?: Maybe<Array<Maybe<Sublesson>>>;
   sublessonsConnection?: Maybe<SublessonConnection>;
   user?: Maybe<UsersPermissionsUser>;
@@ -1196,6 +1243,29 @@ export type QuerySublessonArgs = {
 };
 
 
+export type QuerySublessonChallengeArgs = {
+  id: Scalars['ID'];
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QuerySublessonChallengesArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QuerySublessonChallengesConnectionArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+};
+
+
 export type QuerySublessonsArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
@@ -1252,16 +1322,121 @@ export type Sublesson = {
   updated_at: Scalars['DateTime'];
   slug?: Maybe<Scalars['String']>;
   lesson?: Maybe<Lesson>;
-  description?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   challenges?: Maybe<Array<Maybe<ComponentSublessonchallengeChallenge>>>;
+  descriptions?: Maybe<ComponentSublessonSublessonDescriptions>;
   published_at?: Maybe<Scalars['DateTime']>;
+  sublessonChallenges?: Maybe<Array<Maybe<SublessonChallenge>>>;
+};
+
+
+export type SublessonSublessonChallengesArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
 };
 
 export type SublessonAggregator = {
   __typename?: 'SublessonAggregator';
   count?: Maybe<Scalars['Int']>;
   totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type SublessonChallenge = {
+  __typename?: 'SublessonChallenge';
+  id: Scalars['ID'];
+  created_at: Scalars['DateTime'];
+  updated_at: Scalars['DateTime'];
+  challenge?: Maybe<ComponentSublessonchallengeChallenge>;
+  minimumFrequencyPreference?: Maybe<Enum_Sublessonchallenge_Minimumfrequencypreference>;
+  difficulty?: Maybe<Enum_Sublessonchallenge_Difficulty>;
+  sublesson?: Maybe<Sublesson>;
+  published_at?: Maybe<Scalars['DateTime']>;
+};
+
+export type SublessonChallengeAggregator = {
+  __typename?: 'SublessonChallengeAggregator';
+  count?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type SublessonChallengeConnection = {
+  __typename?: 'SublessonChallengeConnection';
+  values?: Maybe<Array<Maybe<SublessonChallenge>>>;
+  groupBy?: Maybe<SublessonChallengeGroupBy>;
+  aggregate?: Maybe<SublessonChallengeAggregator>;
+};
+
+export type SublessonChallengeConnectionChallenge = {
+  __typename?: 'SublessonChallengeConnectionChallenge';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<SublessonChallengeConnection>;
+};
+
+export type SublessonChallengeConnectionCreated_At = {
+  __typename?: 'SublessonChallengeConnectionCreated_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<SublessonChallengeConnection>;
+};
+
+export type SublessonChallengeConnectionDifficulty = {
+  __typename?: 'SublessonChallengeConnectionDifficulty';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<SublessonChallengeConnection>;
+};
+
+export type SublessonChallengeConnectionId = {
+  __typename?: 'SublessonChallengeConnectionId';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<SublessonChallengeConnection>;
+};
+
+export type SublessonChallengeConnectionMinimumFrequencyPreference = {
+  __typename?: 'SublessonChallengeConnectionMinimumFrequencyPreference';
+  key?: Maybe<Scalars['String']>;
+  connection?: Maybe<SublessonChallengeConnection>;
+};
+
+export type SublessonChallengeConnectionPublished_At = {
+  __typename?: 'SublessonChallengeConnectionPublished_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<SublessonChallengeConnection>;
+};
+
+export type SublessonChallengeConnectionSublesson = {
+  __typename?: 'SublessonChallengeConnectionSublesson';
+  key?: Maybe<Scalars['ID']>;
+  connection?: Maybe<SublessonChallengeConnection>;
+};
+
+export type SublessonChallengeConnectionUpdated_At = {
+  __typename?: 'SublessonChallengeConnectionUpdated_at';
+  key?: Maybe<Scalars['DateTime']>;
+  connection?: Maybe<SublessonChallengeConnection>;
+};
+
+export type SublessonChallengeGroupBy = {
+  __typename?: 'SublessonChallengeGroupBy';
+  id?: Maybe<Array<Maybe<SublessonChallengeConnectionId>>>;
+  created_at?: Maybe<Array<Maybe<SublessonChallengeConnectionCreated_At>>>;
+  updated_at?: Maybe<Array<Maybe<SublessonChallengeConnectionUpdated_At>>>;
+  challenge?: Maybe<Array<Maybe<SublessonChallengeConnectionChallenge>>>;
+  minimumFrequencyPreference?: Maybe<Array<Maybe<SublessonChallengeConnectionMinimumFrequencyPreference>>>;
+  difficulty?: Maybe<Array<Maybe<SublessonChallengeConnectionDifficulty>>>;
+  sublesson?: Maybe<Array<Maybe<SublessonChallengeConnectionSublesson>>>;
+  published_at?: Maybe<Array<Maybe<SublessonChallengeConnectionPublished_At>>>;
+};
+
+export type SublessonChallengeInput = {
+  challenge: ComponentSublessonchallengeChallengeInput;
+  minimumFrequencyPreference?: Maybe<Enum_Sublessonchallenge_Minimumfrequencypreference>;
+  difficulty?: Maybe<Enum_Sublessonchallenge_Difficulty>;
+  internalLabel: Scalars['String'];
+  sublesson?: Maybe<Scalars['ID']>;
+  published_at?: Maybe<Scalars['DateTime']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
 };
 
 export type SublessonConnection = {
@@ -1277,9 +1452,9 @@ export type SublessonConnectionCreated_At = {
   connection?: Maybe<SublessonConnection>;
 };
 
-export type SublessonConnectionDescription = {
-  __typename?: 'SublessonConnectionDescription';
-  key?: Maybe<Scalars['String']>;
+export type SublessonConnectionDescriptions = {
+  __typename?: 'SublessonConnectionDescriptions';
+  key?: Maybe<Scalars['ID']>;
   connection?: Maybe<SublessonConnection>;
 };
 
@@ -1326,17 +1501,18 @@ export type SublessonGroupBy = {
   updated_at?: Maybe<Array<Maybe<SublessonConnectionUpdated_At>>>;
   slug?: Maybe<Array<Maybe<SublessonConnectionSlug>>>;
   lesson?: Maybe<Array<Maybe<SublessonConnectionLesson>>>;
-  description?: Maybe<Array<Maybe<SublessonConnectionDescription>>>;
   name?: Maybe<Array<Maybe<SublessonConnectionName>>>;
+  descriptions?: Maybe<Array<Maybe<SublessonConnectionDescriptions>>>;
   published_at?: Maybe<Array<Maybe<SublessonConnectionPublished_At>>>;
 };
 
 export type SublessonInput = {
   slug?: Maybe<Scalars['String']>;
   lesson?: Maybe<Scalars['ID']>;
-  description?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   challenges?: Maybe<Array<Maybe<ComponentSublessonchallengeChallengeInput>>>;
+  descriptions: ComponentSublessonSublessonDescriptionInput;
+  sublessonChallenges?: Maybe<Array<Maybe<Scalars['ID']>>>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1835,6 +2011,15 @@ export type CreateRolePayload = {
   role?: Maybe<UsersPermissionsRole>;
 };
 
+export type CreateSublessonChallengeInput = {
+  data?: Maybe<SublessonChallengeInput>;
+};
+
+export type CreateSublessonChallengePayload = {
+  __typename?: 'createSublessonChallengePayload';
+  sublessonChallenge?: Maybe<SublessonChallenge>;
+};
+
 export type CreateSublessonInput = {
   data?: Maybe<SublessonInput>;
 };
@@ -1925,6 +2110,15 @@ export type DeleteRolePayload = {
   role?: Maybe<UsersPermissionsRole>;
 };
 
+export type DeleteSublessonChallengeInput = {
+  where?: Maybe<InputId>;
+};
+
+export type DeleteSublessonChallengePayload = {
+  __typename?: 'deleteSublessonChallengePayload';
+  sublessonChallenge?: Maybe<SublessonChallenge>;
+};
+
 export type DeleteSublessonInput = {
   where?: Maybe<InputId>;
 };
@@ -1966,6 +2160,13 @@ export type EditComponentMultipleChoiceChallengeOptionInput = {
   id?: Maybe<Scalars['ID']>;
   text?: Maybe<Scalars['String']>;
   isCorrect?: Maybe<Scalars['Boolean']>;
+};
+
+export type EditComponentSublessonSublessonDescriptionInput = {
+  id?: Maybe<Scalars['ID']>;
+  short?: Maybe<Scalars['String']>;
+  medium?: Maybe<Scalars['String']>;
+  long?: Maybe<Scalars['String']>;
 };
 
 export type EditComponentSublessonchallengeChallengeInput = {
@@ -2059,12 +2260,24 @@ export type EditRoleInput = {
   updated_by?: Maybe<Scalars['ID']>;
 };
 
+export type EditSublessonChallengeInput = {
+  challenge?: Maybe<EditComponentSublessonchallengeChallengeInput>;
+  minimumFrequencyPreference?: Maybe<Enum_Sublessonchallenge_Minimumfrequencypreference>;
+  difficulty?: Maybe<Enum_Sublessonchallenge_Difficulty>;
+  internalLabel?: Maybe<Scalars['String']>;
+  sublesson?: Maybe<Scalars['ID']>;
+  published_at?: Maybe<Scalars['DateTime']>;
+  created_by?: Maybe<Scalars['ID']>;
+  updated_by?: Maybe<Scalars['ID']>;
+};
+
 export type EditSublessonInput = {
   slug?: Maybe<Scalars['String']>;
   lesson?: Maybe<Scalars['ID']>;
-  description?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   challenges?: Maybe<Array<Maybe<EditComponentSublessonchallengeChallengeInput>>>;
+  descriptions?: Maybe<EditComponentSublessonSublessonDescriptionInput>;
+  sublessonChallenges?: Maybe<Array<Maybe<Scalars['ID']>>>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -2154,6 +2367,16 @@ export type UpdateRolePayload = {
   role?: Maybe<UsersPermissionsRole>;
 };
 
+export type UpdateSublessonChallengeInput = {
+  where?: Maybe<InputId>;
+  data?: Maybe<EditSublessonChallengeInput>;
+};
+
+export type UpdateSublessonChallengePayload = {
+  __typename?: 'updateSublessonChallengePayload';
+  sublessonChallenge?: Maybe<SublessonChallenge>;
+};
+
 export type UpdateSublessonInput = {
   where?: Maybe<InputId>;
   data?: Maybe<EditSublessonInput>;
@@ -2195,7 +2418,10 @@ export type MultipleChoiceChallengeDataFragment = (
 export type LessonProgressDataFragment = (
   { __typename?: 'Sublesson' }
   & Pick<Sublesson, 'name'>
-  & { challenges?: Maybe<Array<Maybe<{ __typename: 'ComponentSublessonchallengeChallenge' }>>> }
+  & { sublessonChallenges?: Maybe<Array<Maybe<(
+    { __typename?: 'SublessonChallenge' }
+    & { challenge?: Maybe<{ __typename: 'ComponentSublessonchallengeChallenge' }> }
+  )>>> }
 );
 
 export type GetExampleDataQueryVariables = Exact<{ [key: string]: never; }>;
@@ -2215,18 +2441,24 @@ export type GetExampleDataQuery = (
 
 export type SublessonInstructionsDataFragment = (
   { __typename?: 'Sublesson' }
-  & Pick<Sublesson, 'description' | 'name'>
-  & { lesson?: Maybe<(
+  & Pick<Sublesson, 'name'>
+  & { descriptions?: Maybe<(
+    { __typename?: 'ComponentSublessonSublessonDescriptions' }
+    & Pick<ComponentSublessonSublessonDescriptions, 'short' | 'medium' | 'long'>
+  )>, lesson?: Maybe<(
     { __typename?: 'Lesson' }
     & Pick<Lesson, 'name'>
-  )>, challenges?: Maybe<Array<Maybe<(
-    { __typename?: 'ComponentSublessonchallengeChallenge' }
-    & { codeChallenge?: Maybe<(
-      { __typename?: 'CodeChallenge' }
-      & CodeChallengeDataFragment
-    )>, multipleChoiceChallenge?: Maybe<(
-      { __typename?: 'MultipleChoiceChallenge' }
-      & MultipleChoiceChallengeDataFragment
+  )>, sublessonChallenges?: Maybe<Array<Maybe<(
+    { __typename?: 'SublessonChallenge' }
+    & { challenge?: Maybe<(
+      { __typename?: 'ComponentSublessonchallengeChallenge' }
+      & { codeChallenge?: Maybe<(
+        { __typename?: 'CodeChallenge' }
+        & CodeChallengeDataFragment
+      )>, multipleChoiceChallenge?: Maybe<(
+        { __typename?: 'MultipleChoiceChallenge' }
+        & MultipleChoiceChallengeDataFragment
+      )> }
     )> }
   )>>> }
 );
@@ -2252,8 +2484,10 @@ export type GetLessonDataQuery = (
 export const LessonProgressDataFragmentDoc = gql`
     fragment lessonProgressData on Sublesson {
   name
-  challenges {
-    __typename
+  sublessonChallenges {
+    challenge {
+      __typename
+    }
   }
 }
     `;
@@ -2279,17 +2513,23 @@ export const MultipleChoiceChallengeDataFragmentDoc = gql`
     `;
 export const SublessonInstructionsDataFragmentDoc = gql`
     fragment sublessonInstructionsData on Sublesson {
-  description
+  descriptions {
+    short
+    medium
+    long
+  }
   name
   lesson {
     name
   }
-  challenges {
-    codeChallenge {
-      ...codeChallengeData
-    }
-    multipleChoiceChallenge {
-      ...multipleChoiceChallengeData
+  sublessonChallenges {
+    challenge {
+      codeChallenge {
+        ...codeChallengeData
+      }
+      multipleChoiceChallenge {
+        ...multipleChoiceChallengeData
+      }
     }
   }
 }

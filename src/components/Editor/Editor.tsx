@@ -21,7 +21,9 @@ export const Editor: React.FC<EditorProps> = ({ challenge, onMount }) => {
   const codeEditorValue = useReactiveVar(codeEditorValueVar);
 
   useEffect(() => {
-    codeEditorValueVar(challenge?.startingCode);
+    // if it's multiple choice make it something like '// you can use the editor to play around or test out '
+    const startingCode = challenge?.startingCode;
+    codeEditorValueVar(startingCode);
   }, [challenge?.id]);
 
   return (
