@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Text } from '@chakra-ui/layout';
 import { useReactiveVar } from '@apollo/client';
 import { ChallengeButton } from 'components/Challenges/Challenge.utils';
@@ -25,9 +26,21 @@ export const MultipleChoiceChallengeActions = ({
   const hasUserPassed =
     challengeAttemptStatus === ChallengeAttemptStatusEnum.passed;
 
+  const isOptionCorrect = (index: number) =>
+    Boolean(options[index].isCorrect) === Boolean(optionSelections[index]);
+
+  const shouldShowOptionIncorrectExplanation = (index: number) =>
+    challengeAttemptStatus === ChallengeAttemptStatusEnum.failed &&
+    options[index].incorrectChoiceExplanation &&
+    !isOptionCorrect(index);
+
+  useEffect(() => {
+    multipleChoiceOptionSelectionsVar([]);
+  }, []);
+
   const onSubmit = () => {
-    const isSubmissionCorrect = options.every(
-      ({ isCorrect }, index) => isCorrect === Boolean(optionSelections[index]),
+    const isSubmissionCorrect = options.every((_, index) =>
+      isOptionCorrect(index),
     );
 
     // it would be nice to abstract this into a util so that the logic is consistent in other places
@@ -63,34 +76,47 @@ export const MultipleChoiceChallengeActions = ({
       <Markdown mb="20px" fontSize="18px">
         {prompt}
       </Markdown>
-      {options.map(({ text }, index) => (
-        <Button
-          w="100%"
-          bgColor="#192A4E"
-          color="white"
-          colorScheme="darkblue"
-          mb="20px"
-          py={isOptionSelected(index) ? '20px' : '26px'}
-          d="flex"
-          outline="none"
-          borderColor="lightblue"
-          borderWidth={isOptionSelected(index) ? '6px' : 0}
-          onClick={() => onClickOption(index)}
-        >
-          {text}
-        </Button>
+      {options.map(({ incorrectChoiceExplanation, text }, index) => (
+        <Box mb={index === 0 ? '10px' : '20px'} w="100%">
+          <Button
+            w="100%"
+            bgColor="#192A4E"
+            color="white"
+            colorScheme="darkblue"
+            py={isOptionSelected(index) ? '20px' : '26px'}
+            d="flex"
+            outline="none"
+            borderColor="lightblue"
+            borderWidth={isOptionSelected(index) ? '6px' : 0}
+            onClick={() => onClickOption(index)}
+            key={text}
+          >
+            {text}
+          </Button>
+          {shouldShowOptionIncorrectExplanation(index) && (
+            <Text color="red" fontSize="14px">
+              {incorrectChoiceExplanation}
+            </Text>
+          )}
+        </Box>
       ))}
-      {challengeAttemptStatus === ChallengeAttemptStatusEnum.passed && (
-        <Text color="green">Correct!</Text>
-      )}
-      {challengeAttemptStatus === ChallengeAttemptStatusEnum.failed && (
-        <Text color="red">Incorrect. Try again</Text>
-      )}
-      {hasUserPassed ? (
-        <ChallengeButton onClick={onClickNext}>Next</ChallengeButton>
-      ) : (
-        <ChallengeButton onClick={onSubmit}>Submit</ChallengeButton>
-      )}
+      <Box mt="auto" position="relative" width="100%">
+        {hasUserPassed ? (
+          <ChallengeButton onClick={onClickNext}>Next</ChallengeButton>
+        ) : (
+          <ChallengeButton onClick={onSubmit}>Submit</ChallengeButton>
+        )}
+        {challengeAttemptStatus === ChallengeAttemptStatusEnum.passed && (
+          <Text color="green" fontSize="14px" position="absolute" top="53px">
+            Correct!
+          </Text>
+        )}
+        {challengeAttemptStatus === ChallengeAttemptStatusEnum.failed && (
+          <Text color="red" fontSize="14px" position="absolute" top="53px">
+            Incorrect. Try again
+          </Text>
+        )}
+      </Box>
     </>
   );
 };

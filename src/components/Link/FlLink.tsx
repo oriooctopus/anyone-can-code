@@ -4,25 +4,13 @@ import NextLink from 'next/link';
 import clsx from 'clsx';
 import { IFlLinkProps } from './FlLink.types';
 import { FlText } from '../Typography/FlText';
+import { isExternalURL } from 'src/utils/general';
 
-export const FlLink: React.FC<IFlLinkProps> = ({
-  className,
-  children,
-  variant = 'linkBody',
-  ...otherProps
-}) => {
-  const linkStyles = useLinkStyles;
-
-  // const title = css`
-  //   font-size: 118px;
-  //   font-weight: bold;
-  // `;
-
-  return (
-    <NextLink {...otherProps}>
-      <FlText className={clsx(className)} variant={variant} css={linkStyles}>
-        {children}
-      </FlText>
-    </NextLink>
+export const FlLink: React.FC<IFlLinkProps> = ({ href, ...props }) => {
+  console.log('supplied href', href);
+  return isExternalURL(href) ? (
+    <a href={href} {...props} />
+  ) : (
+    <NextLink href={href} {...props} />
   );
 };

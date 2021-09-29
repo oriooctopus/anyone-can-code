@@ -9,3 +9,15 @@ export const decodeBase64String = (base64String: string): any =>
 export const objMap = (obj, func) => {
   return Object.fromEntries(Object.entries(obj).map(([k, v]) => func(k, v)));
 };
+
+export const isExternalURL = (url: string) => {
+  if (typeof location === 'undefined') {
+    return true;
+  }
+
+  var domain = function (url: string) {
+    return url.replace('http://', '').replace('https://', '').split('/')[0];
+  };
+
+  return domain(location.href) !== domain(url);
+};

@@ -1,7 +1,10 @@
+import clsx from 'clsx';
 import { StyledMarkdown } from 'components/Markdown/Markdown.styles';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { funky } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import { Box, BoxProps } from '@chakra-ui/layout';
+import { rem } from 'src/styles/typography/font';
+import { FlLink } from 'components/Link/FlLink';
 
 type MarkdownProps = BoxProps & {
   children: React.ReactNode;
@@ -25,7 +28,7 @@ const Markdown = ({
               PreTag="div"
               customStyle={{
                 borderRadius: 7,
-                marginTop: 15,
+                margin: `${rem(15)} 0`,
               }}
               style={codeTheme}
               {...props}
@@ -37,7 +40,6 @@ const Markdown = ({
                 borderRadius: '6.4px',
                 fontFamily: 'monospace',
                 backgroundColor: 'rgb(246, 247, 248)',
-                padding: '1.6px',
               }}
               className={className}
               {...props}
@@ -45,6 +47,9 @@ const Markdown = ({
               {children}
             </code>
           );
+        },
+        a: ({ node, children, href, ...props }) => {
+          return <FlLink children={children[0]} {...props} href={href} />;
         },
       }}
     />

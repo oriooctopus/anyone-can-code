@@ -1,5 +1,7 @@
 import { useReactiveVar } from '@apollo/client';
 import {
+  ChallengeAttemptStatusEnum,
+  challengeAttemptStatusVar,
   codeEditorValueVar,
   currentChallengeIndexVar,
   currentSublessonIndexVar,
@@ -51,18 +53,18 @@ export const useOnClickNext = ({
   const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
 
   return () => {
+    challengeAttemptStatusVar(ChallengeAttemptStatusEnum.notAttempted);
+
     if (currentChallengeIndex + 1 !== sublessonChallenges.length) {
       console.log('next challenge');
       currentChallengeIndexVar(currentChallengeIndex + 1);
-      return;
     } else if (currentSublessonIndex + 1 !== totalSublessons) {
       console.log('next sublesson');
       currentSublessonIndexVar(currentSublessonIndex + 1);
       resetSublessonProgress();
-      return;
+    } else {
+      console.log('going to next lesson');
     }
-
-    console.log('going to next lesson');
   };
 };
 

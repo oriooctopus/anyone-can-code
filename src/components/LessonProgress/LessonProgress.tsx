@@ -18,7 +18,8 @@ const LessonProgress = React.memo(({ sublessons }: IProps) => {
     currentChallengeIndex < 0
       ? 0
       : // we add one because the initial index is -1 when on the lesson text
-        ((currentChallengeIndex + 1) / currentSublesson.challenges?.length) *
+        ((currentChallengeIndex + 1) /
+          (currentSublesson.sublessonChallenges?.length + 1)) *
         100;
   console.log(
     'completed',
@@ -43,6 +44,7 @@ const LessonProgress = React.memo(({ sublessons }: IProps) => {
         <SublessonCard
           active={index === currentSublessonIndex}
           percentCompleted={currentSublessonPercentCompleted}
+          key={name}
         >
           {name}
         </SublessonCard>

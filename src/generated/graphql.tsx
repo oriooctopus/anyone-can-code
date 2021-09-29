@@ -152,6 +152,7 @@ export type ComponentCodeChallengeTests = {
 export type ComponentMultipleChoiceChallengeOptionInput = {
   text: Scalars['String'];
   isCorrect?: Maybe<Scalars['Boolean']>;
+  incorrectChoiceExplanation?: Maybe<Scalars['String']>;
 };
 
 export type ComponentMultipleChoiceChallengeOptions = {
@@ -159,11 +160,12 @@ export type ComponentMultipleChoiceChallengeOptions = {
   id: Scalars['ID'];
   text: Scalars['String'];
   isCorrect?: Maybe<Scalars['Boolean']>;
+  incorrectChoiceExplanation?: Maybe<Scalars['String']>;
 };
 
 export type ComponentSublessonSublessonDescriptionInput = {
   short?: Maybe<Scalars['String']>;
-  medium: Scalars['String'];
+  medium?: Maybe<Scalars['String']>;
   long?: Maybe<Scalars['String']>;
 };
 
@@ -171,7 +173,7 @@ export type ComponentSublessonSublessonDescriptions = {
   __typename?: 'ComponentSublessonSublessonDescriptions';
   id: Scalars['ID'];
   short?: Maybe<Scalars['String']>;
-  medium: Scalars['String'];
+  medium?: Maybe<Scalars['String']>;
   long?: Maybe<Scalars['String']>;
 };
 
@@ -1323,7 +1325,6 @@ export type Sublesson = {
   slug?: Maybe<Scalars['String']>;
   lesson?: Maybe<Lesson>;
   name: Scalars['String'];
-  challenges?: Maybe<Array<Maybe<ComponentSublessonchallengeChallenge>>>;
   descriptions?: Maybe<ComponentSublessonSublessonDescriptions>;
   published_at?: Maybe<Scalars['DateTime']>;
   sublessonChallenges?: Maybe<Array<Maybe<SublessonChallenge>>>;
@@ -1510,7 +1511,6 @@ export type SublessonInput = {
   slug?: Maybe<Scalars['String']>;
   lesson?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
-  challenges?: Maybe<Array<Maybe<ComponentSublessonchallengeChallengeInput>>>;
   descriptions: ComponentSublessonSublessonDescriptionInput;
   sublessonChallenges?: Maybe<Array<Maybe<Scalars['ID']>>>;
   published_at?: Maybe<Scalars['DateTime']>;
@@ -2160,6 +2160,7 @@ export type EditComponentMultipleChoiceChallengeOptionInput = {
   id?: Maybe<Scalars['ID']>;
   text?: Maybe<Scalars['String']>;
   isCorrect?: Maybe<Scalars['Boolean']>;
+  incorrectChoiceExplanation?: Maybe<Scalars['String']>;
 };
 
 export type EditComponentSublessonSublessonDescriptionInput = {
@@ -2275,7 +2276,6 @@ export type EditSublessonInput = {
   slug?: Maybe<Scalars['String']>;
   lesson?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
-  challenges?: Maybe<Array<Maybe<EditComponentSublessonchallengeChallengeInput>>>;
   descriptions?: Maybe<EditComponentSublessonSublessonDescriptionInput>;
   sublessonChallenges?: Maybe<Array<Maybe<Scalars['ID']>>>;
   published_at?: Maybe<Scalars['DateTime']>;
@@ -2408,10 +2408,10 @@ export type CodeChallengeDataFragment = (
 
 export type MultipleChoiceChallengeDataFragment = (
   { __typename?: 'MultipleChoiceChallenge' }
-  & Pick<MultipleChoiceChallenge, 'prompt'>
+  & Pick<MultipleChoiceChallenge, 'prompt' | 'canSelectMultipleOptions'>
   & { options?: Maybe<Array<Maybe<(
     { __typename?: 'ComponentMultipleChoiceChallengeOptions' }
-    & Pick<ComponentMultipleChoiceChallengeOptions, 'text' | 'isCorrect'>
+    & Pick<ComponentMultipleChoiceChallengeOptions, 'text' | 'isCorrect' | 'incorrectChoiceExplanation'>
   )>>> }
 );
 
@@ -2508,7 +2508,9 @@ export const MultipleChoiceChallengeDataFragmentDoc = gql`
   options {
     text
     isCorrect
+    incorrectChoiceExplanation
   }
+  canSelectMultipleOptions
 }
     `;
 export const SublessonInstructionsDataFragmentDoc = gql`

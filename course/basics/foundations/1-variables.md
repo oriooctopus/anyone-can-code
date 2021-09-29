@@ -73,8 +73,6 @@ The computer is a harsh task manager
 
 6. Camel Case: the preferred way to name variables
 
-7. The semicolon
-
 ### Map
 
 3. A function is like a special variable

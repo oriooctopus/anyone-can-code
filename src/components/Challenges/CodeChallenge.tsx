@@ -43,7 +43,8 @@ export const CodeChallenge = ({
       ))}
       {/* <HStack spacing={6} mt="auto" mb="15px"> */}
       <Flex spacing={6} mt="auto">
-        {canProceed ? (
+        {/* {canProceed ? ( */}
+        {true ? (
           <ChallengeButton colorScheme="green" onClick={onClickNext} mr="20px">
             Next
           </ChallengeButton>

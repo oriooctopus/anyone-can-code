@@ -18,6 +18,8 @@ export const multipleChoiceChallengeData = gql`
     options {
       text
       isCorrect
+      incorrectChoiceExplanation
     }
+    canSelectMultipleOptions
   }
 `;

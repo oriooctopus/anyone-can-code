@@ -23,11 +23,15 @@ export const testResultsVar = makeVar([]);
 // TODO: store these in local storage. Possibly via apollo cache persist
 export const currentChallengeIndexVar = makeVar(-1);
 export const currentSublessonIndexVar = makeVar(0);
-export const multipleChoiceOptionSelectionsVar = makeVar({});
+export const multipleChoiceOptionSelectionsVar = makeVar<
+  Record<number, boolean>
+>({});
 export const challengeAttemptStatusVar = makeVar<ChallengeAttemptStatusEnum>(
   ChallengeAttemptStatusEnum.notAttempted,
 );
-export const sublessonTextLengthPreferenceVar = makeVar(SublessonTextLengthPreferenceEnum.medium);
+export const sublessonTextLengthPreferenceVar = makeVar(
+  SublessonTextLengthPreferenceEnum.medium,
+);
 export const sublessonChallengeFrequencyVar = makeVar(
   SublessonChallengeFrequencyEnum.medium,
 );

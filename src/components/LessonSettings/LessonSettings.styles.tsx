@@ -31,6 +31,7 @@ export const LessonSettingsButtonGroup = ({
         <Button
           variant={currentValue === value ? 'solid' : 'ghost'}
           flex="1"
+          key={label}
           onClick={() => onClick(value)}
         >
           {label}
