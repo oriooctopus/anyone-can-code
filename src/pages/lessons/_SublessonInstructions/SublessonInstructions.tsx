@@ -67,7 +67,7 @@ const SublessonInstructions = React.memo(
         <Markdown mb="35px">{description}</Markdown>
         {isLessonIntroduction && (
           <ChallengeButton onClick={onClickNext}>
-            Begin Challenges
+            {sublessonChallenges.length ? 'Begin Challenges' : 'Next'}
           </ChallengeButton>
         )}
       </>

@@ -37,4 +37,17 @@ console.log("My name is " + name ", I am " + age + 'years old');
 exercise: What will the result of the following code be? Basically have a simple variable string combination, but have one of the multiple choice options be what would happen if the variable name was added instead of the value.
 exercise: using the provided variable `capital`, console.log the message "The capital of Indonesia is Jakarta!" using concatenation
 exercise: declare a variable called numberOfSquares and set it to 64. Then, use that variable to log the message "There are 64 squares on a chess board" to the console.
+exercise:
+```
+
+var word1 = "Billy";
+var word2 = "went";
+var word3 = "for";
+var word4 = "a";
+var word5 = "walk";
+var space = " ";
+var period = ".";
+
+```
+You need to copy the above strings in the code widget below and create a sentence by concatenating them together. Store your results to a variable named sentence. You can use the strings more than once if needed.
 ```

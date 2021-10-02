@@ -13,6 +13,7 @@ import { useCodeChallengeTests } from 'components/Challenges/Challenge.utils';
 import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
 import { useReactiveVar } from '@apollo/client';
 import { MultipleChoiceChallenge } from 'components/Challenges/MultipleChoiceChallengeOld';
+import { DefaultContentPanelGridItem } from 'components/ContentPanel/ContentPanel.styles';
 
 const App: PageGetLessonDataComp = (props) => {
   const {
@@ -61,12 +62,7 @@ const App: PageGetLessonDataComp = (props) => {
           gap={{ md: '20px', lg: '30px', xl: '40px' }}
           h="100%"
         >
-          <GridItem
-            colSpan={{
-              lg: true ? 5 : 7,
-              md: true ? 7 : 9,
-            }}
-          >
+          <DefaultContentPanelGridItem>
             <SublessonInstructions
               sublesson={currentSublesson}
               totalSublessons={totalSublessons}
@@ -74,7 +70,7 @@ const App: PageGetLessonDataComp = (props) => {
                 lastChallengeIndexOfPreviousSublesson
               }
             />
-          </GridItem>
+          </DefaultContentPanelGridItem>
           <GridItem colSpan={true ? 5 : 3} mt="20px">
             <Editor challenge={currentChallenge} onMount={onMount} />
           </GridItem>
