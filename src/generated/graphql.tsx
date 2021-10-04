@@ -165,7 +165,7 @@ export type ComponentMultipleChoiceChallengeOptions = {
 
 export type ComponentSublessonSublessonDescriptionInput = {
   short?: Maybe<Scalars['String']>;
-  medium?: Maybe<Scalars['String']>;
+  medium: Scalars['String'];
   long?: Maybe<Scalars['String']>;
 };
 
@@ -173,7 +173,7 @@ export type ComponentSublessonSublessonDescriptions = {
   __typename?: 'ComponentSublessonSublessonDescriptions';
   id: Scalars['ID'];
   short?: Maybe<Scalars['String']>;
-  medium?: Maybe<Scalars['String']>;
+  medium: Scalars['String'];
   long?: Maybe<Scalars['String']>;
 };
 
@@ -1325,6 +1325,7 @@ export type Sublesson = {
   slug?: Maybe<Scalars['String']>;
   lesson?: Maybe<Lesson>;
   name: Scalars['String'];
+  challenges?: Maybe<Array<Maybe<ComponentSublessonchallengeChallenge>>>;
   descriptions?: Maybe<ComponentSublessonSublessonDescriptions>;
   published_at?: Maybe<Scalars['DateTime']>;
   sublessonChallenges?: Maybe<Array<Maybe<SublessonChallenge>>>;
@@ -1433,8 +1434,8 @@ export type SublessonChallengeInput = {
   challenge: ComponentSublessonchallengeChallengeInput;
   minimumFrequencyPreference?: Maybe<Enum_Sublessonchallenge_Minimumfrequencypreference>;
   difficulty?: Maybe<Enum_Sublessonchallenge_Difficulty>;
-  internalLabel: Scalars['String'];
   sublesson?: Maybe<Scalars['ID']>;
+  internalLabel: Scalars['String'];
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -1511,6 +1512,7 @@ export type SublessonInput = {
   slug?: Maybe<Scalars['String']>;
   lesson?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
+  challenges?: Maybe<Array<Maybe<ComponentSublessonchallengeChallengeInput>>>;
   descriptions: ComponentSublessonSublessonDescriptionInput;
   sublessonChallenges?: Maybe<Array<Maybe<Scalars['ID']>>>;
   published_at?: Maybe<Scalars['DateTime']>;
@@ -2265,8 +2267,8 @@ export type EditSublessonChallengeInput = {
   challenge?: Maybe<EditComponentSublessonchallengeChallengeInput>;
   minimumFrequencyPreference?: Maybe<Enum_Sublessonchallenge_Minimumfrequencypreference>;
   difficulty?: Maybe<Enum_Sublessonchallenge_Difficulty>;
-  internalLabel?: Maybe<Scalars['String']>;
   sublesson?: Maybe<Scalars['ID']>;
+  internalLabel?: Maybe<Scalars['String']>;
   published_at?: Maybe<Scalars['DateTime']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
@@ -2276,6 +2278,7 @@ export type EditSublessonInput = {
   slug?: Maybe<Scalars['String']>;
   lesson?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
+  challenges?: Maybe<Array<Maybe<EditComponentSublessonchallengeChallengeInput>>>;
   descriptions?: Maybe<EditComponentSublessonSublessonDescriptionInput>;
   sublessonChallenges?: Maybe<Array<Maybe<Scalars['ID']>>>;
   published_at?: Maybe<Scalars['DateTime']>;

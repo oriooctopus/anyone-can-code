@@ -26,6 +26,7 @@ export const currentSublessonIndexVar = makeVar(0);
 export const multipleChoiceOptionSelectionsVar = makeVar<
   Record<number, boolean>
 >({});
+export const currentLogVar = makeVar<Array<string>>([]);
 export const challengeAttemptStatusVar = makeVar<ChallengeAttemptStatusEnum>(
   ChallengeAttemptStatusEnum.notAttempted,
 );

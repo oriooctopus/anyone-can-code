@@ -41,10 +41,8 @@ export const CodeChallenge = ({
           key={label}
         />
       ))}
-      {/* <HStack spacing={6} mt="auto" mb="15px"> */}
       <Flex spacing={6} mt="auto">
-        {/* {canProceed ? ( */}
-        {true ? (
+        {canProceed ? (
           <ChallengeButton colorScheme="green" onClick={onClickNext} mr="20px">
             Next
           </ChallengeButton>
@@ -58,7 +56,6 @@ export const CodeChallenge = ({
           Reset
         </ChallengeButton>
       </Flex>
-      {/* </HStack> */}
     </>
   );
 };

@@ -85,16 +85,15 @@ const App: PageGetLessonDataComp = (props) => {
 
 export const getStaticPaths = () => {
   return {
-    paths: ['/lessons/getting-started-with-variables'],
+    paths: ['/lessons/getting-started-with-variables', '/lessons/strings'],
     fallback: false,
   };
 };
 
-export const getStaticProps: GetStaticProps = async (props) => {
-  console.log('static props');
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   return await ssrGetLessonData.getServerPage({
     variables: {
-      slug: 'getting-started-with-variables',
+      slug: params.lesson,
     },
   });
 };

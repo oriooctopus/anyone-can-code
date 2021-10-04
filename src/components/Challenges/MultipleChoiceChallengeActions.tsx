@@ -77,24 +77,28 @@ export const MultipleChoiceChallengeActions = ({
         {prompt}
       </Markdown>
       {options.map(({ incorrectChoiceExplanation, text }, index) => (
-        <Box mb={index === 0 ? '10px' : '20px'} w="100%">
+        // this should definitely be its own component
+        <Box
+          mb={shouldShowOptionIncorrectExplanation(index) ? '5px' : '15px'}
+          w="100%"
+        >
           <Button
             w="100%"
-            bgColor="#192A4E"
-            color="white"
-            colorScheme="darkblue"
-            py={isOptionSelected(index) ? '20px' : '26px'}
+            bgColor={isOptionSelected(index) ? '#192A4E' : '#F4F2F0'}
+            color={isOptionSelected(index) ? 'white' : 'black'}
+            _hover={{ color: isOptionSelected(index) ? 'white' : 'black' }}
+            py="22px"
+            fontWeight="normal"
             d="flex"
             outline="none"
-            borderColor="lightblue"
-            borderWidth={isOptionSelected(index) ? '6px' : 0}
+            border="1px solid #6A6A6A"
             onClick={() => onClickOption(index)}
             key={text}
           >
             {text}
           </Button>
           {shouldShowOptionIncorrectExplanation(index) && (
-            <Text color="red" fontSize="14px">
+            <Text color="red" fontSize="14px" mt="2px">
               {incorrectChoiceExplanation}
             </Text>
           )}

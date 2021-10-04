@@ -6,9 +6,9 @@ import { NextRouter, useRouter } from 'next/router'
 import { QueryHookOptions, useQuery } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 import type React from 'react';
-import { getApolloClient} from '../utilsreal/withApollo';
+import { getApolloClient } from '../utilsreal/withApollo';
 export async function getServerPageGetExampleData
-    (options: Omit<Apollo.QueryOptions<Types.GetExampleDataQueryVariables>, 'query'>, ctx? :any ){
+    (options: Omit<Apollo.QueryOptions<Types.GetExampleDataQueryVariables>, 'query'>, ctx?: any ){
         const apolloClient = getApolloClient(ctx);
         
         const data = await apolloClient.query<Types.GetExampleDataQuery>({ ...options, query: Operations.GetExampleDataDocument });
@@ -43,7 +43,7 @@ export const ssrGetExampleData = {
       usePage: useGetExampleData,
     }
 export async function getServerPageGetLessonData
-    (options: Omit<Apollo.QueryOptions<Types.GetLessonDataQueryVariables>, 'query'>, ctx? :any ){
+    (options: Omit<Apollo.QueryOptions<Types.GetLessonDataQueryVariables>, 'query'>, ctx?: any ){
         const apolloClient = getApolloClient(ctx);
         
         const data = await apolloClient.query<Types.GetLessonDataQuery>({ ...options, query: Operations.GetLessonDataDocument });
