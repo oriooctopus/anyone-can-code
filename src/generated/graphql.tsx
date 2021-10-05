@@ -307,11 +307,6 @@ export enum Enum_Sublessonchallenge_Minimumfrequencypreference {
   High = 'high'
 }
 
-export type Editor = {
-  __typename?: 'Editor';
-  code?: Maybe<Scalars['String']>;
-};
-
 export type FileInfoInput = {
   name?: Maybe<Scalars['String']>;
   alternativeText?: Maybe<Scalars['String']>;
@@ -716,56 +711,55 @@ export type MultipleChoiceChallengeInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createCodeChallenge?: Maybe<CreateCodeChallengePayload>;
-  createCodeChallengeLocalization: CodeChallenge;
-  createCourse?: Maybe<CreateCoursePayload>;
-  createCourseLocalization: Course;
-  createLesson?: Maybe<CreateLessonPayload>;
-  createLessonCompletion?: Maybe<CreateLessonCompletionPayload>;
-  createLessonLocalization: Lesson;
-  createModule?: Maybe<CreateModulePayload>;
-  createModuleLocalization: Modules;
-  createMultipleChoiceChallenge?: Maybe<CreateMultipleChoiceChallengePayload>;
-  /** Create a new role */
-  createRole?: Maybe<CreateRolePayload>;
-  createSublesson?: Maybe<CreateSublessonPayload>;
-  createSublessonChallenge?: Maybe<CreateSublessonChallengePayload>;
-  /** Create a new user */
-  createUser?: Maybe<CreateUserPayload>;
+  updateCodeChallenge?: Maybe<UpdateCodeChallengePayload>;
   deleteCodeChallenge?: Maybe<DeleteCodeChallengePayload>;
+  createCourse?: Maybe<CreateCoursePayload>;
+  updateCourse?: Maybe<UpdateCoursePayload>;
   deleteCourse?: Maybe<DeleteCoursePayload>;
+  createLessonCompletion?: Maybe<CreateLessonCompletionPayload>;
+  updateLessonCompletion?: Maybe<UpdateLessonCompletionPayload>;
+  deleteLessonCompletion?: Maybe<DeleteLessonCompletionPayload>;
+  createLesson?: Maybe<CreateLessonPayload>;
+  updateLesson?: Maybe<UpdateLessonPayload>;
+  deleteLesson?: Maybe<DeleteLessonPayload>;
+  createModule?: Maybe<CreateModulePayload>;
+  updateModule?: Maybe<UpdateModulePayload>;
+  deleteModule?: Maybe<DeleteModulePayload>;
+  createMultipleChoiceChallenge?: Maybe<CreateMultipleChoiceChallengePayload>;
+  updateMultipleChoiceChallenge?: Maybe<UpdateMultipleChoiceChallengePayload>;
+  deleteMultipleChoiceChallenge?: Maybe<DeleteMultipleChoiceChallengePayload>;
+  createSublessonChallenge?: Maybe<CreateSublessonChallengePayload>;
+  updateSublessonChallenge?: Maybe<UpdateSublessonChallengePayload>;
+  deleteSublessonChallenge?: Maybe<DeleteSublessonChallengePayload>;
+  createSublesson?: Maybe<CreateSublessonPayload>;
+  updateSublesson?: Maybe<UpdateSublessonPayload>;
+  deleteSublesson?: Maybe<DeleteSublessonPayload>;
   /** Delete one file */
   deleteFile?: Maybe<DeleteFilePayload>;
-  deleteLesson?: Maybe<DeleteLessonPayload>;
-  deleteLessonCompletion?: Maybe<DeleteLessonCompletionPayload>;
-  deleteModule?: Maybe<DeleteModulePayload>;
-  deleteMultipleChoiceChallenge?: Maybe<DeleteMultipleChoiceChallengePayload>;
-  /** Delete an existing role */
-  deleteRole?: Maybe<DeleteRolePayload>;
-  deleteSublesson?: Maybe<DeleteSublessonPayload>;
-  deleteSublessonChallenge?: Maybe<DeleteSublessonChallengePayload>;
-  /** Delete an existing user */
-  deleteUser?: Maybe<DeleteUserPayload>;
-  emailConfirmation?: Maybe<UsersPermissionsLoginPayload>;
-  forgotPassword?: Maybe<UserPermissionsPasswordPayload>;
-  login: UsersPermissionsLoginPayload;
-  multipleUpload: Array<Maybe<UploadFile>>;
-  register: UsersPermissionsLoginPayload;
-  resetPassword?: Maybe<UsersPermissionsLoginPayload>;
-  setEditorCode?: Maybe<Scalars['String']>;
-  updateCodeChallenge?: Maybe<UpdateCodeChallengePayload>;
-  updateCourse?: Maybe<UpdateCoursePayload>;
-  updateFileInfo: UploadFile;
-  updateLesson?: Maybe<UpdateLessonPayload>;
-  updateLessonCompletion?: Maybe<UpdateLessonCompletionPayload>;
-  updateModule?: Maybe<UpdateModulePayload>;
-  updateMultipleChoiceChallenge?: Maybe<UpdateMultipleChoiceChallengePayload>;
+  /** Create a new role */
+  createRole?: Maybe<CreateRolePayload>;
   /** Update an existing role */
   updateRole?: Maybe<UpdateRolePayload>;
-  updateSublesson?: Maybe<UpdateSublessonPayload>;
-  updateSublessonChallenge?: Maybe<UpdateSublessonChallengePayload>;
+  /** Delete an existing role */
+  deleteRole?: Maybe<DeleteRolePayload>;
+  /** Create a new user */
+  createUser?: Maybe<CreateUserPayload>;
   /** Update an existing user */
   updateUser?: Maybe<UpdateUserPayload>;
+  /** Delete an existing user */
+  deleteUser?: Maybe<DeleteUserPayload>;
+  createCodeChallengeLocalization: CodeChallenge;
+  createCourseLocalization: Course;
+  createLessonLocalization: Lesson;
+  createModuleLocalization: Modules;
   upload: UploadFile;
+  multipleUpload: Array<Maybe<UploadFile>>;
+  updateFileInfo: UploadFile;
+  login: UsersPermissionsLoginPayload;
+  register: UsersPermissionsLoginPayload;
+  forgotPassword?: Maybe<UserPermissionsPasswordPayload>;
+  resetPassword?: Maybe<UsersPermissionsLoginPayload>;
+  emailConfirmation?: Maybe<UsersPermissionsLoginPayload>;
 };
 
 
@@ -774,68 +768,8 @@ export type MutationCreateCodeChallengeArgs = {
 };
 
 
-export type MutationCreateCodeChallengeLocalizationArgs = {
-  input: UpdateCodeChallengeInput;
-};
-
-
-export type MutationCreateCourseArgs = {
-  input?: Maybe<CreateCourseInput>;
-};
-
-
-export type MutationCreateCourseLocalizationArgs = {
-  input: UpdateCourseInput;
-};
-
-
-export type MutationCreateLessonArgs = {
-  input?: Maybe<CreateLessonInput>;
-};
-
-
-export type MutationCreateLessonCompletionArgs = {
-  input?: Maybe<CreateLessonCompletionInput>;
-};
-
-
-export type MutationCreateLessonLocalizationArgs = {
-  input: UpdateLessonInput;
-};
-
-
-export type MutationCreateModuleArgs = {
-  input?: Maybe<CreateModuleInput>;
-};
-
-
-export type MutationCreateModuleLocalizationArgs = {
-  input: UpdateModuleInput;
-};
-
-
-export type MutationCreateMultipleChoiceChallengeArgs = {
-  input?: Maybe<CreateMultipleChoiceChallengeInput>;
-};
-
-
-export type MutationCreateRoleArgs = {
-  input?: Maybe<CreateRoleInput>;
-};
-
-
-export type MutationCreateSublessonArgs = {
-  input?: Maybe<CreateSublessonInput>;
-};
-
-
-export type MutationCreateSublessonChallengeArgs = {
-  input?: Maybe<CreateSublessonChallengeInput>;
-};
-
-
-export type MutationCreateUserArgs = {
-  input?: Maybe<CreateUserInput>;
+export type MutationUpdateCodeChallengeArgs = {
+  input?: Maybe<UpdateCodeChallengeInput>;
 };
 
 
@@ -844,18 +778,28 @@ export type MutationDeleteCodeChallengeArgs = {
 };
 
 
+export type MutationCreateCourseArgs = {
+  input?: Maybe<CreateCourseInput>;
+};
+
+
+export type MutationUpdateCourseArgs = {
+  input?: Maybe<UpdateCourseInput>;
+};
+
+
 export type MutationDeleteCourseArgs = {
   input?: Maybe<DeleteCourseInput>;
 };
 
 
-export type MutationDeleteFileArgs = {
-  input?: Maybe<DeleteFileInput>;
+export type MutationCreateLessonCompletionArgs = {
+  input?: Maybe<CreateLessonCompletionInput>;
 };
 
 
-export type MutationDeleteLessonArgs = {
-  input?: Maybe<DeleteLessonInput>;
+export type MutationUpdateLessonCompletionArgs = {
+  input?: Maybe<UpdateLessonCompletionInput>;
 };
 
 
@@ -864,8 +808,43 @@ export type MutationDeleteLessonCompletionArgs = {
 };
 
 
+export type MutationCreateLessonArgs = {
+  input?: Maybe<CreateLessonInput>;
+};
+
+
+export type MutationUpdateLessonArgs = {
+  input?: Maybe<UpdateLessonInput>;
+};
+
+
+export type MutationDeleteLessonArgs = {
+  input?: Maybe<DeleteLessonInput>;
+};
+
+
+export type MutationCreateModuleArgs = {
+  input?: Maybe<CreateModuleInput>;
+};
+
+
+export type MutationUpdateModuleArgs = {
+  input?: Maybe<UpdateModuleInput>;
+};
+
+
 export type MutationDeleteModuleArgs = {
   input?: Maybe<DeleteModuleInput>;
+};
+
+
+export type MutationCreateMultipleChoiceChallengeArgs = {
+  input?: Maybe<CreateMultipleChoiceChallengeInput>;
+};
+
+
+export type MutationUpdateMultipleChoiceChallengeArgs = {
+  input?: Maybe<UpdateMultipleChoiceChallengeInput>;
 };
 
 
@@ -874,13 +853,13 @@ export type MutationDeleteMultipleChoiceChallengeArgs = {
 };
 
 
-export type MutationDeleteRoleArgs = {
-  input?: Maybe<DeleteRoleInput>;
+export type MutationCreateSublessonChallengeArgs = {
+  input?: Maybe<CreateSublessonChallengeInput>;
 };
 
 
-export type MutationDeleteSublessonArgs = {
-  input?: Maybe<DeleteSublessonInput>;
+export type MutationUpdateSublessonChallengeArgs = {
+  input?: Maybe<UpdateSublessonChallengeInput>;
 };
 
 
@@ -889,23 +868,83 @@ export type MutationDeleteSublessonChallengeArgs = {
 };
 
 
+export type MutationCreateSublessonArgs = {
+  input?: Maybe<CreateSublessonInput>;
+};
+
+
+export type MutationUpdateSublessonArgs = {
+  input?: Maybe<UpdateSublessonInput>;
+};
+
+
+export type MutationDeleteSublessonArgs = {
+  input?: Maybe<DeleteSublessonInput>;
+};
+
+
+export type MutationDeleteFileArgs = {
+  input?: Maybe<DeleteFileInput>;
+};
+
+
+export type MutationCreateRoleArgs = {
+  input?: Maybe<CreateRoleInput>;
+};
+
+
+export type MutationUpdateRoleArgs = {
+  input?: Maybe<UpdateRoleInput>;
+};
+
+
+export type MutationDeleteRoleArgs = {
+  input?: Maybe<DeleteRoleInput>;
+};
+
+
+export type MutationCreateUserArgs = {
+  input?: Maybe<CreateUserInput>;
+};
+
+
+export type MutationUpdateUserArgs = {
+  input?: Maybe<UpdateUserInput>;
+};
+
+
 export type MutationDeleteUserArgs = {
   input?: Maybe<DeleteUserInput>;
 };
 
 
-export type MutationEmailConfirmationArgs = {
-  confirmation: Scalars['String'];
+export type MutationCreateCodeChallengeLocalizationArgs = {
+  input: UpdateCodeChallengeInput;
 };
 
 
-export type MutationForgotPasswordArgs = {
-  email: Scalars['String'];
+export type MutationCreateCourseLocalizationArgs = {
+  input: UpdateCourseInput;
 };
 
 
-export type MutationLoginArgs = {
-  input: UsersPermissionsLoginInput;
+export type MutationCreateLessonLocalizationArgs = {
+  input: UpdateLessonInput;
+};
+
+
+export type MutationCreateModuleLocalizationArgs = {
+  input: UpdateModuleInput;
+};
+
+
+export type MutationUploadArgs = {
+  refId?: Maybe<Scalars['ID']>;
+  ref?: Maybe<Scalars['String']>;
+  field?: Maybe<Scalars['String']>;
+  source?: Maybe<Scalars['String']>;
+  info?: Maybe<FileInfoInput>;
+  file: Scalars['Upload'];
 };
 
 
@@ -918,8 +957,24 @@ export type MutationMultipleUploadArgs = {
 };
 
 
+export type MutationUpdateFileInfoArgs = {
+  id: Scalars['ID'];
+  info: FileInfoInput;
+};
+
+
+export type MutationLoginArgs = {
+  input: UsersPermissionsLoginInput;
+};
+
+
 export type MutationRegisterArgs = {
   input: UsersPermissionsRegisterInput;
+};
+
+
+export type MutationForgotPasswordArgs = {
+  email: Scalars['String'];
 };
 
 
@@ -930,74 +985,8 @@ export type MutationResetPasswordArgs = {
 };
 
 
-export type MutationSetEditorCodeArgs = {
-  code: Scalars['String'];
-};
-
-
-export type MutationUpdateCodeChallengeArgs = {
-  input?: Maybe<UpdateCodeChallengeInput>;
-};
-
-
-export type MutationUpdateCourseArgs = {
-  input?: Maybe<UpdateCourseInput>;
-};
-
-
-export type MutationUpdateFileInfoArgs = {
-  id: Scalars['ID'];
-  info: FileInfoInput;
-};
-
-
-export type MutationUpdateLessonArgs = {
-  input?: Maybe<UpdateLessonInput>;
-};
-
-
-export type MutationUpdateLessonCompletionArgs = {
-  input?: Maybe<UpdateLessonCompletionInput>;
-};
-
-
-export type MutationUpdateModuleArgs = {
-  input?: Maybe<UpdateModuleInput>;
-};
-
-
-export type MutationUpdateMultipleChoiceChallengeArgs = {
-  input?: Maybe<UpdateMultipleChoiceChallengeInput>;
-};
-
-
-export type MutationUpdateRoleArgs = {
-  input?: Maybe<UpdateRoleInput>;
-};
-
-
-export type MutationUpdateSublessonArgs = {
-  input?: Maybe<UpdateSublessonInput>;
-};
-
-
-export type MutationUpdateSublessonChallengeArgs = {
-  input?: Maybe<UpdateSublessonChallengeInput>;
-};
-
-
-export type MutationUpdateUserArgs = {
-  input?: Maybe<UpdateUserInput>;
-};
-
-
-export type MutationUploadArgs = {
-  refId?: Maybe<Scalars['ID']>;
-  ref?: Maybe<Scalars['String']>;
-  field?: Maybe<Scalars['String']>;
-  source?: Maybe<Scalars['String']>;
-  info?: Maybe<FileInfoInput>;
-  file: Scalars['Upload'];
+export type MutationEmailConfirmationArgs = {
+  confirmation: Scalars['String'];
 };
 
 export enum PublicationState {
@@ -1013,36 +1002,35 @@ export type Query = {
   course?: Maybe<Course>;
   courses?: Maybe<Array<Maybe<Course>>>;
   coursesConnection?: Maybe<CourseConnection>;
-  editor?: Maybe<Editor>;
-  files?: Maybe<Array<Maybe<UploadFile>>>;
-  filesConnection?: Maybe<UploadFileConnection>;
-  getSublessonBySlugs: Sublesson;
-  lesson?: Maybe<Lesson>;
   lessonCompletion?: Maybe<LessonCompletion>;
   lessonCompletions?: Maybe<Array<Maybe<LessonCompletion>>>;
   lessonCompletionsConnection?: Maybe<LessonCompletionConnection>;
+  lesson?: Maybe<Lesson>;
   lessons?: Maybe<Array<Maybe<Lesson>>>;
   lessonsConnection?: Maybe<LessonConnection>;
-  me?: Maybe<UsersPermissionsMe>;
   module?: Maybe<Modules>;
   modules?: Maybe<Array<Maybe<Modules>>>;
   modulesConnection?: Maybe<ModulesConnection>;
   multipleChoiceChallenge?: Maybe<MultipleChoiceChallenge>;
   multipleChoiceChallenges?: Maybe<Array<Maybe<MultipleChoiceChallenge>>>;
   multipleChoiceChallengesConnection?: Maybe<MultipleChoiceChallengeConnection>;
+  sublessonChallenge?: Maybe<SublessonChallenge>;
+  sublessonChallenges?: Maybe<Array<Maybe<SublessonChallenge>>>;
+  sublessonChallengesConnection?: Maybe<SublessonChallengeConnection>;
+  sublesson?: Maybe<Sublesson>;
+  sublessons?: Maybe<Array<Maybe<Sublesson>>>;
+  sublessonsConnection?: Maybe<SublessonConnection>;
+  files?: Maybe<Array<Maybe<UploadFile>>>;
+  filesConnection?: Maybe<UploadFileConnection>;
   role?: Maybe<UsersPermissionsRole>;
   /** Retrieve all the existing roles. You can't apply filters on this query. */
   roles?: Maybe<Array<Maybe<UsersPermissionsRole>>>;
   rolesConnection?: Maybe<UsersPermissionsRoleConnection>;
-  sublesson?: Maybe<Sublesson>;
-  sublessonChallenge?: Maybe<SublessonChallenge>;
-  sublessonChallenges?: Maybe<Array<Maybe<SublessonChallenge>>>;
-  sublessonChallengesConnection?: Maybe<SublessonChallengeConnection>;
-  sublessons?: Maybe<Array<Maybe<Sublesson>>>;
-  sublessonsConnection?: Maybe<SublessonConnection>;
   user?: Maybe<UsersPermissionsUser>;
   users?: Maybe<Array<Maybe<UsersPermissionsUser>>>;
   usersConnection?: Maybe<UsersPermissionsUserConnection>;
+  me?: Maybe<UsersPermissionsMe>;
+  getSublessonBySlugs: Sublesson;
 };
 
 
@@ -1096,36 +1084,6 @@ export type QueryCoursesConnectionArgs = {
 };
 
 
-export type QueryFilesArgs = {
-  sort?: Maybe<Scalars['String']>;
-  limit?: Maybe<Scalars['Int']>;
-  start?: Maybe<Scalars['Int']>;
-  where?: Maybe<Scalars['JSON']>;
-  publicationState?: Maybe<PublicationState>;
-};
-
-
-export type QueryFilesConnectionArgs = {
-  sort?: Maybe<Scalars['String']>;
-  limit?: Maybe<Scalars['Int']>;
-  start?: Maybe<Scalars['Int']>;
-  where?: Maybe<Scalars['JSON']>;
-};
-
-
-export type QueryGetSublessonBySlugsArgs = {
-  lessonSlug: Scalars['String'];
-  sublessonSlug: Scalars['String'];
-  id: Scalars['ID'];
-};
-
-
-export type QueryLessonArgs = {
-  id: Scalars['ID'];
-  publicationState?: Maybe<PublicationState>;
-};
-
-
 export type QueryLessonCompletionArgs = {
   id: Scalars['ID'];
   publicationState?: Maybe<PublicationState>;
@@ -1146,6 +1104,12 @@ export type QueryLessonCompletionsConnectionArgs = {
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
   where?: Maybe<Scalars['JSON']>;
+};
+
+
+export type QueryLessonArgs = {
+  id: Scalars['ID'];
+  publicationState?: Maybe<PublicationState>;
 };
 
 
@@ -1216,35 +1180,6 @@ export type QueryMultipleChoiceChallengesConnectionArgs = {
 };
 
 
-export type QueryRoleArgs = {
-  id: Scalars['ID'];
-  publicationState?: Maybe<PublicationState>;
-};
-
-
-export type QueryRolesArgs = {
-  sort?: Maybe<Scalars['String']>;
-  limit?: Maybe<Scalars['Int']>;
-  start?: Maybe<Scalars['Int']>;
-  where?: Maybe<Scalars['JSON']>;
-  publicationState?: Maybe<PublicationState>;
-};
-
-
-export type QueryRolesConnectionArgs = {
-  sort?: Maybe<Scalars['String']>;
-  limit?: Maybe<Scalars['Int']>;
-  start?: Maybe<Scalars['Int']>;
-  where?: Maybe<Scalars['JSON']>;
-};
-
-
-export type QuerySublessonArgs = {
-  id: Scalars['ID'];
-  publicationState?: Maybe<PublicationState>;
-};
-
-
 export type QuerySublessonChallengeArgs = {
   id: Scalars['ID'];
   publicationState?: Maybe<PublicationState>;
@@ -1268,6 +1203,12 @@ export type QuerySublessonChallengesConnectionArgs = {
 };
 
 
+export type QuerySublessonArgs = {
+  id: Scalars['ID'];
+  publicationState?: Maybe<PublicationState>;
+};
+
+
 export type QuerySublessonsArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
@@ -1278,6 +1219,46 @@ export type QuerySublessonsArgs = {
 
 
 export type QuerySublessonsConnectionArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+};
+
+
+export type QueryFilesArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryFilesConnectionArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+};
+
+
+export type QueryRoleArgs = {
+  id: Scalars['ID'];
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryRolesArgs = {
+  sort?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Int']>;
+  where?: Maybe<Scalars['JSON']>;
+  publicationState?: Maybe<PublicationState>;
+};
+
+
+export type QueryRolesConnectionArgs = {
   sort?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
@@ -1305,6 +1286,13 @@ export type QueryUsersConnectionArgs = {
   limit?: Maybe<Scalars['Int']>;
   start?: Maybe<Scalars['Int']>;
   where?: Maybe<Scalars['JSON']>;
+};
+
+
+export type QueryGetSublessonBySlugsArgs = {
+  lessonSlug: Scalars['String'];
+  sublessonSlug: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 export type RoleInput = {
@@ -2427,21 +2415,6 @@ export type LessonProgressDataFragment = (
   )>>> }
 );
 
-export type GetExampleDataQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetExampleDataQuery = (
-  { __typename?: 'Query' }
-  & { lessons?: Maybe<Array<Maybe<(
-    { __typename?: 'Lesson' }
-    & Pick<Lesson, 'name'>
-    & { sublessons?: Maybe<Array<Maybe<(
-      { __typename?: 'Sublesson' }
-      & Pick<Sublesson, 'name'>
-    )>>> }
-  )>>> }
-);
-
 export type SublessonInstructionsDataFragment = (
   { __typename?: 'Sublesson' }
   & Pick<Sublesson, 'name'>
@@ -2540,43 +2513,6 @@ export const SublessonInstructionsDataFragmentDoc = gql`
 }
     ${CodeChallengeDataFragmentDoc}
 ${MultipleChoiceChallengeDataFragmentDoc}`;
-export const GetExampleDataDocument = gql`
-    query getExampleData {
-  lessons {
-    name
-    sublessons {
-      name
-    }
-  }
-}
-    `;
-
-/**
- * __useGetExampleDataQuery__
- *
- * To run a query within a React component, call `useGetExampleDataQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetExampleDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetExampleDataQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetExampleDataQuery(baseOptions?: Apollo.QueryHookOptions<GetExampleDataQuery, GetExampleDataQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetExampleDataQuery, GetExampleDataQueryVariables>(GetExampleDataDocument, options);
-      }
-export function useGetExampleDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetExampleDataQuery, GetExampleDataQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetExampleDataQuery, GetExampleDataQueryVariables>(GetExampleDataDocument, options);
-        }
-export type GetExampleDataQueryHookResult = ReturnType<typeof useGetExampleDataQuery>;
-export type GetExampleDataLazyQueryHookResult = ReturnType<typeof useGetExampleDataLazyQuery>;
-export type GetExampleDataQueryResult = Apollo.QueryResult<GetExampleDataQuery, GetExampleDataQueryVariables>;
 export const GetLessonDataDocument = gql`
     query getLessonData($slug: String!) {
   lessons(where: {slug: $slug}) {
