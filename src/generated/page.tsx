@@ -6,7 +6,7 @@ import { NextRouter, useRouter } from 'next/router'
 import { QueryHookOptions, useQuery } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 import type React from 'react';
-import { getApolloClient } from '../utilsreal/withApollo';
+import { getApolloClient } from '../utils/withApollo';
 export async function getServerPageGetLessonData
     (options: Omit<Apollo.QueryOptions<Types.GetLessonDataQueryVariables>, 'query'>, ctx?: any ){
         const apolloClient = getApolloClient(ctx);

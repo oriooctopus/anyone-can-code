@@ -29,7 +29,7 @@ generates:
       # excludePatternsOptions: 'i'
       # customDataIdFromObjectName: 'test'
       # customDataIdFromObjectImport: 'abc'
-      apolloClientInstanceImport: '../utilsreal/withApollo'
+      apolloClientInstanceImport: '../utils/withApollo'
       # apolloStateKey: '__APOLLO_STATE__'
     preset: import-types
     presetConfig:
