@@ -1,18 +1,15 @@
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { Monaco } from '@monaco-editor/react';
 import AllHallowsEveTheme from 'monaco-themes/themes/All Hallows Eve.json';
 
 export const DEFAULT_MONACO_EDITOR_THEME = 'all-hallows-eve';
 
-export const defineDefaultMonacoTheme = (monaco: Monaco) => {
-  monaco.editor.defineTheme(
+export const DEFAULT_EDITOR_STARTING_CODE =
+  '// use this editor to test code live in the browser';
+
+export const defineDefaultMonacoTheme = ({ editor }: Monaco) => {
+  editor.defineTheme(
     DEFAULT_MONACO_EDITOR_THEME,
-    /*
-     * TODO: open an issue to figure out how to do the following:
-     * Because the theme comes from a json file, the type needs
-     * to be asserted when imported, but I'm not sure how to
-     * import/access the relevant type
-     */
-    // @ts-ignore
-    AllHallowsEveTheme,
+    AllHallowsEveTheme as monaco.editor.IStandaloneThemeData,
   );
 };

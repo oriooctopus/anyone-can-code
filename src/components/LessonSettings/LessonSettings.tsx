@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import { SettingOutlined } from '@ant-design/icons';
 import { useReactiveVar } from '@apollo/client';
 import {
   Box,
   BoxProps,
   Button,
-  Flex,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -31,6 +29,7 @@ import {
 
 type props = BoxProps & {};
 
+// TODO: add formik typing
 export const LessonSettings = ({ ...boxProps }: props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const sublessonTextLengthPreference = useReactiveVar(
@@ -40,14 +39,12 @@ export const LessonSettings = ({ ...boxProps }: props) => {
     sublessonChallengeFrequencyVar,
   );
 
-  // how to do with typescript?
   const initialValues = {
     lessonSaveOption: LessonSettingsSaveOptionsEnum.everywhere,
     sublessonTextLengthPreference,
     sublessonChallengeFrequency,
   };
-  const onSubmit = (values, { setSubmitting }) => {
-    console.log('submit!', values);
+  const onSubmit = (values) => {
     // in future we will use the save preferences to determine how we update
     sublessonTextLengthPreferenceVar(values.sublessonTextLengthPreference);
     sublessonChallengeFrequencyVar(values.sublessonChallengeFrequency);
@@ -60,13 +57,7 @@ export const LessonSettings = ({ ...boxProps }: props) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <Formik initialValues={initialValues} onSubmit={onSubmit}>
-          {({
-            values,
-            handleChange,
-            handleSubmit,
-            isSubmitting,
-            setFieldValue,
-          }) => (
+          {({ values, handleSubmit, setFieldValue }) => (
             <ModalContent maxWidth="600px">
               <ModalHeader>Lesson Settings</ModalHeader>
               <ModalCloseButton />

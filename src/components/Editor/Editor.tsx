@@ -4,17 +4,18 @@ import MonacoEditor from '@monaco-editor/react';
 import editorOptions from './editor-options';
 import { codeEditorValueVar, currentLogVar } from 'src/cache';
 import { useReactiveVar } from '@apollo/client';
-import { ChallengeFragment } from 'src/generated/graphql';
 import { useDebounced } from 'src/utils/hooks/useDebounced';
 import { getConsoleLogsFromCodeEvaluation } from 'src/workers/utils';
 import {
+  DEFAULT_EDITOR_STARTING_CODE,
   DEFAULT_MONACO_EDITOR_THEME,
   defineDefaultMonacoTheme,
 } from 'components/Editor/Editor.utils';
 import '@fontsource/roboto-mono';
+import { CodeChallengeDataFragment } from 'src/generated/graphql';
 
 type EditorProps = {
-  challenge: ChallengeFragment | undefined;
+  challenge: CodeChallengeDataFragment | undefined;
   onMount: () => void;
 };
 
@@ -32,9 +33,7 @@ export const Editor: React.FC<EditorProps> = ({ challenge }) => {
   );
 
   useEffect(() => {
-    // if it's multiple choice make it something like '// you can use the editor to play around or test out '
-    const startingCode = challenge?.startingCode;
-    codeEditorValueVar(startingCode);
+    codeEditorValueVar(challenge?.startingCode || DEFAULT_EDITOR_STARTING_CODE);
   }, [challenge?.id]);
 
   return (
@@ -45,7 +44,7 @@ export const Editor: React.FC<EditorProps> = ({ challenge }) => {
         theme={DEFAULT_MONACO_EDITOR_THEME}
         value={codeEditorValue}
         options={editorOptions}
-        onChange={(val) => codeEditorValueVar(val)}
+        onChange={codeEditorValueVar}
         height={'70vh'}
       />
       <Box

@@ -26,13 +26,11 @@ const getIcon = (passed: boolean | undefined) => {
   return <CloseCircleOutlined style={{ fontSize: rem(24), color: 'red' }} />;
 };
 
-export const TestCaseResult = ({ label, passed }: IProps) => {
-  return (
-    <Flex align="center" mt="18px">
-      {getIcon(passed)}
-      <Text ml="5px">{label}</Text>
-    </Flex>
-  );
-};
+export const TestCaseResult = ({ label, passed }: IProps) => (
+  <Flex align="center" mt="18px">
+    {getIcon(passed)}
+    <Text ml="5px">{label}</Text>
+  </Flex>
+);
 
 export default TestCaseResult;
