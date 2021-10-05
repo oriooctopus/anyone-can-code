@@ -20,6 +20,7 @@ export const getApolloClient = (
   initialState?: NormalizedCacheObject,
 ) => {
   const httpLink = createHttpLink({
+    // TODO: Don't hardcode this
     uri: 'http://localhost:1337/graphql',
     fetch,
   });

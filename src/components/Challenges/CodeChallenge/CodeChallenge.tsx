@@ -1,16 +1,13 @@
-// import { CodeChallengeProps } from 'components/Challenges/Challenge.types';
-import { Button, ButtonProps } from '@chakra-ui/button';
-import { Box, Flex, HStack, Text } from '@chakra-ui/layout';
+import { Box, Flex, Text } from '@chakra-ui/layout';
 import TestCaseResult from 'components/TestCaseResult/TestCaseResult';
-import { FlText } from 'components/Typography/FlText';
-import {
-  ChallengeButton,
-  hasPassedCodeChallenge,
-  useCodeChallengeTests,
-} from 'components/Challenges/Challenge.utils';
+import { ChallengeButton } from 'components/Challenges/Challenge.utils';
 import { codeEditorValueVar, testResultsVar } from 'src/cache';
 import { useReactiveVar } from '@apollo/client';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
+import {
+  hasPassedCodeChallenge,
+  useCodeChallengeTests,
+} from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
 
 export type CodeChallengeProps = {
   challenge: CodeChallengeDataFragment;
@@ -33,7 +30,7 @@ export const CodeChallenge = ({
   return (
     <>
       <Box mt="15px" />
-      <FlText variant="regularBody">{prompt}</FlText>
+      <Text>{prompt}</Text>
       {tests?.map(({ label }, index) => (
         <TestCaseResult
           passed={testResults[index]?.pass}

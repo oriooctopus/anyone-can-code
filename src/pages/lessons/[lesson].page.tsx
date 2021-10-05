@@ -1,19 +1,16 @@
 import { GetStaticProps } from 'next';
 import { Editor } from 'components/Editor/Editor';
-import { ChakraProvider, Grid, GridItem } from '@chakra-ui/react';
+import { Grid, GridItem } from '@chakra-ui/react';
 import LessonProgress from 'src/components/LessonProgress/LessonProgress';
 import { PageGetLessonDataComp, ssrGetLessonData } from 'src/generated/page';
-import theme from 'src/theme/chakra-theme';
-import { withApollo } from 'src/utilsreal/withApollo';
+import { withApollo } from 'src/utils/withApollo';
 import Layout from 'components/Layout/Layout';
-import '@fontsource/roboto';
-import { useCodeChallengeTests } from 'components/Challenges/Challenge.utils';
 import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
 import { useReactiveVar } from '@apollo/client';
-import { MultipleChoiceChallenge } from 'components/Challenges/MultipleChoiceChallengeOld';
-import { DefaultContentPanelGridItem } from 'components/ContentPanel/ContentPanel.styles';
 import { SublessonInstructions } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions';
 import { getChallengesFromSublessonChallenges } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions.utils';
+import { useCodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
+import '@fontsource/roboto';
 
 const App: PageGetLessonDataComp = (props) => {
   const {
@@ -31,8 +28,6 @@ const App: PageGetLessonDataComp = (props) => {
 
   // I thought about abstracting away this logic.. but I don't think it's really necessary with typescript?
   const isCodeChallenge = currentChallenge?.__typename === 'CodeChallenge';
-  const isMultipleChoiceChallenge =
-    currentChallenge?.__typename === 'MultipleChoiceChallenge';
   const { runTests } = useCodeChallengeTests(
     isCodeChallenge ? currentChallenge.tests : [],
   );
@@ -55,31 +50,35 @@ const App: PageGetLessonDataComp = (props) => {
   console.log('is lesson page rerunning');
 
   return (
-    <ChakraProvider theme={theme}>
-      <Layout>
-        <Grid
-          templateColumns="repeat(12, 1fr)"
-          gap={{ md: '20px', lg: '30px', xl: '40px' }}
-          h="100%"
+    <Layout>
+      <Grid
+        templateColumns="repeat(12, 1fr)"
+        gap={{ md: '20px', lg: '30px', xl: '40px' }}
+        h="100%"
+      >
+        <GridItem
+          colSpan={{
+            lg: true ? 5 : 7,
+            md: true ? 7 : 9,
+          }}
+          {...props}
         >
-          <DefaultContentPanelGridItem>
-            <SublessonInstructions
-              sublesson={currentSublesson}
-              totalSublessons={totalSublessons}
-              lastChallengeIndexOfPreviousSublesson={
-                lastChallengeIndexOfPreviousSublesson
-              }
-            />
-          </DefaultContentPanelGridItem>
-          <GridItem colSpan={true ? 5 : 3} mt="20px">
-            <Editor challenge={currentChallenge} onMount={onMount} />
-          </GridItem>
-          <GridItem colSpan={2} display={{ md: 'none', lg: 'block' }}>
-            <LessonProgress sublessons={lessons[0].sublessons} />
-          </GridItem>
-        </Grid>
-      </Layout>
-    </ChakraProvider>
+          <SublessonInstructions
+            sublesson={currentSublesson}
+            totalSublessons={totalSublessons}
+            lastChallengeIndexOfPreviousSublesson={
+              lastChallengeIndexOfPreviousSublesson
+            }
+          />
+        </GridItem>
+        <GridItem colSpan={true ? 5 : 3} mt="20px">
+          <Editor challenge={currentChallenge} onMount={onMount} />
+        </GridItem>
+        <GridItem colSpan={2} display={{ md: 'none', lg: 'block' }}>
+          <LessonProgress sublessons={lessons[0].sublessons} />
+        </GridItem>
+      </Grid>
+    </Layout>
   );
 };
 
@@ -102,10 +101,4 @@ export default withApollo(
   ssrGetLessonData.withPage(({ query }) => ({
     variables: { slug: query.lesson as string },
   }))(App),
-  // ssrGetLessonData.withPage(({ query }) => {
-  //   console.log('query', query);
-  //   return {
-  //     variables: { slug: query.lesson as String },
-  //   };
-  // })(App),
 );

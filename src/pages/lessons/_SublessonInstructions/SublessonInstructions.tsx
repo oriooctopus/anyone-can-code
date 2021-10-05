@@ -73,7 +73,9 @@ export const SublessonInstructions = React.memo(
         secondaryContent={!isLessonIntroduction && sublessonText}
       >
         <>
-          <FlText variant="smallLabel">{lesson?.name}</FlText>
+          <Text fontSize="13px" textTransform="uppercase">
+            {lesson?.name}
+          </Text>
           {isLessonIntroduction ? (
             sublessonText
           ) : (

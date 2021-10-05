@@ -1,7 +1,7 @@
 // import { ChallengeProps } from 'components/Challenges/Challenge.types';
-import { CodeChallenge } from 'components/Challenges/CodeChallenge';
+import { CodeChallenge } from 'components/Challenges/CodeChallenge/CodeChallenge';
 import { ChallengeFragment } from 'src/types/generalTypes';
-import { MultipleChoiceChallengeActions } from './MultipleChoiceChallengeActions';
+import { MultipleChoiceChallengeActions } from './MultipleChoiceChallenge/MultipleChoiceChallenge';
 
 export type ChallengeProps = {
   challenge: ChallengeFragment;
