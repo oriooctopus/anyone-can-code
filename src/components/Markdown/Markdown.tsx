@@ -49,7 +49,14 @@ const Markdown = ({
           );
         },
         a: ({ node, children, href, ...props }) => {
-          return <FlLink children={children[0]} {...props} href={href} />;
+          return (
+            <FlLink
+              children={children[0]}
+              {...props}
+              href={href}
+              target="_blank"
+            />
+          );
         },
       }}
     />

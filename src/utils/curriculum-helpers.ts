@@ -1,4 +1,3 @@
-import CSSHelp from './css-help';
 import strip from '@freecodecamp/strip-comments';
 
 const removeHtmlComments = (str: string): string =>
@@ -37,7 +36,7 @@ removeWhiteSpace() above, which removes all whitespace characters.
 */
 function isCalledWithNoArgs(
   calledFuncName: string,
-  callingCode: string
+  callingCode: string,
 ): boolean {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const noCommentsCallingCode = strip(callingCode) as string;
@@ -52,7 +51,6 @@ const curriculumHelpers = {
   removeCssComments,
   removeWhiteSpace,
   isCalledWithNoArgs,
-  CSSHelp
 };
 
 export default curriculumHelpers;

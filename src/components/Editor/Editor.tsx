@@ -29,7 +29,7 @@ export const Editor: React.FC<EditorProps> = ({ challenge }) => {
       currentLogVar(newLog);
     },
     [codeEditorValue],
-    200,
+    400,
   );
 
   useEffect(() => {
