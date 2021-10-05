@@ -1,6 +1,6 @@
 import { lessonProgressData } from 'components/LessonProgress/LessonProgress.query';
 import gql from 'graphql-tag';
-import { sublessonInstructionsData } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions.query';
+import { sublessonInstructionsData } from 'components/ContentPanel/ContentPanel.query';
 
 export const getLessonData = gql`
   query getLessonData($slug: String!) {

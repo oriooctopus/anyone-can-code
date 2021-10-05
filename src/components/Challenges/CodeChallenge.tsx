@@ -53,6 +53,7 @@ export const CodeChallenge = ({
         )}
 
         <ChallengeButton colorScheme="red" onClick={resetCode}>
+          {/* make this button less prominent */}
           Reset
         </ChallengeButton>
       </Flex>

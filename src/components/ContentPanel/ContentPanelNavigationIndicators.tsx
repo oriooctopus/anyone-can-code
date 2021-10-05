@@ -14,7 +14,7 @@ const IndicatorText = (props: IndicatorTextProps) => (
   <Text color="#646466" opacity="70%" fontSize="14px" {...props} />
 );
 
-export const PanelNavigationIndicators = ({
+export const ContentPanelNavigationIndicators = ({
   onGoBack,
   scrollIndicator,
   ...containerProps

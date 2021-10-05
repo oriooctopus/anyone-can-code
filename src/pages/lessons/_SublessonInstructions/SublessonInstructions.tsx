@@ -1,18 +1,8 @@
 import { useReactiveVar } from '@apollo/client';
-import {
-  currentChallengeIndexVar,
-  currentSublessonIndexVar,
-  SublessonTextLengthPreferenceEnum,
-  sublessonTextLengthPreferenceVar,
-} from 'src/cache';
-import React, { useState } from 'react';
-import { Box, Button, Divider, Flex, Heading, Text } from '@chakra-ui/react';
+import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
+import React from 'react';
 import '@fontsource/roboto';
 import { SublessonInstructionsDataFragment } from 'src/generated/graphql';
-import {
-  SublessonInstructionsContainer,
-  SublessonName,
-} from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions.styles';
 import {
   getChallengesFromSublessonChallenges,
   useGetLessonDescription,
@@ -22,9 +12,8 @@ import { FlText } from 'components/Typography/FlText';
 import Markdown from 'components/Markdown/Markdown';
 import { Challenge } from 'components/Challenges/Challenge';
 import { ChallengeButton } from 'components/Challenges/Challenge.utils';
-import { PanelNavigationIndicators } from 'components/PanelNavigationIndicators/PanelNavigationIndicators';
-import { LessonSettings } from 'components/LessonSettings/LessonSettings';
-import { useTheme } from 'src/styles/themes/theme';
+import { ContentPanel } from 'components/ContentPanel/ContentPanel';
+import { Text } from '@chakra-ui/layout';
 
 type props = {
   sublesson: SublessonInstructionsDataFragment;
@@ -36,7 +25,7 @@ type props = {
   lastChallengeIndexOfPreviousSublesson: number | undefined;
 };
 
-const SublessonInstructions = React.memo(
+export const SublessonInstructions = React.memo(
   ({
     lastChallengeIndexOfPreviousSublesson,
     sublesson,
@@ -53,17 +42,12 @@ const SublessonInstructions = React.memo(
     const isLessonIntroduction = currentChallengeIndex === -1;
     console.log('current challenge idnex', currentChallengeIndex);
 
-    /*
-     * TODO: Improve this indicator. It should be hidden unless the user is
-     * at the very top of the page
-     */
-    const showScrollIndicator = !isLessonIntroduction;
-    const showGoBackindicatpr =
+    const showGoBackIndicator =
       !isLessonIntroduction || currentSublessonIndex !== 0;
 
     const sublessonText = (
       <>
-        <SublessonName variant="h2">{name}</SublessonName>
+        <Text fontSize="26px">{name}</Text>
         <Markdown mb="35px">{description}</Markdown>
         {isLessonIntroduction && (
           <ChallengeButton onClick={onClickNext}>
@@ -73,7 +57,7 @@ const SublessonInstructions = React.memo(
       </>
     );
 
-    const goBack = () => {
+    const onGoBack = () => {
       if (currentChallengeIndex === -1) {
         currentSublessonIndexVar(currentSublessonIndex - 1);
         currentChallengeIndexVar(lastChallengeIndexOfPreviousSublesson);
@@ -83,20 +67,12 @@ const SublessonInstructions = React.memo(
     };
 
     return (
-      <Box
-        bgColor="white"
-        p="20px 20px 0"
-        height="calc(100vh - 65px)"
-        overflowY="scroll"
-        position="relative"
+      <ContentPanel
+        includeSettings={true}
+        onGoBack={showGoBackIndicator && onGoBack}
+        secondaryContent={!isLessonIntroduction && sublessonText}
       >
-        <LessonSettings position="absolute" right="20px" top="15px" />
-        <Box
-          minHeight="calc(100vh - 80px)"
-          d="flex"
-          flexDir="column"
-          alignItems="baseline"
-        >
+        <>
           <FlText variant="smallLabel">{lesson?.name}</FlText>
           {isLessonIntroduction ? (
             sublessonText
@@ -106,21 +82,8 @@ const SublessonInstructions = React.memo(
               onClickNext={onClickNext}
             />
           )}
-          <PanelNavigationIndicators
-            onGoBack={showGoBackindicatpr && goBack}
-            scrollIndicator={showScrollIndicator}
-            mb="20px"
-          />
-        </Box>
-        {!isLessonIntroduction && (
-          <>
-            <Divider color="#D0D0D5" opacity="1" mb="20px" />
-            {sublessonText}
-          </>
-        )}
-      </Box>
+        </>
+      </ContentPanel>
     );
   },
 );
-
-export default SublessonInstructions;

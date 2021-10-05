@@ -2,18 +2,18 @@ import { GetStaticProps } from 'next';
 import { Editor } from 'components/Editor/Editor';
 import { ChakraProvider, Grid, GridItem } from '@chakra-ui/react';
 import LessonProgress from 'src/components/LessonProgress/LessonProgress';
-import SublessonInstructions from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions';
 import { PageGetLessonDataComp, ssrGetLessonData } from 'src/generated/page';
 import theme from 'src/theme/chakra-theme';
 import { withApollo } from 'src/utilsreal/withApollo';
 import Layout from 'components/Layout/Layout';
-import { getChallengesFromSublessonChallenges } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions.utils';
 import '@fontsource/roboto';
 import { useCodeChallengeTests } from 'components/Challenges/Challenge.utils';
 import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
 import { useReactiveVar } from '@apollo/client';
 import { MultipleChoiceChallenge } from 'components/Challenges/MultipleChoiceChallengeOld';
 import { DefaultContentPanelGridItem } from 'components/ContentPanel/ContentPanel.styles';
+import { SublessonInstructions } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions';
+import { getChallengesFromSublessonChallenges } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions.utils';
 
 const App: PageGetLessonDataComp = (props) => {
   const {

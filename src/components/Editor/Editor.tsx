@@ -8,6 +8,7 @@ import { useReactiveVar } from '@apollo/client';
 import { ChallengeFragment } from 'src/generated/graphql';
 import { useDebounced } from 'src/utils/hooks/useDebounced';
 import { getConsoleLogsFromCodeEvaluation } from 'src/workers/utils';
+import '@fontsource/roboto-mono';
 
 type EditorProps = {
   challenge: ChallengeFragment | undefined;
@@ -70,7 +71,9 @@ export const Editor: React.FC<EditorProps> = ({ challenge, onMount }) => {
         borderTopRadius="10px"
         h="100px"
         mt="auto"
+        mr="5px"
         padding="10px"
+        fontFamily="Roboto Mono"
       >
         {currentLog.map((log) => (
           <span style={{ display: 'block' }}>{log}</span>
