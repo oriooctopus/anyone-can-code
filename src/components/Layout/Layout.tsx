@@ -1,5 +1,5 @@
-import React from 'react';
 import { Box } from '@chakra-ui/react';
+import React from 'react';
 import Navbar from 'components/Navbar/Navbar';
 
 type LayoutProps = {

@@ -1,8 +1,8 @@
-import { LessonSettingsButtonGroupOption } from 'components/LessonSettings/LessonSettings.types';
 import {
   SublessonChallengeFrequencyEnum,
   SublessonTextLengthPreferenceEnum,
 } from 'src/cache';
+import { LessonSettingsButtonGroupOption } from 'components/LessonSettings/LessonSettings.types';
 
 export enum LessonSettingsSaveOptionsEnum {
   sublesson = 'sublesson',

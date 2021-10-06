@@ -1,10 +1,10 @@
+import { Box, BoxProps } from '@chakra-ui/layout';
 import clsx from 'clsx';
-import { StyledMarkdown } from 'components/Markdown/Markdown.styles';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { funky } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-import { Box, BoxProps } from '@chakra-ui/layout';
 import { rem } from 'src/styles/typography/font';
 import { FlLink } from 'components/Link/FlLink';
+import { StyledMarkdown } from 'components/Markdown/Markdown.styles';
 
 type MarkdownProps = BoxProps & {
   children: React.ReactNode;

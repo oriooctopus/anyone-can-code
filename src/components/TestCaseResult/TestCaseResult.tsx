@@ -1,5 +1,3 @@
-import { Flex, Text } from '@chakra-ui/layout';
-import React from 'react';
 import CheckFailure from '../../assets/CheckFailure.svg';
 import CheckSuccess from '../../assets/CheckSuccess.svg';
 import {
@@ -7,6 +5,8 @@ import {
   MinusOutlined,
   CloseCircleOutlined,
 } from '@ant-design/icons';
+import { Flex, Text } from '@chakra-ui/layout';
+import React from 'react';
 import { rem } from 'src/styles/typography/font';
 
 interface IProps {

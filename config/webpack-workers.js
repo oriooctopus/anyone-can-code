@@ -1,16 +1,11 @@
 const path = require('path');
 const webpack = require('webpack');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { writeFileSync } = require('fs');
 
 module.exports = (env = {}) => {
   const __DEV__ = env.production !== true;
   const staticPath = path.join(__dirname, '../public/js');
   return {
-    // cache: __DEV__ ? { type: "filesystem" } : false,
-    // mode: __DEV__ ? "development" : "production",
     entry: {
-      'frame-runner': './src/workers/frame-runner.js',
       'test-evaluator': './src/workers/test-evaluator.js',
     },
     devtool: 'inline-source-map',
@@ -20,10 +15,6 @@ module.exports = (env = {}) => {
         // construct and output the filename here, so the client can use the
         // json to find the file.
         const filename = `${chunkData.chunk.name}`;
-        // writeFileSync(
-        //   path.join(configPath, `${chunkData.chunk.name}.json`),
-        //   `{"filename": "${filename}"}`,
-        // );
         return filename + '.js';
       },
       chunkFilename: '[name].js',
@@ -59,9 +50,6 @@ module.exports = (env = {}) => {
       ],
     },
     plugins: [
-      // new CopyWebpackPlugin({
-      //   patterns: ['node_modules/sass.js/dist/sass.sync.js'],
-      // }),
       new webpack.ProvidePlugin({
         process: 'process/browser',
       }),
@@ -70,14 +58,6 @@ module.exports = (env = {}) => {
       }),
     ],
     resolve: {
-      // modules: [
-      //   {
-      //     buffer: require.resolve("buffer"),
-      //     util: false,
-      //     stream: false,
-      //     process: require.resolve("process/browser"),
-      //   },
-      // ],
       extensions: ['.js', '.ts'],
     },
   };

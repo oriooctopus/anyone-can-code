@@ -1,8 +1,8 @@
-import { memo } from 'react';
 import { Box, Divider } from '@chakra-ui/react';
-import { LessonSettings } from 'components/LessonSettings/LessonSettings';
 import '@fontsource/roboto';
+import { memo } from 'react';
 import { ContentPanelNavigationIndicators } from 'components/ContentPanel/ContentPanelNavigationIndicators';
+import { LessonSettings } from 'components/LessonSettings/LessonSettings';
 
 type props = {
   onGoBack?: () => void | undefined;

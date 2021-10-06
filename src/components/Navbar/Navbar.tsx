@@ -1,6 +1,6 @@
-import { memo } from 'react';
-import { Box, HStack } from '@chakra-ui/layout';
 import { NavbarLink } from './Navbar.styles';
+import { Box, HStack } from '@chakra-ui/layout';
+import { memo } from 'react';
 import { rem } from 'src/styles/typography/font';
 
 const Navbar = memo(() => (

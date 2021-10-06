@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import { Text } from '@chakra-ui/layout';
 import { useReactiveVar } from '@apollo/client';
-import { ChallengeButton } from 'components/Challenges/Challenge.utils';
+import { Text } from '@chakra-ui/layout';
+import { Box, Button, Divider } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import {
   multipleChoiceOptionSelectionsVar,
   challengeAttemptStatusVar,
@@ -9,8 +9,8 @@ import {
   currentChallengeIndexVar,
 } from 'src/cache';
 import { MultipleChoiceChallengeDataFragment } from 'src/generated/graphql';
+import { ChallengeButton } from 'components/Challenges/Challenge.utils';
 import Markdown from 'components/Markdown/Markdown';
-import { Box, Button, Divider } from '@chakra-ui/react';
 
 type props = {
   onClickNext: () => void;
@@ -18,7 +18,7 @@ type props = {
 };
 
 export const MultipleChoiceChallengeActions = ({
-  challenge: { canSelectMultipleOptions, options, prompt },
+  challenge: { canSelectMultipleOptions, id, options, prompt },
   onClickNext,
 }: props) => {
   const challengeAttemptStatus = useReactiveVar(challengeAttemptStatusVar);
@@ -36,7 +36,7 @@ export const MultipleChoiceChallengeActions = ({
 
   useEffect(() => {
     multipleChoiceOptionSelectionsVar([]);
-  }, []);
+  }, [id]);
 
   const onSubmit = () => {
     const isSubmissionCorrect = options.every((_, index) =>
@@ -52,7 +52,6 @@ export const MultipleChoiceChallengeActions = ({
   };
 
   const onClickOption = (index: number) => {
-    console.log('currently', challengeAttemptStatus);
     challengeAttemptStatusVar(ChallengeAttemptStatusEnum.notAttempted);
     if (canSelectMultipleOptions) {
       multipleChoiceOptionSelectionsVar({

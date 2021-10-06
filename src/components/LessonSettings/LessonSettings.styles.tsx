@@ -1,12 +1,4 @@
-import {
-  Box,
-  BoxProps,
-  Button,
-  ButtonProps,
-  Flex,
-  HStack,
-  Text,
-} from '@chakra-ui/react';
+import { Box, BoxProps, Button, HStack, Text } from '@chakra-ui/react';
 import { LessonSettingsButtonGroupOption } from 'components/LessonSettings/LessonSettings.types';
 
 type ButtonGroupProps = {

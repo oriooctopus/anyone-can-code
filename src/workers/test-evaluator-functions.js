@@ -1,9 +1,9 @@
 // import '@babel/polyfill';
-import { format as __format } from '../utils/format';
 // import assert from "power-assert";
 import curriculumHelpers, {
   removeJSComments,
 } from '../utils/curriculum-helpers';
+import { format as __format } from '../utils/format';
 
 const __utils = ((self) => {
   const MAX_LOGS_SIZE = 64 * 1024;

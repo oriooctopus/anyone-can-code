@@ -1,4 +1,5 @@
 import { Button, ButtonProps } from '@chakra-ui/button';
+import { testResultsVar } from 'src/cache';
 
 export const ChallengeButton = (props: ButtonProps) => (
   <Button
@@ -10,6 +11,10 @@ export const ChallengeButton = (props: ButtonProps) => (
     {...props}
   />
 );
+
+export const resetChallengeTestResults = () => {
+  testResultsVar([]);
+};
 
 // export const useMultipleChoice = () => {
 //   const [optionSelectionMap, setOptionSelectionMap] = useState([]);

@@ -38,44 +38,44 @@ exports.challengeTypes = {
 
 // turn challengeType to file ext
 exports.pathsMap = {
-  [html]: "html",
-  [js]: "js",
-  [bonfire]: "js",
+  [html]: 'html',
+  [js]: 'js',
+  [bonfire]: 'js',
 };
 // determine the component to view for each challenge
 exports.viewTypes = {
-  [html]: "classic",
-  [js]: "classic",
-  [bonfire]: "classic",
-  [frontEndProject]: "frontend",
-  [backEndProject]: "backend",
-  [pythonProject]: "frontend",
-  [modern]: "modern",
-  [step]: "step",
-  [quiz]: "quiz",
-  [backend]: "backend",
-  [video]: "video",
-  [codeally]: "codeally",
+  [html]: 'classic',
+  [js]: 'classic',
+  [bonfire]: 'classic',
+  [frontEndProject]: 'frontend',
+  [backEndProject]: 'backend',
+  [pythonProject]: 'frontend',
+  [modern]: 'modern',
+  [step]: 'step',
+  [quiz]: 'quiz',
+  [backend]: 'backend',
+  [video]: 'video',
+  [codeally]: 'codeally',
 };
 
 // determine the type of submit function to use for the challenge on completion
 exports.submitTypes = {
-  [html]: "tests",
-  [js]: "tests",
-  [bonfire]: "tests",
+  [html]: 'tests',
+  [js]: 'tests',
+  [bonfire]: 'tests',
   // requires just a single url
   // like codepen.com/my-project
-  [frontEndProject]: "project.frontEnd",
+  [frontEndProject]: 'project.frontEnd',
   // requires two urls
   // a hosted URL where the app is running live
   // project code url like GitHub
-  [backEndProject]: "project.backEnd",
-  [pythonProject]: "project.backEnd",
-  [step]: "step",
-  [quiz]: "quiz",
-  [backend]: "backend",
-  [modern]: "tests",
-  [video]: "tests",
+  [backEndProject]: 'project.backEnd',
+  [pythonProject]: 'project.backEnd',
+  [step]: 'step',
+  [quiz]: 'quiz',
+  [backend]: 'backend',
+  [modern]: 'tests',
+  [video]: 'tests',
 };
 
 // determine which help forum questions should be posted to

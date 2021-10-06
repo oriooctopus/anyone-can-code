@@ -1,16 +1,16 @@
-import { GetStaticProps } from 'next';
-import { Editor } from 'components/Editor/Editor';
+import { useReactiveVar } from '@apollo/client';
 import { Grid, GridItem } from '@chakra-ui/react';
+import '@fontsource/roboto';
+import { GetStaticProps } from 'next';
+import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
 import LessonProgress from 'src/components/LessonProgress/LessonProgress';
 import { PageGetLessonDataComp, ssrGetLessonData } from 'src/generated/page';
-import { withApollo } from 'src/utils/withApollo';
-import Layout from 'components/Layout/Layout';
-import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
-import { useReactiveVar } from '@apollo/client';
 import { SublessonInstructions } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions';
 import { getChallengesFromSublessonChallenges } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions.utils';
+import { withApollo } from 'src/utils/withApollo';
 import { useCodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
-import '@fontsource/roboto';
+import { Editor } from 'components/Editor/Editor';
+import Layout from 'components/Layout/Layout';
 
 const App: PageGetLessonDataComp = (props) => {
   const {

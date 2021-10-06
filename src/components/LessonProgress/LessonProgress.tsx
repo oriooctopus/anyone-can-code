@@ -1,9 +1,9 @@
+import SublessonCard from './SublessonCard/SublessonCard';
 import { useReactiveVar } from '@apollo/client';
 import { Box, Divider, Flex } from '@chakra-ui/layout';
 import React from 'react';
 import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
 import { LessonProgressDataFragment } from 'src/generated/graphql';
-import SublessonCard from './SublessonCard/SublessonCard';
 
 interface IProps {
   sublessons: Array<LessonProgressDataFragment>;

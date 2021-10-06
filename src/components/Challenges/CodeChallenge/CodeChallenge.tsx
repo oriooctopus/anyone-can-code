@@ -1,13 +1,13 @@
-import { Box, Flex, Text } from '@chakra-ui/layout';
-import TestCaseResult from 'components/TestCaseResult/TestCaseResult';
-import { ChallengeButton } from 'components/Challenges/Challenge.utils';
-import { codeEditorValueVar, testResultsVar } from 'src/cache';
 import { useReactiveVar } from '@apollo/client';
+import { Box, Flex, Text } from '@chakra-ui/layout';
+import { codeEditorValueVar, testResultsVar } from 'src/cache';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
+import { ChallengeButton } from 'components/Challenges/Challenge.utils';
 import {
   hasPassedCodeChallenge,
   useCodeChallengeTests,
 } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
+import TestCaseResult from 'components/TestCaseResult/TestCaseResult';
 
 export type CodeChallengeProps = {
   challenge: CodeChallengeDataFragment;
@@ -18,10 +18,10 @@ export const CodeChallenge = ({
   challenge: { tests, prompt, startingCode },
   onClickNext,
 }: CodeChallengeProps) => {
-  const { resetTests, runTests, testResults } = useCodeChallengeTests(tests);
+  const { runTests, testResults } = useCodeChallengeTests(tests);
   const resetCode = () => {
     codeEditorValueVar(startingCode);
-    resetTests();
+    testResultsVar([]);
   };
   const testResultsValue = useReactiveVar(testResultsVar);
 

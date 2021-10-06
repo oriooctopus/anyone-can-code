@@ -1,4 +1,3 @@
-import { NextPage } from 'next';
 import {
   ApolloClient,
   NormalizedCacheObject,
@@ -6,6 +5,7 @@ import {
   ApolloProvider,
   createHttpLink,
 } from '@apollo/client';
+import { NextPage } from 'next';
 
 export const withApollo = (Comp: NextPage) => (props: any) => {
   return (

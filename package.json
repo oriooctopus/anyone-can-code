@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev -p 4000",
+    "format": "yarn prettier --write .",
     "build": "next build",
     "start": "next start",
     "codegen": "graphql-codegen --config codegen.yml",
@@ -114,6 +115,7 @@
     "next-with-apollo": "^5.2.1",
     "normalize.css": "8.0.1",
     "optimize-css-assets-webpack-plugin": "5.0.4",
+    "p-map": "4.0.0",
     "path": "^0.12.7",
     "pnp-webpack-plugin": "1.6.4",
     "postcss-flexbugs-fixes": "4.2.1",
@@ -172,6 +174,7 @@
     "@storybook/builder-webpack5": "^6.4.0-alpha.35",
     "@storybook/manager-webpack5": "^6.4.0-alpha.35",
     "@storybook/react": "^6.4.0-alpha.35",
+    "@trivago/prettier-plugin-sort-imports": "^2.0.4",
     "@types/lodash-es": "^4.17.4",
     "csstype": "^3.0.9",
     "graphql-codegen-apollo-next-ssr": "^1.6.1",

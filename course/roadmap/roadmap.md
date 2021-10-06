@@ -114,7 +114,10 @@
 - you can highlight parts of a lesson and you'll see it in the recap
 
 - when they click next on the final sublesson, a modal will popup that is like. You have completed the sublessson! Choose what to do next: and the optiosn will be
+
   - "view recap/summary" - which will popup another, much larger modal with the summary
   - "practice this lesson with exercises" - need to come up with a better name. This wouldn't be available if there aren't enough exercises
   - "next lesson"
   - "back to course map" - not sure if this should be included since we don't want to overwhelm the user with options
+
+- Instead of the projects being about reinforcing the lessons, the lessons are just preparation for the projects

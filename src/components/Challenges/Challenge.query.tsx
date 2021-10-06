@@ -14,6 +14,7 @@ export const codeChallengeData = gql`
 
 export const multipleChoiceChallengeData = gql`
   fragment multipleChoiceChallengeData on MultipleChoiceChallenge {
+    id
     prompt
     options {
       text

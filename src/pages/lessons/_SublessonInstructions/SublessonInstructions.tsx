@@ -1,19 +1,19 @@
 import { useReactiveVar } from '@apollo/client';
-import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
-import React from 'react';
+import { Text } from '@chakra-ui/layout';
 import '@fontsource/roboto';
+import React from 'react';
+import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
 import { SublessonInstructionsDataFragment } from 'src/generated/graphql';
 import {
   getChallengesFromSublessonChallenges,
   useGetLessonDescription,
   useOnClickNext,
 } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions.utils';
-import { FlText } from 'components/Typography/FlText';
-import Markdown from 'components/Markdown/Markdown';
 import { Challenge } from 'components/Challenges/Challenge';
 import { ChallengeButton } from 'components/Challenges/Challenge.utils';
 import { ContentPanel } from 'components/ContentPanel/ContentPanel';
-import { Text } from '@chakra-ui/layout';
+import Markdown from 'components/Markdown/Markdown';
+import { FlText } from 'components/Typography/FlText';
 
 type props = {
   sublesson: SublessonInstructionsDataFragment;

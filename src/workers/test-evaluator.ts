@@ -1,42 +1,50 @@
-import { format as __format } from '../utils/format';
 import {
   evaluateWithContext,
   getCode,
   getEvaluationContext,
 } from 'src/workers/utils';
 
-/* Run the test if there is one.  If not just evaluate the user code */
-export const runTestEvaluator = async (e, resolve) => {
+type runTestEvaluatorProps = {
+  code: string;
+  internalTest: string;
+  removeComments?: boolean;
+};
+
+export const runTestEvaluator = async ({
+  code,
+  internalTest,
+  removeComments = true,
+}: runTestEvaluatorProps) => {
+  // TODO: abstract this to a util
   if (typeof self === 'undefined') {
     return;
   }
 
-  const code = getCode(e.data?.code?.contents, e.data?.removeComments);
+  let userPassed = true;
+  let evaluationError;
+  const formattedCode = getCode(code, removeComments);
 
   try {
-    const context = getEvaluationContext(code);
+    const context = getEvaluationContext(formattedCode);
 
     const result = evaluateWithContext(
-      `${code};
-      ${e.data.internalTest};`,
+      `${formattedCode};
+      ${internalTest};`,
       context,
-    ); // evaluates the user's code
+    );
     if (!result) {
       throw new Error('did not pass');
     }
   } catch (err) {
     console.log('catching the err', err);
-    return {
-      pass: false,
-      err,
-    };
+    userPassed = false;
+    evaluationError = err;
   }
-  console.log('success we passsed!');
 
   return {
-    pass: true,
-    // fix this
-    test: 456,
+    error: evaluationError,
+    test: internalTest,
+    pass: userPassed,
   };
 };
 

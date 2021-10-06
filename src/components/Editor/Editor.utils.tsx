@@ -1,5 +1,5 @@
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { Monaco } from '@monaco-editor/react';
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import AllHallowsEveTheme from 'monaco-themes/themes/All Hallows Eve.json';
 
 export const DEFAULT_MONACO_EDITOR_THEME = 'all-hallows-eve';

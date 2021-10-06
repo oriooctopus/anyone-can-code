@@ -1,7 +1,7 @@
 import { Box, BoxProps, Button, Text, TextProps } from '@chakra-ui/react';
 import React from 'react';
-import LeftArrow from 'src/assets/LeftArrow.svg';
 import DownArrow from 'src/assets/DownArrow.svg';
+import LeftArrow from 'src/assets/LeftArrow.svg';
 
 type TProps = {
   onGoBack: () => void;

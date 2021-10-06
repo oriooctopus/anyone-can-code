@@ -1,7 +1,7 @@
-// import { ChallengeProps } from 'components/Challenges/Challenge.types';
-import { CodeChallenge } from 'components/Challenges/CodeChallenge/CodeChallenge';
+import { useEffect } from 'react';
 import { ChallengeFragment } from 'src/types/generalTypes';
-import { MultipleChoiceChallengeActions } from './MultipleChoiceChallenge/MultipleChoiceChallenge';
+import { CodeChallenge } from 'components/Challenges/CodeChallenge/CodeChallenge';
+import { MultipleChoiceChallengeActions } from 'components/Challenges/MultipleChoiceChallenge/MultipleChoiceChallenge';
 
 export type ChallengeProps = {
   challenge: ChallengeFragment;

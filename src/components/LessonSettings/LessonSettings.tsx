@@ -1,24 +1,24 @@
 import { SettingOutlined } from '@ant-design/icons';
 import { useReactiveVar } from '@apollo/client';
 import {
+  useDisclosure,
   Box,
   BoxProps,
   Button,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Text,
-  useDisclosure,
 } from '@chakra-ui/react';
-import {
-  sublessonTextLengthPreferenceVar,
-  sublessonChallengeFrequencyVar,
-} from 'src/cache';
 import { Formik } from 'formik';
+import {
+  sublessonChallengeFrequencyVar,
+  sublessonTextLengthPreferenceVar,
+} from 'src/cache';
 import { LessonSettingsButtonGroup } from 'components/LessonSettings/LessonSettings.styles';
 import {
   lessonSettingsSaveOptions,

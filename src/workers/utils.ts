@@ -1,7 +1,7 @@
-import { currentLogVar } from 'src/cache';
 import curriculumHelpers, {
   removeJSComments,
 } from '../utils/curriculum-helpers';
+import { currentLogVar } from 'src/cache';
 
 type consoleLogOverride = (data: any[]) => void;
 
