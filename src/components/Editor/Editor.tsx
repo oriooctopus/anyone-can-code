@@ -1,4 +1,3 @@
-import editorOptions from './editor-options';
 import { useReactiveVar } from '@apollo/client';
 import { Box } from '@chakra-ui/react';
 import '@fontsource/roboto-mono';
@@ -13,6 +12,7 @@ import {
   DEFAULT_MONACO_EDITOR_THEME,
   defineDefaultMonacoTheme,
 } from 'components/Editor/Editor.utils';
+import editorOptions from 'components/Editor/editor-options';
 
 type EditorProps = {
   challenge: CodeChallengeDataFragment | undefined;

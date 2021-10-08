@@ -56,6 +56,8 @@ var fullName = firstName + middleName + lastName;
 
 the value of `fullName` will be `OliverAmoreUllman`.
 
+STRINGS PART 2
+
 3. Why do we need quotes?
 
 4. How to google - using quotes inside - ON THE HOW TO GOOGLE HAVE THEM TRY IT FIRST

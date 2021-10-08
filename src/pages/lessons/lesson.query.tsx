@@ -15,3 +15,11 @@ export const getLessonData = gql`
   ${sublessonInstructionsData}
   ${lessonProgressData}
 `;
+
+export const getAllLessonSlugs = gql`
+  query getAllLessonSlugs {
+    lessons {
+      slug
+    }
+  }
+`;

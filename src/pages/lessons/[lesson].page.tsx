@@ -2,9 +2,14 @@ import { useReactiveVar } from '@apollo/client';
 import { Grid, GridItem } from '@chakra-ui/react';
 import '@fontsource/roboto';
 import { GetStaticProps } from 'next';
+import { useEffect } from 'react';
 import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
 import LessonProgress from 'src/components/LessonProgress/LessonProgress';
-import { PageGetLessonDataComp, ssrGetLessonData } from 'src/generated/page';
+import {
+  PageGetLessonDataComp,
+  ssrGetLessonData,
+  ssrGetAllLessonSlugs,
+} from 'src/generated/page';
 import { SublessonInstructions } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions';
 import { getChallengesFromSublessonChallenges } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions.utils';
 import { withApollo } from 'src/utils/withApollo';
@@ -14,14 +19,15 @@ import Layout from 'components/Layout/Layout';
 
 const App: PageGetLessonDataComp = (props) => {
   const {
-    data: { lessons },
+    data: {
+      lessons: [lesson],
+    },
   } = props;
 
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
   const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
 
-  const currentSublesson = lessons[0].sublessons[currentSublessonIndex];
-  console.log('lessons', lessons, 'index', currentSublessonIndex);
+  const currentSublesson = lesson.sublessons[currentSublessonIndex];
   const parsedChallenges = getChallengesFromSublessonChallenges(
     currentSublesson.challenges,
   );
@@ -32,14 +38,13 @@ const App: PageGetLessonDataComp = (props) => {
   const { runTests } = useCodeChallengeTests(
     isCodeChallenge ? currentChallenge.tests : [],
   );
-  const totalSublessons = lessons[0].sublessons.length;
+  const totalSublessons = lesson.sublessons.length;
   const lastChallengeIndexOfPreviousSublesson =
     currentSublessonIndex > 0
-      ? lessons[0].sublessons[currentSublessonIndex - 1]?.challenges?.length - 1
+      ? lesson.sublessons[currentSublessonIndex - 1]?.challenges?.length - 1
       : undefined;
 
   const onMount = () => {
-    console.log('mount is happening');
     runTests();
   };
 
@@ -47,7 +52,10 @@ const App: PageGetLessonDataComp = (props) => {
     return <span>no lesson</span>;
   }
 
-  console.log('is lesson page rerunning');
+  useEffect(() => {
+    window.setSublesson = currentSublessonIndexVar;
+    window.setChallenge = currentChallengeIndexVar;
+  }, []);
 
   return (
     <Layout>
@@ -75,20 +83,23 @@ const App: PageGetLessonDataComp = (props) => {
           <Editor challenge={currentChallenge} onMount={onMount} />
         </GridItem>
         <GridItem colSpan={2} display={{ md: 'none', lg: 'block' }}>
-          <LessonProgress sublessons={lessons[0].sublessons} />
+          <LessonProgress sublessons={lesson.sublessons} />
         </GridItem>
       </Grid>
     </Layout>
   );
 };
 
-export const getStaticPaths = () => {
+export const getStaticPaths = async () => {
+  const {
+    props: {
+      data: { lessons },
+    },
+  } = await ssrGetAllLessonSlugs.getServerPage({});
+  const lessonUrls = lessons.map(({ slug }) => `/lessons/${slug}`);
+
   return {
-    paths: [
-      '/lessons/getting-started-with-variables',
-      '/lessons/strings',
-      '/lessons/console-log',
-    ],
+    paths: lessonUrls,
     fallback: false,
   };
 };
