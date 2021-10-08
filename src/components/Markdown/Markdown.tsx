@@ -6,10 +6,10 @@ import { rem } from 'src/styles/typography/font';
 import { FlLink } from 'components/Link/FlLink';
 import { StyledMarkdown } from 'components/Markdown/Markdown.styles';
 
-type MarkdownProps = BoxProps & {
+export interface MarkdownProps extends BoxProps {
   children: React.ReactNode;
   codeTheme?: any;
-};
+}
 
 const Markdown = ({
   children: test,

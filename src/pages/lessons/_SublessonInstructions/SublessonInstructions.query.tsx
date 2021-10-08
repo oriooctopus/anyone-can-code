@@ -15,14 +15,12 @@ export const sublessonInstructionsData = gql`
     lesson {
       name
     }
-    sublessonChallenges {
-      challenge {
-        codeChallenge {
-          ...codeChallengeData
-        }
-        multipleChoiceChallenge {
-          ...multipleChoiceChallengeData
-        }
+    challenges {
+      codeChallenge {
+        ...codeChallengeData
+      }
+      multipleChoiceChallenge {
+        ...multipleChoiceChallengeData
       }
     }
   }

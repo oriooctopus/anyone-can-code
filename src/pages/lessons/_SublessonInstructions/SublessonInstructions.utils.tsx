@@ -19,9 +19,9 @@ import { ChallengeFragment } from 'src/types/generalTypes';
  * convert it to the Challenge union type
  */
 export const getChallengesFromSublessonChallenges = (
-  sublessonChallenges: SublessonInstructionsDataFragment['sublessonChallenges'],
+  challenges: SublessonInstructionsDataFragment['challenges'],
 ): Array<ChallengeFragment> => {
-  return (sublessonChallenges || []).map(({ challenge }) => {
+  return (challenges || []).map((challenge, index) => {
     // TODO: make this code more elegant
     if (challenge.codeChallenge) {
       return challenge.codeChallenge;
@@ -30,7 +30,7 @@ export const getChallengesFromSublessonChallenges = (
     }
 
     throw new Error(
-      'Sublesson challenge did not contain any challenges. Is the challenge/sublesson still a draft?',
+      `Sublesson challenge at index ${index} did not contain any challenges. Is the challenge/sublesson still a draft?`,
     );
   });
 };
@@ -46,7 +46,7 @@ const resetSublessonProgress = () => {
 };
 
 export const useOnClickNext = ({
-  sublesson: { sublessonChallenges },
+  sublesson: { challenges },
   totalSublessons,
 }: useOnClickNextProps) => {
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
@@ -55,7 +55,7 @@ export const useOnClickNext = ({
   return () => {
     challengeAttemptStatusVar(ChallengeAttemptStatusEnum.notAttempted);
 
-    if (currentChallengeIndex + 1 !== sublessonChallenges.length) {
+    if (currentChallengeIndex + 1 !== challenges.length) {
       console.log('next challenge');
       currentChallengeIndexVar(currentChallengeIndex + 1);
     } else if (currentSublessonIndex + 1 !== totalSublessons) {

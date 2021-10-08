@@ -1,7 +1,4 @@
-import curriculumHelpers, {
-  removeJSComments,
-} from '../utils/curriculum-helpers';
-import { currentLogVar } from 'src/cache';
+import { removeJSComments } from '../utils/curriculum-helpers';
 
 type consoleLogOverride = (data: any[]) => void;
 
@@ -24,7 +21,7 @@ export const restoreConsoleLog = () => {
 };
 
 const _codeEvaluationHelpers = {
-  removeWhitespace: (string, i = 0, res = '') => {
+  removeWhitespace: (string: string, i = 0, res = ''): string => {
     if (i >= string.length) return res;
     else if (string[i] == ' ')
       return _codeEvaluationHelpers.removeWhitespace(string, i + 1, res);
@@ -37,10 +34,11 @@ const _codeEvaluationHelpers = {
   },
 };
 
-export const getEvaluationContext = (code: string) => {
+export const getEvaluationContext = (code: string, logs?: Array<unknown>) => {
   return {
     _codeEvaluationHelpers,
     _codeString: `${code}`,
+    _internalLogs: logs,
   };
 };
 

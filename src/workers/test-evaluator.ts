@@ -2,6 +2,8 @@ import {
   evaluateWithContext,
   getCode,
   getEvaluationContext,
+  overrideConsoleLog,
+  restoreConsoleLog,
 } from 'src/workers/utils';
 
 type runTestEvaluatorProps = {
@@ -24,11 +26,18 @@ export const runTestEvaluator = async ({
   let evaluationError;
   const formattedCode = getCode(code, removeComments);
 
-  try {
-    const context = getEvaluationContext(formattedCode);
+  const logs = [] as Array<unknown>;
 
+  overrideConsoleLog((args) => {
+    logs.push(args);
+    console.standardLog('args', ...args);
+  });
+
+  try {
+    const context = getEvaluationContext(formattedCode, logs);
     const result = evaluateWithContext(
       `${formattedCode};
+      debugger;
       ${internalTest};`,
       context,
     );
@@ -36,10 +45,11 @@ export const runTestEvaluator = async ({
       throw new Error('did not pass');
     }
   } catch (err) {
-    console.log('catching the err', err);
     userPassed = false;
     evaluationError = err;
   }
+
+  restoreConsoleLog();
 
   return {
     error: evaluationError,

@@ -18,7 +18,7 @@ export const useCodeChallengeTests = (tests: CodeChallengeTests) => {
   const testResultsValue = useReactiveVar(testResultsVar);
 
   /*
-   * necessary when runTests is run immedietely after a codeEditorValue changes
+   * necessary when runTests is run immediately after a codeEditorValue changes
    */
   const codeEditorValueRef = useRef(codeEditorValue);
   codeEditorValueRef.current = codeEditorValue;
@@ -26,6 +26,7 @@ export const useCodeChallengeTests = (tests: CodeChallengeTests) => {
   // TODO: extract runTests property to a function for easier testing
   const handleRunTests = async () => {
     const results = await runTests(codeEditorValueRef.current, tests);
+    console.log('results', results);
     testResultsVar(results);
   };
 

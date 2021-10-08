@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { ChallengeFragment } from 'src/types/generalTypes';
 import { CodeChallenge } from 'components/Challenges/CodeChallenge/CodeChallenge';
-import { MultipleChoiceChallengeActions } from 'components/Challenges/MultipleChoiceChallenge/MultipleChoiceChallenge';
+import { MultipleChoiceChallenge } from 'components/Challenges/MultipleChoiceChallenge/MultipleChoiceChallenge';
 
 export type ChallengeProps = {
   challenge: ChallengeFragment;
@@ -13,7 +13,7 @@ export const Challenge = ({ challenge, onClickNext }: ChallengeProps) => {
     return <CodeChallenge challenge={challenge} onClickNext={onClickNext} />;
   } else if (challenge.__typename === 'MultipleChoiceChallenge') {
     return (
-      <MultipleChoiceChallengeActions
+      <MultipleChoiceChallenge
         challenge={challenge}
         onClickNext={onClickNext}
       />

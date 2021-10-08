@@ -43,7 +43,18 @@ let message = `Hello ${name}`;
 console.log(greeting);
 ```
 
-2. Different quotes, mismatches
+2. Combining strings
+
+To combine a string with another, use the `+` symbol. Here's an example. Specifically, look at the last line:
+
+```
+var firstName = 'Oliver';
+var middleName = 'Amore';
+var lastName = 'Ullman';
+var fullName = firstName + middleName + lastName;
+```
+
+the value of `fullName` will be `OliverAmoreUllman`.
 
 3. Why do we need quotes?
 

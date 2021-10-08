@@ -9,7 +9,7 @@ import {
   currentChallengeIndexVar,
 } from 'src/cache';
 import { MultipleChoiceChallengeDataFragment } from 'src/generated/graphql';
-import { ChallengeButton } from 'components/Challenges/Challenge.utils';
+import { ChallengeButton } from 'components/Challenges/Challenge.styles';
 import Markdown from 'components/Markdown/Markdown';
 
 type props = {
@@ -17,7 +17,7 @@ type props = {
   challenge: MultipleChoiceChallengeDataFragment;
 };
 
-export const MultipleChoiceChallengeActions = ({
+export const MultipleChoiceChallenge = ({
   challenge: { canSelectMultipleOptions, id, options, prompt },
   onClickNext,
 }: props) => {

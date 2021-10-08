@@ -19,7 +19,7 @@ const LessonProgress = React.memo(({ sublessons }: IProps) => {
       ? 0
       : // we add one because the initial index is -1 when on the lesson text
         ((currentChallengeIndex + 1) /
-          (currentSublesson.sublessonChallenges?.length + 1)) *
+          (currentSublesson.challenges?.length + 1)) *
         100;
   console.log(
     'completed',

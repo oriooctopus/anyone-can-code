@@ -4,7 +4,7 @@ import { Box } from '@chakra-ui/react';
 import '@fontsource/roboto-mono';
 import MonacoEditor from '@monaco-editor/react';
 import { useEffect } from 'react';
-import { codeEditorValueVar, currentLogVar } from 'src/cache';
+import { codeEditorValueVar, currentLogVar, testResultsVar } from 'src/cache';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
 import { useDebounced } from 'src/utils/hooks/useDebounced';
 import { getConsoleLogsFromCodeEvaluation } from 'src/workers/utils';
@@ -22,6 +22,11 @@ type EditorProps = {
 export const Editor: React.FC<EditorProps> = ({ challenge }) => {
   const codeEditorValue = useReactiveVar(codeEditorValueVar);
   const currentLog = useReactiveVar(currentLogVar);
+
+  const onChangeEditorValue = (newValue: string) => {
+    testResultsVar([]);
+    codeEditorValueVar(newValue);
+  };
 
   useDebounced(
     () => {
@@ -44,7 +49,7 @@ export const Editor: React.FC<EditorProps> = ({ challenge }) => {
         theme={DEFAULT_MONACO_EDITOR_THEME}
         value={codeEditorValue}
         options={editorOptions}
-        onChange={codeEditorValueVar}
+        onChange={onChangeEditorValue}
         height={'70vh'}
       />
       <Box

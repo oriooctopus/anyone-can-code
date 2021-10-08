@@ -10,10 +10,9 @@ import {
   useOnClickNext,
 } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions.utils';
 import { Challenge } from 'components/Challenges/Challenge';
-import { ChallengeButton } from 'components/Challenges/Challenge.utils';
+import { ChallengeButton } from 'components/Challenges/Challenge.styles';
 import { ContentPanel } from 'components/ContentPanel/ContentPanel';
 import Markdown from 'components/Markdown/Markdown';
-import { FlText } from 'components/Typography/FlText';
 
 type props = {
   sublesson: SublessonInstructionsDataFragment;
@@ -31,16 +30,13 @@ export const SublessonInstructions = React.memo(
     sublesson,
     totalSublessons,
   }: props) => {
+    const { challenges, descriptions, name, lesson } = sublesson;
     const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
     const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
-    const { sublessonChallenges, descriptions, name, lesson } = sublesson;
-    console.log('sublessonChallenges!!', sublessonChallenges);
     const description = useGetLessonDescription(descriptions);
-    const parsedChallenges =
-      getChallengesFromSublessonChallenges(sublessonChallenges);
+    const parsedChallenges = getChallengesFromSublessonChallenges(challenges);
     const onClickNext = useOnClickNext({ sublesson, totalSublessons });
     const isLessonIntroduction = currentChallengeIndex === -1;
-    console.log('current challenge idnex', currentChallengeIndex);
 
     const showGoBackIndicator =
       !isLessonIntroduction || currentSublessonIndex !== 0;
@@ -51,7 +47,7 @@ export const SublessonInstructions = React.memo(
         <Markdown mb="35px">{description}</Markdown>
         {isLessonIntroduction && (
           <ChallengeButton onClick={onClickNext}>
-            {sublessonChallenges.length ? 'Begin Challenges' : 'Next'}
+            {challenges.length ? 'Begin Challenges' : 'Next'}
           </ChallengeButton>
         )}
       </>

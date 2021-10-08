@@ -21,8 +21,9 @@ const App: PageGetLessonDataComp = (props) => {
   const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
 
   const currentSublesson = lessons[0].sublessons[currentSublessonIndex];
+  console.log('lessons', lessons, 'index', currentSublessonIndex);
   const parsedChallenges = getChallengesFromSublessonChallenges(
-    currentSublesson.sublessonChallenges,
+    currentSublesson.challenges,
   );
   const currentChallenge = parsedChallenges[currentChallengeIndex];
 
@@ -34,8 +35,7 @@ const App: PageGetLessonDataComp = (props) => {
   const totalSublessons = lessons[0].sublessons.length;
   const lastChallengeIndexOfPreviousSublesson =
     currentSublessonIndex > 0
-      ? lessons[0].sublessons[currentSublessonIndex - 1]?.sublessonChallenges
-          ?.length - 1
+      ? lessons[0].sublessons[currentSublessonIndex - 1]?.challenges?.length - 1
       : undefined;
 
   const onMount = () => {
@@ -84,7 +84,11 @@ const App: PageGetLessonDataComp = (props) => {
 
 export const getStaticPaths = () => {
   return {
-    paths: ['/lessons/getting-started-with-variables', '/lessons/strings'],
+    paths: [
+      '/lessons/getting-started-with-variables',
+      '/lessons/strings',
+      '/lessons/console-log',
+    ],
     fallback: false,
   };
 };
