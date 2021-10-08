@@ -1,51 +1,46 @@
 import { Box, BoxProps } from '@chakra-ui/layout';
-import clsx from 'clsx';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { funky } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-import { rem } from 'src/styles/typography/font';
 import { FlLink } from 'components/Link/FlLink';
-import { StyledMarkdown } from 'components/Markdown/Markdown.styles';
+import {
+  StyledMarkdown,
+  InlineCode,
+  MultiLineCodeBlock,
+  MultiLineCodeProps,
+} from 'components/Markdown/Markdown.styles';
+import { stripNewlines } from 'components/Markdown/Markdown.utils';
 
-export interface MarkdownProps extends BoxProps {
+export interface MarkdownProps {
   children: React.ReactNode;
   codeTheme?: any;
+  containerOverrides?: BoxProps;
+  // TODO: There must be an actual type made for this. Find that instead of recreating it
+  markdownCSSOverrides?: Record<string, React.CSSProperties | string | number>;
+  forceMultiLine?: boolean;
+  multiLineCodePropOverrides?: Partial<MultiLineCodeProps>;
 }
 
 const Markdown = ({
-  children: test,
+  children: markdownChildren,
   codeTheme,
-  ...styleProps
+  forceMultiLine,
+  multiLineCodePropOverrides = {},
+  markdownCSSOverrides = {},
+  containerOverrides = {},
 }: MarkdownProps) => (
-  <Box {...styleProps} className="test" w="100%">
+  <Box w="100%" {...containerOverrides}>
     <StyledMarkdown
-      children={test}
+      children={markdownChildren}
+      cssOverrides={markdownCSSOverrides}
       components={{
-        code({ node, inline, className, children, ...props }) {
-          return !inline ? (
-            <SyntaxHighlighter
-              children={String(children).replace(/\n$/, '')}
-              language={'js'}
-              PreTag="div"
-              customStyle={{
-                borderRadius: 7,
-                margin: `${rem(15)} 0`,
-              }}
-              style={codeTheme}
-              {...props}
-            />
+        code({ node, inline, children, ...props }) {
+          return inline && !forceMultiLine ? (
+            <InlineCode {...props}>{children}</InlineCode>
           ) : (
-            <code
-              style={{
-                border: '1.6px solid rgba(0,0,0,.1)',
-                borderRadius: '6.4px',
-                fontFamily: 'monospace',
-                backgroundColor: 'rgb(246, 247, 248)',
-              }}
-              className={className}
+            <MultiLineCodeBlock
+              children={stripNewlines(children)}
+              theme={codeTheme}
               {...props}
-            >
-              {children}
-            </code>
+              {...multiLineCodePropOverrides}
+            />
           );
         },
         a: ({ node, children, href, ...props }) => {

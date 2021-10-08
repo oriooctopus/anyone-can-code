@@ -44,7 +44,7 @@ export const SublessonInstructions = React.memo(
     const sublessonText = (
       <>
         <Text fontSize="26px">{name}</Text>
-        <Markdown mb="35px">{description}</Markdown>
+        <Markdown containerOverrides={{ mb: '35px' }}>{description}</Markdown>
         {isLessonIntroduction && (
           <ChallengeButton onClick={onClickNext}>
             {challenges.length ? 'Begin Challenges' : 'Next'}

@@ -15,7 +15,7 @@ type runTestEvaluatorProps = {
 export const runTestEvaluator = async ({
   code,
   internalTest,
-  removeComments = true,
+  removeComments,
 }: runTestEvaluatorProps) => {
   // TODO: abstract this to a util
   if (typeof self === 'undefined') {

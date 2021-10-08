@@ -1,15 +1,18 @@
 import { useReactiveVar } from '@apollo/client';
 import { Text } from '@chakra-ui/layout';
-import { Box, Button, Divider } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import {
   multipleChoiceOptionSelectionsVar,
   challengeAttemptStatusVar,
   ChallengeAttemptStatusEnum,
-  currentChallengeIndexVar,
 } from 'src/cache';
 import { MultipleChoiceChallengeDataFragment } from 'src/generated/graphql';
-import { ChallengeButton } from 'components/Challenges/Challenge.styles';
+import {
+  ChallengeButton,
+  ChallengeMarkdown,
+} from 'components/Challenges/Challenge.styles';
+import { MultipleChoiceChallengeOption } from 'components/Challenges/MultipleChoiceChallenge/MultipleChoiceChallengeOption';
 import Markdown from 'components/Markdown/Markdown';
 
 type props = {
@@ -18,7 +21,13 @@ type props = {
 };
 
 export const MultipleChoiceChallenge = ({
-  challenge: { canSelectMultipleOptions, id, options, prompt },
+  challenge: {
+    canSelectMultipleOptions,
+    id,
+    options,
+    prompt,
+    useMarkdownForOptionsText,
+  },
   onClickNext,
 }: props) => {
   const challengeAttemptStatus = useReactiveVar(challengeAttemptStatusVar);
@@ -72,36 +81,19 @@ export const MultipleChoiceChallenge = ({
       <Text fontStyle="italic" opacity="65%" color="black" mb="30px" mt="10px">
         Select the correct option:
       </Text>
-      <Markdown mb="20px" fontSize="18px">
-        {prompt}
-      </Markdown>
+      <ChallengeMarkdown>{prompt}</ChallengeMarkdown>
       {options.map(({ incorrectChoiceExplanation, text }, index) => (
-        // this should definitely be its own component
-        <Box
-          mb={shouldShowOptionIncorrectExplanation(index) ? '5px' : '15px'}
-          w="100%"
-        >
-          <Button
-            w="100%"
-            bgColor={isOptionSelected(index) ? '#192A4E' : '#F4F2F0'}
-            color={isOptionSelected(index) ? 'white' : 'black'}
-            _hover={{ color: isOptionSelected(index) ? 'white' : 'black' }}
-            py="22px"
-            fontWeight="normal"
-            d="flex"
-            outline="none"
-            border="1px solid #6A6A6A"
-            onClick={() => onClickOption(index)}
-            key={text}
-          >
-            {text}
-          </Button>
-          {shouldShowOptionIncorrectExplanation(index) && (
-            <Text color="red" fontSize="14px" mt="2px">
-              {incorrectChoiceExplanation}
-            </Text>
+        <MultipleChoiceChallengeOption
+          text={text}
+          incorrectChoiceExplanation={incorrectChoiceExplanation}
+          isOptionSelected={isOptionSelected(index)}
+          onClickOption={() => onClickOption(index)}
+          showOptionIncorrectExplanation={shouldShowOptionIncorrectExplanation(
+            index,
           )}
-        </Box>
+          useMarkdown={useMarkdownForOptionsText}
+          key={text}
+        />
       ))}
       <Box mt="auto" position="relative" width="100%">
         {hasUserPassed ? (

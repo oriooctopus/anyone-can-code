@@ -22,5 +22,6 @@ export const multipleChoiceChallengeData = gql`
       incorrectChoiceExplanation
     }
     canSelectMultipleOptions
+    useMarkdownForOptionsText
   }
 `;
