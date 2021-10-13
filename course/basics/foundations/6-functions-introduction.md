@@ -1,3 +1,25 @@
+https://learnprogramming.online/app.html?id=613 - introduction to functions
+they have a great graphic there
+
+- include a sublesson that console.log does not replace return
+
+  - also console.log itself returns undefined (return console.log(number \* 2)
+
+- what is a function?
+- call a function
+- arguments
+- inside the function
+- declare a function
+- debugging tip: console logging in a function
+
+don't forget to add a challenge that has them replace a variable and console log with just a console log
+
+- what is a function
+- declaration and invocation (have them console log hello)
+- add argument
+- returning and using
+- debugging tip: console logging inside of a function
+
 ## Map
 
 1. Introduction/Declaring a function

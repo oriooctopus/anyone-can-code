@@ -20,23 +20,28 @@ export const restoreConsoleLog = () => {
   console.log = console.standardLog;
 };
 
-const _codeEvaluationHelpers = {
-  removeWhitespace: (string: string, i = 0, res = ''): string => {
-    if (i >= string.length) return res;
-    else if (string[i] == ' ')
-      return _codeEvaluationHelpers.removeWhitespace(string, i + 1, res);
-    else
-      return _codeEvaluationHelpers.removeWhitespace(
-        string,
-        i + 1,
-        (res += string[i]),
-      );
-  },
+const getCodeEvaluationHelpers = (logs: Array<Array<unknown>>) => {
+  const helpers = {
+    // right now this only works with primitives
+    wasLoggedToConsole: (val: unknown) => {
+      return logs.some((logGroup) => logGroup.some((log) => log === val));
+    },
+    removeWhitespace: (string: string, i = 0, res = ''): string => {
+      if (i >= string.length) return res;
+      else if (string[i] == ' ')
+        return helpers.removeWhitespace(string, i + 1, res);
+      else return helpers.removeWhitespace(string, i + 1, (res += string[i]));
+    },
+  };
+  return helpers;
 };
 
-export const getEvaluationContext = (code: string, logs?: Array<unknown>) => {
+export const getEvaluationContext = (
+  code: string,
+  logs?: Array<Array<unknown>>,
+) => {
   return {
-    _codeEvaluationHelpers,
+    _codeEvaluationHelpers: getCodeEvaluationHelpers(logs),
     _codeString: `${code}`,
     _internalLogs: logs,
   };

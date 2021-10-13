@@ -30,57 +30,63 @@ export const MultipleChoiceChallengeOption: React.FC<IProps> = ({
   showOptionIncorrectExplanation,
   text,
   useMarkdown,
-}) => (
-  <Box mb={showOptionIncorrectExplanation ? '5px' : '15px'} w="100%">
-    <Button
-      w="100%"
-      bgColor={isOptionSelected ? SELECTED_OPTION_BACKGROUND_COLOR : '#F4F2F0'}
-      color={isOptionSelected ? 'white' : 'black'}
-      _hover={{ color: isOptionSelected ? 'white' : 'black' }}
-      _active={{ color: isOptionSelected ? 'white' : 'black' }}
-      fontWeight="normal"
-      d="flex"
-      outline="none"
-      border="1px solid #6A6A6A"
-      onClick={onClickOption}
-      key={text}
-      {...(useMarkdown
-        ? {
-            height: '100%',
-            padding: 0,
-            textAlign: 'left',
-          }
-        : {
-            py: '22px',
-          })}
-    >
-      {useMarkdown ? (
-        <Markdown
-          codeTheme={isOptionSelected ? darcula : defaultTheme}
-          forceMultiLine
-          markdownCSSOverrides={{
-            '> *': {
-              marginBottom: 0,
-            },
-            marginTop: 0,
-          }}
-          multiLineCodePropOverrides={{
-            customStyle: {
-              margin: 0,
-              padding: `${rem(12)} ${rem(10)}`,
-            },
-          }}
-        >
-          {text}
-        </Markdown>
-      ) : (
-        text
+}) => {
+  const color = isOptionSelected ? 'white' : 'black';
+
+  return (
+    <Box mb={showOptionIncorrectExplanation ? '5px' : '15px'} w="100%">
+      <Button
+        w="100%"
+        bgColor={
+          isOptionSelected ? SELECTED_OPTION_BACKGROUND_COLOR : '#F4F2F0'
+        }
+        color={color}
+        // TODO: it feels dirty to have to override the hover like this. Probably need to create a variant
+        _hover={{ color }}
+        fontWeight="normal"
+        d="flex"
+        outline="none"
+        border="1px solid #6A6A6A"
+        onClick={onClickOption}
+        key={text}
+        {...(useMarkdown
+          ? {
+              height: '100%',
+              padding: 0,
+              textAlign: 'left',
+            }
+          : {
+              py: '22px',
+            })}
+      >
+        {useMarkdown ? (
+          <Markdown
+            codeTheme={isOptionSelected ? darcula : defaultTheme}
+            forceMultiLine
+            markdownCSSOverrides={{
+              '> *': {
+                marginBottom: 0,
+              },
+              marginTop: 0,
+            }}
+            multiLineCodePropOverrides={{
+              customStyle: {
+                margin: 0,
+                padding: `${rem(12)} ${rem(10)}`,
+              },
+            }}
+          >
+            {text}
+          </Markdown>
+        ) : (
+          text
+        )}
+      </Button>
+      {showOptionIncorrectExplanation && (
+        <Text color="red" fontSize="14px" mt="2px">
+          {incorrectChoiceExplanation}
+        </Text>
       )}
-    </Button>
-    {showOptionIncorrectExplanation && (
-      <Text color="red" fontSize="14px" mt="2px">
-        {incorrectChoiceExplanation}
-      </Text>
-    )}
-  </Box>
-);
+    </Box>
+  );
+};

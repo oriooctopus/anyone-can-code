@@ -1,0 +1,15 @@
+1. What is a boolean?
+- only maybe one exercise if the user has configured a high amount of exercises. The exercise should more be about testing there understanding. It might be nice to test 'true' vs true
+
+to give a sneak peek, it will allow you to only run a part of your application if your user is 18
+
+2. equality
+
+The equality operator, `==` allows us to answer questions like "Is jack's favorite color red?" or "
+
+3. greater than/less than
+
+4. strict operators
+
+
+==, !=, <=, >=

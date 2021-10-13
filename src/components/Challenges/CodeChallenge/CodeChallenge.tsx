@@ -37,7 +37,9 @@ export const CodeChallenge = ({
     <>
       <Box mt="15px" />
       {/* we give text flex grow so that the tests are on the bottom */}
-      <ChallengeMarkdown flexGrow={1}>{prompt}</ChallengeMarkdown>
+      <ChallengeMarkdown containerOverrides={{ flexGrow: 1 }}>
+        {prompt}
+      </ChallengeMarkdown>
       <Box mb="20px">
         {tests?.map(({ label }, index) => (
           <TestCaseResult

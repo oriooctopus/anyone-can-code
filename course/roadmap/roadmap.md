@@ -121,3 +121,34 @@
   - "back to course map" - not sure if this should be included since we don't want to overwhelm the user with options
 
 - Instead of the projects being about reinforcing the lessons, the lessons are just preparation for the projects
+
+- when the user presses the 'show solution' button we should have an optional modal that pops up asking why they did it.
+
+- flashcards are automatically added like in learnjavascript.online
+
+- popular highlights
+
+- the user should be able to by default hide the editor on the sublesson instructions. Or maybe that's just the deault, that the editor is hiddden and a button expands it during the instructions
+
+- we need to emphasize that they should only be using the text when they forget. Not skimming it then revisting it a bunch later
+
+- fill in the missing parts of the code. For example:
+  nextDecade(year) {
+  return year + 10;
+  }
+
+  - https://docs.google.com/document/d/1MDsEdtkCHGC10ZUasnVNqd5_iRbUUBPo86hLyPjmyGI/edit
+
+- have a share page or modal pop up sometimes
+
+  - if they sign up with your code, they'll instantly be friends/connected
+
+- you can ask your friends questions. You ask a question and all your friends get notified
+
+- project recap
+
+- you can highligh something and suggest an imporvement (learnprogramming.online)
+
+- you can bookmark sublessons or challenges
+
+- if a challenge is hard, have a message with a ! icon above the tests that says "this challenge is hard so expect to spend extra time on it. Stay motivated! Direct them to the forums if necessary"
