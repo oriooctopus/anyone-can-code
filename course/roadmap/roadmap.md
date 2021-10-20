@@ -152,3 +152,23 @@
 - you can bookmark sublessons or challenges
 
 - if a challenge is hard, have a message with a ! icon above the tests that says "this challenge is hard so expect to spend extra time on it. Stay motivated! Direct them to the forums if necessary"
+
+- so the top row of the content panel has two dropdowns, one fro lesson text length and one for challgen freuqnecy. For leson text length when the user has long selected but there is only medium, it'll show medium (preference: high) or something
+
+- ability to set a daily learning goal like in duolingo or sololearn
+
+  - IN THE SAME SPIRIT, YOU CAN START "SPRINTS" WHERE YOUR DAILY RATE IS HIGHER FOR LIKE A WEEK OR SOMETHING
+
+- syntax handbook. It pops up on the right over the sublesson progress. it's like a list that you can search and then on the left of each item is a sideways facing carot that when you click it faces down and content expands below it (like the qa from dfuzr). In it is, idk, like an infographic for the syntax?
+
+  - At the top of the handbook/list, have: "If you have to look up syntax to complete a challenge, DO NOT COPY PASTE THE SYNTAX. Type in the syntax manually, that way you can better learn the syntax for next time
+
+- recommend that they type the examples that they see in the lessons!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+- ability to schedule a challenge to be seen in your 'due challenges' later. THis is great for when someone fails on a challenge
+
+- most hints should be in pseudocode
+
+- after a completes a challenge that they used a hint on, a modal should pop up asking if they want to add the challenge to their 'due challenges' so that they can practice it later
+
+- debugging handbook. Has summaries for the googling lessons, error lessons, debugging lessons

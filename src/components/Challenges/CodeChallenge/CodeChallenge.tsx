@@ -1,5 +1,6 @@
 import { useReactiveVar } from '@apollo/client';
-import { Box, Flex } from '@chakra-ui/layout';
+import { Button } from '@chakra-ui/button';
+import { Box, Divider, Flex } from '@chakra-ui/layout';
 import { useEffect } from 'react';
 import { codeEditorValueVar, testResultsVar } from 'src/cache';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
@@ -40,7 +41,8 @@ export const CodeChallenge = ({
       <ChallengeMarkdown containerOverrides={{ flexGrow: 1 }}>
         {prompt}
       </ChallengeMarkdown>
-      <Box mb="20px">
+      <Box mb="20px" w="100%">
+        <Divider opacity={1} />
         {tests?.map(({ label }, index) => (
           <TestCaseResult
             passed={testResults[index]?.pass}
@@ -48,6 +50,7 @@ export const CodeChallenge = ({
             key={label}
           />
         ))}
+        <Button variant="ghost">Show hint</Button>
       </Box>
       <Flex spacing={6} mt="auto">
         {canProceed ? (
@@ -60,7 +63,11 @@ export const CodeChallenge = ({
           </ChallengeButton>
         )}
 
-        <ChallengeButton colorScheme="red" onClick={resetChallenge}>
+        <ChallengeButton
+          colorScheme="red"
+          onClick={resetChallenge}
+          variant="ghost"
+        >
           {/* make this button less prominent */}
           Reset
         </ChallengeButton>

@@ -8,17 +8,19 @@ Should be able to
 
 ---
 
-variables
+the right way to learn in this course, variables
 
-semicolon strings comments
-
-math
+comments strings math
 
 console.log understanding erros 1: x is not defined
 
-booleans-and-equality functions
+booleans-and-equality (add a section about naming conventions, also talk about truthy/falsy) functions prompt and/or logic
 
-challenge1 challenge 2 challenge 3
+if-statements
+
+basic-googling-skills debugging-tips-1 (video)
+
+challenge-if-statement-odd-or-even challenge-build-a-quiz
 
 ---
 
@@ -32,6 +34,7 @@ Should be able to:
 - understand arrays
 - more domain knowledge
 - write basic algorithms
+- understand basic console log debug processes
 
 ---
 
