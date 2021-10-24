@@ -172,3 +172,15 @@
 - after a completes a challenge that they used a hint on, a modal should pop up asking if they want to add the challenge to their 'due challenges' so that they can practice it later
 
 - debugging handbook. Has summaries for the googling lessons, error lessons, debugging lessons
+
+- external resources should be called "additional resources"
+
+- we should include hints for each 'google resource'. Two levels, the recommended query, and the result that says how to do it.
+
+- since they submit it in the browser, they could add their solution in one click
+
+- include tinkering in the mindset lesson. also include fixed vs growth
+
+- peer instructions using a currency based system. earning the currency allows you to get help from someone above you. The currency maybe can even be converted to money at the top level. And maybe have some inspiration from the way that that coding interview thing you did did things? Remember where you would interview someone else and they would interview you? THat would basically provide some structure/tips to how to advise the student.
+
+- when making your lessons, don't forget about _priming_ https://jarednielsen.com/teach-adults-code/

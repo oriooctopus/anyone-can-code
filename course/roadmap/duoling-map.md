@@ -14,6 +14,8 @@ comments strings math
 
 console.log understanding erros 1: x is not defined
 
+what-to-do-when-stuck
+
 booleans-and-equality (add a section about naming conventions, also talk about truthy/falsy) functions prompt and/or logic
 
 if-statements

@@ -1,5 +1,5 @@
 import { useReactiveVar } from '@apollo/client';
-import { Grid, GridItem } from '@chakra-ui/react';
+import { Box, Grid, GridItem } from '@chakra-ui/react';
 import '@fontsource/roboto';
 import { GetStaticProps } from 'next';
 import { useEffect } from 'react';
@@ -16,6 +16,7 @@ import { withApollo } from 'src/utils/withApollo';
 import { useCodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
 import { Editor } from 'components/Editor/Editor';
 import Layout from 'components/Layout/Layout';
+import { LessonBar } from 'components/LessonBar/LessonBar';
 
 const App: PageGetLessonDataComp = (props) => {
   const {
@@ -62,7 +63,6 @@ const App: PageGetLessonDataComp = (props) => {
       <Grid
         templateColumns="repeat(12, 1fr)"
         gap={{ md: '20px', lg: '30px', xl: '40px' }}
-        h="100%"
       >
         <GridItem
           colSpan={{

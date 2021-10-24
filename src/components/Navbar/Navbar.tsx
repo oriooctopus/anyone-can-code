@@ -1,16 +1,24 @@
 import { NavbarLink } from './Navbar.styles';
-import { Box, HStack } from '@chakra-ui/layout';
+import { Flex, HStack } from '@chakra-ui/layout';
 import { memo } from 'react';
+import { mainNavbarHeight } from 'src/styles/constants';
 import { rem } from 'src/styles/typography/font';
 
 const Navbar = memo(() => (
-  <Box as="nav" backgroundColor="#15141f" p={rem(20)}>
+  <Flex
+    as="nav"
+    backgroundColor="#15141f"
+    color="white"
+    px={rem(20)}
+    height={rem(mainNavbarHeight)}
+    alignItems="center"
+  >
     <HStack spacing={6}>
       <NavbarLink href="#">Map</NavbarLink>
       <NavbarLink href="#">Goals</NavbarLink>
       <NavbarLink href="#">Lexicon</NavbarLink>
     </HStack>
-  </Box>
+  </Flex>
 ));
 
 export default Navbar;

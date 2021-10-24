@@ -2,6 +2,7 @@ import SublessonCard from './SublessonCard/SublessonCard';
 import { useReactiveVar } from '@apollo/client';
 import { Box, Divider, Flex } from '@chakra-ui/layout';
 import React from 'react';
+import { BsMap } from 'react-icons/bs';
 import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
 import { LessonProgressDataFragment } from 'src/generated/graphql';
 
@@ -30,25 +31,21 @@ const LessonProgress = React.memo(({ sublessons }: IProps) => {
 
   return (
     <Box color="white" mr="30px" mt="15px">
-      <Divider
-        bgColor="white"
-        borderRadius="2px"
-        orientation="vertical"
-        h="100%"
-        position="absolute"
-        left="0"
-        top="0"
-        bottom="0"
-      />
-      {sublessons.map(({ name }, index) => (
-        <SublessonCard
-          active={index === currentSublessonIndex}
-          percentCompleted={currentSublessonPercentCompleted}
-          key={name}
-        >
-          {name}
-        </SublessonCard>
-      ))}
+      <Box>
+        {sublessons.map(({ name }, index) => (
+          <SublessonCard
+            active={index === currentSublessonIndex}
+            percentCompleted={currentSublessonPercentCompleted}
+            key={name}
+          >
+            {name}
+          </SublessonCard>
+        ))}
+      </Box>
+      {/* the debug handbook and other stuff would go in here*/}
+      {/* <Flex>
+        BsMap
+      </Flex> */}
     </Box>
   );
 });

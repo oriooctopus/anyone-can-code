@@ -11,7 +11,9 @@ export const flFontWeight = {
   BOLD_800: 800 as 800,
 };
 
-export function rem(px: number): string {
+export function rem(px: number): string | number {
+  // TODO: by default disable the calculation in production and then add some sort of flog to reenable if necessary in dev
+  return `${px}px`;
   const remValue = round(px / BASE_FONT_SIZE, 3);
   return `${remValue}rem`;
 }

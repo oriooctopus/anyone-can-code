@@ -1,13 +1,15 @@
 import { Box, Divider } from '@chakra-ui/react';
 import '@fontsource/roboto';
 import { memo } from 'react';
+import { lessonMenuHeight, mainNavbarHeight } from 'src/styles/constants';
+import { rem } from 'src/styles/typography/font';
 import { ContentPanelNavigationIndicators } from 'components/ContentPanel/ContentPanelNavigationIndicators';
 import { LessonSettings } from 'components/LessonSettings/LessonSettings';
 
 type props = {
   onGoBack?: () => void | undefined;
   /*
-   * Accessable by scrolling down below the mainContent. An arrow
+   * Accessible by scrolling down below the mainContent. An arrow
    * is shown when secondaryContent exists to indicate to the user
    * that they need to scroll to access it
    */
@@ -16,25 +18,23 @@ type props = {
   includeSettings?: boolean;
 };
 
+const ContentPanelHeight = `calc(100vh - ${rem(mainNavbarHeight)} - ${rem(
+  lessonMenuHeight,
+)})`;
+
 export const ContentPanel = memo(
   ({ includeSettings, children, onGoBack, secondaryContent }: props) => (
     <Box
       bgColor="white"
       p="20px 20px 0"
-      // TODO: cleaner calculation instead of hardcoded 65px
-      height="calc(100vh - 65px)"
+      height={ContentPanelHeight}
       overflowY="scroll"
       position="relative"
     >
       {includeSettings && (
         <LessonSettings position="absolute" right="20px" top="15px" />
       )}
-      <Box
-        minHeight="calc(100vh - 80px)"
-        d="flex"
-        flexDir="column"
-        alignItems="baseline"
-      >
+      <Box height="100%" d="flex" flexDir="column" alignItems="baseline">
         {children}
         <ContentPanelNavigationIndicators
           onGoBack={onGoBack}
