@@ -21,7 +21,12 @@ import { ChallengeFragment } from 'src/types/generalTypes';
 export const getChallengesFromSublessonChallenges = (
   challenges: SublessonInstructionsDataFragment['challenges'],
 ): Array<ChallengeFragment> => {
-  return (challenges || []).map((challenge, index) => {
+  // not sure why typescript/graphql views the challenges as nullable
+  return (challenges || []).flatMap((challenge, index) => {
+    if (challenge === undefined || challenge === null) {
+      return [];
+    }
+
     // TODO: make this code more elegant
     if (challenge.codeChallenge) {
       return challenge.codeChallenge;

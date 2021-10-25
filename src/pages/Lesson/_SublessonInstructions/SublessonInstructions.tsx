@@ -8,7 +8,7 @@ import {
   getChallengesFromSublessonChallenges,
   useGetLessonDescription,
   useOnClickNext,
-} from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions.utils';
+} from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
 import { Challenge } from 'components/Challenges/Challenge';
 import { ChallengeButton } from 'components/Challenges/Challenge.styles';
 import { ContentPanel } from 'components/ContentPanel/ContentPanel';

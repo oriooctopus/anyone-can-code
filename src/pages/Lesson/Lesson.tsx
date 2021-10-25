@@ -1,62 +1,69 @@
 import { useReactiveVar } from '@apollo/client';
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 import '@fontsource/roboto';
-import { GetStaticProps } from 'next';
 import { useEffect } from 'react';
 import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
 import LessonProgress from 'src/components/LessonProgress/LessonProgress';
-import {
-  PageGetLessonDataComp,
-  ssrGetLessonData,
-  ssrGetAllLessonSlugs,
-} from 'src/generated/page';
-import { SublessonInstructions } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions';
-import { getChallengesFromSublessonChallenges } from 'src/pages/lessons/_SublessonInstructions/SublessonInstructions.utils';
-import { withApollo } from 'src/utils/withApollo';
+import { SublessonInstructions } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions';
+import { getChallengesFromSublessonChallenges } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
 import { useCodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
 import { Editor } from 'components/Editor/Editor';
 import Layout from 'components/Layout/Layout';
 import { LessonBar } from 'components/LessonBar/LessonBar';
+import { useParams } from 'react-router';
+import { GetLessonDataQuery, useGetLessonDataQuery } from 'src/generated/graphql';
+import { isCodeChallenge } from 'components/Challenges/Challenge.utils';
 
-const App: PageGetLessonDataComp = (props) => {
-  const {
-    data: {
-      lessons: [lesson],
-    },
-  } = props;
+interface IRouteParams {
+  slug: string;
+}
 
+type Lesson = NonNullable<NonNullable<GetLessonDataQuery['lessons']>[number]>;
+
+
+interface IProps {
+  lesson: Lesson
+}
+
+
+const LessonPage = ({lesson}: IProps) => {
+  const sublessons = lesson.sublessons || [];
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
   const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
-
-  const currentSublesson = lesson.sublessons[currentSublessonIndex];
+  const currentSublesson = sublessons[currentSublessonIndex];
   const parsedChallenges = getChallengesFromSublessonChallenges(
-    currentSublesson.challenges,
+    currentSublesson?.challenges,
   );
   const currentChallenge = parsedChallenges[currentChallengeIndex];
-
   // I thought about abstracting away this logic.. but I don't think it's really necessary with typescript?
-  const isCodeChallenge = currentChallenge?.__typename === 'CodeChallenge';
   const { runTests } = useCodeChallengeTests(
-    isCodeChallenge ? currentChallenge.tests : [],
+    isCodeChallenge(currentChallenge) ? currentChallenge.tests : [],
   );
-  const totalSublessons = lesson.sublessons.length;
+  const totalSublessons = sublessons.length;
+  /*
+   * This actually has to be fixed as it doesn't make sense when there aren't challenges
+   * The idea is when going back from the beginning of a sublesson to the end of another,
+   * find the last challenge of the last sublesson and that's where you'll go, but what we
+   * should just do is have it be -1 or something
+   */
   const lastChallengeIndexOfPreviousSublesson =
     currentSublessonIndex > 0
-      ? lesson.sublessons[currentSublessonIndex - 1]?.challenges?.length - 1
+      ? (sublessons?.[currentSublessonIndex - 1]?.challenges?.length || 0) - 1
       : undefined;
 
   const onMount = () => {
     runTests();
   };
 
-  if (!currentSublesson) {
-    return <span>no lesson</span>;
-  }
-
   useEffect(() => {
+    // TODO: set types for these
     window.setSublesson = currentSublessonIndexVar;
     window.setChallenge = currentChallengeIndexVar;
   }, []);
+
+  if (!currentSublesson) {
+    return <span>no sublesson</span>;
+  }
 
   return (
     <Layout>
@@ -69,7 +76,6 @@ const App: PageGetLessonDataComp = (props) => {
             lg: true ? 5 : 7,
             md: true ? 7 : 9,
           }}
-          {...props}
         >
           <SublessonInstructions
             sublesson={currentSublesson}
@@ -83,37 +89,26 @@ const App: PageGetLessonDataComp = (props) => {
           <Editor challenge={currentChallenge} onMount={onMount} />
         </GridItem>
         <GridItem colSpan={2} display={{ md: 'none', lg: 'block' }}>
-          <LessonProgress sublessons={lesson.sublessons} />
+          <LessonProgress sublessons={sublessons} />
         </GridItem>
       </Grid>
     </Layout>
   );
 };
 
-export const getStaticPaths = async () => {
-  const {
-    props: {
-      data: { lessons },
-    },
-  } = await ssrGetAllLessonSlugs.getServerPage({});
-  const lessonUrls = lessons.map(({ slug }) => `/lessons/${slug}`);
-
-  return {
-    paths: lessonUrls,
-    fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  return await ssrGetLessonData.getServerPage({
+export const LessonPageContainer = () => {
+  const { slug } = useParams<IRouteParams>();
+  const { data, loading, error } = useGetLessonDataQuery({
     variables: {
-      slug: params.lesson,
+      slug
     },
   });
-};
 
-export default withApollo(
-  ssrGetLessonData.withPage(({ query }) => ({
-    variables: { slug: query.lesson as string },
-  }))(App),
-);
+  const lesson = data?.lessons?.[0];
+
+  if (!lesson) {
+    return <span>Lesson not found</span>;
+  }
+
+  return <LessonPage lesson={lesson} />;
+};

@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { sublessonInstructionsData } from 'components/ContentPanel/ContentPanel.query';
+// import { sublessonInstructionsData } from 'components/ContentPanel/ContentPanel.query';
 import { lessonProgressData } from 'components/LessonProgress/LessonProgress.query';
 
 export const getLessonData = gql`
@@ -12,7 +12,7 @@ export const getLessonData = gql`
       }
     }
   }
-  ${sublessonInstructionsData}
+  # ${sublessonInstructionsData}
   ${lessonProgressData}
 `;
 

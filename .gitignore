@@ -1,28 +1,5 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# Dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# Testing
-/coverage
-
-# Next.js
-/.next/
-/out/
-
-# Generated
-/src/generated/
-
-# Production
-/build
-public/js
-
-# MISC
+node_modules
 .DS_Store
-
-# Debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+dist
+dist-ssr
+*.local

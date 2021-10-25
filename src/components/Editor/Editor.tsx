@@ -4,7 +4,6 @@ import '@fontsource/roboto-mono';
 import MonacoEditor from '@monaco-editor/react';
 import { useEffect } from 'react';
 import { codeEditorValueVar, currentLogVar, testResultsVar } from 'src/cache';
-import { CodeChallengeDataFragment } from 'src/generated/graphql';
 import { useDebounced } from 'src/utils/hooks/useDebounced';
 import { getConsoleLogsFromCodeEvaluation } from 'src/workers/utils';
 import {
@@ -13,9 +12,11 @@ import {
   defineDefaultMonacoTheme,
 } from 'components/Editor/Editor.utils';
 import editorOptions from 'components/Editor/editor-options';
+import { ChallengeFragment } from 'src/types/generalTypes';
+import { isCodeChallenge } from 'components/Challenges/Challenge.utils';
 
 type EditorProps = {
-  challenge: CodeChallengeDataFragment | undefined;
+  challenge: ChallengeFragment | undefined;
   onMount: () => void;
 };
 
@@ -23,7 +24,7 @@ export const Editor: React.FC<EditorProps> = ({ challenge }) => {
   const codeEditorValue = useReactiveVar(codeEditorValueVar);
   const currentLog = useReactiveVar(currentLogVar);
 
-  const onChangeEditorValue = (newValue: string) => {
+  const onChangeEditorValue = (newValue: string | undefined) => {
     testResultsVar([]);
     codeEditorValueVar(newValue);
   };
@@ -38,7 +39,9 @@ export const Editor: React.FC<EditorProps> = ({ challenge }) => {
   );
 
   useEffect(() => {
-    codeEditorValueVar(challenge?.startingCode || DEFAULT_EDITOR_STARTING_CODE);
+    const startingValue =
+      challenge && isCodeChallenge(challenge) && challenge?.startingCode;
+    codeEditorValueVar(startingValue || DEFAULT_EDITOR_STARTING_CODE);
   }, [challenge?.id]);
 
   return (
@@ -62,7 +65,7 @@ export const Editor: React.FC<EditorProps> = ({ challenge }) => {
         padding="10px"
         fontFamily="Roboto Mono"
       >
-        {currentLog.map((log) => (
+        {currentLog.map(log => (
           <span style={{ display: 'block' }}>{log}</span>
         ))}
       </Box>
