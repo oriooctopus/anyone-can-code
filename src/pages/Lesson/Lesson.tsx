@@ -2,17 +2,20 @@ import { useReactiveVar } from '@apollo/client';
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 import '@fontsource/roboto';
 import { useEffect } from 'react';
+import { useParams } from 'react-router';
 import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
 import LessonProgress from 'src/components/LessonProgress/LessonProgress';
+import {
+  GetLessonDataQuery,
+  useGetLessonDataQuery,
+} from 'src/generated/graphql';
 import { SublessonInstructions } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions';
 import { getChallengesFromSublessonChallenges } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
+import { isCodeChallenge } from 'components/Challenges/Challenge.utils';
 import { useCodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
 import { Editor } from 'components/Editor/Editor';
 import Layout from 'components/Layout/Layout';
 import { LessonBar } from 'components/LessonBar/LessonBar';
-import { useParams } from 'react-router';
-import { GetLessonDataQuery, useGetLessonDataQuery } from 'src/generated/graphql';
-import { isCodeChallenge } from 'components/Challenges/Challenge.utils';
 
 interface IRouteParams {
   slug: string;
@@ -20,13 +23,11 @@ interface IRouteParams {
 
 type Lesson = NonNullable<NonNullable<GetLessonDataQuery['lessons']>[number]>;
 
-
 interface IProps {
-  lesson: Lesson
+  lesson: Lesson;
 }
 
-
-const LessonPage = ({lesson}: IProps) => {
+const LessonPage = ({ lesson }: IProps) => {
   const sublessons = lesson.sublessons || [];
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
   const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
@@ -100,9 +101,11 @@ export const LessonPageContainer = () => {
   const { slug } = useParams<IRouteParams>();
   const { data, loading, error } = useGetLessonDataQuery({
     variables: {
-      slug
+      slug,
     },
   });
+
+  console.log('data', data, slug);
 
   const lesson = data?.lessons?.[0];
 

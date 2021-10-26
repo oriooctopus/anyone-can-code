@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-import ReactMarkdown from 'react-markdown/react-markdown.min';
+import { chakra } from '@chakra-ui/react';
+import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { rem } from 'src/styles/typography/font';
 
@@ -51,25 +51,24 @@ export const MultiLineCodeBlock: React.FC<MultiLineCodeProps> = ({
   />
 );
 
-export const StyledMarkdown = styled(ReactMarkdown)<{
-  cssOverrides: React.CSSProperties;
-}>(({ cssOverrides = {} }) => ({
-  marginTop: rem(10),
-  lineHeight: 1.65,
-  // TODO: expose these selectors programmatically so that external overrides are cleaner
-  ' a': {
-    color: '#172A4E',
-    textDecoration: 'underline',
+export const StyledMarkdown = chakra(ReactMarkdown, {
+  baseStyle: {
+    marginTop: rem(10),
+    lineHeight: 1.65,
+    // TODO: expose these selectors programmatically so that external overrides are cleaner
+    ' a': {
+      color: '#172A4E',
+      textDecoration: 'underline',
+    },
+    ' li': {
+      listStyle: 'inside',
+      listStyleType: "'- '",
+    },
+    '> *': {
+      marginBottom: rem(10),
+    },
+    ' code': {
+      padding: `0 ${rem(3)}`,
+    },
   },
-  ' li': {
-    listStyle: 'inside',
-    listStyleType: "'- '",
-  },
-  '> *': {
-    marginBottom: rem(10),
-  },
-  ' code': {
-    padding: `0 ${rem(3)}`,
-  },
-  ...cssOverrides,
-}));
+});
