@@ -4,11 +4,11 @@ export type TSidebarOverlayState =
   | 'debug-handbook'
   | 'module-map'
   | 'syntax-handbook'
-  | null;
+  | undefined;
 
 interface ISidebarOverlayContextProps {
   overlayState: TSidebarOverlayState;
-  setOverlayState: (state: TSidebarOverlayState) => void;
+  setOverlayState: (state?: TSidebarOverlayState) => void;
 }
 
 export const SidebarOverlayContext =

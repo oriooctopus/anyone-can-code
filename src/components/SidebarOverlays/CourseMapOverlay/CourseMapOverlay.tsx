@@ -1,5 +1,5 @@
-import { Box, Divider, Text } from '@chakra-ui/react';
-import { SidebarOverlayContent } from 'components/SidebarOverlay/SidebarOverlay.styles';
+import { Box, Text } from '@chakra-ui/react';
+import { SidebarOverlayBase } from 'components/SidebarOverlays/SidebarOverlayBase/SidebarOverlayBase';
 
 const Module = () => (
   <Box>
@@ -13,9 +13,9 @@ const Module = () => (
 
 export const CourseMapOverlay = () => {
   return (
-    <SidebarOverlayContent>
+    <SidebarOverlayBase title="Course Map">
       <Module />
       <Module />
-    </SidebarOverlayContent>
+    </SidebarOverlayBase>
   );
 };

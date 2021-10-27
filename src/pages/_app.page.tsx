@@ -6,7 +6,7 @@ import theme from 'src/theme/chakra-theme';
 import {
   SidebarOverlayContext,
   TSidebarOverlayState,
-} from 'components/SidebarOverlays/SidebarOverlay/SidebarOverlayContext';
+} from 'components/SidebarOverlays/SidebarOverlayContext';
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [overlayState, setOverlayState] = useState<TSidebarOverlayState>(null);
