@@ -14,7 +14,7 @@ import { getChallengesFromSublessonChallenges } from 'src/pages/Lesson/_Sublesso
 import { isCodeChallenge } from 'components/Challenges/Challenge.utils';
 import { useCodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
 import { Editor } from 'components/Editor/Editor';
-import Layout from 'components/Layout/Layout';
+import { Layout } from 'components/Layout/Layout';
 import { LessonBar } from 'components/LessonBar/LessonBar';
 
 interface IRouteParams {

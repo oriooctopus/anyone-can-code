@@ -5,8 +5,10 @@ export const CourseMapOverlayData = gql`
     courses(where: { slug: $slug }) {
       name
       modules {
+        name
         lessons {
           name
+          slug
         }
       }
     }

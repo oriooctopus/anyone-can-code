@@ -46,6 +46,13 @@ export const MultipleChoiceChallenge = ({
   useEffect(() => {
     multipleChoiceOptionSelectionsVar([]);
   }, [id]);
+  // TODO: Give the user a way to cancel the automatic moving on
+  useEffect(() => {
+    if (hasUserPassed) {
+      // this shouldn't be called onClickNext if it doesn't happen on click
+      setTimeout(onClickNext, 2000);
+    }
+  }, [challengeAttemptStatus]);
 
   const onSubmit = () => {
     const isSubmissionCorrect = options.every((_, index) =>
@@ -103,7 +110,7 @@ export const MultipleChoiceChallenge = ({
         )}
         {challengeAttemptStatus === ChallengeAttemptStatusEnum.passed && (
           <Text color="green" fontSize="14px" position="absolute" top="53px">
-            Correct!
+            Correct! Moving on...
           </Text>
         )}
         {challengeAttemptStatus === ChallengeAttemptStatusEnum.failed && (

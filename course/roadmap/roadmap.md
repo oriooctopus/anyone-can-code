@@ -184,3 +184,7 @@
 - peer instructions using a currency based system. earning the currency allows you to get help from someone above you. The currency maybe can even be converted to money at the top level. And maybe have some inspiration from the way that that coding interview thing you did did things? Remember where you would interview someone else and they would interview you? THat would basically provide some structure/tips to how to advise the student.
 
 - when making your lessons, don't forget about _priming_ https://jarednielsen.com/teach-adults-code/
+
+- when you create a ticket board, make sure it integrates with some sort of feature tracker like strapi has
+
+- clarify that math isn't required

@@ -64,7 +64,7 @@ export const SublessonInstructions = React.memo(
 
     return (
       <ContentPanel
-        includeSettings={true}
+        // includeSettings={true}
         onGoBack={showGoBackIndicator && onGoBack}
         secondaryContent={!isLessonIntroduction && sublessonText}
       >

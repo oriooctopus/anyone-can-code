@@ -6,7 +6,7 @@ type LayoutProps = {
   children: React.ReactNode;
 };
 
-const Layout = ({ children }: LayoutProps) => (
+export const Layout = ({ children }: LayoutProps) => (
   <Box bgColor="black" h="100vh" d="flex" flexDirection="column">
     <Navbar />
     <Box as="main" flex="1">
@@ -14,5 +14,3 @@ const Layout = ({ children }: LayoutProps) => (
     </Box>
   </Box>
 );
-
-export default Layout;

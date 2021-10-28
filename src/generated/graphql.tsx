@@ -2562,7 +2562,7 @@ export type GetCourseMapOverlayDataQueryVariables = Exact<{
 }>;
 
 
-export type GetCourseMapOverlayDataQuery = { __typename?: 'Query', courses?: Array<{ __typename?: 'Course', name: string, modules?: Array<{ __typename?: 'Modules', lessons?: Array<{ __typename?: 'Lesson', name: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
+export type GetCourseMapOverlayDataQuery = { __typename?: 'Query', courses?: Array<{ __typename?: 'Course', name: string, modules?: Array<{ __typename?: 'Modules', name: string, lessons?: Array<{ __typename?: 'Lesson', name: string, slug: string } | null | undefined> | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined };
 
 export type GetLessonDataQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -2637,8 +2637,10 @@ export const GetCourseMapOverlayDataDocument = gql`
   courses(where: {slug: $slug}) {
     name
     modules {
+      name
       lessons {
         name
+        slug
       }
     }
   }

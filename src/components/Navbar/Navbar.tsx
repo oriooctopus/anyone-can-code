@@ -21,8 +21,6 @@ const Navbar = memo(() => {
         <NavbarLink onClick={() => setOverlayState('module-map')}>
           Map
         </NavbarLink>
-        <NavbarLink href="#">Goals</NavbarLink>
-        <NavbarLink href="#">Lexicon</NavbarLink>
       </HStack>
     </Flex>
   );
