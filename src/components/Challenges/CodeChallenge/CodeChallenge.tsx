@@ -50,7 +50,7 @@ export const CodeChallenge = ({
             key={label}
           />
         ))}
-        <Button variant="ghost">Show hint</Button>
+        {/* <Button variant="ghost">Show hint</Button> */}
       </Box>
       <Flex spacing={6} mt="auto">
         {canProceed ? (

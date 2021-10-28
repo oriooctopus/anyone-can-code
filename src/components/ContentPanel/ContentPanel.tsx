@@ -34,7 +34,7 @@ export const ContentPanel = memo(
       {includeSettings && (
         <LessonSettings position="absolute" right="20px" top="15px" />
       )}
-      <Box height="100%" d="flex" flexDir="column" alignItems="baseline">
+      <Box minHeight="100%" d="flex" flexDir="column" alignItems="baseline">
         {children}
         <ContentPanelNavigationIndicators
           onGoBack={onGoBack}
