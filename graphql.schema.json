@@ -7234,9 +7234,13 @@
               "kind": "LIST",
               "name": null,
               "ofType": {
-                "kind": "INPUT_OBJECT",
-                "name": "ComponentMultipleChoiceChallengeOptionInput",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ComponentMultipleChoiceChallengeOptionInput",
+                  "ofType": null
+                }
               }
             },
             "defaultValue": null,

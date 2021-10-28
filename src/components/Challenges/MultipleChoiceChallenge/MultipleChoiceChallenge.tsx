@@ -24,7 +24,7 @@ export const MultipleChoiceChallenge = ({
   challenge: {
     canSelectMultipleOptions,
     id,
-    options,
+    options = [],
     prompt,
     useMarkdownForOptionsText,
   },

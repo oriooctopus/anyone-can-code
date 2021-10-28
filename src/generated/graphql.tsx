@@ -822,7 +822,7 @@ export type MultipleChoiceChallengeInput = {
   canSelectMultipleOptions?: Maybe<Scalars['Boolean']>;
   challengeMeta: ComponentChallengeChallengeInput;
   created_by?: Maybe<Scalars['ID']>;
-  options?: Maybe<Array<Maybe<ComponentMultipleChoiceChallengeOptionInput>>>;
+  options?: Maybe<Array<ComponentMultipleChoiceChallengeOptionInput>>;
   prompt: Scalars['String'];
   published_at?: Maybe<Scalars['DateTime']>;
   updated_by?: Maybe<Scalars['ID']>;
