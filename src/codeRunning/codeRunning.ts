@@ -1,14 +1,7 @@
 import pMap from 'p-map';
+import { TTestResult } from 'src/codeRunning/codeRunning.types';
 import { runTestEvaluator } from 'src/workers/test-evaluator';
 import { CodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.types';
-
-type TTestResult = {
-  pass: boolean;
-  internalTest: string;
-  label: string;
-  error?: string;
-  stack?: string;
-};
 
 const executeTests = async (
   code: string,

@@ -1,18 +1,20 @@
 import { useReactiveVar } from '@apollo/client';
 import { Button } from '@chakra-ui/button';
 import { Box, Divider, Flex } from '@chakra-ui/layout';
+import { Heading } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { codeEditorValueVar, testResultsVar } from 'src/cache';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
+import { ChallengeHints } from 'components/ChallengeHints/ChallengeHints';
 import {
   ChallengeButton,
   ChallengeMarkdown,
 } from 'components/Challenges/Challenge.styles';
 import {
+  getCodeChallengeStartingCode,
   hasPassedCodeChallenge,
   useCodeChallengeTests,
 } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
-import { DEFAULT_EDITOR_STARTING_CODE } from 'components/Editor/Editor.utils';
 import TestCaseResult from 'components/TestCaseResult/TestCaseResult';
 
 export type CodeChallengeProps = {
@@ -21,16 +23,18 @@ export type CodeChallengeProps = {
 };
 
 export const CodeChallenge = ({
-  challenge: { id, tests, prompt, startingCode },
+  challenge,
   onClickNext,
 }: CodeChallengeProps) => {
-  const { runTests, testResults } = useCodeChallengeTests(tests);
+  const { id, hints, tests, prompt } = challenge;
+  const { runTests } = useCodeChallengeTests(tests);
   const resetChallenge = () => {
-    codeEditorValueVar(startingCode || DEFAULT_EDITOR_STARTING_CODE);
+    codeEditorValueVar(getCodeChallengeStartingCode(challenge));
     testResultsVar([]);
   };
   const testResultsValue = useReactiveVar(testResultsVar);
   const canProceed = hasPassedCodeChallenge(tests, testResultsValue);
+  const showHints = Boolean(hints?.length);
 
   useEffect(resetChallenge, [id]);
 
@@ -42,15 +46,8 @@ export const CodeChallenge = ({
         {prompt}
       </ChallengeMarkdown>
       <Box mb="20px" w="100%">
-        <Divider opacity={1} />
-        {tests?.map(({ label }, index) => (
-          <TestCaseResult
-            passed={testResults[index]?.pass}
-            label={label}
-            key={label}
-          />
-        ))}
-        {/* <Button variant="ghost">Show hint</Button> */}
+        {showHints ? <ChallengeHints hints={hints} /> : <Divider opacity={1} />}
+        <Tests tests={tests} />
       </Box>
       <Flex spacing={6} mt="auto">
         {canProceed ? (
@@ -73,5 +70,28 @@ export const CodeChallenge = ({
         </ChallengeButton>
       </Flex>
     </>
+  );
+};
+
+interface ITestsProps {
+  tests: CodeChallengeProps['challenge']['tests'];
+}
+
+const Tests: React.FC<ITestsProps> = ({ tests }) => {
+  const { testResults } = useCodeChallengeTests(tests);
+
+  return (
+    <Box>
+      <Heading size="md" mr="auto" mt={3}>
+        Tests
+      </Heading>
+      {tests?.map(({ label }, index) => (
+        <TestCaseResult
+          passed={testResults[index]?.pass}
+          label={label}
+          key={label}
+        />
+      ))}
+    </Box>
   );
 };

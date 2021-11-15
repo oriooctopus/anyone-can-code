@@ -1,5 +1,3 @@
-import CheckFailure from '../../assets/CheckFailure.svg';
-import CheckSuccess from '../../assets/CheckSuccess.svg';
 import {
   CheckCircleOutlined,
   MinusOutlined,

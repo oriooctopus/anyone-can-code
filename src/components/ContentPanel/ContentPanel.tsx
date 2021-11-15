@@ -1,4 +1,4 @@
-import { Box, Divider } from '@chakra-ui/react';
+import { Box, Divider, Text } from '@chakra-ui/react';
 import '@fontsource/roboto';
 import { memo } from 'react';
 import { lessonMenuHeight, mainNavbarHeight } from 'src/styles/constants';

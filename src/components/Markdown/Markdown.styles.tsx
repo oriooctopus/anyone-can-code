@@ -53,7 +53,6 @@ export const MultiLineCodeBlock: React.FC<MultiLineCodeProps> = ({
 
 export const StyledMarkdown = chakra(ReactMarkdown, {
   baseStyle: {
-    marginTop: rem(10),
     lineHeight: 1.65,
     // TODO: expose these selectors programmatically so that external overrides are cleaner
     ' a': {

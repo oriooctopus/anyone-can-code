@@ -4,16 +4,16 @@ import '@fontsource/roboto-mono';
 import MonacoEditor from '@monaco-editor/react';
 import { useEffect } from 'react';
 import { codeEditorValueVar, currentLogVar, testResultsVar } from 'src/cache';
+import { ChallengeFragment } from 'src/types/generalTypes';
 import { useDebounced } from 'src/utils/hooks/useDebounced';
 import { getConsoleLogsFromCodeEvaluation } from 'src/workers/utils';
+import { isCodeChallenge } from 'components/Challenges/Challenge.utils';
 import {
   DEFAULT_EDITOR_STARTING_CODE,
   DEFAULT_MONACO_EDITOR_THEME,
   defineDefaultMonacoTheme,
 } from 'components/Editor/Editor.utils';
 import editorOptions from 'components/Editor/editor-options';
-import { ChallengeFragment } from 'src/types/generalTypes';
-import { isCodeChallenge } from 'components/Challenges/Challenge.utils';
 
 type EditorProps = {
   challenge: ChallengeFragment | undefined;
@@ -38,12 +38,6 @@ export const Editor: React.FC<EditorProps> = ({ challenge }) => {
     400,
   );
 
-  useEffect(() => {
-    const startingValue =
-      challenge && isCodeChallenge(challenge) && challenge?.startingCode;
-    codeEditorValueVar(startingValue || DEFAULT_EDITOR_STARTING_CODE);
-  }, [challenge?.id]);
-
   return (
     <Box d="flex" flexDirection="column" h="100%">
       <MonacoEditor
@@ -65,7 +59,7 @@ export const Editor: React.FC<EditorProps> = ({ challenge }) => {
         padding="10px"
         fontFamily="Roboto Mono"
       >
-        {currentLog.map(log => (
+        {currentLog.map((log) => (
           <span style={{ display: 'block' }}>{log}</span>
         ))}
       </Box>

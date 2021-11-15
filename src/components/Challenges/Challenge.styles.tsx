@@ -8,6 +8,7 @@ export const ChallengeMarkdown = ({
   <Markdown
     containerOverrides={{
       mb: '20px',
+      mt: '10px',
       fontSize: '18px',
       ...containerOverrides,
     }}

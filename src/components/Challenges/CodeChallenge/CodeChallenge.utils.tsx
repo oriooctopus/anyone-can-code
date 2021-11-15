@@ -2,13 +2,33 @@ import { useReactiveVar } from '@apollo/client';
 import { useRef } from 'react';
 import { codeEditorValueVar, testResultsVar } from 'src/cache';
 import { runTests } from 'src/codeRunning/codeRunning';
+import { CodeChallengeDataFragment } from 'src/generated/graphql';
 import { CodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.types';
+
+export const getCodeChallengeStartingCode = (
+  challenge: CodeChallengeDataFragment,
+) => {
+  const { challengeMeta, startingCode } = challenge;
+
+  if (!challenge) {
+    return '';
+  }
+
+  if (startingCode) {
+    return startingCode;
+  } else if (challengeMeta?.difficulty === 'hard') {
+    return 'This is a hard challenge. Expect to struggle. TODO: Add more text to this and improve the message';
+  }
+
+  return '';
+};
 
 // need to properly type test results once things get solidified
 export const hasPassedCodeChallenge = (
   tests: CodeChallengeTests,
   testResults: any[],
 ) =>
+  !tests ||
   tests.length === 0 ||
   // if testResults.length and there are tests, that means the tests haven't ran yet
   (testResults.length !== 0 && testResults.every(({ pass }) => pass));

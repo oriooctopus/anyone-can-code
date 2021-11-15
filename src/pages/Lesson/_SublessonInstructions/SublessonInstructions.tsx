@@ -1,11 +1,16 @@
 import { useReactiveVar } from '@apollo/client';
 import { Text } from '@chakra-ui/layout';
 import '@fontsource/roboto';
-import React from 'react';
-import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
+import React, { useEffect } from 'react';
+import {
+  codeEditorValueVar,
+  currentChallengeIndexVar,
+  currentSublessonIndexVar,
+} from 'src/cache';
 import { SublessonInstructionsDataFragment } from 'src/generated/graphql';
 import {
   getChallengesFromSublessonChallenges,
+  getSublessonStartingCode,
   useGetLessonDescription,
   useOnClickNext,
 } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
@@ -30,7 +35,7 @@ export const SublessonInstructions = React.memo(
     sublesson,
     totalSublessons,
   }: props) => {
-    const { challenges, descriptions, name, lesson } = sublesson;
+    const { challenges, descriptions, id, name, lesson } = sublesson;
     const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
     const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
     const description = useGetLessonDescription(descriptions);
@@ -44,7 +49,10 @@ export const SublessonInstructions = React.memo(
     const sublessonText = (
       <>
         <Text fontSize="26px">{name}</Text>
-        <Markdown containerOverrides={{ mb: '35px' }}>{description}</Markdown>
+        <Markdown containerOverrides={{ mb: '35px', mt: '10px' }}>
+          {description}
+        </Markdown>
+
         {isLessonIntroduction && (
           <ChallengeButton onClick={onClickNext}>
             {challenges.length ? 'Begin Challenges' : 'Next'}
@@ -61,6 +69,10 @@ export const SublessonInstructions = React.memo(
         currentChallengeIndexVar(currentChallengeIndex - 1);
       }
     };
+
+    useEffect(() => {
+      codeEditorValueVar(getSublessonStartingCode());
+    }, [id]);
 
     return (
       <ContentPanel

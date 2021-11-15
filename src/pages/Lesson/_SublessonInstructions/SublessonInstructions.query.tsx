@@ -6,12 +6,13 @@ import {
 
 export const sublessonInstructionsData = gql`
   fragment sublessonInstructionsData on Sublesson {
+    name
+    id
     descriptions {
       short
       medium
       long
     }
-    name
     lesson {
       name
     }

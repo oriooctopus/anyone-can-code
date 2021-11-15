@@ -67,7 +67,6 @@ export const MultipleChoiceChallengeOption: React.FC<IProps> = ({
               '> *': {
                 marginBottom: 0,
               },
-              marginTop: 0,
             }}
             multiLineCodePropOverrides={{
               customStyle: {

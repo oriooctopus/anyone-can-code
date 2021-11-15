@@ -12,6 +12,7 @@ generates:
       - 'typescript-operations'
       - 'typescript-react-apollo'
     config:
+      avoidOptionals: true
       reactApolloVersion: 3
       withHooks: true
       withHOC: false

@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { challengeHintsData } from 'components/ChallengeHints/ChallengeHints.query';
 
 export const codeChallengeData = gql`
   fragment codeChallengeData on CodeChallenge {
@@ -7,9 +8,16 @@ export const codeChallengeData = gql`
       internalTest
       label
     }
+    hints {
+      ...challengeHint
+    }
+    challengeMeta {
+      difficulty
+    }
     startingCode
     prompt
   }
+  ${challengeHintsData}
 `;
 
 export const multipleChoiceChallengeData = gql`

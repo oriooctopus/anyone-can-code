@@ -188,3 +188,7 @@
 - when you create a ticket board, make sure it integrates with some sort of feature tracker like strapi has
 
 - clarify that math isn't required
+
+- ability to see sublessons from lesson map
+
+- include a 'gain experience' button in the site

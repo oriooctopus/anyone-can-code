@@ -2,5 +2,6 @@
   "singleQuote": true,
   "trailingComma": "all",
   "printWidth": 80,
-  "importOrder": ["^src/(.*)$", "^components/(.*)$"]
+  "importOrder": ["^src/(.*)$", "^components/(.*)$"],
+  "jsonRecursiveSort": true
 }

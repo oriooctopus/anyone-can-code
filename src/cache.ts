@@ -1,4 +1,5 @@
 import { makeVar } from '@apollo/client';
+import { TTestResult } from 'src/codeRunning/codeRunning.types';
 
 export enum ChallengeAttemptStatusEnum {
   notAttempted = 'notAttempted',
@@ -19,7 +20,7 @@ export enum SublessonChallengeFrequencyEnum {
 }
 
 export const codeEditorValueVar = makeVar('the initial code');
-export const testResultsVar = makeVar([]);
+export const testResultsVar = makeVar<Array<TTestResult>>([]);
 // TODO: store these in local storage. Possibly via apollo cache persist
 export const currentChallengeIndexVar = makeVar(-1);
 export const currentSublessonIndexVar = makeVar(0);
