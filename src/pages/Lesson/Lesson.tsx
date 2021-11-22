@@ -1,5 +1,5 @@
 import { useReactiveVar } from '@apollo/client';
-import { Box, Grid, GridItem } from '@chakra-ui/react';
+import { Box, Grid, GridItem, SimpleGrid } from '@chakra-ui/react';
 import '@fontsource/roboto';
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
@@ -14,7 +14,7 @@ import { getChallengesFromSublessonChallenges } from 'src/pages/Lesson/_Sublesso
 import { isCodeChallenge } from 'components/Challenges/Challenge.utils';
 import { useCodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
 import { Editor } from 'components/Editor/Editor';
-import { Layout } from 'components/Layout/Layout';
+import { Layout, LessonLayout } from 'components/Layout/Layout';
 import { LessonBar } from 'components/LessonBar/LessonBar';
 
 interface IRouteParams {
@@ -66,16 +66,15 @@ const LessonPage = ({ lesson }: IProps) => {
     return <span>no sublesson</span>;
   }
 
+  // now I need to figure out how to make the nav not full length
+
   return (
-    <Layout>
-      <Grid
-        templateColumns="repeat(12, 1fr)"
-        gap={{ md: '20px', lg: '30px', xl: '40px' }}
-      >
+    <LessonLayout lessonSidebar={<LessonProgress sublessons={sublessons} />}>
+      <Grid templateColumns="repeat(12, 1fr)" gap={{ md: '20px' }}>
         <GridItem
           colSpan={{
-            lg: true ? 5 : 7,
-            md: true ? 7 : 9,
+            lg: true ? 6 : 7,
+            md: true ? 6 : 9,
           }}
         >
           <SublessonInstructions
@@ -86,14 +85,11 @@ const LessonPage = ({ lesson }: IProps) => {
             }
           />
         </GridItem>
-        <GridItem colSpan={true ? 5 : 3} mt="20px">
+        <GridItem colSpan={6} mt="10px">
           <Editor challenge={currentChallenge} onMount={onMount} />
         </GridItem>
-        <GridItem colSpan={2} display={{ md: 'none', lg: 'block' }}>
-          <LessonProgress sublessons={sublessons} />
-        </GridItem>
       </Grid>
-    </Layout>
+    </LessonLayout>
   );
 };
 

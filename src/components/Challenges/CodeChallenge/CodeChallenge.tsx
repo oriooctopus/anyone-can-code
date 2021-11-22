@@ -1,7 +1,7 @@
 import { useReactiveVar } from '@apollo/client';
 import { Button } from '@chakra-ui/button';
 import { Box, Divider, Flex } from '@chakra-ui/layout';
-import { Heading } from '@chakra-ui/react';
+import { Heading, VStack } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { codeEditorValueVar, testResultsVar } from 'src/cache';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
@@ -82,16 +82,18 @@ const Tests: React.FC<ITestsProps> = ({ tests }) => {
 
   return (
     <Box>
-      <Heading size="md" mr="auto" mt={3}>
+      <Heading size="md" mr="auto" my="23px">
         Tests
       </Heading>
-      {tests?.map(({ label }, index) => (
-        <TestCaseResult
-          passed={testResults[index]?.pass}
-          label={label}
-          key={label}
-        />
-      ))}
+      <VStack spacing="12px" align="left">
+        {tests?.map(({ label }, index) => (
+          <TestCaseResult
+            passed={testResults[index]?.pass}
+            label={label}
+            key={label}
+          />
+        ))}
+      </VStack>
     </Box>
   );
 };

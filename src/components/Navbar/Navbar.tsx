@@ -11,7 +11,7 @@ const Navbar = memo(() => {
   return (
     <Flex
       as="nav"
-      backgroundColor="#15141f"
+      // backgroundColor="#15141f"
       color="white"
       px={rem(20)}
       height={rem(mainNavbarHeight)}

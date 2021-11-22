@@ -4,12 +4,14 @@ import {
   CloseCircleOutlined,
 } from '@ant-design/icons';
 import { Flex, Text } from '@chakra-ui/layout';
+import { FlexProps } from '@chakra-ui/react';
 import React from 'react';
 import { rem } from 'src/styles/typography/font';
 
 interface IProps {
   label: string;
   passed: boolean;
+  containerStyles?: FlexProps;
 }
 
 const getIcon = (passed: boolean | undefined) => {
@@ -24,10 +26,14 @@ const getIcon = (passed: boolean | undefined) => {
   return <CloseCircleOutlined style={{ fontSize: rem(24), color: 'red' }} />;
 };
 
-export const TestCaseResult = ({ label, passed }: IProps) => (
-  <Flex align="center" mt="18px">
+export const TestCaseResult = ({
+  containerStyles = {},
+  label,
+  passed,
+}: IProps) => (
+  <Flex align="center" {...containerStyles}>
     {getIcon(passed)}
-    <Text ml="5px">{label}</Text>
+    <Text ml="12px">{label}</Text>
   </Flex>
 );
 

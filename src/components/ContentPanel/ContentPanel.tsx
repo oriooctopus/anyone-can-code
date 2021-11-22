@@ -19,7 +19,7 @@ type props = {
 };
 
 const ContentPanelHeight = `calc(100vh - ${rem(mainNavbarHeight)} - ${rem(
-  lessonMenuHeight,
+  lessonMenuHeight + 5,
 )})`;
 
 export const ContentPanel = memo(
@@ -30,6 +30,18 @@ export const ContentPanel = memo(
       height={ContentPanelHeight}
       overflowY="scroll"
       position="relative"
+      borderRadius="16px"
+      css={{
+        '&::-webkit-scrollbar-thumb': {
+          backgroundColor: 'lightgray',
+          border: '8px solid transparent',
+          borderRadius: '16px',
+          backgroundClip: 'padding-box',
+        },
+        '&::-webkit-scrollbar': {
+          width: '24px',
+        },
+      }}
     >
       {includeSettings && (
         <LessonSettings position="absolute" right="20px" top="15px" />
