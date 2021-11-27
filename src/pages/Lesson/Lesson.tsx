@@ -71,12 +71,7 @@ const LessonPage = ({ lesson }: IProps) => {
   return (
     <LessonLayout lessonSidebar={<LessonProgress sublessons={sublessons} />}>
       <Grid templateColumns="repeat(12, 1fr)" gap={{ md: '20px' }}>
-        <GridItem
-          colSpan={{
-            lg: true ? 6 : 7,
-            md: true ? 6 : 9,
-          }}
-        >
+        <GridItem colSpan={5}>
           <SublessonInstructions
             sublesson={currentSublesson}
             totalSublessons={totalSublessons}
@@ -85,7 +80,7 @@ const LessonPage = ({ lesson }: IProps) => {
             }
           />
         </GridItem>
-        <GridItem colSpan={6} mt="10px">
+        <GridItem colSpan={7} mt="10px">
           <Editor challenge={currentChallenge} onMount={onMount} />
         </GridItem>
       </Grid>

@@ -4,6 +4,7 @@ import '@fontsource/roboto';
 import React, { useEffect } from 'react';
 import {
   codeEditorValueVar,
+  contentPanelScrollToTopFunctionVar,
   currentChallengeIndexVar,
   currentSublessonIndexVar,
 } from 'src/cache';
@@ -35,27 +36,33 @@ export const SublessonInstructions = React.memo(
     sublesson,
     totalSublessons,
   }: props) => {
-    const { challenges, descriptions, id, name, lesson } = sublesson;
     const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
     const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
-    const description = useGetLessonDescription(descriptions);
-    const parsedChallenges = getChallengesFromSublessonChallenges(challenges);
+    const contentPanelScrollToTopFunction = useReactiveVar(
+      contentPanelScrollToTopFunctionVar,
+    );
+    const description = useGetLessonDescription(sublesson.descriptions);
+    const parsedChallenges = getChallengesFromSublessonChallenges(
+      sublesson.challenges,
+    );
+    const currentChallenge = parsedChallenges[currentChallengeIndex];
     const onClickNext = useOnClickNext({ sublesson, totalSublessons });
     const isLessonIntroduction = currentChallengeIndex === -1;
+    const contentId = currentChallenge?.id ? currentChallenge.id : sublesson.id;
 
     const showGoBackIndicator =
       !isLessonIntroduction || currentSublessonIndex !== 0;
 
     const sublessonText = (
       <>
-        <Text fontSize="26px">{name}</Text>
+        <Text fontSize="26px">{sublesson.name}</Text>
         <Markdown containerOverrides={{ mb: '35px', mt: '10px' }}>
           {description}
         </Markdown>
 
         {isLessonIntroduction && (
           <ChallengeButton onClick={onClickNext}>
-            {challenges.length ? 'Begin Challenges' : 'Next'}
+            {sublesson.challenges.length ? 'Begin Challenges' : 'Next'}
           </ChallengeButton>
         )}
       </>
@@ -72,17 +79,23 @@ export const SublessonInstructions = React.memo(
 
     useEffect(() => {
       codeEditorValueVar(getSublessonStartingCode());
-    }, [id]);
+    }, [sublesson.id]);
+
+    useEffect(contentPanelScrollToTopFunction, [
+      sublesson.id,
+      currentChallenge?.id,
+    ]);
 
     return (
       <ContentPanel
         // includeSettings={true}
+        contentId={contentId}
         onGoBack={showGoBackIndicator && onGoBack}
         secondaryContent={!isLessonIntroduction && sublessonText}
       >
         <>
           <Text fontSize="13px" textTransform="uppercase">
-            {lesson?.name}
+            {sublesson.lesson?.name}
           </Text>
           {isLessonIntroduction ? (
             sublessonText

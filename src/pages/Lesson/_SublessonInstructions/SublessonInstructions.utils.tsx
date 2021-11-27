@@ -17,26 +17,29 @@ import { ChallengeFragment } from 'src/types/generalTypes';
  * entering it in the CMS. However, once we get the data we can
  * convert it to the Challenge union type
  */
+export const getChallengeFromSublessonChallenge = (
+  challenge: SublessonInstructionsDataFragment['challenges'][number],
+): ChallengeFragment => {
+  if (Boolean(challenge) === false) {
+    return null;
+  }
+
+  // TODO: make this code more elegant
+  if (challenge.codeChallenge) {
+    return challenge.codeChallenge;
+  } else if (challenge.multipleChoiceChallenge) {
+    return challenge.multipleChoiceChallenge;
+  }
+
+  throw new Error(
+    `Sublesson challenge of id ${challenge.id} did not contain any challenges. Is the challenge/sublesson still a draft?`,
+  );
+};
+
 export const getChallengesFromSublessonChallenges = (
   challenges: SublessonInstructionsDataFragment['challenges'],
 ): Array<ChallengeFragment> => {
-  // not sure why typescript/graphql views the challenges as nullable
-  return (challenges || []).flatMap((challenge, index) => {
-    if (challenge === undefined || challenge === null) {
-      return [];
-    }
-
-    // TODO: make this code more elegant
-    if (challenge.codeChallenge) {
-      return challenge.codeChallenge;
-    } else if (challenge.multipleChoiceChallenge) {
-      return challenge.multipleChoiceChallenge;
-    }
-
-    throw new Error(
-      `Sublesson challenge at index ${index} did not contain any challenges. Is the challenge/sublesson still a draft?`,
-    );
-  });
+  return (challenges || []).flatMap(getChallengeFromSublessonChallenge);
 };
 
 type useOnClickNextProps = {

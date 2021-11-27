@@ -1,7 +1,16 @@
-import { Box, Button, ButtonGroup, ButtonProps, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  ButtonProps,
+  Flex,
+  Text,
+} from '@chakra-ui/react';
 import { useState } from 'react';
+import { BiCheckCircle } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import { rem } from 'src/styles/typography/font';
+import { ProgressStateEnum } from 'src/types/generalTypes';
 import { FlLink } from 'components/Link/FlLink';
 
 const lessonSharedStyles = {
@@ -21,6 +30,12 @@ interface ICourseMapOverlayLesson {
 const LessonButton: React.FC<ButtonProps> = (buttonProps) => (
   <Button size="sm" {...buttonProps} />
 );
+
+const lessonIconColorMap: Record<ProgressStateEnum, string> = {
+  [ProgressStateEnum.INCOMPLETE]: '#ECE9E9',
+  [ProgressStateEnum.CURRENT]: '#A77E14',
+  [ProgressStateEnum.COMPLETE]: '#14A76C',
+};
 
 /*
  * Refactor this so that there is a lesson container that has all the lessons
@@ -59,8 +74,13 @@ export const CourseMapOverlayLesson: React.FC<ICourseMapOverlayLesson> = ({
       </FlLink>
     </FlLink>
   ) : (
-    <Box {...lessonSharedStyles} onMouseEnter={() => setShowActions(true)}>
-      <Text>{name}</Text>
-    </Box>
+    <FlLink href={`/lesson/${slug}`}>
+      <Flex {...lessonSharedStyles} justify="space-between">
+        <Text fontSize="20px" fontWeight={600}>
+          {name}
+        </Text>
+        {/* <BiCheckCircle color={lessonIconColorMap['COMPLETE']} size={38} /> */}
+      </Flex>
+    </FlLink>
   );
 };

@@ -1,3 +1,5 @@
+import { renderToStaticMarkup } from 'react-dom/server';
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const encodeToBase64String = (value: any): string =>
   btoa(JSON.stringify(value));
@@ -20,4 +22,9 @@ export const isExternalURL = (url: string) => {
   };
 
   return domain(location.href) !== domain(url);
+};
+
+export const renderSvgToCss = (svg: React.ReactElement) => {
+  const staticMarkupSvg = renderToStaticMarkup(svg).replace(/"/g, "'");
+  return `url("data:image/svg+xml; utf8, ${staticMarkupSvg}")`;
 };

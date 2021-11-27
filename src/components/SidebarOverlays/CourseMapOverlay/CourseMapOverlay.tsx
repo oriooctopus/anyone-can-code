@@ -22,7 +22,7 @@ export const CourseMapOverlay = () => {
         (moduleData) =>
           moduleData && (
             <Box key={moduleData.name}>
-              <Heading size="md" p={4}>
+              <Heading fontSize="26px" p={4}>
                 {moduleData.name}
               </Heading>
               {moduleData.lessons &&

@@ -1,10 +1,7 @@
 import { rem } from 'src/styles/typography/font';
-import { ProgressStepperItemState } from 'components/ProgressStepper/ProgressStepper.types';
+import { ProgressState } from 'src/types/generalTypes';
 
-export const progressStepperColorStateMap: Record<
-  ProgressStepperItemState,
-  string
-> = {
+export const progressStepperColorStateMap: Record<ProgressState, string> = {
   complete: '#59CD90',
   current: '#E5E5E5',
   incomplete: '#D62828',

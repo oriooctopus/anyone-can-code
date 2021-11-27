@@ -17,6 +17,7 @@ export const sublessonInstructionsData = gql`
       name
     }
     challenges {
+      id
       codeChallenge {
         ...codeChallengeData
       }
