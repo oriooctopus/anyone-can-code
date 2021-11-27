@@ -2,7 +2,7 @@ import { useReactiveVar } from '@apollo/client';
 import { Button } from '@chakra-ui/button';
 import { Box, Divider, Flex,Text } from '@chakra-ui/layout';
 import { Heading, VStack, HStack } from '@chakra-ui/react';
-import Reset from 'src/assets/Restart.svg';
+import Reset from 'src/assets/Reset.svg';
 import { useEffect } from 'react';
 import { codeEditorValueVar, testResultsVar } from 'src/cache';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
