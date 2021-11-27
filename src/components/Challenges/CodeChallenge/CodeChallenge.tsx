@@ -68,7 +68,7 @@ export const CodeChallenge = ({
         >
           <HStack spacing="5px">
             <Reset />
-            <Text fontWeight="500">Reset Code</Text>
+            <Text fontWeight="semibold">Reset Code</Text>
           </HStack>
         </ChallengeButton>
       </Flex>
