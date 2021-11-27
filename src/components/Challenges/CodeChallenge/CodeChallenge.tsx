@@ -1,7 +1,8 @@
 import { useReactiveVar } from '@apollo/client';
 import { Button } from '@chakra-ui/button';
-import { Box, Divider, Flex } from '@chakra-ui/layout';
-import { Heading, VStack } from '@chakra-ui/react';
+import { Box, Divider, Flex,Text } from '@chakra-ui/layout';
+import { Heading, VStack, HStack } from '@chakra-ui/react';
+import Reset from 'src/assets/Reset.svg';
 import { useEffect } from 'react';
 import { codeEditorValueVar, testResultsVar } from 'src/cache';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
@@ -65,8 +66,10 @@ export const CodeChallenge = ({
           onClick={resetChallenge}
           variant="ghost"
         >
-          {/* make this button less prominent */}
-          Reset
+          <HStack spacing="5px">
+            <Reset />
+            <Text fontWeight="medium">Reset Code</Text>
+          </HStack>
         </ChallengeButton>
       </Flex>
     </>
