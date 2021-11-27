@@ -29,7 +29,7 @@ export const ContentPanel = memo(
 
     useEffect(() => {
       contentPanelScrollToTopFunctionVar(() =>
-        containerRef.current.scrollTo(0, 0),
+        containerRef?.current?.scrollTo(0, 0),
       );
     }, []);
 

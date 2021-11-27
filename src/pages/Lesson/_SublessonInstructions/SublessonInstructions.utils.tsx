@@ -1,4 +1,5 @@
 import { useReactiveVar } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
 import {
   ChallengeAttemptStatusEnum,
   challengeAttemptStatusVar,
@@ -8,7 +9,10 @@ import {
   sublessonTextLengthPreferenceVar,
   testResultsVar,
 } from 'src/cache';
-import { SublessonInstructionsDataFragment } from 'src/generated/graphql';
+import {
+  SublessonInstructionsDataFragment,
+  useGetOnClickNextDataQuery,
+} from 'src/generated/graphql';
 import { ChallengeFragment } from 'src/types/generalTypes';
 
 /*
@@ -53,11 +57,15 @@ const resetSublessonProgress = () => {
 };
 
 export const useOnClickNext = ({
-  sublesson: { challenges },
+  sublesson: { challenges, lesson },
   totalSublessons,
 }: useOnClickNextProps) => {
+  const history = useHistory();
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
   const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
+  const { data, loading, error } = useGetOnClickNextDataQuery({
+    variables: { currentLessonId: Number(lesson.id) },
+  });
 
   return () => {
     challengeAttemptStatusVar(ChallengeAttemptStatusEnum.notAttempted);
@@ -70,7 +78,7 @@ export const useOnClickNext = ({
       currentSublessonIndexVar(currentSublessonIndex + 1);
       resetSublessonProgress();
     } else {
-      console.log('going to next lesson');
+      history.push(`/lesson/${data?.nextLessonSlug}`);
     }
   };
 };

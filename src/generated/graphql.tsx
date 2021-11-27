@@ -1170,6 +1170,7 @@ export type Query = {
   multipleChoiceChallenge: Maybe<MultipleChoiceChallenge>;
   multipleChoiceChallenges: Maybe<Array<Maybe<MultipleChoiceChallenge>>>;
   multipleChoiceChallengesConnection: Maybe<MultipleChoiceChallengeConnection>;
+  nextLessonSlug: Maybe<Scalars['String']>;
   progressState: Maybe<ProgressState>;
   role: Maybe<UsersPermissionsRole>;
   /** Retrieve all the existing roles. You can't apply filters on this query. */
@@ -1354,6 +1355,11 @@ export type QueryMultipleChoiceChallengesConnectionArgs = {
   sort: Maybe<Scalars['String']>;
   start: Maybe<Scalars['Int']>;
   where: Maybe<Scalars['JSON']>;
+};
+
+
+export type QueryNextLessonSlugArgs = {
+  currentLessonId: Scalars['Int'];
 };
 
 
@@ -2615,14 +2621,16 @@ export type GetLessonDataQueryVariables = Exact<{
 }>;
 
 
-export type GetLessonDataQuery = { __typename?: 'Query', lessons: Array<{ __typename?: 'Lesson', name: string, sublessons: Array<{ __typename?: 'Sublesson', name: string, id: string, descriptions: { __typename?: 'ComponentSublessonSublessonDescriptions', short: string | null, medium: string, long: string | null } | null, lesson: { __typename?: 'Lesson', name: string } | null, challenges: Array<{ __typename?: 'ComponentSublessonchallengeChallenge', id: string, codeChallenge: { __typename?: 'CodeChallenge', id: string, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentCodeChallengeTests', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeHint', text: string, recommendedTimeBeforeViewing: number | null } | null> | null, challengeMeta: { __typename?: 'ComponentChallengeChallenge', difficulty: Enum_Componentchallengechallenge_Difficulty } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallenge', id: string, prompt: string, canSelectMultipleOptions: boolean | null, useMarkdownForOptionsText: boolean | null, options: Array<{ __typename?: 'ComponentMultipleChoiceChallengeOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null> | null } | null> | null } | null> | null };
+export type GetLessonDataQuery = { __typename?: 'Query', lessons: Array<{ __typename?: 'Lesson', name: string, sublessons: Array<{ __typename?: 'Sublesson', name: string, id: string, descriptions: { __typename?: 'ComponentSublessonSublessonDescriptions', short: string | null, medium: string, long: string | null } | null, lesson: { __typename?: 'Lesson', id: string, name: string } | null, challenges: Array<{ __typename?: 'ComponentSublessonchallengeChallenge', id: string, codeChallenge: { __typename?: 'CodeChallenge', id: string, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentCodeChallengeTests', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeHint', text: string, recommendedTimeBeforeViewing: number | null } | null> | null, challengeMeta: { __typename?: 'ComponentChallengeChallenge', difficulty: Enum_Componentchallengechallenge_Difficulty } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallenge', id: string, prompt: string, canSelectMultipleOptions: boolean | null, useMarkdownForOptionsText: boolean | null, options: Array<{ __typename?: 'ComponentMultipleChoiceChallengeOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null> | null } | null> | null } | null> | null };
 
-export type GetAllLessonSlugsQueryVariables = Exact<{ [key: string]: never; }>;
+export type SublessonInstructionsDataFragment = { __typename?: 'Sublesson', name: string, id: string, descriptions: { __typename?: 'ComponentSublessonSublessonDescriptions', short: string | null, medium: string, long: string | null } | null, lesson: { __typename?: 'Lesson', id: string, name: string } | null, challenges: Array<{ __typename?: 'ComponentSublessonchallengeChallenge', id: string, codeChallenge: { __typename?: 'CodeChallenge', id: string, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentCodeChallengeTests', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeHint', text: string, recommendedTimeBeforeViewing: number | null } | null> | null, challengeMeta: { __typename?: 'ComponentChallengeChallenge', difficulty: Enum_Componentchallengechallenge_Difficulty } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallenge', id: string, prompt: string, canSelectMultipleOptions: boolean | null, useMarkdownForOptionsText: boolean | null, options: Array<{ __typename?: 'ComponentMultipleChoiceChallengeOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null> | null };
+
+export type GetOnClickNextDataQueryVariables = Exact<{
+  currentLessonId: Scalars['Int'];
+}>;
 
 
-export type GetAllLessonSlugsQuery = { __typename?: 'Query', lessons: Array<{ __typename?: 'Lesson', slug: string } | null> | null };
-
-export type SublessonInstructionsDataFragment = { __typename?: 'Sublesson', name: string, id: string, descriptions: { __typename?: 'ComponentSublessonSublessonDescriptions', short: string | null, medium: string, long: string | null } | null, lesson: { __typename?: 'Lesson', name: string } | null, challenges: Array<{ __typename?: 'ComponentSublessonchallengeChallenge', id: string, codeChallenge: { __typename?: 'CodeChallenge', id: string, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentCodeChallengeTests', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeHint', text: string, recommendedTimeBeforeViewing: number | null } | null> | null, challengeMeta: { __typename?: 'ComponentChallengeChallenge', difficulty: Enum_Componentchallengechallenge_Difficulty } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallenge', id: string, prompt: string, canSelectMultipleOptions: boolean | null, useMarkdownForOptionsText: boolean | null, options: Array<{ __typename?: 'ComponentMultipleChoiceChallengeOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null> | null };
+export type GetOnClickNextDataQuery = { __typename?: 'Query', nextLessonSlug: string | null };
 
 export const ChallengeHintFragmentDoc = gql`
     fragment challengeHint on ComponentChallengeHint {
@@ -2684,6 +2692,7 @@ export const SublessonInstructionsDataFragmentDoc = gql`
     long
   }
   lesson {
+    id
     name
   }
   challenges {
@@ -2780,37 +2789,36 @@ export function useGetLessonDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetLessonDataQueryHookResult = ReturnType<typeof useGetLessonDataQuery>;
 export type GetLessonDataLazyQueryHookResult = ReturnType<typeof useGetLessonDataLazyQuery>;
 export type GetLessonDataQueryResult = Apollo.QueryResult<GetLessonDataQuery, GetLessonDataQueryVariables>;
-export const GetAllLessonSlugsDocument = gql`
-    query getAllLessonSlugs {
-  lessons {
-    slug
-  }
+export const GetOnClickNextDataDocument = gql`
+    query getOnClickNextData($currentLessonId: Int!) {
+  nextLessonSlug(currentLessonId: $currentLessonId)
 }
     `;
 
 /**
- * __useGetAllLessonSlugsQuery__
+ * __useGetOnClickNextDataQuery__
  *
- * To run a query within a React component, call `useGetAllLessonSlugsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllLessonSlugsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetOnClickNextDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOnClickNextDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetAllLessonSlugsQuery({
+ * const { data, loading, error } = useGetOnClickNextDataQuery({
  *   variables: {
+ *      currentLessonId: // value for 'currentLessonId'
  *   },
  * });
  */
-export function useGetAllLessonSlugsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllLessonSlugsQuery, GetAllLessonSlugsQueryVariables>) {
+export function useGetOnClickNextDataQuery(baseOptions: Apollo.QueryHookOptions<GetOnClickNextDataQuery, GetOnClickNextDataQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllLessonSlugsQuery, GetAllLessonSlugsQueryVariables>(GetAllLessonSlugsDocument, options);
+        return Apollo.useQuery<GetOnClickNextDataQuery, GetOnClickNextDataQueryVariables>(GetOnClickNextDataDocument, options);
       }
-export function useGetAllLessonSlugsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllLessonSlugsQuery, GetAllLessonSlugsQueryVariables>) {
+export function useGetOnClickNextDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOnClickNextDataQuery, GetOnClickNextDataQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllLessonSlugsQuery, GetAllLessonSlugsQueryVariables>(GetAllLessonSlugsDocument, options);
+          return Apollo.useLazyQuery<GetOnClickNextDataQuery, GetOnClickNextDataQueryVariables>(GetOnClickNextDataDocument, options);
         }
-export type GetAllLessonSlugsQueryHookResult = ReturnType<typeof useGetAllLessonSlugsQuery>;
-export type GetAllLessonSlugsLazyQueryHookResult = ReturnType<typeof useGetAllLessonSlugsLazyQuery>;
-export type GetAllLessonSlugsQueryResult = Apollo.QueryResult<GetAllLessonSlugsQuery, GetAllLessonSlugsQueryVariables>;
+export type GetOnClickNextDataQueryHookResult = ReturnType<typeof useGetOnClickNextDataQuery>;
+export type GetOnClickNextDataLazyQueryHookResult = ReturnType<typeof useGetOnClickNextDataLazyQuery>;
+export type GetOnClickNextDataQueryResult = Apollo.QueryResult<GetOnClickNextDataQuery, GetOnClickNextDataQueryVariables>;
