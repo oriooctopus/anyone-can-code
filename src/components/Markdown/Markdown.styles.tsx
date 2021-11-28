@@ -47,6 +47,7 @@ export const MultiLineCodeBlock: React.FC<MultiLineCodeProps> = ({
       ...customStyle,
     }}
     style={theme}
+    wrapLongLines={true}
     {...props}
   />
 );
@@ -63,7 +64,7 @@ export const StyledMarkdown = chakra(ReactMarkdown, {
       listStyle: 'inside',
       listStyleType: "'- '",
     },
-    '> *': {
+    '> *:not(:last-child)': {
       marginBottom: rem(10),
     },
     ' code': {

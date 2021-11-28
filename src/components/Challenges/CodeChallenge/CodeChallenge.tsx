@@ -1,9 +1,9 @@
 import { useReactiveVar } from '@apollo/client';
 import { Button } from '@chakra-ui/button';
-import { Box, Divider, Flex,Text } from '@chakra-ui/layout';
+import { Box, Divider, Flex, Text } from '@chakra-ui/layout';
 import { Heading, VStack, HStack } from '@chakra-ui/react';
-import Reset from 'src/assets/Reset.svg';
 import { useEffect } from 'react';
+import Reset from 'src/assets/Reset.svg';
 import { codeEditorValueVar, testResultsVar } from 'src/cache';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
 import { ChallengeHints } from 'components/ChallengeHints/ChallengeHints';
@@ -20,11 +20,13 @@ import TestCaseResult from 'components/TestCaseResult/TestCaseResult';
 
 export type CodeChallengeProps = {
   challenge: CodeChallengeDataFragment;
+  nextButtonText: string;
   onClickNext: () => void;
 };
 
 export const CodeChallenge = ({
   challenge,
+  nextButtonText,
   onClickNext,
 }: CodeChallengeProps) => {
   const { id, hints, tests, prompt } = challenge;
@@ -53,7 +55,7 @@ export const CodeChallenge = ({
       <Flex spacing={6} mt="auto">
         {canProceed ? (
           <ChallengeButton colorScheme="green" onClick={onClickNext} mr="20px">
-            Next
+            {nextButtonText}
           </ChallengeButton>
         ) : (
           <ChallengeButton colorScheme="green" onClick={runTests} mr="20px">

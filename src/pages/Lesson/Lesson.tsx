@@ -9,6 +9,7 @@ import {
   GetLessonDataQuery,
   useGetLessonDataQuery,
 } from 'src/generated/graphql';
+import { resetLesson } from 'src/pages/Lesson/Lesson.utils';
 import { SublessonInstructions } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions';
 import { getChallengesFromSublessonChallenges } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
 import { isCodeChallenge } from 'components/Challenges/Challenge.utils';
@@ -21,6 +22,7 @@ interface IRouteParams {
   slug: string;
 }
 
+// TODO: Fix once we upgrade strapi
 type Lesson = NonNullable<NonNullable<GetLessonDataQuery['lessons']>[number]>;
 
 interface IProps {
@@ -56,6 +58,8 @@ const LessonPage = ({ lesson }: IProps) => {
     runTests();
   };
 
+  useEffect(resetLesson, [lesson.id]);
+
   useEffect(() => {
     // TODO: set types for these
     window.setSublesson = currentSublessonIndexVar;
@@ -65,8 +69,6 @@ const LessonPage = ({ lesson }: IProps) => {
   if (!currentSublesson) {
     return <span>no sublesson</span>;
   }
-
-  // now I need to figure out how to make the nav not full length
 
   return (
     <LessonLayout lessonSidebar={<LessonProgress sublessons={sublessons} />}>

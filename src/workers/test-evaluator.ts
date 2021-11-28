@@ -37,7 +37,6 @@ export const runTestEvaluator = async ({
     const context = getEvaluationContext(formattedCode, logs);
     const result = evaluateWithContext(
       `${formattedCode};
-      debugger;
       ${internalTest};`,
       context,
     );

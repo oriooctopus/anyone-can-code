@@ -1,3 +1,5 @@
+// i need to refactor this to not be specific to lesson. It should a generic isEnd kind of thing
+// or maybe I should just have the next text be passed in? or have a function that gets the next text?
 import { useReactiveVar } from '@apollo/client';
 import { Text } from '@chakra-ui/layout';
 import { Box } from '@chakra-ui/react';
@@ -16,8 +18,9 @@ import { MultipleChoiceChallengeOption } from 'components/Challenges/MultipleCho
 import Markdown from 'components/Markdown/Markdown';
 
 type props = {
-  onClickNext: () => void;
   challenge: MultipleChoiceChallengeDataFragment;
+  nextButtonText: string;
+  onClickNext: () => void;
 };
 
 export const MultipleChoiceChallenge = ({
@@ -28,6 +31,7 @@ export const MultipleChoiceChallenge = ({
     prompt,
     useMarkdownForOptionsText,
   },
+  nextButtonText,
   onClickNext,
 }: props) => {
   const challengeAttemptStatus = useReactiveVar(challengeAttemptStatusVar);
@@ -97,13 +101,15 @@ export const MultipleChoiceChallenge = ({
       ))}
       <Box mt="auto" position="relative" width="100%">
         {hasUserPassed ? (
-          <ChallengeButton onClick={onClickNext}>Next</ChallengeButton>
+          <ChallengeButton onClick={onClickNext}>
+            {nextButtonText}
+          </ChallengeButton>
         ) : (
           <ChallengeButton onClick={onSubmit}>Submit</ChallengeButton>
         )}
         {challengeAttemptStatus === ChallengeAttemptStatusEnum.passed && (
           <Text color="green" fontSize="14px" position="absolute" top="53px">
-            Correct! Click Next to continue
+            Correct!
           </Text>
         )}
         {challengeAttemptStatus === ChallengeAttemptStatusEnum.failed && (
