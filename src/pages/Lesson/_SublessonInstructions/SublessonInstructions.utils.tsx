@@ -52,7 +52,7 @@ type useSublessonNavigationProps = {
   totalSublessons: number;
 };
 
-export const resetSublessonProgress = () => {
+export const resetSublessonSidebar = () => {
   currentChallengeIndexVar(sublessonChallengeStartingIndex);
   testResultsVar([]);
 };
@@ -80,7 +80,7 @@ export const useSublessonNavigation = ({
       currentChallengeIndexVar(currentChallengeIndex + 1);
     } else if (!isLastSublesson) {
       currentSublessonIndexVar(currentSublessonIndex + 1);
-      resetSublessonProgress();
+      resetSublessonSidebar();
     } else {
       history.push(`/lesson/${data?.nextLessonSlug}`);
     }

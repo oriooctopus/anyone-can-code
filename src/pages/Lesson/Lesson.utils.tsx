@@ -1,7 +1,7 @@
 import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
-import { resetSublessonProgress } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
+import { resetSublessonSidebar } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
 
 export const resetLesson = () => {
-  resetSublessonProgress();
+  resetSublessonSidebar();
   currentSublessonIndexVar(0);
 };

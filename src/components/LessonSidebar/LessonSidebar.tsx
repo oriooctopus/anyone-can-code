@@ -5,14 +5,14 @@ import { Heading, useBoolean } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { BsMap } from 'react-icons/bs';
 import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
-import { LessonProgressDataFragment } from 'src/generated/graphql';
+import { LessonSidebarDataFragment } from 'src/generated/graphql';
 import { getChallengesFromSublessonChallenges } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
 import { rem } from 'src/styles/typography/font';
 import { ProgressStateEnum } from 'src/types/generalTypes';
 import { ProgressStepper } from 'components/ProgressStepper/ProgressStepper';
 
 interface IProps {
-  sublessons: Array<LessonProgressDataFragment>;
+  sublessons: Array<LessonSidebarDataFragment>;
 }
 
 /**
@@ -34,7 +34,8 @@ const getProgressState = (
   }
 };
 
-const LessonProgress = React.memo(({ sublessons }: IProps) => {
+const LessonSidebar = React.memo(({ sublessons }: IProps) => {
+  console.log('keeps rendering');
   const [showStepperHoverActions, setShowStepperHoverActions] = useBoolean();
 
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
@@ -42,7 +43,7 @@ const LessonProgress = React.memo(({ sublessons }: IProps) => {
   const currentSublesson = sublessons[currentSublessonIndex];
   // currentSublesson.
 
-  const lessonProgressStepper = sublessons.map(({ name }, index) => ({
+  const lessonSidebarStepper = sublessons.map(({ name }, index) => ({
     onClick: () => currentSublessonIndexVar(index),
     hoverText: name,
     state: getProgressState(currentSublessonIndex, index),
@@ -50,7 +51,7 @@ const LessonProgress = React.memo(({ sublessons }: IProps) => {
   const currentSublessonParsedChallenges = getChallengesFromSublessonChallenges(
     currentSublesson.challenges,
   );
-  const sublessonProgressStepper = currentSublesson.challenges.map(
+  const sublessonSidebarStepper = currentSublesson.challenges.map(
     ({ prompt }, index) => ({
       onClick: () => currentSublessonIndexVar(index),
       hoverText: name,
@@ -147,4 +148,4 @@ const LessonProgress = React.memo(({ sublessons }: IProps) => {
   );
 });
 
-export default LessonProgress;
+export default LessonSidebar;

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
-export const lessonProgressData = gql`
-  fragment lessonProgressData on Sublesson {
+export const lessonSidebarData = gql`
+  fragment lessonSidebarData on Sublesson {
     name
     challenges {
       codeChallenge {

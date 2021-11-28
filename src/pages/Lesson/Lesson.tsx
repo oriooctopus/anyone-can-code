@@ -1,10 +1,10 @@
 import { useReactiveVar } from '@apollo/client';
-import { Box, Grid, GridItem, SimpleGrid } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem, SimpleGrid } from '@chakra-ui/react';
 import '@fontsource/roboto';
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
-import LessonProgress from 'src/components/LessonProgress/LessonProgress';
+import LessonSidebar from 'src/components/LessonSidebar/LessonSidebar';
 import {
   GetLessonDataQuery,
   useGetLessonDataQuery,
@@ -16,7 +16,9 @@ import { isCodeChallenge } from 'components/Challenges/Challenge.utils';
 import { useCodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
 import { Editor } from 'components/Editor/Editor';
 import { Layout, LessonLayout } from 'components/Layout/Layout';
+import { layoutStyles } from 'components/Layout/Layout.styles';
 import { LessonBar } from 'components/LessonBar/LessonBar';
+import Navbar from 'components/Navbar/Navbar';
 
 interface IRouteParams {
   slug: string;
@@ -58,8 +60,6 @@ const LessonPage = ({ lesson }: IProps) => {
     runTests();
   };
 
-  useEffect(resetLesson, [lesson.id]);
-
   useEffect(() => {
     // TODO: set types for these
     window.setSublesson = currentSublessonIndexVar;
@@ -71,22 +71,20 @@ const LessonPage = ({ lesson }: IProps) => {
   }
 
   return (
-    <LessonLayout lessonSidebar={<LessonProgress sublessons={sublessons} />}>
-      <Grid templateColumns="repeat(12, 1fr)" gap={{ md: '20px' }}>
-        <GridItem colSpan={5}>
-          <SublessonInstructions
-            sublesson={currentSublesson}
-            totalSublessons={totalSublessons}
-            lastChallengeIndexOfPreviousSublesson={
-              lastChallengeIndexOfPreviousSublesson
-            }
-          />
-        </GridItem>
-        <GridItem colSpan={7} mt="10px">
-          <Editor challenge={currentChallenge} onMount={onMount} />
-        </GridItem>
-      </Grid>
-    </LessonLayout>
+    <Grid templateColumns="repeat(12, 1fr)" gap={{ md: '20px' }}>
+      <GridItem colSpan={5}>
+        <SublessonInstructions
+          sublesson={currentSublesson}
+          totalSublessons={totalSublessons}
+          lastChallengeIndexOfPreviousSublesson={
+            lastChallengeIndexOfPreviousSublesson
+          }
+        />
+      </GridItem>
+      <GridItem colSpan={7} mt="10px">
+        <Editor challenge={currentChallenge} onMount={onMount} />
+      </GridItem>
+    </Grid>
   );
 };
 
@@ -98,13 +96,20 @@ export const LessonPageContainer = () => {
     },
   });
 
-  console.log('data', data, slug);
-
   const lesson = data?.lessons?.[0];
+  const sublessons = lesson?.sublessons;
 
-  if (!lesson) {
-    return <span>Lesson not found</span>;
-  }
+  useEffect(resetLesson, [lesson?.id]);
+
+  return (
+    <Flex {...layoutStyles}>
+      <Box pl="2px" mr={{ md: '20px', lg: '30px', xl: '40px' }}>
+        <Navbar />
+        {lesson && <LessonPage lesson={lesson} />}
+      </Box>
+      {sublessons && <LessonSidebar sublessons={sublessons} />}
+    </Flex>
+  );
 
   return <LessonPage lesson={lesson} />;
 };

@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { lessonProgressData } from 'components/LessonProgress/LessonProgress.query';
+import { lessonSidebarData } from 'components/LessonSidebar/LessonSidebar.query';
 
 // TODO: write a custom query on the backend that accepts a module as well and only returns one item
 export const getLessonData = gql`
@@ -9,9 +9,9 @@ export const getLessonData = gql`
       name
       sublessons {
         ...sublessonInstructionsData
-        ...lessonProgressData
+        ...lessonSidebarData
       }
     }
   }
-  ${lessonProgressData}
+  ${lessonSidebarData}
 `;

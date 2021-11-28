@@ -2551,7 +2551,7 @@ export type CodeChallengeDataFragment = { __typename?: 'CodeChallenge', id: stri
 
 export type MultipleChoiceChallengeDataFragment = { __typename?: 'MultipleChoiceChallenge', id: string, prompt: string, canSelectMultipleOptions: boolean | null, useMarkdownForOptionsText: boolean | null, options: Array<{ __typename?: 'ComponentMultipleChoiceChallengeOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null };
 
-export type LessonProgressDataFragment = { __typename?: 'Sublesson', name: string, challenges: Array<{ __typename?: 'ComponentSublessonchallengeChallenge', codeChallenge: { __typename?: 'CodeChallenge', id: string, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentCodeChallengeTests', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeHint', text: string, recommendedTimeBeforeViewing: number | null } | null> | null, challengeMeta: { __typename?: 'ComponentChallengeChallenge', difficulty: Enum_Componentchallengechallenge_Difficulty } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallenge', id: string, prompt: string, canSelectMultipleOptions: boolean | null, useMarkdownForOptionsText: boolean | null, options: Array<{ __typename?: 'ComponentMultipleChoiceChallengeOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null> | null };
+export type LessonSidebarDataFragment = { __typename?: 'Sublesson', name: string, challenges: Array<{ __typename?: 'ComponentSublessonchallengeChallenge', codeChallenge: { __typename?: 'CodeChallenge', id: string, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentCodeChallengeTests', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeHint', text: string, recommendedTimeBeforeViewing: number | null } | null> | null, challengeMeta: { __typename?: 'ComponentChallengeChallenge', difficulty: Enum_Componentchallengechallenge_Difficulty } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallenge', id: string, prompt: string, canSelectMultipleOptions: boolean | null, useMarkdownForOptionsText: boolean | null, options: Array<{ __typename?: 'ComponentMultipleChoiceChallengeOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null> | null };
 
 export type GetCourseMapOverlayDataQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -2612,8 +2612,8 @@ export const MultipleChoiceChallengeDataFragmentDoc = gql`
   useMarkdownForOptionsText
 }
     `;
-export const LessonProgressDataFragmentDoc = gql`
-    fragment lessonProgressData on Sublesson {
+export const LessonSidebarDataFragmentDoc = gql`
+    fragment lessonSidebarData on Sublesson {
   name
   challenges {
     codeChallenge {
@@ -2700,12 +2700,12 @@ export const GetLessonDataDocument = gql`
     name
     sublessons {
       ...sublessonInstructionsData
-      ...lessonProgressData
+      ...lessonSidebarData
     }
   }
 }
     ${SublessonInstructionsDataFragmentDoc}
-${LessonProgressDataFragmentDoc}`;
+${LessonSidebarDataFragmentDoc}`;
 
 /**
  * __useGetLessonDataQuery__
