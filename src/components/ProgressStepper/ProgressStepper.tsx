@@ -16,7 +16,7 @@ interface IProgressStepperProps {
   showHoverActions: boolean;
   title: string;
   steps: Array<{
-    hoverText: string;
+    hoverText?: string;
     state: ProgressStateEnum;
     onClick: () => void;
   }>;

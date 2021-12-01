@@ -15,6 +15,7 @@ import {
   useGetSublessonNavigationDataQuery,
 } from 'src/generated/graphql';
 import { ChallengeFragment } from 'src/types/generalTypes';
+import { setChallengeIndex } from 'components/Challenges/Challenge.utils';
 
 /*
  * Because the CMS does not allow for proper union types we
@@ -52,8 +53,8 @@ type useSublessonNavigationProps = {
   totalSublessons: number;
 };
 
-export const resetSublessonSidebar = () => {
-  currentChallengeIndexVar(sublessonChallengeStartingIndex);
+export const resetSublesson = () => {
+  setChallengeIndex(sublessonChallengeStartingIndex);
   testResultsVar([]);
 };
 
@@ -80,7 +81,7 @@ export const useSublessonNavigation = ({
       currentChallengeIndexVar(currentChallengeIndex + 1);
     } else if (!isLastSublesson) {
       currentSublessonIndexVar(currentSublessonIndex + 1);
-      resetSublessonSidebar();
+      resetSublesson();
     } else {
       history.push(`/lesson/${data?.nextLessonSlug}`);
     }
@@ -157,4 +158,9 @@ export const getSublessonStartingCode = () => {
  * teaching, because instead of just looking at examples,
  * you are writing code yourself.
  */`;
+};
+
+export const setSublessonIndex = (lessonIndex: number) => {
+  currentSublessonIndexVar(lessonIndex);
+  resetSublesson();
 };

@@ -20,6 +20,14 @@ export enum SublessonChallengeFrequencyEnum {
   high = 'high',
 }
 
+interface sublessonCompletionData {
+  code: string;
+  completed: boolean;
+}
+
+export const lessonCompletionDataVar = makeVar<
+  Array<Array<sublessonCompletionData>>
+>([]);
 export const codeEditorValueVar = makeVar('the initial code');
 export const testResultsVar = makeVar<Array<TTestResult>>([]);
 // TODO: store these in local storage. Possibly via apollo cache persist

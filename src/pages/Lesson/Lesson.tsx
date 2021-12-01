@@ -15,9 +15,7 @@ import { getChallengesFromSublessonChallenges } from 'src/pages/Lesson/_Sublesso
 import { isCodeChallenge } from 'components/Challenges/Challenge.utils';
 import { useCodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
 import { Editor } from 'components/Editor/Editor';
-import { Layout, LessonLayout } from 'components/Layout/Layout';
 import { layoutStyles } from 'components/Layout/Layout.styles';
-import { LessonBar } from 'components/LessonBar/LessonBar';
 import Navbar from 'components/Navbar/Navbar';
 
 interface IRouteParams {
@@ -102,7 +100,7 @@ export const LessonPageContainer = () => {
   useEffect(resetLesson, [lesson?.id]);
 
   return (
-    <Flex {...layoutStyles}>
+    <Flex {...layoutStyles} overflow="hidden">
       <Box pl="2px" mr={{ md: '20px', lg: '30px', xl: '40px' }}>
         <Navbar />
         {lesson && <LessonPage lesson={lesson} />}
@@ -110,6 +108,4 @@ export const LessonPageContainer = () => {
       {sublessons && <LessonSidebar sublessons={sublessons} />}
     </Flex>
   );
-
-  return <LessonPage lesson={lesson} />;
 };

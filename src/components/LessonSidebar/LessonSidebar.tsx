@@ -1,3 +1,4 @@
+// what if instead of red white and green, we use grey instead of red, and something else instead of white?yu
 import SublessonCard from './SublessonCard/SublessonCard';
 import { useReactiveVar } from '@apollo/client';
 import { Box, Divider, Flex } from '@chakra-ui/layout';
@@ -6,9 +7,13 @@ import React, { useState } from 'react';
 import { BsMap } from 'react-icons/bs';
 import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
 import { LessonSidebarDataFragment } from 'src/generated/graphql';
-import { getChallengesFromSublessonChallenges } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
+import {
+  getChallengesFromSublessonChallenges,
+  setSublessonIndex,
+} from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
 import { rem } from 'src/styles/typography/font';
 import { ProgressStateEnum } from 'src/types/generalTypes';
+import { setChallengeIndex } from 'components/Challenges/Challenge.utils';
 import { ProgressStepper } from 'components/ProgressStepper/ProgressStepper';
 
 interface IProps {
@@ -41,21 +46,22 @@ const LessonSidebar = React.memo(({ sublessons }: IProps) => {
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
   const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
   const currentSublesson = sublessons[currentSublessonIndex];
-  // currentSublesson.
 
   const lessonSidebarStepper = sublessons.map(({ name }, index) => ({
-    onClick: () => currentSublessonIndexVar(index),
+    onClick: () => setSublessonIndex(index),
     hoverText: name,
     state: getProgressState(currentSublessonIndex, index),
   }));
-  const currentSublessonParsedChallenges = getChallengesFromSublessonChallenges(
-    currentSublesson.challenges,
-  );
-  const sublessonSidebarStepper = currentSublesson.challenges.map(
-    ({ prompt }, index) => ({
-      onClick: () => currentSublessonIndexVar(index),
-      hoverText: name,
-      state: getProgressState(currentSublessonIndex, index),
+  /**
+   * We add an extra empty object at the beginning to represent
+   * the introduction. This is somewhat janky so later on let's
+   * reconsider this
+   */
+  const sublessonSidebarStepper = [{}, currentSublesson.challenges].map(
+    (_challenge, index) => ({
+      hoverText: index === 0 ? 'Introduction' : `Challenge ${index}`,
+      onClick: () => setChallengeIndex(index),
+      state: getProgressState(currentChallengeIndex, index),
     }),
   );
 
@@ -68,6 +74,7 @@ const LessonSidebar = React.memo(({ sublessons }: IProps) => {
       textAlign="center"
       py="20px"
       flex={`${rem(115)} 0 0`}
+      overflow="hidden"
     >
       <Heading size="md" mb={rem(25)}>
         Progress
@@ -75,74 +82,12 @@ const LessonSidebar = React.memo(({ sublessons }: IProps) => {
       <ProgressStepper
         showHoverActions={showStepperHoverActions}
         title="Lesson"
-        steps={[
-          {
-            hoverText: 'first lesson',
-            state: 'complete',
-            onClick: () => console.log('clicked'),
-          },
-          {
-            hoverText: 'first lesson',
-            state: 'current',
-            onClick: () => console.log('clicked'),
-          },
-          {
-            hoverText: 'first lesson',
-            state: 'complete',
-            onClick: () => console.log('clicked'),
-          },
-          {
-            hoverText: 'second lesson',
-            state: 'complete',
-            onClick: () => console.log('clicked'),
-          },
-          {
-            hoverText: 'third lesson',
-            state: 'incomplete',
-            onClick: () => console.log('clicked'),
-          },
-          {
-            hoverText: 'third lesson',
-            state: 'incomplete',
-            onClick: () => console.log('clicked'),
-          },
-          {
-            hoverText: 'third lesson',
-            state: 'incomplete',
-            onClick: () => console.log('clicked'),
-          },
-        ]}
+        steps={lessonSidebarStepper}
       />
       <ProgressStepper
         showHoverActions={showStepperHoverActions}
         title="Sublesson"
-        steps={[
-          {
-            hoverText: 'first lesson',
-            state: 'complete',
-            onClick: () => console.log('clicked'),
-          },
-          {
-            hoverText: 'second lesson',
-            state: 'current',
-            onClick: () => console.log('clicked'),
-          },
-          {
-            hoverText: 'third lesson',
-            state: 'incomplete',
-            onClick: () => console.log('clicked'),
-          },
-          {
-            hoverText: 'third lesson',
-            state: 'incomplete',
-            onClick: () => console.log('clicked'),
-          },
-          {
-            hoverText: 'third lesson',
-            state: 'incomplete',
-            onClick: () => console.log('clicked'),
-          },
-        ]}
+        steps={sublessonSidebarStepper}
       />
     </Box>
   );

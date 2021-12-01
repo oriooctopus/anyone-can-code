@@ -31,6 +31,7 @@ export const CodeChallenge = ({
 }: CodeChallengeProps) => {
   const { id, hints, tests, prompt } = challenge;
   const { runTests } = useCodeChallengeTests(tests);
+  // I now need to differentiate two functions. REset challenge which is truly to reset it, and another function to get the when a challenge loads.
   const resetChallenge = () => {
     codeEditorValueVar(getCodeChallengeStartingCode(challenge));
     testResultsVar([]);

@@ -52,7 +52,6 @@ export const Editor: React.FC<EditorProps> = ({ challenge }) => {
       <Box
         bgColor="white"
         color="black"
-        // this doesn't match designs but I might like it more this way?
         borderRadius="10px"
         h="100px"
         mt="auto"
