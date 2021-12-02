@@ -25,21 +25,19 @@ export const setLocalStorageValue = (key: string, value: any) => {
 /**
  * Retrieves a compressed value from local storage
  */
-export const getLocalStorageValue = () => {
-  return null;
-  // if (typeof window === 'undefined') {
-  // }
+// export const getLocalStorageValue = () => null;
+// if (typeof window === 'undefined') {
+// }
 
-  // const hashedValue = getLocalStorage().getItem(key);
-  // if (hashedValue) {
-  //   try {
-  //     return decodeBase64String(hashedValue);
-  //   } catch {
-  //     return null;
-  //   }
-  // }
-  // return null;
-};
+// const hashedValue = getLocalStorage().getItem(key);
+// if (hashedValue) {
+//   try {
+//     return decodeBase64String(hashedValue);
+//   } catch {
+//     return null;
+//   }
+// }
+// return null;
 
 /**
  * Removes a value from local storage

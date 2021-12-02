@@ -10,7 +10,8 @@
     "codegen": "graphql-codegen --config codegen.yml",
     "build:workers:watch": "node --max_old_space_size=7168 node_modules/webpack-cli/bin/cli --config ./config/webpack-workers.js --watch",
     "format": "yarn prettier --write .",
-    "lint": "yarn eslint --fix ."
+    "lint": "yarn eslint --fix .",
+    "checktypes": "tsc"
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.4",

@@ -60,6 +60,5 @@ export const runTestEvaluator = async ({
 };
 
 if (typeof self !== 'undefined') {
-  // @ts-expect-error will fix later
   self.postMessage({ type: 'contentLoaded' });
 }

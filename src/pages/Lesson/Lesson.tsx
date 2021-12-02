@@ -9,12 +9,9 @@ import {
   useGetLessonDataQuery,
 } from 'src/generated/graphql';
 import { SublessonInstructions } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions';
-import { getChallengesFromSublessonChallenges } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
 import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
 import { resetLesson } from 'src/state/lesson/lesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
-import { isCodeChallenge } from 'components/Challenges/Challenge.utils';
-import { useCodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
 import { Editor } from 'components/Editor/Editor';
 import { layoutStyles } from 'components/Layout/Layout.styles';
 import { Navbar } from 'components/Navbar/Navbar';
@@ -35,16 +32,7 @@ interface IProps {
 const LessonPage = ({ lesson }: IProps) => {
   const sublessons = lesson.sublessons || [];
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
-  const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
   const currentSublesson = sublessons[currentSublessonIndex];
-  const parsedChallenges = getChallengesFromSublessonChallenges(
-    currentSublesson?.challenges,
-  );
-  const currentChallenge = parsedChallenges[currentChallengeIndex];
-  // I thought about abstracting away this logic.. but I don't think it's really necessary with typescript?
-  const { runTests } = useCodeChallengeTests(
-    isCodeChallenge(currentChallenge) ? currentChallenge.tests : [],
-  );
   const totalSublessons = sublessons.length;
   /*
    * This actually has to be fixed as it doesn't make sense when there aren't challenges
@@ -56,10 +44,6 @@ const LessonPage = ({ lesson }: IProps) => {
     currentSublessonIndex > 0
       ? (sublessons?.[currentSublessonIndex - 1]?.challenges?.length || 0) - 1
       : undefined;
-
-  const onMount = () => {
-    runTests();
-  };
 
   useEffect(() => {
     // TODO: set types for these
@@ -85,7 +69,7 @@ const LessonPage = ({ lesson }: IProps) => {
         />
       </GridItem>
       <GridItem colSpan={7} mt="10px">
-        <Editor challenge={currentChallenge} onMount={onMount} />
+        <Editor />
       </GridItem>
     </Grid>
   );
