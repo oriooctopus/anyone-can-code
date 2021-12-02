@@ -4,8 +4,9 @@ import { Box, Divider, Flex, Text } from '@chakra-ui/layout';
 import { Heading, VStack, HStack } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import Reset from 'src/assets/Reset.svg';
-import { codeEditorValueVar, testResultsVar } from 'src/cache';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
+import { testResultsVar } from 'src/state/challenge/codeChallenge/codeChallenge.reactiveVariables';
+import { codeEditorValueVar } from 'src/state/general';
 import { ChallengeHints } from 'components/ChallengeHints/ChallengeHints';
 import {
   ChallengeButton,
@@ -31,7 +32,7 @@ export const CodeChallenge = ({
 }: CodeChallengeProps) => {
   const { id, hints, tests, prompt } = challenge;
   const { runTests } = useCodeChallengeTests(tests);
-  // I now need to differentiate two functions. REset challenge which is truly to reset it, and another function to get the when a challenge loads.
+  // I now need to differentiate two functions. Reset challenge which is truly to reset it, and another function to get the when a challenge loads.
   const resetChallenge = () => {
     codeEditorValueVar(getCodeChallengeStartingCode(challenge));
     testResultsVar([]);

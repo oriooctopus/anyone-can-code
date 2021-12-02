@@ -1,21 +1,12 @@
 import { useReactiveVar } from '@apollo/client';
-import { useHistory } from 'react-router-dom';
-import { sublessonChallengeStartingIndex } from 'src/App.constants';
+import { SublessonInstructionsDataFragment } from 'src/generated/graphql';
 import {
-  ChallengeAttemptStatusEnum,
-  challengeAttemptStatusVar,
-  currentChallengeIndexVar,
-  currentSublessonIndexVar,
   SublessonTextLengthPreferenceEnum,
   sublessonTextLengthPreferenceVar,
-  testResultsVar,
-} from 'src/cache';
-import {
-  SublessonInstructionsDataFragment,
-  useGetSublessonNavigationDataQuery,
-} from 'src/generated/graphql';
+} from 'src/state/general';
+import { resetSublesson } from 'src/state/sublesson/sublesson';
+import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { ChallengeFragment } from 'src/types/generalTypes';
-import { setChallengeIndex } from 'components/Challenges/Challenge.utils';
 
 /*
  * Because the CMS does not allow for proper union types we
@@ -48,50 +39,7 @@ export const getChallengesFromSublessonChallenges = (
   return (challenges || []).flatMap(getChallengeFromSublessonChallenge);
 };
 
-type useSublessonNavigationProps = {
-  sublesson: SublessonInstructionsDataFragment;
-  totalSublessons: number;
-};
-
-export const resetSublesson = () => {
-  setChallengeIndex(sublessonChallengeStartingIndex);
-  testResultsVar([]);
-};
-
 export const isSublessonIntroduction = (index: number) => index === -1;
-
-export const useSublessonNavigation = ({
-  sublesson: { challenges, lesson },
-  totalSublessons,
-}: useSublessonNavigationProps) => {
-  const history = useHistory();
-  const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
-  const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
-  const { data } = useGetSublessonNavigationDataQuery({
-    variables: { currentLessonId: Number(lesson.id) },
-  });
-  const isLastChallenge = currentChallengeIndex + 1 === challenges.length;
-  const isLastSublesson = currentSublessonIndex + 1 === totalSublessons;
-  const isEndOfLesson = isLastChallenge && isLastSublesson;
-
-  const onClickNext = () => {
-    challengeAttemptStatusVar(ChallengeAttemptStatusEnum.notAttempted);
-
-    if (!isLastChallenge) {
-      currentChallengeIndexVar(currentChallengeIndex + 1);
-    } else if (!isLastSublesson) {
-      currentSublessonIndexVar(currentSublessonIndex + 1);
-      resetSublesson();
-    } else {
-      history.push(`/lesson/${data?.nextLessonSlug}`);
-    }
-  };
-
-  return {
-    isEndOfLesson,
-    onClickNext,
-  };
-};
 
 const descriptionPreferenceToNumericalValueMap: Record<
   SublessonTextLengthPreferenceEnum,
@@ -148,16 +96,6 @@ export const useGetLessonDescription = (
     fallbackDirection === 'higher' ? closestLower : closestHigher;
 
   return firstChoice || secondChoice;
-};
-
-// TODO: add logic that excludes the starting code comments before comments have been introduced
-export const getSublessonStartingCode = () => {
-  return `/* We highly recommend that when you see code examples in
- * the lesson you type them out again here. This will
- * significantly help you remember what the lesson is
- * teaching, because instead of just looking at examples,
- * you are writing code yourself.
- */`;
 };
 
 export const setSublessonIndex = (lessonIndex: number) => {

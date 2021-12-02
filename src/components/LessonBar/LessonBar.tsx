@@ -1,9 +1,9 @@
 import { Box, Text, useDisclosure } from '@chakra-ui/react';
 import { lessonMenuHeight } from 'src/styles/constants';
-import { SidebarOverlay } from 'components/SidebarOverlays/SidebarOverlay/SidebarOverlay';
+import { SidebarOverlay } from 'components/SidebarOverlays/SidebarOverlay';
 
 export const LessonBar = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen } = useDisclosure();
 
   return (
     <Box
@@ -15,7 +15,7 @@ export const LessonBar = () => {
       height={lessonMenuHeight}
     >
       <Text onClick={onOpen}>Map</Text>
-      {isOpen && <SidebarOverlay onClose={onClose} />}
+      {isOpen && <SidebarOverlay />}
     </Box>
   );
 };

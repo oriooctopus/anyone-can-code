@@ -3,20 +3,24 @@ import { removeJSComments } from '../utils/curriculum-helpers';
 type consoleLogOverride = (data: any[]) => void;
 
 export const overrideConsoleLog = (override: consoleLogOverride) => {
+  // @ts-ignore
   console.standardLog = console.log;
   console.log = (...data: any[]) => {
     override(data);
+    // @ts-ignore
     console.standardLog.apply(console, data);
   };
 };
 
 export const restoreConsoleLog = () => {
+  // @ts-ignore
   if (!console.standardLog) {
     throw new Error(
       'Attempted to restore console.log but it has never been overwritten',
     );
   }
 
+  // @ts-ignore
   console.log = console.standardLog;
 };
 
@@ -58,6 +62,7 @@ export const getConsoleLogsFromCodeEvaluation = (
 
   overrideConsoleLog((...args) => {
     logs.push(args.toString());
+    // @ts-ignore
     console.standardLog('args', ...args);
   });
   try {

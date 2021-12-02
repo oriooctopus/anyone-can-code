@@ -8,10 +8,6 @@ export const encodeToBase64String = (value: any): string =>
 export const decodeBase64String = (base64String: string): any =>
   JSON.parse(atob(base64String));
 
-export const objMap = (obj, func) => {
-  return Object.fromEntries(Object.entries(obj).map(([k, v]) => func(k, v)));
-};
-
 export const isExternalURL = (url: string) => {
   if (typeof location === 'undefined') {
     return true;

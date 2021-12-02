@@ -6,7 +6,6 @@ const options: monaco.editor.IStandaloneEditorConstructionOptions = {
   selectionHighlight: false,
   overviewRulerBorder: false,
   hideCursorInOverviewRuler: true,
-  renderIndentGuides: false,
   minimap: {
     enabled: false,
   },

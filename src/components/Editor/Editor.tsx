@@ -2,14 +2,13 @@ import { useReactiveVar } from '@apollo/client';
 import { Box } from '@chakra-ui/react';
 import '@fontsource/roboto-mono';
 import MonacoEditor from '@monaco-editor/react';
-import { useEffect } from 'react';
-import { codeEditorValueVar, currentLogVar, testResultsVar } from 'src/cache';
+import { resetTestResults } from 'src/state/challenge/codeChallenge/codeChallenge';
+import { currentLogVar } from 'src/state/editor/editor.reactiveVariables';
+import { codeEditorValueVar } from 'src/state/general';
 import { ChallengeFragment } from 'src/types/generalTypes';
 import { useDebounced } from 'src/utils/hooks/useDebounced';
 import { getConsoleLogsFromCodeEvaluation } from 'src/workers/utils';
-import { isCodeChallenge } from 'components/Challenges/Challenge.utils';
 import {
-  DEFAULT_EDITOR_STARTING_CODE,
   DEFAULT_MONACO_EDITOR_THEME,
   defineDefaultMonacoTheme,
 } from 'components/Editor/Editor.utils';
@@ -25,7 +24,7 @@ export const Editor: React.FC<EditorProps> = ({ challenge }) => {
   const currentLog = useReactiveVar(currentLogVar);
 
   const onChangeEditorValue = (newValue: string | undefined) => {
-    testResultsVar([]);
+    resetTestResults();
     codeEditorValueVar(newValue);
   };
 

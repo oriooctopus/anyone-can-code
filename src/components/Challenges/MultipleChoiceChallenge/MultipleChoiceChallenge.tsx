@@ -1,21 +1,16 @@
-// i need to refactor this to not be specific to lesson. It should a generic isEnd kind of thing
-// or maybe I should just have the next text be passed in? or have a function that gets the next text?
 import { useReactiveVar } from '@apollo/client';
 import { Text } from '@chakra-ui/layout';
 import { Box } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import {
-  multipleChoiceOptionSelectionsVar,
-  challengeAttemptStatusVar,
-  ChallengeAttemptStatusEnum,
-} from 'src/cache';
 import { MultipleChoiceChallengeDataFragment } from 'src/generated/graphql';
+import { challengeAttemptStatusVar } from 'src/state/challenge/challenge.reactiveVariables';
+import { ChallengeAttemptStatusEnum } from 'src/state/challenge/challenge.types';
+import { multipleChoiceOptionSelectionsVar } from 'src/state/challenge/multipleChoiceChallenge/multipleChoiceChallenge.reactiveVariables';
 import {
   ChallengeButton,
   ChallengeMarkdown,
 } from 'components/Challenges/Challenge.styles';
 import { MultipleChoiceChallengeOption } from 'components/Challenges/MultipleChoiceChallenge/MultipleChoiceChallengeOption';
-import Markdown from 'components/Markdown/Markdown';
 
 type props = {
   challenge: MultipleChoiceChallengeDataFragment;

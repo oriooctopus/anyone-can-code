@@ -1,19 +1,15 @@
 // what if instead of red white and green, we use grey instead of red, and something else instead of white?yu
-import SublessonCard from './SublessonCard/SublessonCard';
 import { useReactiveVar } from '@apollo/client';
-import { Box, Divider, Flex } from '@chakra-ui/layout';
+import { Box } from '@chakra-ui/layout';
 import { Heading, useBoolean } from '@chakra-ui/react';
-import React, { useState } from 'react';
-import { BsMap } from 'react-icons/bs';
-import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
+import * as React from 'react';
 import { LessonSidebarDataFragment } from 'src/generated/graphql';
-import {
-  getChallengesFromSublessonChallenges,
-  setSublessonIndex,
-} from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
+import { setChallengeIndex } from 'src/state/challenge/challenge';
+import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
+import { setSublessonIndex } from 'src/state/sublesson/sublesson';
+import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { rem } from 'src/styles/typography/font';
 import { ProgressStateEnum } from 'src/types/generalTypes';
-import { setChallengeIndex } from 'components/Challenges/Challenge.utils';
 import { ProgressStepper } from 'components/ProgressStepper/ProgressStepper';
 
 interface IProps {
@@ -40,7 +36,6 @@ const getProgressState = (
 };
 
 const LessonSidebar = React.memo(({ sublessons }: IProps) => {
-  console.log('keeps rendering');
   const [showStepperHoverActions, setShowStepperHoverActions] = useBoolean();
 
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);

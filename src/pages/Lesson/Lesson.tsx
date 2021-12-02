@@ -1,17 +1,18 @@
 import { useReactiveVar } from '@apollo/client';
-import { Box, Flex, Grid, GridItem, SimpleGrid } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import '@fontsource/roboto';
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
-import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
 import LessonSidebar from 'src/components/LessonSidebar/LessonSidebar';
 import {
   GetLessonDataQuery,
   useGetLessonDataQuery,
 } from 'src/generated/graphql';
-import { resetLesson } from 'src/pages/Lesson/Lesson.utils';
 import { SublessonInstructions } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions';
 import { getChallengesFromSublessonChallenges } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
+import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
+import { resetLesson } from 'src/state/lesson/lesson';
+import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { isCodeChallenge } from 'components/Challenges/Challenge.utils';
 import { useCodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
 import { Editor } from 'components/Editor/Editor';
@@ -23,10 +24,12 @@ interface IRouteParams {
 }
 
 // TODO: Fix once we upgrade strapi
-type Lesson = NonNullable<NonNullable<GetLessonDataQuery['lessons']>[number]>;
+export type LessonType = NonNullable<
+  NonNullable<GetLessonDataQuery['lessons']>[number]
+>;
 
 interface IProps {
-  lesson: Lesson;
+  lesson: LessonType;
 }
 
 const LessonPage = ({ lesson }: IProps) => {
@@ -60,7 +63,9 @@ const LessonPage = ({ lesson }: IProps) => {
 
   useEffect(() => {
     // TODO: set types for these
+    // @ts-expect-error
     window.setSublesson = currentSublessonIndexVar;
+    // @ts-expect-error
     window.setChallenge = currentChallengeIndexVar;
   }, []);
 
@@ -97,7 +102,7 @@ export const LessonPageContainer = () => {
   const lesson = data?.lessons?.[0];
   const sublessons = lesson?.sublessons;
 
-  useEffect(resetLesson, [lesson?.id]);
+  useEffect(() => lesson && resetLesson(lesson), [lesson?.id]);
 
   return (
     <Flex {...layoutStyles} overflow="hidden">

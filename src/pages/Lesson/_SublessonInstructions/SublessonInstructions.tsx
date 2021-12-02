@@ -2,20 +2,20 @@ import { useReactiveVar } from '@apollo/client';
 import { Text } from '@chakra-ui/layout';
 import '@fontsource/roboto';
 import React, { useEffect } from 'react';
-import {
-  codeEditorValueVar,
-  contentPanelScrollToTopFunctionVar,
-  currentChallengeIndexVar,
-  currentSublessonIndexVar,
-} from 'src/cache';
 import { SublessonInstructionsDataFragment } from 'src/generated/graphql';
 import {
   getChallengesFromSublessonChallenges,
-  getSublessonStartingCode,
   isSublessonIntroduction,
   useGetLessonDescription,
-  useSublessonNavigation,
 } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
+import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
+import {
+  codeEditorValueVar,
+  contentPanelScrollToTopFunctionVar,
+} from 'src/state/general';
+import { useSublessonNavigation } from 'src/state/sublesson/sublesson';
+import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
+import { getSublessonStartingCode } from 'src/state/sublesson/sublesson.utils';
 import { Challenge } from 'components/Challenges/Challenge';
 import { ChallengeButton } from 'components/Challenges/Challenge.styles';
 import { ContentPanel } from 'components/ContentPanel/ContentPanel';

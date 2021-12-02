@@ -1,4 +1,5 @@
 import { Box, BoxProps } from '@chakra-ui/layout';
+import ReactMarkdown from 'react-markdown';
 import { FlLink } from 'components/Link/FlLink';
 import {
   StyledMarkdown,
@@ -9,7 +10,7 @@ import {
 import { stripNewlines } from 'components/Markdown/Markdown.utils';
 
 export interface MarkdownProps {
-  children: React.ReactNode;
+  children: string;
   codeTheme?: any;
   containerOverrides?: BoxProps;
   // TODO: There must be an actual type made for this. Find that instead of recreating it
