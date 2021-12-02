@@ -1,7 +1,4 @@
-import {
-  ModalOverlay,
-  Modal,
-} from '@chakra-ui/react';
+import { ModalOverlay, Modal } from '@chakra-ui/react';
 import {
   useGetSidebarOverlay,
   useSidebarOverlayContext,
