@@ -3,7 +3,7 @@ import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import '@fontsource/roboto';
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
-import LessonSidebar from 'src/components/LessonSidebar/LessonSidebar';
+import { LessonSidebar } from 'src/components/LessonSidebar/LessonSidebar';
 import {
   GetLessonDataQuery,
   useGetLessonDataQuery,
@@ -17,7 +17,7 @@ import { isCodeChallenge } from 'components/Challenges/Challenge.utils';
 import { useCodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
 import { Editor } from 'components/Editor/Editor';
 import { layoutStyles } from 'components/Layout/Layout.styles';
-import Navbar from 'components/Navbar/Navbar';
+import { Navbar } from 'components/Navbar/Navbar';
 
 interface IRouteParams {
   slug: string;
@@ -63,9 +63,9 @@ const LessonPage = ({ lesson }: IProps) => {
 
   useEffect(() => {
     // TODO: set types for these
-    // @ts-expect-error
+    // @ts-expect-error will fix later
     window.setSublesson = currentSublessonIndexVar;
-    // @ts-expect-error
+    // @ts-expect-error will fix later
     window.setChallenge = currentChallengeIndexVar;
   }, []);
 
@@ -93,7 +93,7 @@ const LessonPage = ({ lesson }: IProps) => {
 
 export const LessonPageContainer = () => {
   const { slug } = useParams<IRouteParams>();
-  const { data, loading, error } = useGetLessonDataQuery({
+  const { data } = useGetLessonDataQuery({
     variables: {
       slug,
     },

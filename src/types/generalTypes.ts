@@ -1,6 +1,5 @@
 import {
   CodeChallengeDataFragment,
-  ComponentSublessonchallengeChallenge,
   MultipleChoiceChallengeDataFragment,
 } from 'src/generated/graphql';
 

@@ -27,7 +27,7 @@ import {
   LessonSettingsSaveOptionsEnum,
 } from 'components/LessonSettings/LessonSettings.utils';
 
-type props = BoxProps & {};
+type props = BoxProps;
 
 // TODO: add formik typing
 export const LessonSettings = ({ ...boxProps }: props) => {
@@ -44,7 +44,7 @@ export const LessonSettings = ({ ...boxProps }: props) => {
     sublessonTextLengthPreference,
     sublessonChallengeFrequency,
   };
-  // @ts-ignore
+  // @ts-expect-error will fix later
   const onSubmit = (values) => {
     // in future we will use the save preferences to determine how we update
     sublessonTextLengthPreferenceVar(values.sublessonTextLengthPreference);

@@ -1,5 +1,5 @@
+/* eslint-disable */
 import { Box, BoxProps } from '@chakra-ui/layout';
-import ReactMarkdown from 'react-markdown';
 import { FlLink } from 'components/Link/FlLink';
 import {
   StyledMarkdown,

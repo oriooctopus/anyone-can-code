@@ -1,4 +1,4 @@
-// @ts-ignore
+// @ts-expect-error will fix later
 import strip from '@freecodecamp/strip-comments';
 
 const removeHtmlComments = (str: string): string =>
@@ -20,11 +20,6 @@ export const removeJSComments = (codeStr: string): string => {
 const removeWhiteSpace = (str = ''): string => {
   return str.replace(/\s/g, '');
 };
-
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
-function escapeRegExp(exp: string): string {
-  return exp.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
 
 const curriculumHelpers = {
   removeHtmlComments,

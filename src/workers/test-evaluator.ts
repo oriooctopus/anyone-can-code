@@ -30,12 +30,12 @@ export const runTestEvaluator = async ({
 
   overrideConsoleLog((args) => {
     logs.push(args);
-    // @ts-ignore
+    // @ts-expect-error will fix later
     console.standardLog('args', ...args);
   });
 
   try {
-    // @ts-ignore
+    // @ts-expect-error will fix later
     const context = getEvaluationContext(formattedCode, logs);
     const result = evaluateWithContext(
       `${formattedCode};
@@ -60,6 +60,6 @@ export const runTestEvaluator = async ({
 };
 
 if (typeof self !== 'undefined') {
-  // @ts-ignore
+  // @ts-expect-error will fix later
   self.postMessage({ type: 'contentLoaded' });
 }

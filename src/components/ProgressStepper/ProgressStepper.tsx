@@ -1,5 +1,4 @@
 import { Box, Flex, HStack, Text, Tooltip } from '@chakra-ui/react';
-import { FiMenu } from 'react-icons/fi';
 import Menu from 'src/assets/Menu';
 import { rem } from 'src/styles/typography/font';
 import { ProgressStateEnum } from 'src/types/generalTypes';
@@ -43,7 +42,7 @@ export const ProgressStepper = ({
     </Flex>
     <HStack justify="center" spacing="3px">
       {steps.map(({ hoverText, state, onClick }) => (
-        <FlLink onClick={onClick}>
+        <FlLink onClick={onClick} key={hoverText}>
           <Tooltip label={hoverText}>
             <Box
               w={progressStepperItemSize}

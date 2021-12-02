@@ -23,14 +23,14 @@ interface IProps {
  */
 const SELECTED_OPTION_BACKGROUND_COLOR = '#2b2b2b'; // '#192A4E';
 
-export const MultipleChoiceChallengeOption: React.FC<IProps> = ({
+export const MultipleChoiceChallengeOption = ({
   incorrectChoiceExplanation,
   isOptionSelected,
   onClickOption,
   showOptionIncorrectExplanation,
   text,
   useMarkdown,
-}) => {
+}: IProps) => {
   const color = isOptionSelected ? 'white' : 'black';
 
   return (

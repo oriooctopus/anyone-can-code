@@ -5,7 +5,6 @@ import MonacoEditor from '@monaco-editor/react';
 import { resetTestResults } from 'src/state/challenge/codeChallenge/codeChallenge';
 import { currentLogVar } from 'src/state/editor/editor.reactiveVariables';
 import { codeEditorValueVar } from 'src/state/general';
-import { ChallengeFragment } from 'src/types/generalTypes';
 import { useDebounced } from 'src/utils/hooks/useDebounced';
 import { getConsoleLogsFromCodeEvaluation } from 'src/workers/utils';
 import {
@@ -14,12 +13,7 @@ import {
 } from 'components/Editor/Editor.utils';
 import editorOptions from 'components/Editor/editor-options';
 
-type EditorProps = {
-  challenge: ChallengeFragment | undefined;
-  onMount: () => void;
-};
-
-export const Editor: React.FC<EditorProps> = ({ challenge }) => {
+export const Editor = () => {
   const codeEditorValue = useReactiveVar(codeEditorValueVar);
   const currentLog = useReactiveVar(currentLogVar);
 
@@ -58,8 +52,10 @@ export const Editor: React.FC<EditorProps> = ({ challenge }) => {
         padding="10px"
         fontFamily="Roboto Mono"
       >
-        {currentLog.map((log) => (
-          <span style={{ display: 'block' }}>{log}</span>
+        {currentLog.map((log, index) => (
+          <span style={{ display: 'block' }} key={log + index}>
+            {log}
+          </span>
         ))}
       </Box>
     </Box>

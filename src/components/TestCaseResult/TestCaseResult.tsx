@@ -3,7 +3,7 @@ import {
   MinusOutlined,
   CloseCircleOutlined,
 } from '@ant-design/icons';
-import { Flex, Text } from '@chakra-ui/layout';
+import { Flex } from '@chakra-ui/layout';
 import { FlexProps } from '@chakra-ui/react';
 import React from 'react';
 import { rem } from 'src/styles/typography/font';

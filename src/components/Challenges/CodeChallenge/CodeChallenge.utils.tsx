@@ -27,7 +27,7 @@ export const getCodeChallengeStartingCode = (
 // need to properly type test results once things get solidified
 export const hasPassedCodeChallenge = (
   tests: CodeChallengeTests,
-  testResults: any[],
+  testResults: unknown[],
 ) =>
   !tests ||
   tests.length === 0 ||

@@ -1,4 +1,4 @@
-import { Box, Divider, Text } from '@chakra-ui/react';
+import { Box, Divider } from '@chakra-ui/react';
 import '@fontsource/roboto';
 import { memo, useEffect, useRef } from 'react';
 import { contentPanelScrollToTopFunctionVar } from 'src/state/general';
@@ -75,3 +75,5 @@ export const ContentPanel = memo(
     );
   },
 );
+
+ContentPanel.displayName = 'ContentPanel';

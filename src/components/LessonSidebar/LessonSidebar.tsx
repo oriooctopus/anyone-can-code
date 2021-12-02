@@ -35,7 +35,7 @@ const getProgressState = (
   }
 };
 
-const LessonSidebar = React.memo(({ sublessons }: IProps) => {
+export const LessonSidebar = React.memo(({ sublessons }: IProps) => {
   const [showStepperHoverActions, setShowStepperHoverActions] = useBoolean();
 
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
@@ -88,4 +88,4 @@ const LessonSidebar = React.memo(({ sublessons }: IProps) => {
   );
 });
 
-export default LessonSidebar;
+LessonSidebar.displayName = 'LessonSidebar';

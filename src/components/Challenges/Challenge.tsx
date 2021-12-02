@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { ChallengeFragment } from 'src/types/generalTypes';
 import { CodeChallenge } from 'components/Challenges/CodeChallenge/CodeChallenge';
 import { MultipleChoiceChallenge } from 'components/Challenges/MultipleChoiceChallenge/MultipleChoiceChallenge';

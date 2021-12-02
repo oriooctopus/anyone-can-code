@@ -1,4 +1,4 @@
-import { decodeBase64String, encodeToBase64String } from 'src/utils/general';
+import { encodeToBase64String } from 'src/utils/general';
 
 /**
  * Safely returns the local storage object. In browser, it gets the window
@@ -25,20 +25,20 @@ export const setLocalStorageValue = (key: string, value: any) => {
 /**
  * Retrieves a compressed value from local storage
  */
-export const getLocalStorageValue = (key: string) => {
+export const getLocalStorageValue = () => {
   return null;
-  if (typeof window === 'undefined') {
-  }
+  // if (typeof window === 'undefined') {
+  // }
 
-  const hashedValue = getLocalStorage().getItem(key);
-  if (hashedValue) {
-    try {
-      return decodeBase64String(hashedValue);
-    } catch {
-      return null;
-    }
-  }
-  return null;
+  // const hashedValue = getLocalStorage().getItem(key);
+  // if (hashedValue) {
+  //   try {
+  //     return decodeBase64String(hashedValue);
+  //   } catch {
+  //     return null;
+  //   }
+  // }
+  // return null;
 };
 
 /**

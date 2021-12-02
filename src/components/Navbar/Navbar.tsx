@@ -5,7 +5,7 @@ import { mainNavbarHeight } from 'src/styles/constants';
 import { rem } from 'src/styles/typography/font';
 import { useSidebarOverlayContext } from 'components/SidebarOverlays/SidebarOverlay.utils';
 
-const Navbar = memo(() => {
+export const Navbar = memo(() => {
   const { setOverlayState } = useSidebarOverlayContext();
 
   return (
@@ -26,4 +26,4 @@ const Navbar = memo(() => {
   );
 });
 
-export default Navbar;
+Navbar.displayName = 'Navbar';

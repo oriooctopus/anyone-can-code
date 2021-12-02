@@ -18,7 +18,7 @@ export const updateChallengeCompletionData = <
   const currentSublessonIndex = currentSublessonIndexVar();
   const currentChallengeIndex = currentChallengeIndexVar();
 
-  // @ts-ignore
+  // @ts-expect-error will fix later
   const newLessonCompletionData = update(lessonCompletionData, {
     [currentSublessonIndex]: {
       [currentChallengeIndex]: spec,

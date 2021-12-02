@@ -1,16 +1,6 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  ButtonProps,
-  Flex,
-  Text,
-} from '@chakra-ui/react';
+import { Button, ButtonProps, Flex, Text } from '@chakra-ui/react';
 import { useState } from 'react';
-import { BiCheckCircle } from 'react-icons/bi';
-import { Link } from 'react-router-dom';
 import { rem } from 'src/styles/typography/font';
-import { ProgressStateEnum } from 'src/types/generalTypes';
 import { FlLink } from 'components/Link/FlLink';
 
 const lessonSharedStyles = {
@@ -27,15 +17,15 @@ interface ICourseMapOverlayLesson {
   slug: string;
 }
 
-const LessonButton: React.FC<ButtonProps> = (buttonProps) => (
+const LessonButton = (buttonProps: ButtonProps) => (
   <Button size="sm" {...buttonProps} />
 );
 
-const lessonIconColorMap: Record<ProgressStateEnum, string> = {
-  [ProgressStateEnum.INCOMPLETE]: '#ECE9E9',
-  [ProgressStateEnum.CURRENT]: '#A77E14',
-  [ProgressStateEnum.COMPLETE]: '#14A76C',
-};
+// const lessonIconColorMap: Record<ProgressStateEnum, string> = {
+//   [ProgressStateEnum.INCOMPLETE]: '#ECE9E9',
+//   [ProgressStateEnum.CURRENT]: '#A77E14',
+//   [ProgressStateEnum.COMPLETE]: '#14A76C',
+// };
 
 /*
  * Refactor this so that there is a lesson container that has all the lessons
@@ -45,10 +35,10 @@ const lessonIconColorMap: Record<ProgressStateEnum, string> = {
  *
  * Also add make it so that there aren't any borders on hover
  */
-export const CourseMapOverlayLesson: React.FC<ICourseMapOverlayLesson> = ({
+export const CourseMapOverlayLesson = ({
   name,
   slug,
-}) => {
+}: ICourseMapOverlayLesson) => {
   const [showActions, setShowActions] = useState(false);
 
   return showActions ? (

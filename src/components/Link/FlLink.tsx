@@ -7,7 +7,7 @@ export interface IFlLinkProps extends LinkProps {
   href?: string;
 }
 
-export const FlLink: React.FC<IFlLinkProps> = ({ href, ...linkProps }) => {
+export const FlLink = ({ href, ...linkProps }: IFlLinkProps) => {
   if (!href) {
     return <Link as="button" href="ewf" {...omit(linkProps, 'ref')} />;
   }

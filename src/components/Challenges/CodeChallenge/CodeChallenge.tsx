@@ -1,5 +1,4 @@
 import { useReactiveVar } from '@apollo/client';
-import { Button } from '@chakra-ui/button';
 import { Box, Divider, Flex, Text } from '@chakra-ui/layout';
 import { Heading, VStack, HStack } from '@chakra-ui/react';
 import { useEffect } from 'react';
@@ -84,7 +83,7 @@ interface ITestsProps {
   tests: CodeChallengeProps['challenge']['tests'];
 }
 
-const Tests: React.FC<ITestsProps> = ({ tests }) => {
+const Tests = ({ tests }: ITestsProps) => {
   const { testResults } = useCodeChallengeTests(tests);
 
   return (

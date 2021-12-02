@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Home } from 'src/pages/Home';
 import { LessonPageContainer } from 'src/pages/Lesson/Lesson';
 import { PageNotFound } from 'src/pages/PageNotFound';

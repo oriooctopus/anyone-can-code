@@ -112,3 +112,5 @@ export const SublessonInstructions = React.memo(
     );
   },
 );
+
+SublessonInstructions.displayName = 'SublessonInstructions';

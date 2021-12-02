@@ -13,7 +13,7 @@ export const isExternalURL = (url: string) => {
     return true;
   }
 
-  var domain = function (url: string) {
+  const domain = function (url: string) {
     return url.replace('http://', '').replace('https://', '').split('/')[0];
   };
 

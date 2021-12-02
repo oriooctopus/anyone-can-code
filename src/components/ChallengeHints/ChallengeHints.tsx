@@ -16,15 +16,15 @@ interface IChallengeHintProps {
   hints: Array<ChallengeHintFragment>;
 }
 
-export const ChallengeHints: React.FC<IChallengeHintProps> = ({ hints }) => {
+export const ChallengeHints = ({ hints }: IChallengeHintProps) => {
   return (
     <Box>
       <Heading size="md" mr="auto">
         Hints
       </Heading>
       <Accordion my={4} allowMultiple>
-        {hints.map(({ recommendedTimeBeforeViewing, text }, index) => (
-          <AccordionItem>
+        {hints.map(({ text }, index) => (
+          <AccordionItem key={text}>
             <AccordionButton pl={1}>
               <Text mr="auto">Hint {index}</Text>
               {/* TODO: Implement recommended time before viewing */}

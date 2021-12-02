@@ -1,12 +1,11 @@
-import { Box, Flex, Grid } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { layoutStyles } from 'components/Layout/Layout.styles';
-import Navbar from 'components/Navbar/Navbar';
+import { Navbar } from 'components/Navbar/Navbar';
 
 type LayoutProps = {
   children: React.ReactNode;
 };
-
 // This file needs to be more thought through.
 
 export const Layout = ({ children }: LayoutProps) => (
