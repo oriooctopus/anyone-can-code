@@ -9,43 +9,28 @@ import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactive
 import { setSublessonIndex } from 'src/state/sublesson/sublesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { rem } from 'src/styles/typography/font';
-import { ProgressStateEnum } from 'src/types/generalTypes';
+import {
+  useGetLessonCompletionProgressStates,
+  useGetProgressState,
+} from 'components/LessonSidebar/LessonSidebar.utils';
 import { ProgressStepper } from 'components/ProgressStepper/ProgressStepper';
 
 interface IProps {
   sublessons: Array<LessonSidebarDataFragment>;
 }
 
-/**
- * This logic inside is temporary. This should actually get the
- * progress state from the backend lesson completion data, and right
- * now this doesn't actually work 100% right (if a user skips around)
- * it will show the info incorrectly.
- */
-const getProgressState = (
-  currentIndex: number,
-  lessonIndex: number,
-): ProgressStateEnum => {
-  if (currentIndex === lessonIndex) {
-    return ProgressStateEnum.CURRENT;
-  } else if (currentIndex > lessonIndex) {
-    return ProgressStateEnum.COMPLETE;
-  } else {
-    return ProgressStateEnum.INCOMPLETE;
-  }
-};
-
 export const LessonSidebar = React.memo(({ sublessons }: IProps) => {
   const [showStepperHoverActions, setShowStepperHoverActions] = useBoolean();
-
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
   const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
-  const currentSublesson = sublessons[currentSublessonIndex];
+  const { challengeCompletions, sublessonCompletions } =
+    useGetLessonCompletionProgressStates();
 
-  const lessonSidebarStepper = sublessons.map(({ name }, index) => ({
-    onClick: () => setSublessonIndex(index),
+  const currentSublesson = sublessons[currentSublessonIndex];
+  const lessonSidebarStepper = sublessons.map(({ name }, sublessonIndex) => ({
+    onClick: () => setSublessonIndex(sublessonIndex),
     hoverText: name,
-    state: getProgressState(currentSublessonIndex, index),
+    state: sublessonCompletions[sublessonIndex],
   }));
   /**
    * We add an extra empty object at the beginning to represent
@@ -53,10 +38,11 @@ export const LessonSidebar = React.memo(({ sublessons }: IProps) => {
    * reconsider this
    */
   const sublessonSidebarStepper = [{}, currentSublesson.challenges].map(
-    (_challenge, index) => ({
-      hoverText: index === 0 ? 'Introduction' : `Challenge ${index}`,
-      onClick: () => setChallengeIndex(index),
-      state: getProgressState(currentChallengeIndex, index),
+    (_challenge, challengeIndex) => ({
+      hoverText:
+        challengeIndex === 0 ? 'Introduction' : `Challenge ${challengeIndex}`,
+      onClick: () => setChallengeIndex(challengeIndex - 1),
+      state: challengeCompletions?.[currentSublessonIndex]?.[challengeIndex],
     }),
   );
 
