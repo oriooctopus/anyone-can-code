@@ -7,13 +7,13 @@ import {
   getChallengesFromSublessonChallenges,
   isSublessonIntroduction,
   useGetLessonDescription,
+  useSublessonNavigation,
 } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
 import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
 import {
   codeEditorValueVar,
   contentPanelScrollToTopFunctionVar,
 } from 'src/state/general';
-import { useSublessonNavigation } from 'src/state/sublesson/sublesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { getSublessonStartingCode } from 'src/state/sublesson/sublesson.utils';
 import { Challenge } from 'components/Challenges/Challenge';

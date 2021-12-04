@@ -1,8 +1,11 @@
-export interface ISublessonCompletionData {
+export interface IChallengeCompletionData {
   code?: string;
   completed?: boolean;
 }
 
-export type sublessonCompletionDataType = Array<
-  Array<ISublessonCompletionData>
->;
+export interface ISublessonCompletionData {
+  introductionCompleted?: boolean;
+  challenges: Array<IChallengeCompletionData>;
+}
+
+export type lessonCompletionDataType = Array<ISublessonCompletionData>;

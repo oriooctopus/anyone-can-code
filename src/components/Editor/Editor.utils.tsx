@@ -20,5 +20,7 @@ export const useCurrentEditorValue = () => {
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
   const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
 
-  return lessonCompletionData?.[currentSublessonIndex]?.[currentChallengeIndex];
+  return lessonCompletionData?.[currentSublessonIndex]?.challenges?.[
+    currentChallengeIndex
+  ];
 };

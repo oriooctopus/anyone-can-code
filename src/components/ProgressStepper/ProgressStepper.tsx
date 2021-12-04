@@ -11,14 +11,16 @@ import {
 const iconSize = 10;
 const iconNegativeMargin = (iconSize + 8) * -1;
 
+export interface IProgressStepperStep {
+  hoverText?: string;
+  state: ProgressStateEnum;
+  onClick: () => void;
+}
+
 interface IProgressStepperProps {
   showHoverActions: boolean;
   title: string;
-  steps: Array<{
-    hoverText?: string;
-    state: ProgressStateEnum;
-    onClick: () => void;
-  }>;
+  steps: Array<IProgressStepperStep>;
 }
 
 export const ProgressStepper = ({

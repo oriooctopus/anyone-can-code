@@ -2,6 +2,7 @@ import { useReactiveVar } from '@apollo/client';
 import { useRef } from 'react';
 import { runTests } from 'src/codeRunning/codeRunning';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
+import { failChallenge, passChallenge } from 'src/state/challenge/challenge';
 import { testResultsVar } from 'src/state/challenge/codeChallenge/codeChallenge.reactiveVariables';
 import { codeEditorValueVar } from 'src/state/general';
 import { CodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.types';
@@ -47,8 +48,9 @@ export const useCodeChallengeTests = (tests: CodeChallengeTests) => {
   // TODO: extract runTests property to a function for easier testing
   const handleRunTests = async () => {
     const results = await runTests(codeEditorValueRef.current, tests);
-    console.log('results', results);
     testResultsVar(results);
+
+    hasPassedCodeChallenge(tests, results) ? passChallenge() : failChallenge();
   };
 
   return {

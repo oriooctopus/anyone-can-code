@@ -3,6 +3,7 @@ import { Text } from '@chakra-ui/layout';
 import { Box } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { MultipleChoiceChallengeDataFragment } from 'src/generated/graphql';
+import { failChallenge, passChallenge } from 'src/state/challenge/challenge';
 import { challengeAttemptStatusVar } from 'src/state/challenge/challenge.reactiveVariables';
 import { ChallengeAttemptStatusEnum } from 'src/state/challenge/challenge.types';
 import { multipleChoiceOptionSelectionsVar } from 'src/state/challenge/multipleChoiceChallenge/multipleChoiceChallenge.reactiveVariables';
@@ -51,12 +52,7 @@ export const MultipleChoiceChallenge = ({
       isOptionCorrect(index),
     );
 
-    // it would be nice to abstract this into a util so that the logic is consistent in other places
-    challengeAttemptStatusVar(
-      isSubmissionCorrect
-        ? ChallengeAttemptStatusEnum.passed
-        : ChallengeAttemptStatusEnum.failed,
-    );
+    isSubmissionCorrect ? passChallenge() : failChallenge();
   };
 
   const onClickOption = (index: number) => {
