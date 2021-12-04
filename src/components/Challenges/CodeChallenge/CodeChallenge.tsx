@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import Reset from 'src/assets/Reset.svg';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
 import { testResultsVar } from 'src/state/challenge/codeChallenge/codeChallenge.reactiveVariables';
-import { codeEditorValueVar } from 'src/state/general';
+import { updateCurrentEditorValue } from 'src/state/lessonCompletion/lessonCompletion';
 import { ChallengeHints } from 'components/ChallengeHints/ChallengeHints';
 import {
   ChallengeButton,
@@ -33,7 +33,7 @@ export const CodeChallenge = ({
   const { runTests } = useCodeChallengeTests(tests);
   // I now need to differentiate two functions. Reset challenge which is truly to reset it, and another function to get the when a challenge loads.
   const resetChallenge = () => {
-    codeEditorValueVar(getCodeChallengeStartingCode(challenge));
+    updateCurrentEditorValue(getCodeChallengeStartingCode(challenge));
     testResultsVar([]);
   };
   const testResultsValue = useReactiveVar(testResultsVar);

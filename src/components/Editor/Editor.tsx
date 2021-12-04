@@ -4,9 +4,10 @@ import '@fontsource/roboto-mono';
 import MonacoEditor from '@monaco-editor/react';
 import { resetTestResults } from 'src/state/challenge/codeChallenge/codeChallenge';
 import { currentLogVar } from 'src/state/editor/editor.reactiveVariables';
-import { codeEditorValueVar } from 'src/state/general';
+import { updateCurrentEditorValue } from 'src/state/lessonCompletion/lessonCompletion';
 import { useDebounced } from 'src/utils/hooks/useDebounced';
 import { getConsoleLogsFromCodeEvaluation } from 'src/workers/utils';
+import { useGetStoredCodeFromCompletionData } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
 import {
   DEFAULT_MONACO_EDITOR_THEME,
   defineDefaultMonacoTheme,
@@ -14,12 +15,12 @@ import {
 import editorOptions from 'components/Editor/editor-options';
 
 export const Editor = () => {
-  const codeEditorValue = useReactiveVar(codeEditorValueVar);
   const currentLog = useReactiveVar(currentLogVar);
+  const codeEditorValue = useGetStoredCodeFromCompletionData();
 
   const onChangeEditorValue = (newValue: string | undefined) => {
     resetTestResults();
-    codeEditorValueVar(newValue);
+    updateCurrentEditorValue(newValue);
   };
 
   useDebounced(

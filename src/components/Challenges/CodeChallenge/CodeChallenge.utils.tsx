@@ -3,20 +3,51 @@ import { useRef } from 'react';
 import { runTests } from 'src/codeRunning/codeRunning';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
 import { failChallenge, passChallenge } from 'src/state/challenge/challenge';
+import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
 import { testResultsVar } from 'src/state/challenge/codeChallenge/codeChallenge.reactiveVariables';
-import { codeEditorValueVar } from 'src/state/general';
+import { lessonCompletionDataVar } from 'src/state/lessonCompletion/lessonCompletion.reactiveVariables';
+import { lessonCompletionDataType } from 'src/state/lessonCompletion/lessonCompletion.types';
+import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { CodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.types';
+
+type TGetStoredCodeFromCompletionData = {
+  challengeIndex?: number;
+  sublessonIndex?: number;
+  lessonCompletionData?: lessonCompletionDataType;
+};
+
+export const getStoredCodeFromCompletionData = ({
+  challengeIndex = currentChallengeIndexVar(),
+  sublessonIndex = currentSublessonIndexVar(),
+  lessonCompletionData = lessonCompletionDataVar(),
+}: TGetStoredCodeFromCompletionData) => {
+  return lessonCompletionData[sublessonIndex]?.challenges?.[challengeIndex]
+    ?.code;
+};
+
+export const useGetStoredCodeFromCompletionData = () => {
+  const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
+  const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
+  const lessonCompletionData = useReactiveVar(lessonCompletionDataVar);
+
+  return getStoredCodeFromCompletionData({
+    challengeIndex: currentChallengeIndex,
+    sublessonIndex: currentSublessonIndex,
+    lessonCompletionData,
+  });
+};
 
 export const getCodeChallengeStartingCode = (
   challenge: CodeChallengeDataFragment,
 ) => {
   const { challengeMeta, startingCode } = challenge;
+  const storedCode = getStoredCodeFromCompletionData({});
 
   if (!challenge) {
     return '';
-  }
-
-  if (startingCode) {
+  } else if (storedCode) {
+    return storedCode;
+  } else if (startingCode) {
     return startingCode;
   } else if (challengeMeta?.difficulty === 'hard') {
     return 'This is a hard challenge. Expect to struggle. TODO: Add more text to this and improve the message';
@@ -36,7 +67,7 @@ export const hasPassedCodeChallenge = (
   (testResults.length !== 0 && testResults.every(({ pass }) => pass));
 
 export const useCodeChallengeTests = (tests: CodeChallengeTests) => {
-  const codeEditorValue = useReactiveVar(codeEditorValueVar);
+  const codeEditorValue = useGetStoredCodeFromCompletionData();
   const testResultsValue = useReactiveVar(testResultsVar);
 
   /*

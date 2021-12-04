@@ -1,7 +1,7 @@
 import { useReactiveVar } from '@apollo/client';
 import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import '@fontsource/roboto';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { LessonSidebar } from 'src/components/LessonSidebar/LessonSidebar';
 import {
@@ -76,17 +76,26 @@ const LessonPage = ({ lesson }: IProps) => {
 };
 
 export const LessonPageContainer = () => {
+  const [lesson, setLesson] = useState<LessonType>(null);
   const { slug } = useParams<IRouteParams>();
   const { data } = useGetLessonDataQuery({
     variables: {
       slug,
     },
+    onCompleted: (data) => {
+      const lessonData = data?.lessons?.[0];
+      /**
+       * It's important that the lesson completion data is reset
+       * before the lesson value is provided. This is to avoid race
+       * conditions.
+       */
+      lessonData && resetLesson(lessonData);
+      console.log('lesson is set');
+      setLesson(lessonData);
+    },
   });
 
-  const lesson = data?.lessons?.[0];
   const sublessons = lesson?.sublessons;
-
-  useEffect(() => lesson && resetLesson(lesson), [lesson?.id]);
 
   return (
     <Flex {...layoutStyles} overflow="hidden">

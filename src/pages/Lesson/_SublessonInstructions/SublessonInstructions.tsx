@@ -10,10 +10,8 @@ import {
   useSublessonNavigation,
 } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
 import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
-import {
-  codeEditorValueVar,
-  contentPanelScrollToTopFunctionVar,
-} from 'src/state/general';
+import { contentPanelScrollToTopFunctionVar } from 'src/state/general';
+import { updateCurrentEditorValue } from 'src/state/lessonCompletion/lessonCompletion';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { getSublessonStartingCode } from 'src/state/sublesson/sublesson.utils';
 import { Challenge } from 'components/Challenges/Challenge';
@@ -81,7 +79,7 @@ export const SublessonInstructions = React.memo(
     };
 
     useEffect(() => {
-      codeEditorValueVar(getSublessonStartingCode());
+      updateCurrentEditorValue(getSublessonStartingCode());
     }, [sublesson.id]);
 
     useEffect(contentPanelScrollToTopFunction, [

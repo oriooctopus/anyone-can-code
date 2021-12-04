@@ -12,7 +12,6 @@ export enum SublessonChallengeFrequencyEnum {
   high = 'high',
 }
 
-export const codeEditorValueVar = makeVar('the initial code');
 // TODO: store these in local storage. Possibly via apollo cache persist
 
 export const sublessonTextLengthPreferenceVar = makeVar(

@@ -19,6 +19,15 @@ export const updateChallengeCompletionData = <
   const currentSublessonIndex = currentSublessonIndexVar();
   const currentChallengeIndex = currentChallengeIndexVar();
 
+  /**
+   * TODO: is this the best place for this check? Maybe
+   * we should just ensure that the function doesn't get
+   * run at all in this situation. Not sure.
+   */
+  if (currentChallengeIndex === -1) {
+    return;
+  }
+
   // @ts-expect-error will fix later. Interesting that when I forget to include challenges it had no error
   const newLessonCompletionData = update(lessonCompletionData, {
     [currentSublessonIndex]: {
@@ -46,4 +55,13 @@ export const updateSublessonIntroductionCompletion = (
   });
 
   lessonCompletionDataVar(newLessonCompletionData);
+};
+
+export const updateCurrentEditorValue = (value: string) => {
+  debugger;
+  updateChallengeCompletionData({
+    code: {
+      $set: value,
+    },
+  });
 };
