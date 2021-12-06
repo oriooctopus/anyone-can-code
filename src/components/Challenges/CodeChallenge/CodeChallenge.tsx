@@ -4,6 +4,7 @@ import { Heading, VStack, HStack } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import Reset from 'src/assets/Reset.svg';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
+import { getCodeChallengeStartingCode } from 'src/state/challenge/codeChallenge/codeChallenge';
 import { testResultsVar } from 'src/state/challenge/codeChallenge/codeChallenge.reactiveVariables';
 import { updateCurrentEditorValue } from 'src/state/lessonCompletion/lessonCompletion';
 import { ChallengeHints } from 'components/ChallengeHints/ChallengeHints';
@@ -12,7 +13,6 @@ import {
   ChallengeMarkdown,
 } from 'components/Challenges/Challenge.styles';
 import {
-  getCodeChallengeStartingCode,
   hasPassedCodeChallenge,
   useCodeChallengeTests,
 } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
@@ -32,8 +32,10 @@ export const CodeChallenge = ({
   const { id, hints, tests, prompt } = challenge;
   const { runTests } = useCodeChallengeTests(tests);
   // I now need to differentiate two functions. Reset challenge which is truly to reset it, and another function to get the when a challenge loads.
-  const resetChallenge = () => {
-    updateCurrentEditorValue(getCodeChallengeStartingCode(challenge));
+  const resetChallenge = (ignoreCurrentChallengeStoredCode?: boolean) => {
+    updateCurrentEditorValue(
+      getCodeChallengeStartingCode(challenge, ignoreCurrentChallengeStoredCode),
+    );
     testResultsVar([]);
   };
   const testResultsValue = useReactiveVar(testResultsVar);
@@ -66,7 +68,7 @@ export const CodeChallenge = ({
 
         <ChallengeButton
           colorScheme="red"
-          onClick={resetChallenge}
+          onClick={() => resetChallenge(true)}
           variant="ghost"
         >
           <HStack spacing="5px">

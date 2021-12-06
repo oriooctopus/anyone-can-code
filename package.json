@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "serve": "vite preview",
     "codegen": "graphql-codegen --config codegen.yml",
+    "codegen:watch": "graphql-codegen --config codegen.yml --watch",
     "build:workers:watch": "node --max_old_space_size=7168 node_modules/webpack-cli/bin/cli --config ./config/webpack-workers.js --watch",
     "format": "yarn prettier --write .",
     "lint": "yarn eslint --fix .",

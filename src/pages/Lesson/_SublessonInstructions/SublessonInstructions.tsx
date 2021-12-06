@@ -63,7 +63,7 @@ export const SublessonInstructions = React.memo(
 
         {isIntroduction && (
           <ChallengeButton onClick={onClickNext}>
-            {sublesson.challenges.length ? 'Begin Challenges' : 'Next'}
+            {sublesson.challenges.length ? 'Begin Challenges' : nextButtonText}
           </ChallengeButton>
         )}
       </>

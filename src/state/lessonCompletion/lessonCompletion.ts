@@ -36,7 +36,6 @@ export const updateChallengeCompletionData = <
       },
     },
   });
-
   lessonCompletionDataVar(newLessonCompletionData);
 };
 
@@ -58,7 +57,6 @@ export const updateSublessonIntroductionCompletion = (
 };
 
 export const updateCurrentEditorValue = (value: string) => {
-  debugger;
   updateChallengeCompletionData({
     code: {
       $set: value,

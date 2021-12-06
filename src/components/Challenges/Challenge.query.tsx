@@ -11,6 +11,7 @@ export const codeChallengeData = gql`
     hints {
       ...challengeHint
     }
+    getStartingCodeFromPreviousChallenge
     challengeMeta {
       difficulty
     }

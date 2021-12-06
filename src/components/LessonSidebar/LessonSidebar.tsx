@@ -13,6 +13,7 @@ interface IProps {
 
 export const LessonSidebar = React.memo(({ sublessons }: IProps) => {
   const [showStepperHoverActions, setShowStepperHoverActions] = useBoolean();
+  // TODO: memo this or something so that it doesn't run every time the hover happens
   const { allSublessonsStepperData, currentSublessonStepperData } =
     useGetLessonSidebarProgressStepperData(sublessons);
 

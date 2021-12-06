@@ -78,7 +78,7 @@ const LessonPage = ({ lesson }: IProps) => {
 export const LessonPageContainer = () => {
   const [lesson, setLesson] = useState<LessonType>(null);
   const { slug } = useParams<IRouteParams>();
-  const { data } = useGetLessonDataQuery({
+  useGetLessonDataQuery({
     variables: {
       slug,
     },
@@ -90,7 +90,6 @@ export const LessonPageContainer = () => {
        * conditions.
        */
       lessonData && resetLesson(lessonData);
-      console.log('lesson is set');
       setLesson(lessonData);
     },
   });

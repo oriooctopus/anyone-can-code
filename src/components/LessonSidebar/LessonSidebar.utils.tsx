@@ -3,10 +3,18 @@ import { LessonSidebarDataFragment } from 'src/generated/graphql';
 import { setChallengeIndex } from 'src/state/challenge/challenge';
 import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
 import { lessonCompletionDataVar } from 'src/state/lessonCompletion/lessonCompletion.reactiveVariables';
+import { ISublessonCompletionData } from 'src/state/lessonCompletion/lessonCompletion.types';
 import { setSublessonIndex } from 'src/state/sublesson/sublesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { ProgressStateEnum } from 'src/types/generalTypes';
 import { IProgressStepperStep } from 'components/ProgressStepper/ProgressStepper';
+
+const isSublessonComplete = (sublessonCompletion: ISublessonCompletionData) => {
+  return (
+    sublessonCompletion.introductionCompleted &&
+    sublessonCompletion.challenges?.every(({ completed }) => completed)
+  );
+};
 
 const useGetLessonCompletionProgressStates = () => {
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
@@ -19,9 +27,7 @@ const useGetLessonCompletionProgressStates = () => {
         return ProgressStateEnum.CURRENT;
       }
 
-      return lessonCompletionData?.[sublessonIndex]?.challenges?.every(
-        ({ completed }) => completed,
-      )
+      return isSublessonComplete(lessonCompletionData?.[sublessonIndex])
         ? ProgressStateEnum.COMPLETE
         : ProgressStateEnum.INCOMPLETE;
     },
