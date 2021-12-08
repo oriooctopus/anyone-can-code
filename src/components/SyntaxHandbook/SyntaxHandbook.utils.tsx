@@ -15,6 +15,7 @@ function flatMap<T, U>(
 export const getSyntaxHandbookEntriesFromQueryData = (
   data: GetSyntaxHandbookDataQuery,
 ) => {
+  //test
   // TODO: clean this shit up
   const lessons = data?.courses?.[0]?.modules?.[0]?.lessons || [];
 
