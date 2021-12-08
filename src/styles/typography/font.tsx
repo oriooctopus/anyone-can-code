@@ -5,10 +5,10 @@ export const BASE_FONT_FAMILY = 'roboto';
 export const BASE_FONT_SIZE = 16;
 
 export const flFontWeight = {
-  LIGHT_300: 300 as 300,
-  NORMAL_400: 400 as 400,
-  SEMIBOLD_600: 600 as 600,
-  BOLD_800: 800 as 800,
+  LIGHT_300: 300 as const,
+  NORMAL_400: 400 as const,
+  SEMIBOLD_600: 600 as const,
+  BOLD_800: 800 as const,
 };
 
 export function rem(px: number): string | number {

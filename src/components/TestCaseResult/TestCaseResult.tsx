@@ -3,10 +3,11 @@ import {
   MinusOutlined,
   CloseCircleOutlined,
 } from '@ant-design/icons';
-import { Flex, Text } from '@chakra-ui/layout';
+import { Flex } from '@chakra-ui/layout';
 import { FlexProps } from '@chakra-ui/react';
 import React from 'react';
 import { rem } from 'src/styles/typography/font';
+import Markdown from 'components/Markdown/Markdown';
 
 interface IProps {
   label: string;
@@ -33,7 +34,7 @@ export const TestCaseResult = ({
 }: IProps) => (
   <Flex align="center" {...containerStyles}>
     {getIcon(passed)}
-    <Text ml="12px">{label}</Text>
+    <Markdown containerOverrides={{ ml: '12px' }}>{label}</Markdown>
   </Flex>
 );
 

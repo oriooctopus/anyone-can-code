@@ -1,19 +1,8 @@
-import {
-  Button,
-  ModalOverlay,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { ModalOverlay, Modal } from '@chakra-ui/react';
 import {
   useGetSidebarOverlay,
   useSidebarOverlayContext,
 } from 'components/SidebarOverlays/SidebarOverlay.utils';
-import { SidebarOverlayContext } from 'components/SidebarOverlays/SidebarOverlayContext';
 
 export const SidebarOverlay = () => {
   const SidebarOverlayContent = useGetSidebarOverlay();

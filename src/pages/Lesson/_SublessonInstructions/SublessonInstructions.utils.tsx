@@ -1,14 +1,23 @@
 import { useReactiveVar } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
 import {
-  ChallengeAttemptStatusEnum,
+  SublessonInstructionsDataFragment,
+  useGetSublessonNavigationDataQuery,
+} from 'src/generated/graphql';
+import { setChallengeIndex } from 'src/state/challenge/challenge';
+import {
   challengeAttemptStatusVar,
   currentChallengeIndexVar,
-  currentSublessonIndexVar,
+} from 'src/state/challenge/challenge.reactiveVariables';
+import { ChallengeAttemptStatusEnum } from 'src/state/challenge/challenge.types';
+import {
   SublessonTextLengthPreferenceEnum,
   sublessonTextLengthPreferenceVar,
-  testResultsVar,
-} from 'src/cache';
-import { SublessonInstructionsDataFragment } from 'src/generated/graphql';
+} from 'src/state/general';
+import { updateSublessonIntroductionCompletion } from 'src/state/lessonCompletion/lessonCompletion';
+import { lessonCompletionDataVar } from 'src/state/lessonCompletion/lessonCompletion.reactiveVariables';
+import { resetSublesson } from 'src/state/sublesson/sublesson';
+import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { ChallengeFragment } from 'src/types/generalTypes';
 
 /*
@@ -17,60 +26,32 @@ import { ChallengeFragment } from 'src/types/generalTypes';
  * entering it in the CMS. However, once we get the data we can
  * convert it to the Challenge union type
  */
+export const getChallengeFromSublessonChallenge = (
+  challenge: SublessonInstructionsDataFragment['challenges'][number],
+): ChallengeFragment => {
+  if (Boolean(challenge) === false) {
+    return null;
+  }
+
+  // TODO: make this code more elegant
+  if (challenge.codeChallenge) {
+    return challenge.codeChallenge;
+  } else if (challenge.multipleChoiceChallenge) {
+    return challenge.multipleChoiceChallenge;
+  }
+
+  throw new Error(
+    `Sublesson challenge of id ${challenge.id} did not contain any challenges. Is the challenge/sublesson still a draft?`,
+  );
+};
+
 export const getChallengesFromSublessonChallenges = (
   challenges: SublessonInstructionsDataFragment['challenges'],
 ): Array<ChallengeFragment> => {
-  // not sure why typescript/graphql views the challenges as nullable
-  return (challenges || []).flatMap((challenge, index) => {
-    if (challenge === undefined || challenge === null) {
-      return [];
-    }
-
-    // TODO: make this code more elegant
-    if (challenge.codeChallenge) {
-      return challenge.codeChallenge;
-    } else if (challenge.multipleChoiceChallenge) {
-      return challenge.multipleChoiceChallenge;
-    }
-
-    throw new Error(
-      `Sublesson challenge at index ${index} did not contain any challenges. Is the challenge/sublesson still a draft?`,
-    );
-  });
+  return (challenges || []).flatMap(getChallengeFromSublessonChallenge);
 };
 
-type useOnClickNextProps = {
-  sublesson: SublessonInstructionsDataFragment;
-  totalSublessons: number;
-};
-
-const resetSublessonProgress = () => {
-  currentChallengeIndexVar(-1);
-  testResultsVar([]);
-};
-
-export const useOnClickNext = ({
-  sublesson: { challenges },
-  totalSublessons,
-}: useOnClickNextProps) => {
-  const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
-  const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
-
-  return () => {
-    challengeAttemptStatusVar(ChallengeAttemptStatusEnum.notAttempted);
-
-    if (currentChallengeIndex + 1 !== challenges.length) {
-      console.log('next challenge');
-      currentChallengeIndexVar(currentChallengeIndex + 1);
-    } else if (currentSublessonIndex + 1 !== totalSublessons) {
-      console.log('next sublesson');
-      currentSublessonIndexVar(currentSublessonIndex + 1);
-      resetSublessonProgress();
-    } else {
-      console.log('going to next lesson');
-    }
-  };
-};
+export const isSublessonIntroduction = (index: number) => index === -1;
 
 const descriptionPreferenceToNumericalValueMap: Record<
   SublessonTextLengthPreferenceEnum,
@@ -129,12 +110,49 @@ export const useGetLessonDescription = (
   return firstChoice || secondChoice;
 };
 
-// TODO: add logic that excludes the starting code comments before comments have been introduced
-export const getSublessonStartingCode = () => {
-  return `/* We highly recommend that when you see code examples in
- * the lesson you type them out again here. This will
- * significantly help you remember what the lesson is
- * teaching, because instead of just looking at examples,
- * you are writing code yourself.
- */`;
+export const setSublessonIndex = (lessonIndex: number) => {
+  currentSublessonIndexVar(lessonIndex);
+  resetSublesson();
+};
+
+type useSublessonNavigationProps = {
+  sublesson: SublessonInstructionsDataFragment;
+  totalSublessons: number;
+};
+
+export const useSublessonNavigation = ({
+  sublesson: { challenges, lesson },
+  totalSublessons,
+}: useSublessonNavigationProps) => {
+  const history = useHistory();
+  const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
+  const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
+  const { data } = useGetSublessonNavigationDataQuery({
+    variables: { currentLessonId: Number(lesson.id) },
+  });
+  const isLastChallenge = currentChallengeIndex + 1 === challenges.length;
+  const isLastSublesson = currentSublessonIndex + 1 === totalSublessons;
+  const isEndOfLesson = isLastChallenge && isLastSublesson;
+  const isIntroduction = isSublessonIntroduction(currentChallengeIndex);
+
+  const onClickNext = () => {
+    challengeAttemptStatusVar(ChallengeAttemptStatusEnum.notAttempted);
+
+    if (isIntroduction) {
+      updateSublessonIntroductionCompletion(currentSublessonIndex, true);
+    }
+
+    if (!isLastChallenge) {
+      setChallengeIndex(currentChallengeIndex + 1);
+    } else if (!isLastSublesson) {
+      setSublessonIndex(currentSublessonIndex + 1);
+    } else {
+      history.push(`/lesson/${data?.nextLessonSlug}`);
+    }
+  };
+
+  return {
+    isEndOfLesson,
+    onClickNext,
+  };
 };

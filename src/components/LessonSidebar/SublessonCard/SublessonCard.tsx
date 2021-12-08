@@ -54,7 +54,6 @@ const Triangle = ({ active }: { active?: boolean }) => (
 
 const SublessonCard = (props: IProps) => {
   const { children, active, percentCompleted } = props;
-  console.log('percent completed', percentCompleted, props);
   return (
     <Box
       bgColor="#172A4E"

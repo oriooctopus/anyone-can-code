@@ -1,45 +1,38 @@
 import { useReactiveVar } from '@apollo/client';
-import { Box, Grid, GridItem, SimpleGrid } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import '@fontsource/roboto';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { currentChallengeIndexVar, currentSublessonIndexVar } from 'src/cache';
-import LessonProgress from 'src/components/LessonProgress/LessonProgress';
+import { LessonSidebar } from 'src/components/LessonSidebar/LessonSidebar';
 import {
   GetLessonDataQuery,
   useGetLessonDataQuery,
 } from 'src/generated/graphql';
 import { SublessonInstructions } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions';
-import { getChallengesFromSublessonChallenges } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
-import { isCodeChallenge } from 'components/Challenges/Challenge.utils';
-import { useCodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
+import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
+import { resetLesson } from 'src/state/lesson/lesson';
+import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { Editor } from 'components/Editor/Editor';
-import { Layout, LessonLayout } from 'components/Layout/Layout';
-import { LessonBar } from 'components/LessonBar/LessonBar';
+import { layoutStyles } from 'components/Layout/Layout.styles';
+import { Navbar } from 'components/Navbar/Navbar';
 
 interface IRouteParams {
   slug: string;
 }
 
-type Lesson = NonNullable<NonNullable<GetLessonDataQuery['lessons']>[number]>;
+// TODO: Fix once we upgrade strapi
+export type LessonType = NonNullable<
+  NonNullable<GetLessonDataQuery['lessons']>[number]
+>;
 
 interface IProps {
-  lesson: Lesson;
+  lesson: LessonType;
 }
 
 const LessonPage = ({ lesson }: IProps) => {
   const sublessons = lesson.sublessons || [];
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
-  const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
   const currentSublesson = sublessons[currentSublessonIndex];
-  const parsedChallenges = getChallengesFromSublessonChallenges(
-    currentSublesson?.challenges,
-  );
-  const currentChallenge = parsedChallenges[currentChallengeIndex];
-  // I thought about abstracting away this logic.. but I don't think it's really necessary with typescript?
-  const { runTests } = useCodeChallengeTests(
-    isCodeChallenge(currentChallenge) ? currentChallenge.tests : [],
-  );
   const totalSublessons = sublessons.length;
   /*
    * This actually has to be fixed as it doesn't make sense when there aren't challenges
@@ -52,13 +45,11 @@ const LessonPage = ({ lesson }: IProps) => {
       ? (sublessons?.[currentSublessonIndex - 1]?.challenges?.length || 0) - 1
       : undefined;
 
-  const onMount = () => {
-    runTests();
-  };
-
   useEffect(() => {
     // TODO: set types for these
+    // @ts-expect-error will fix later
     window.setSublesson = currentSublessonIndexVar;
+    // @ts-expect-error will fix later
     window.setChallenge = currentChallengeIndexVar;
   }, []);
 
@@ -66,48 +57,52 @@ const LessonPage = ({ lesson }: IProps) => {
     return <span>no sublesson</span>;
   }
 
-  // now I need to figure out how to make the nav not full length
-
   return (
-    <LessonLayout lessonSidebar={<LessonProgress sublessons={sublessons} />}>
-      <Grid templateColumns="repeat(12, 1fr)" gap={{ md: '20px' }}>
-        <GridItem
-          colSpan={{
-            lg: true ? 6 : 7,
-            md: true ? 6 : 9,
-          }}
-        >
-          <SublessonInstructions
-            sublesson={currentSublesson}
-            totalSublessons={totalSublessons}
-            lastChallengeIndexOfPreviousSublesson={
-              lastChallengeIndexOfPreviousSublesson
-            }
-          />
-        </GridItem>
-        <GridItem colSpan={6} mt="10px">
-          <Editor challenge={currentChallenge} onMount={onMount} />
-        </GridItem>
-      </Grid>
-    </LessonLayout>
+    <Grid templateColumns="repeat(12, 1fr)" gap={{ md: '20px' }}>
+      <GridItem colSpan={5}>
+        <SublessonInstructions
+          sublesson={currentSublesson}
+          totalSublessons={totalSublessons}
+          lastChallengeIndexOfPreviousSublesson={
+            lastChallengeIndexOfPreviousSublesson
+          }
+        />
+      </GridItem>
+      <GridItem colSpan={7} mt="10px">
+        <Editor />
+      </GridItem>
+    </Grid>
   );
 };
 
 export const LessonPageContainer = () => {
+  const [lesson, setLesson] = useState<LessonType>(null);
   const { slug } = useParams<IRouteParams>();
-  const { data, loading, error } = useGetLessonDataQuery({
+  useGetLessonDataQuery({
     variables: {
       slug,
     },
+    onCompleted: (data) => {
+      const lessonData = data?.lessons?.[0];
+      /**
+       * It's important that the lesson completion data is reset
+       * before the lesson value is provided. This is to avoid race
+       * conditions.
+       */
+      lessonData && resetLesson(lessonData);
+      setLesson(lessonData);
+    },
   });
 
-  console.log('data', data, slug);
+  const sublessons = lesson?.sublessons;
 
-  const lesson = data?.lessons?.[0];
-
-  if (!lesson) {
-    return <span>Lesson not found</span>;
-  }
-
-  return <LessonPage lesson={lesson} />;
+  return (
+    <Flex {...layoutStyles} overflow="hidden">
+      <Box pl="2px" mr={{ md: '20px', lg: '30px', xl: '40px' }}>
+        <Navbar />
+        {lesson && <LessonPage lesson={lesson} />}
+      </Box>
+      {sublessons && <LessonSidebar sublessons={sublessons} />}
+    </Flex>
+  );
 };

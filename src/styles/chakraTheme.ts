@@ -21,4 +21,11 @@ export default extendTheme({
     body: 'Roboto',
     heading: 'Roboto',
   },
+  styles: {
+    global: {
+      body: {
+        overflow: 'hidden',
+      },
+    },
+  },
 });

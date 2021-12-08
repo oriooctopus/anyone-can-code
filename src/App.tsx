@@ -1,9 +1,8 @@
-import { Home } from 'pages/Home';
-import { PageNotFound } from 'pages/PageNotFound';
 import { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Home } from 'src/pages/Home';
 import { LessonPageContainer } from 'src/pages/Lesson/Lesson';
-import { Layout } from 'components/Layout/Layout';
+import { PageNotFound } from 'src/pages/PageNotFound';
 import { SidebarOverlay } from 'components/SidebarOverlays/SidebarOverlay';
 import { TSidebarOverlayState } from 'components/SidebarOverlays/SidebarOverlayContext';
 import { SidebarOverlayContext } from 'components/SidebarOverlays/SidebarOverlayContext';

@@ -1,32 +1,66 @@
 import { useReactiveVar } from '@apollo/client';
 import { useRef } from 'react';
-import { codeEditorValueVar, testResultsVar } from 'src/cache';
 import { runTests } from 'src/codeRunning/codeRunning';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
+import { failChallenge, passChallenge } from 'src/state/challenge/challenge';
+import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
+import { testResultsVar } from 'src/state/challenge/codeChallenge/codeChallenge.reactiveVariables';
+import { lessonCompletionDataVar } from 'src/state/lessonCompletion/lessonCompletion.reactiveVariables';
+import { lessonCompletionDataType } from 'src/state/lessonCompletion/lessonCompletion.types';
+import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { CodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.types';
 
-export const getCodeChallengeStartingCode = (
-  challenge: CodeChallengeDataFragment,
-) => {
-  const { challengeMeta, startingCode } = challenge;
+type TGetLearningStepCompletionData = {
+  challengeIndex?: number;
+  sublessonIndex?: number;
+  lessonCompletionData?: lessonCompletionDataType;
+};
 
-  if (!challenge) {
-    return '';
+export const getLearningStepCompletionData = ({
+  challengeIndex = currentChallengeIndexVar(),
+  sublessonIndex = currentSublessonIndexVar(),
+  lessonCompletionData = lessonCompletionDataVar(),
+}: TGetLearningStepCompletionData) => {
+  const { challenges, introduction } =
+    lessonCompletionData[sublessonIndex] || {};
+
+  if (challengeIndex === -1) {
+    return introduction;
   }
 
-  if (startingCode) {
-    return startingCode;
-  } else if (challengeMeta?.difficulty === 'hard') {
-    return 'This is a hard challenge. Expect to struggle. TODO: Add more text to this and improve the message';
+  return challenges?.[challengeIndex];
+};
+
+export const getStoredCodeFromLastChallengeData = () => {
+  const challengeIndex = currentChallengeIndexVar();
+
+  if (challengeIndex === 0) {
+    throw new Error(
+      'Attempted to get stored code from previous challenge, but this is the first challenge.',
+    );
   }
 
-  return '';
+  return getLearningStepCompletionData({
+    challengeIndex: challengeIndex - 1,
+  })?.code;
+};
+
+export const useGetLearningStepCompletionData = () => {
+  const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
+  const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
+  const lessonCompletionData = useReactiveVar(lessonCompletionDataVar);
+
+  return getLearningStepCompletionData({
+    challengeIndex: currentChallengeIndex,
+    sublessonIndex: currentSublessonIndex,
+    lessonCompletionData,
+  });
 };
 
 // need to properly type test results once things get solidified
 export const hasPassedCodeChallenge = (
   tests: CodeChallengeTests,
-  testResults: any[],
+  testResults: unknown[],
 ) =>
   !tests ||
   tests.length === 0 ||
@@ -34,7 +68,7 @@ export const hasPassedCodeChallenge = (
   (testResults.length !== 0 && testResults.every(({ pass }) => pass));
 
 export const useCodeChallengeTests = (tests: CodeChallengeTests) => {
-  const codeEditorValue = useReactiveVar(codeEditorValueVar);
+  const { code: codeEditorValue } = useGetLearningStepCompletionData();
   const testResultsValue = useReactiveVar(testResultsVar);
 
   /*
@@ -46,8 +80,9 @@ export const useCodeChallengeTests = (tests: CodeChallengeTests) => {
   // TODO: extract runTests property to a function for easier testing
   const handleRunTests = async () => {
     const results = await runTests(codeEditorValueRef.current, tests);
-    console.log('results', results);
     testResultsVar(results);
+
+    hasPassedCodeChallenge(tests, results) ? passChallenge() : failChallenge();
   };
 
   return {

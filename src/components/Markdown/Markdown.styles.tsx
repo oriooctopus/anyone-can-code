@@ -8,11 +8,11 @@ interface InlineCodeProps {
   className?: string;
 }
 
-export const InlineCode: React.FC<InlineCodeProps> = ({
+export const InlineCode = ({
   children,
   className,
   ...props
-}) => (
+}: InlineCodeProps) => (
   <code
     style={{
       border: '1.6px solid rgba(0,0,0,.1)',
@@ -33,11 +33,11 @@ export interface MultiLineCodeProps {
   theme: React.CSSProperties;
 }
 
-export const MultiLineCodeBlock: React.FC<MultiLineCodeProps> = ({
+export const MultiLineCodeBlock = ({
   customStyle = {},
   theme,
   ...props
-}) => (
+}: MultiLineCodeProps) => (
   <SyntaxHighlighter
     language={'js'}
     PreTag="div"
@@ -47,6 +47,7 @@ export const MultiLineCodeBlock: React.FC<MultiLineCodeProps> = ({
       ...customStyle,
     }}
     style={theme}
+    wrapLongLines={true}
     {...props}
   />
 );
@@ -63,7 +64,7 @@ export const StyledMarkdown = chakra(ReactMarkdown, {
       listStyle: 'inside',
       listStyleType: "'- '",
     },
-    '> *': {
+    '> *:not(:last-child)': {
       marginBottom: rem(10),
     },
     ' code': {

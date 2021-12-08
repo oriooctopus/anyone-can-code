@@ -1,12 +1,11 @@
-import { Box, Grid } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { layoutStyles } from 'components/Layout/Layout.styles';
-import Navbar from 'components/Navbar/Navbar';
+import { Navbar } from 'components/Navbar/Navbar';
 
 type LayoutProps = {
   children: React.ReactNode;
 };
-
 // This file needs to be more thought through.
 
 export const Layout = ({ children }: LayoutProps) => (
@@ -27,17 +26,11 @@ export const LessonLayout = ({
   children,
   lessonSidebar,
 }: LessonLayoutProps) => (
-  <Box {...layoutStyles}>
-    <Grid
-      templateColumns="11fr 1fr"
-      gap={{ md: '20px', lg: '30px', xl: '40px' }}
-      h="100%"
-    >
-      <Box pl="2px">
-        <Navbar />
-        {children}
-      </Box>
-      {lessonSidebar}
-    </Grid>
-  </Box>
+  <Flex {...layoutStyles}>
+    <Box pl="2px" mr={{ md: '20px', lg: '30px', xl: '40px' }}>
+      <Navbar />
+      {children}
+    </Box>
+    {lessonSidebar}
+  </Flex>
 );

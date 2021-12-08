@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Box, BoxProps } from '@chakra-ui/layout';
 import { FlLink } from 'components/Link/FlLink';
 import {
@@ -9,7 +10,7 @@ import {
 import { stripNewlines } from 'components/Markdown/Markdown.utils';
 
 export interface MarkdownProps {
-  children: React.ReactNode;
+  children: string;
   codeTheme?: any;
   containerOverrides?: BoxProps;
   // TODO: There must be an actual type made for this. Find that instead of recreating it
@@ -31,6 +32,10 @@ const Markdown = ({
       children={markdownChildren}
       cssOverrides={markdownCSSOverrides}
       components={{
+        img({ src, ...props }) {
+          // TODO: Make this more dynamic once you migrate to v4 of strapi
+          return <img src={`http://localhost:1337${src}`} {...props} />;
+        },
         code({ node, inline, children, ...props }) {
           return inline && !forceMultiLine ? (
             <InlineCode {...props}>{children}</InlineCode>

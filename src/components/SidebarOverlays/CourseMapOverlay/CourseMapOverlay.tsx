@@ -1,4 +1,4 @@
-import { Box, Heading, Text } from '@chakra-ui/react';
+import { Box, Heading } from '@chakra-ui/react';
 import { useGetCourseMapOverlayDataQuery } from 'src/generated/graphql';
 import { CourseMapOverlayLesson } from 'components/SidebarOverlays/CourseMapOverlay/CourseMapOverlay.styles';
 import { SidebarOverlayBase } from 'components/SidebarOverlays/SidebarOverlayBase/SidebarOverlayBase';
@@ -22,7 +22,7 @@ export const CourseMapOverlay = () => {
         (moduleData) =>
           moduleData && (
             <Box key={moduleData.name}>
-              <Heading size="md" p={4}>
+              <Heading fontSize="26px" p={4}>
                 {moduleData.name}
               </Heading>
               {moduleData.lessons &&

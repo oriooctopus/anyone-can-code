@@ -1,18 +1,18 @@
 import { useReactiveVar } from '@apollo/client';
-import { Button } from '@chakra-ui/button';
-import { Box, Divider, Flex,Text } from '@chakra-ui/layout';
+import { Box, Divider, Flex, Text } from '@chakra-ui/layout';
 import { Heading, VStack, HStack } from '@chakra-ui/react';
-import Reset from 'src/assets/Reset.svg';
 import { useEffect } from 'react';
-import { codeEditorValueVar, testResultsVar } from 'src/cache';
+import Reset from 'src/assets/Reset.svg';
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
+import { getCodeChallengeStartingCode } from 'src/state/challenge/codeChallenge/codeChallenge';
+import { testResultsVar } from 'src/state/challenge/codeChallenge/codeChallenge.reactiveVariables';
+import { updateCurrentEditorValue } from 'src/state/lessonCompletion/lessonCompletion';
 import { ChallengeHints } from 'components/ChallengeHints/ChallengeHints';
 import {
   ChallengeButton,
   ChallengeMarkdown,
 } from 'components/Challenges/Challenge.styles';
 import {
-  getCodeChallengeStartingCode,
   hasPassedCodeChallenge,
   useCodeChallengeTests,
 } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
@@ -20,17 +20,22 @@ import TestCaseResult from 'components/TestCaseResult/TestCaseResult';
 
 export type CodeChallengeProps = {
   challenge: CodeChallengeDataFragment;
+  nextButtonText: string;
   onClickNext: () => void;
 };
 
 export const CodeChallenge = ({
   challenge,
+  nextButtonText,
   onClickNext,
 }: CodeChallengeProps) => {
   const { id, hints, tests, prompt } = challenge;
   const { runTests } = useCodeChallengeTests(tests);
-  const resetChallenge = () => {
-    codeEditorValueVar(getCodeChallengeStartingCode(challenge));
+  // I now need to differentiate two functions. Reset challenge which is truly to reset it, and another function to get the when a challenge loads.
+  const resetChallenge = (ignoreCurrentChallengeStoredCode?: boolean) => {
+    updateCurrentEditorValue(
+      getCodeChallengeStartingCode(challenge, ignoreCurrentChallengeStoredCode),
+    );
     testResultsVar([]);
   };
   const testResultsValue = useReactiveVar(testResultsVar);
@@ -53,7 +58,7 @@ export const CodeChallenge = ({
       <Flex spacing={6} mt="auto">
         {canProceed ? (
           <ChallengeButton colorScheme="green" onClick={onClickNext} mr="20px">
-            Next
+            {nextButtonText}
           </ChallengeButton>
         ) : (
           <ChallengeButton colorScheme="green" onClick={runTests} mr="20px">
@@ -63,7 +68,7 @@ export const CodeChallenge = ({
 
         <ChallengeButton
           colorScheme="red"
-          onClick={resetChallenge}
+          onClick={() => resetChallenge(true)}
           variant="ghost"
         >
           <HStack spacing="5px">
@@ -80,7 +85,7 @@ interface ITestsProps {
   tests: CodeChallengeProps['challenge']['tests'];
 }
 
-const Tests: React.FC<ITestsProps> = ({ tests }) => {
+const Tests = ({ tests }: ITestsProps) => {
   const { testResults } = useCodeChallengeTests(tests);
 
   return (

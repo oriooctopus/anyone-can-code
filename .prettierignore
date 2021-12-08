@@ -1,3 +1,4 @@
 .next
 public
 src/generated
+graphql.schema.json

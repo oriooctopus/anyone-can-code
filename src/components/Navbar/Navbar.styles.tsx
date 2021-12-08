@@ -1,6 +1,5 @@
 import { FlLink, IFlLinkProps } from '../Link/FlLink';
-import React from 'react';
 
-export const NavbarLink: React.FC<IFlLinkProps> = (props) => (
+export const NavbarLink = (props: IFlLinkProps) => (
   <FlLink color="white" {...props} />
 );

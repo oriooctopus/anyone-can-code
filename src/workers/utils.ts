@@ -1,22 +1,26 @@
 import { removeJSComments } from '../utils/curriculum-helpers';
 
-type consoleLogOverride = (data: any[]) => void;
+type consoleLogOverride = (data: unknown[]) => void;
 
 export const overrideConsoleLog = (override: consoleLogOverride) => {
+  // @ts-expect-error will fix later
   console.standardLog = console.log;
-  console.log = (...data: any[]) => {
+  console.log = (...data: unknown[]) => {
     override(data);
-    console.standardLog.apply(console, data);
+    // @ts-expect-error will fix later
+    console.standardLog.apply(console, data); // eslint-disable-line prefer-spread
   };
 };
 
 export const restoreConsoleLog = () => {
+  // @ts-expect-error will fix later
   if (!console.standardLog) {
     throw new Error(
       'Attempted to restore console.log but it has never been overwritten',
     );
   }
 
+  // @ts-expect-error will fix later
   console.log = console.standardLog;
 };
 
@@ -58,6 +62,7 @@ export const getConsoleLogsFromCodeEvaluation = (
 
   overrideConsoleLog((...args) => {
     logs.push(args.toString());
+    // @ts-expect-error will fix later
     console.standardLog('args', ...args);
   });
   try {

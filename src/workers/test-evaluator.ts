@@ -30,14 +30,15 @@ export const runTestEvaluator = async ({
 
   overrideConsoleLog((args) => {
     logs.push(args);
+    // @ts-expect-error will fix later
     console.standardLog('args', ...args);
   });
 
   try {
+    // @ts-expect-error will fix later
     const context = getEvaluationContext(formattedCode, logs);
     const result = evaluateWithContext(
       `${formattedCode};
-      debugger;
       ${internalTest};`,
       context,
     );
