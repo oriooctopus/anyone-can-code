@@ -11,7 +11,7 @@ import { IProgressStepperStep } from 'components/ProgressStepper/ProgressStepper
 
 const isSublessonComplete = (sublessonCompletion: ISublessonCompletionData) => {
   return (
-    sublessonCompletion.introductionCompleted &&
+    sublessonCompletion.introduction.completed &&
     sublessonCompletion.challenges?.every(({ completed }) => completed)
   );
 };
@@ -48,7 +48,7 @@ const useGetLessonCompletionProgressStates = () => {
   const currentSublessonIntroductionCompletion =
     currentChallengeIndex === -1
       ? ProgressStateEnum.CURRENT
-      : lessonCompletionData?.[currentSublessonIndex].introductionCompleted
+      : lessonCompletionData?.[currentSublessonIndex].introduction.completed
       ? ProgressStateEnum.COMPLETE
       : ProgressStateEnum.INCOMPLETE;
   const currentSublessonCompletion = {

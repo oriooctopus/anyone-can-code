@@ -32,6 +32,10 @@ const Markdown = ({
       children={markdownChildren}
       cssOverrides={markdownCSSOverrides}
       components={{
+        img({ src, ...props }) {
+          // TODO: Make this more dynamic once you migrate to v4 of strapi
+          return <img src={`http://localhost:1337${src}`} {...props} />;
+        },
         code({ node, inline, children, ...props }) {
           return inline && !forceMultiLine ? (
             <InlineCode {...props}>{children}</InlineCode>

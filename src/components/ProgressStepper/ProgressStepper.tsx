@@ -18,19 +18,19 @@ export interface IProgressStepperStep {
 }
 
 interface IProgressStepperProps {
-  showHoverActions: boolean;
+  // showHoverActions: boolean;
   title: string;
   steps: Array<IProgressStepperStep>;
 }
 
 export const ProgressStepper = ({
-  showHoverActions,
+  // showHoverActions,
   steps,
   title,
 }: IProgressStepperProps) => (
   <Box p="5px">
     <Flex align="center" justify="center" mb={rem(10)}>
-      {showHoverActions && (
+      {/* {showHoverActions && (
         <Box w={0}>
           <Menu
             color="white"
@@ -39,7 +39,7 @@ export const ProgressStepper = ({
             marginTop="-1px"
           />
         </Box>
-      )}
+      )} */}
       <Text>{title}</Text>
     </Flex>
     <HStack justify="center" spacing="3px">

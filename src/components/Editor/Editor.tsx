@@ -7,7 +7,7 @@ import { currentLogVar } from 'src/state/editor/editor.reactiveVariables';
 import { updateCurrentEditorValue } from 'src/state/lessonCompletion/lessonCompletion';
 import { useDebounced } from 'src/utils/hooks/useDebounced';
 import { getConsoleLogsFromCodeEvaluation } from 'src/workers/utils';
-import { useGetChallengeCompletionData } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
+import { useGetLearningStepCompletionData } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
 import {
   DEFAULT_MONACO_EDITOR_THEME,
   defineDefaultMonacoTheme,
@@ -16,7 +16,7 @@ import editorOptions from 'components/Editor/editor-options';
 
 export const Editor = () => {
   const currentLog = useReactiveVar(currentLogVar);
-  const { code, startingCode } = useGetChallengeCompletionData() || {};
+  const { code, startingCode } = useGetLearningStepCompletionData() || {};
   const codeEditorValue = code === undefined ? startingCode : code;
 
   const onChangeEditorValue = (newValue: string | undefined) => {

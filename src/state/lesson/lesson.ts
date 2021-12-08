@@ -32,7 +32,7 @@ export const resetLesson = (lesson: LessonType) => {
             startingCode,
           };
         }),
-        introductionCompleted: false,
+        introduction: {},
       };
     });
 

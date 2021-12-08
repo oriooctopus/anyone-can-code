@@ -4,7 +4,7 @@ import {
 } from 'src/state/challenge/challenge.reactiveVariables';
 import { ChallengeAttemptStatusEnum } from 'src/state/challenge/challenge.types';
 import { resetTestResults } from 'src/state/challenge/codeChallenge/codeChallenge';
-import { updateChallengeCompletionData } from 'src/state/lessonCompletion/lessonCompletion';
+import { updateLearningStepCompletionData } from 'src/state/lessonCompletion/lessonCompletion';
 
 export const setChallengeIndex = (challengeIndex: number) => {
   currentChallengeIndexVar(challengeIndex);
@@ -18,7 +18,7 @@ export const setChallengeIndex = (challengeIndex: number) => {
  */
 export const passChallenge = () => {
   challengeAttemptStatusVar(ChallengeAttemptStatusEnum.passed);
-  updateChallengeCompletionData({
+  updateLearningStepCompletionData({
     completed: {
       $set: true,
     },

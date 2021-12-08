@@ -1,7 +1,7 @@
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
 import { getCodeChallengeStartingCode } from 'src/state/challenge/codeChallenge/codeChallenge';
 import { testResultsVar } from 'src/state/challenge/codeChallenge/codeChallenge.reactiveVariables';
-import { updateChallengeCompletionData } from 'src/state/lessonCompletion/lessonCompletion';
+import { updateLearningStepCompletionData } from 'src/state/lessonCompletion/lessonCompletion';
 import { getSublessonStartingCode } from 'src/state/sublesson/sublesson.utils';
 
 interface IResetCodeProps {
@@ -19,7 +19,7 @@ export const resetCode = ({ challenge }: IResetCodeProps) => {
 };
 
 export const setCurrentEditorValue = (code: string) => {
-  updateChallengeCompletionData({
+  updateLearningStepCompletionData({
     code: {
       $set: code,
     },

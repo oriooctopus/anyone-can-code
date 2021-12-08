@@ -1,7 +1,7 @@
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
 import { testResultsVar } from 'src/state/challenge/codeChallenge/codeChallenge.reactiveVariables';
 import {
-  getChallengeCompletionData,
+  getLearningStepCompletionData,
   getStoredCodeFromLastChallengeData,
 } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
 
@@ -15,7 +15,7 @@ export const getCodeChallengeStartingCode = (
 ) => {
   const { challengeMeta, startingCode, getStartingCodeFromPreviousChallenge } =
     challenge;
-  const storedCode = getChallengeCompletionData({})?.code;
+  const storedCode = getLearningStepCompletionData({})?.code;
   const previousChallengeStoredCode =
     getStartingCodeFromPreviousChallenge &&
     getStoredCodeFromLastChallengeData();

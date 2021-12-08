@@ -448,6 +448,7 @@ export type Lesson = {
   published_at: Maybe<Scalars['DateTime']>;
   slug: Scalars['String'];
   sublessons: Maybe<Array<Maybe<Sublesson>>>;
+  syntaxEntry: Maybe<SyntaxEntry>;
   updated_at: Scalars['DateTime'];
 };
 
@@ -602,6 +603,12 @@ export type LessonConnectionSlug = {
   key: Maybe<Scalars['String']>;
 };
 
+export type LessonConnectionSyntaxEntry = {
+  __typename?: 'LessonConnectionSyntaxEntry';
+  connection: Maybe<LessonConnection>;
+  key: Maybe<Scalars['ID']>;
+};
+
 export type LessonConnectionUpdated_At = {
   __typename?: 'LessonConnectionUpdated_at';
   connection: Maybe<LessonConnection>;
@@ -619,6 +626,7 @@ export type LessonGroupBy = {
   name: Maybe<Array<Maybe<LessonConnectionName>>>;
   published_at: Maybe<Array<Maybe<LessonConnectionPublished_At>>>;
   slug: Maybe<Array<Maybe<LessonConnectionSlug>>>;
+  syntaxEntry: Maybe<Array<Maybe<LessonConnectionSyntaxEntry>>>;
   updated_at: Maybe<Array<Maybe<LessonConnectionUpdated_At>>>;
 };
 
@@ -633,6 +641,7 @@ export type LessonInput = {
   published_at: Maybe<Scalars['DateTime']>;
   slug: Scalars['String'];
   sublessons: Maybe<Array<Maybe<Scalars['ID']>>>;
+  syntaxEntry: Maybe<Scalars['ID']>;
   updated_by: Maybe<Scalars['ID']>;
 };
 
@@ -740,7 +749,7 @@ export type ModulesGroupBy = {
   updated_at: Maybe<Array<Maybe<ModulesConnectionUpdated_At>>>;
 };
 
-export type Morph = CodeChallenge | CodeChallengeAggregator | CodeChallengeConnection | CodeChallengeConnectionChallengeMeta | CodeChallengeConnectionCreated_At | CodeChallengeConnectionGetStartingCodeFromPreviousChallenge | CodeChallengeConnectionId | CodeChallengeConnectionLocale | CodeChallengeConnectionPrompt | CodeChallengeConnectionPublished_At | CodeChallengeConnectionStartingCode | CodeChallengeConnectionUpdated_At | CodeChallengeGroupBy | ComponentChallengeChallenge | ComponentChallengeHint | ComponentCodeChallengeHint | ComponentCodeChallengeTests | ComponentModuleModuleLesson | ComponentModuleModuleRows | ComponentMultipleChoiceChallengeOptions | ComponentSublessonSublessonDescriptions | ComponentSublessonchallengeChallenge | Course | CourseAggregator | CourseConnection | CourseConnectionCreated_At | CourseConnectionId | CourseConnectionLocale | CourseConnectionName | CourseConnectionPublished_At | CourseConnectionSlug | CourseConnectionUpdated_At | CourseGroupBy | I18NLocale | Lesson | LessonAggregator | LessonCompletion | LessonCompletionAggregator | LessonCompletionConnection | LessonCompletionConnectionConfidence | LessonCompletionConnectionCreated_At | LessonCompletionConnectionId | LessonCompletionConnectionPublished_At | LessonCompletionConnectionUpdated_At | LessonCompletionGroupBy | LessonConnection | LessonConnectionCreated_At | LessonConnectionId | LessonConnectionInternalNotes | LessonConnectionIsHard | LessonConnectionLocale | LessonConnectionModule | LessonConnectionName | LessonConnectionPublished_At | LessonConnectionSlug | LessonConnectionUpdated_At | LessonGroupBy | Modules | ModulesAggregator | ModulesConnection | ModulesConnectionCreated_At | ModulesConnectionId | ModulesConnectionLocale | ModulesConnectionName | ModulesConnectionPublished_At | ModulesConnectionUpdated_At | ModulesGroupBy | MultipleChoiceChallenge | MultipleChoiceChallengeAggregator | MultipleChoiceChallengeConnection | MultipleChoiceChallengeConnectionCanSelectMultipleOptions | MultipleChoiceChallengeConnectionChallengeMeta | MultipleChoiceChallengeConnectionCreated_At | MultipleChoiceChallengeConnectionId | MultipleChoiceChallengeConnectionPrompt | MultipleChoiceChallengeConnectionPublished_At | MultipleChoiceChallengeConnectionUpdated_At | MultipleChoiceChallengeConnectionUseMarkdownForOptionsText | MultipleChoiceChallengeGroupBy | Sublesson | SublessonAggregator | SublessonConnection | SublessonConnectionCreated_At | SublessonConnectionDescriptions | SublessonConnectionId | SublessonConnectionLesson | SublessonConnectionMinimizeEditor | SublessonConnectionName | SublessonConnectionPublished_At | SublessonConnectionSyntaxEntry | SublessonConnectionUpdated_At | SublessonGroupBy | SyntaxEntry | SyntaxEntryAggregator | SyntaxEntryConnection | SyntaxEntryConnectionCreated_At | SyntaxEntryConnectionEntry | SyntaxEntryConnectionId | SyntaxEntryConnectionPublished_At | SyntaxEntryConnectionSublesson | SyntaxEntryConnectionUpdated_At | SyntaxEntryGroupBy | UploadFile | UploadFileAggregator | UploadFileAggregatorAvg | UploadFileAggregatorMax | UploadFileAggregatorMin | UploadFileAggregatorSum | UploadFileConnection | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionCreated_At | UploadFileConnectionExt | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionHeight | UploadFileConnectionId | UploadFileConnectionMime | UploadFileConnectionName | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | UploadFileConnectionSize | UploadFileConnectionUpdated_At | UploadFileConnectionUrl | UploadFileConnectionWidth | UploadFileGroupBy | UserPermissionsPasswordPayload | UsersPermissionsLoginPayload | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleAggregator | UsersPermissionsRoleConnection | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionType | UsersPermissionsRoleGroupBy | UsersPermissionsUser | UsersPermissionsUserAggregator | UsersPermissionsUserConnection | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserGroupBy | CreateCodeChallengePayload | CreateCoursePayload | CreateLessonCompletionPayload | CreateLessonPayload | CreateModulePayload | CreateMultipleChoiceChallengePayload | CreateRolePayload | CreateSublessonPayload | CreateSyntaxEntryPayload | CreateUserPayload | DeleteCodeChallengePayload | DeleteCoursePayload | DeleteFilePayload | DeleteLessonCompletionPayload | DeleteLessonPayload | DeleteModulePayload | DeleteMultipleChoiceChallengePayload | DeleteRolePayload | DeleteSublessonPayload | DeleteSyntaxEntryPayload | DeleteUserPayload | UpdateCodeChallengePayload | UpdateCoursePayload | UpdateLessonCompletionPayload | UpdateLessonPayload | UpdateModulePayload | UpdateMultipleChoiceChallengePayload | UpdateRolePayload | UpdateSublessonPayload | UpdateSyntaxEntryPayload | UpdateUserPayload;
+export type Morph = CodeChallenge | CodeChallengeAggregator | CodeChallengeConnection | CodeChallengeConnectionChallengeMeta | CodeChallengeConnectionCreated_At | CodeChallengeConnectionGetStartingCodeFromPreviousChallenge | CodeChallengeConnectionId | CodeChallengeConnectionLocale | CodeChallengeConnectionPrompt | CodeChallengeConnectionPublished_At | CodeChallengeConnectionStartingCode | CodeChallengeConnectionUpdated_At | CodeChallengeGroupBy | ComponentChallengeChallenge | ComponentChallengeHint | ComponentCodeChallengeHint | ComponentCodeChallengeTests | ComponentModuleModuleLesson | ComponentModuleModuleRows | ComponentMultipleChoiceChallengeOptions | ComponentSublessonSublessonDescriptions | ComponentSublessonchallengeChallenge | Course | CourseAggregator | CourseConnection | CourseConnectionCreated_At | CourseConnectionId | CourseConnectionLocale | CourseConnectionName | CourseConnectionPublished_At | CourseConnectionSlug | CourseConnectionUpdated_At | CourseGroupBy | I18NLocale | Lesson | LessonAggregator | LessonCompletion | LessonCompletionAggregator | LessonCompletionConnection | LessonCompletionConnectionConfidence | LessonCompletionConnectionCreated_At | LessonCompletionConnectionId | LessonCompletionConnectionPublished_At | LessonCompletionConnectionUpdated_At | LessonCompletionGroupBy | LessonConnection | LessonConnectionCreated_At | LessonConnectionId | LessonConnectionInternalNotes | LessonConnectionIsHard | LessonConnectionLocale | LessonConnectionModule | LessonConnectionName | LessonConnectionPublished_At | LessonConnectionSlug | LessonConnectionSyntaxEntry | LessonConnectionUpdated_At | LessonGroupBy | Modules | ModulesAggregator | ModulesConnection | ModulesConnectionCreated_At | ModulesConnectionId | ModulesConnectionLocale | ModulesConnectionName | ModulesConnectionPublished_At | ModulesConnectionUpdated_At | ModulesGroupBy | MultipleChoiceChallenge | MultipleChoiceChallengeAggregator | MultipleChoiceChallengeConnection | MultipleChoiceChallengeConnectionCanSelectMultipleOptions | MultipleChoiceChallengeConnectionChallengeMeta | MultipleChoiceChallengeConnectionCreated_At | MultipleChoiceChallengeConnectionId | MultipleChoiceChallengeConnectionPrompt | MultipleChoiceChallengeConnectionPublished_At | MultipleChoiceChallengeConnectionUpdated_At | MultipleChoiceChallengeConnectionUseMarkdownForOptionsText | MultipleChoiceChallengeGroupBy | Sublesson | SublessonAggregator | SublessonConnection | SublessonConnectionCreated_At | SublessonConnectionDescriptions | SublessonConnectionId | SublessonConnectionLesson | SublessonConnectionMinimizeEditor | SublessonConnectionName | SublessonConnectionPublished_At | SublessonConnectionSyntaxEntry | SublessonConnectionUpdated_At | SublessonGroupBy | SyntaxEntry | SyntaxEntryAggregator | SyntaxEntryAggregatorAvg | SyntaxEntryAggregatorMax | SyntaxEntryAggregatorMin | SyntaxEntryAggregatorSum | SyntaxEntryConnection | SyntaxEntryConnectionContent | SyntaxEntryConnectionCreated_At | SyntaxEntryConnectionId | SyntaxEntryConnectionLesson | SyntaxEntryConnectionMaxWidth | SyntaxEntryConnectionName | SyntaxEntryConnectionPublished_At | SyntaxEntryConnectionSublesson | SyntaxEntryConnectionUpdated_At | SyntaxEntryGroupBy | UploadFile | UploadFileAggregator | UploadFileAggregatorAvg | UploadFileAggregatorMax | UploadFileAggregatorMin | UploadFileAggregatorSum | UploadFileConnection | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionCreated_At | UploadFileConnectionExt | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionHeight | UploadFileConnectionId | UploadFileConnectionMime | UploadFileConnectionName | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | UploadFileConnectionSize | UploadFileConnectionUpdated_At | UploadFileConnectionUrl | UploadFileConnectionWidth | UploadFileGroupBy | UserPermissionsPasswordPayload | UsersPermissionsLoginPayload | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleAggregator | UsersPermissionsRoleConnection | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionType | UsersPermissionsRoleGroupBy | UsersPermissionsUser | UsersPermissionsUserAggregator | UsersPermissionsUserConnection | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserGroupBy | CreateCodeChallengePayload | CreateCoursePayload | CreateLessonCompletionPayload | CreateLessonPayload | CreateModulePayload | CreateMultipleChoiceChallengePayload | CreateRolePayload | CreateSublessonPayload | CreateSyntaxEntryPayload | CreateUserPayload | DeleteCodeChallengePayload | DeleteCoursePayload | DeleteFilePayload | DeleteLessonCompletionPayload | DeleteLessonPayload | DeleteModulePayload | DeleteMultipleChoiceChallengePayload | DeleteRolePayload | DeleteSublessonPayload | DeleteSyntaxEntryPayload | DeleteUserPayload | UpdateCodeChallengePayload | UpdateCoursePayload | UpdateLessonCompletionPayload | UpdateLessonPayload | UpdateModulePayload | UpdateMultipleChoiceChallengePayload | UpdateRolePayload | UpdateSublessonPayload | UpdateSyntaxEntryPayload | UpdateUserPayload;
 
 export type MultipleChoiceChallenge = {
   __typename?: 'MultipleChoiceChallenge';
@@ -1552,9 +1561,12 @@ export type SublessonInput = {
 
 export type SyntaxEntry = {
   __typename?: 'SyntaxEntry';
-  Entry: Scalars['String'];
+  content: Scalars['String'];
   created_at: Scalars['DateTime'];
   id: Scalars['ID'];
+  lesson: Maybe<Lesson>;
+  maxWidth: Maybe<Scalars['Int']>;
+  name: Scalars['String'];
   published_at: Maybe<Scalars['DateTime']>;
   sublesson: Maybe<Sublesson>;
   updated_at: Scalars['DateTime'];
@@ -1562,8 +1574,32 @@ export type SyntaxEntry = {
 
 export type SyntaxEntryAggregator = {
   __typename?: 'SyntaxEntryAggregator';
+  avg: Maybe<SyntaxEntryAggregatorAvg>;
   count: Maybe<Scalars['Int']>;
+  max: Maybe<SyntaxEntryAggregatorMax>;
+  min: Maybe<SyntaxEntryAggregatorMin>;
+  sum: Maybe<SyntaxEntryAggregatorSum>;
   totalCount: Maybe<Scalars['Int']>;
+};
+
+export type SyntaxEntryAggregatorAvg = {
+  __typename?: 'SyntaxEntryAggregatorAvg';
+  maxWidth: Maybe<Scalars['Float']>;
+};
+
+export type SyntaxEntryAggregatorMax = {
+  __typename?: 'SyntaxEntryAggregatorMax';
+  maxWidth: Maybe<Scalars['Float']>;
+};
+
+export type SyntaxEntryAggregatorMin = {
+  __typename?: 'SyntaxEntryAggregatorMin';
+  maxWidth: Maybe<Scalars['Float']>;
+};
+
+export type SyntaxEntryAggregatorSum = {
+  __typename?: 'SyntaxEntryAggregatorSum';
+  maxWidth: Maybe<Scalars['Float']>;
 };
 
 export type SyntaxEntryConnection = {
@@ -1573,22 +1609,40 @@ export type SyntaxEntryConnection = {
   values: Maybe<Array<Maybe<SyntaxEntry>>>;
 };
 
+export type SyntaxEntryConnectionContent = {
+  __typename?: 'SyntaxEntryConnectionContent';
+  connection: Maybe<SyntaxEntryConnection>;
+  key: Maybe<Scalars['String']>;
+};
+
 export type SyntaxEntryConnectionCreated_At = {
   __typename?: 'SyntaxEntryConnectionCreated_at';
   connection: Maybe<SyntaxEntryConnection>;
   key: Maybe<Scalars['DateTime']>;
 };
 
-export type SyntaxEntryConnectionEntry = {
-  __typename?: 'SyntaxEntryConnectionEntry';
-  connection: Maybe<SyntaxEntryConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
 export type SyntaxEntryConnectionId = {
   __typename?: 'SyntaxEntryConnectionId';
   connection: Maybe<SyntaxEntryConnection>;
   key: Maybe<Scalars['ID']>;
+};
+
+export type SyntaxEntryConnectionLesson = {
+  __typename?: 'SyntaxEntryConnectionLesson';
+  connection: Maybe<SyntaxEntryConnection>;
+  key: Maybe<Scalars['ID']>;
+};
+
+export type SyntaxEntryConnectionMaxWidth = {
+  __typename?: 'SyntaxEntryConnectionMaxWidth';
+  connection: Maybe<SyntaxEntryConnection>;
+  key: Maybe<Scalars['Int']>;
+};
+
+export type SyntaxEntryConnectionName = {
+  __typename?: 'SyntaxEntryConnectionName';
+  connection: Maybe<SyntaxEntryConnection>;
+  key: Maybe<Scalars['String']>;
 };
 
 export type SyntaxEntryConnectionPublished_At = {
@@ -1611,18 +1665,24 @@ export type SyntaxEntryConnectionUpdated_At = {
 
 export type SyntaxEntryGroupBy = {
   __typename?: 'SyntaxEntryGroupBy';
-  Entry: Maybe<Array<Maybe<SyntaxEntryConnectionEntry>>>;
+  content: Maybe<Array<Maybe<SyntaxEntryConnectionContent>>>;
   created_at: Maybe<Array<Maybe<SyntaxEntryConnectionCreated_At>>>;
   id: Maybe<Array<Maybe<SyntaxEntryConnectionId>>>;
+  lesson: Maybe<Array<Maybe<SyntaxEntryConnectionLesson>>>;
+  maxWidth: Maybe<Array<Maybe<SyntaxEntryConnectionMaxWidth>>>;
+  name: Maybe<Array<Maybe<SyntaxEntryConnectionName>>>;
   published_at: Maybe<Array<Maybe<SyntaxEntryConnectionPublished_At>>>;
   sublesson: Maybe<Array<Maybe<SyntaxEntryConnectionSublesson>>>;
   updated_at: Maybe<Array<Maybe<SyntaxEntryConnectionUpdated_At>>>;
 };
 
 export type SyntaxEntryInput = {
-  Entry: Scalars['String'];
+  InternalNotes: Maybe<Scalars['String']>;
+  content: Scalars['String'];
   created_by: Maybe<Scalars['ID']>;
-  internalLabel: Scalars['String'];
+  lesson: Maybe<Scalars['ID']>;
+  maxWidth: Maybe<Scalars['Int']>;
+  name: Scalars['String'];
   published_at: Maybe<Scalars['DateTime']>;
   sublesson: Maybe<Scalars['ID']>;
   updated_by: Maybe<Scalars['ID']>;
@@ -2367,6 +2427,7 @@ export type EditLessonInput = {
   published_at: Maybe<Scalars['DateTime']>;
   slug: Maybe<Scalars['String']>;
   sublessons: Maybe<Array<Maybe<Scalars['ID']>>>;
+  syntaxEntry: Maybe<Scalars['ID']>;
   updated_by: Maybe<Scalars['ID']>;
 };
 
@@ -2423,9 +2484,12 @@ export type EditSublessonInput = {
 };
 
 export type EditSyntaxEntryInput = {
-  Entry: Maybe<Scalars['String']>;
+  InternalNotes: Maybe<Scalars['String']>;
+  content: Maybe<Scalars['String']>;
   created_by: Maybe<Scalars['ID']>;
-  internalLabel: Maybe<Scalars['String']>;
+  lesson: Maybe<Scalars['ID']>;
+  maxWidth: Maybe<Scalars['Int']>;
+  name: Maybe<Scalars['String']>;
   published_at: Maybe<Scalars['DateTime']>;
   sublesson: Maybe<Scalars['ID']>;
   updated_by: Maybe<Scalars['ID']>;
@@ -2559,6 +2623,13 @@ export type GetCourseMapOverlayDataQueryVariables = Exact<{
 
 
 export type GetCourseMapOverlayDataQuery = { __typename?: 'Query', courses: Array<{ __typename?: 'Course', name: string, modules: Array<{ __typename?: 'Modules', name: string, lessons: Array<{ __typename?: 'Lesson', name: string, slug: string } | null> | null } | null> | null } | null> | null };
+
+export type GetSyntaxHandbookDataQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type GetSyntaxHandbookDataQuery = { __typename?: 'Query', courses: Array<{ __typename?: 'Course', modules: Array<{ __typename?: 'Modules', lessons: Array<{ __typename?: 'Lesson', syntaxEntry: { __typename?: 'SyntaxEntry', content: string, name: string, maxWidth: number | null } | null, sublessons: Array<{ __typename?: 'Sublesson', syntaxEntry: { __typename?: 'SyntaxEntry', content: string, name: string, maxWidth: number | null } | null } | null> | null } | null> | null } | null> | null } | null> | null };
 
 export type GetLessonDataQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -2694,6 +2765,56 @@ export function useGetCourseMapOverlayDataLazyQuery(baseOptions?: Apollo.LazyQue
 export type GetCourseMapOverlayDataQueryHookResult = ReturnType<typeof useGetCourseMapOverlayDataQuery>;
 export type GetCourseMapOverlayDataLazyQueryHookResult = ReturnType<typeof useGetCourseMapOverlayDataLazyQuery>;
 export type GetCourseMapOverlayDataQueryResult = Apollo.QueryResult<GetCourseMapOverlayDataQuery, GetCourseMapOverlayDataQueryVariables>;
+export const GetSyntaxHandbookDataDocument = gql`
+    query getSyntaxHandbookData($slug: String!) {
+  courses(where: {slug: $slug}) {
+    modules {
+      lessons {
+        syntaxEntry {
+          content
+          name
+          maxWidth
+        }
+        sublessons {
+          syntaxEntry {
+            content
+            name
+            maxWidth
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetSyntaxHandbookDataQuery__
+ *
+ * To run a query within a React component, call `useGetSyntaxHandbookDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSyntaxHandbookDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSyntaxHandbookDataQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useGetSyntaxHandbookDataQuery(baseOptions: Apollo.QueryHookOptions<GetSyntaxHandbookDataQuery, GetSyntaxHandbookDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSyntaxHandbookDataQuery, GetSyntaxHandbookDataQueryVariables>(GetSyntaxHandbookDataDocument, options);
+      }
+export function useGetSyntaxHandbookDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSyntaxHandbookDataQuery, GetSyntaxHandbookDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSyntaxHandbookDataQuery, GetSyntaxHandbookDataQueryVariables>(GetSyntaxHandbookDataDocument, options);
+        }
+export type GetSyntaxHandbookDataQueryHookResult = ReturnType<typeof useGetSyntaxHandbookDataQuery>;
+export type GetSyntaxHandbookDataLazyQueryHookResult = ReturnType<typeof useGetSyntaxHandbookDataLazyQuery>;
+export type GetSyntaxHandbookDataQueryResult = Apollo.QueryResult<GetSyntaxHandbookDataQuery, GetSyntaxHandbookDataQueryVariables>;
 export const GetLessonDataDocument = gql`
     query getLessonData($slug: String!) {
   lessons(where: {slug: $slug}) {

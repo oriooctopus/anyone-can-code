@@ -10,18 +10,25 @@ import { lessonCompletionDataType } from 'src/state/lessonCompletion/lessonCompl
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { CodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.types';
 
-type TGetChallengeCompletionData = {
+type TGetLearningStepCompletionData = {
   challengeIndex?: number;
   sublessonIndex?: number;
   lessonCompletionData?: lessonCompletionDataType;
 };
 
-export const getChallengeCompletionData = ({
+export const getLearningStepCompletionData = ({
   challengeIndex = currentChallengeIndexVar(),
   sublessonIndex = currentSublessonIndexVar(),
   lessonCompletionData = lessonCompletionDataVar(),
-}: TGetChallengeCompletionData) => {
-  return lessonCompletionData[sublessonIndex]?.challenges?.[challengeIndex];
+}: TGetLearningStepCompletionData) => {
+  const { challenges, introduction } =
+    lessonCompletionData[sublessonIndex] || {};
+
+  if (challengeIndex === -1) {
+    return introduction;
+  }
+
+  return challenges?.[challengeIndex];
 };
 
 export const getStoredCodeFromLastChallengeData = () => {
@@ -33,17 +40,17 @@ export const getStoredCodeFromLastChallengeData = () => {
     );
   }
 
-  return getChallengeCompletionData({
+  return getLearningStepCompletionData({
     challengeIndex: challengeIndex - 1,
   })?.code;
 };
 
-export const useGetChallengeCompletionData = () => {
+export const useGetLearningStepCompletionData = () => {
   const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
   const lessonCompletionData = useReactiveVar(lessonCompletionDataVar);
 
-  return getChallengeCompletionData({
+  return getLearningStepCompletionData({
     challengeIndex: currentChallengeIndex,
     sublessonIndex: currentSublessonIndex,
     lessonCompletionData,
@@ -61,7 +68,7 @@ export const hasPassedCodeChallenge = (
   (testResults.length !== 0 && testResults.every(({ pass }) => pass));
 
 export const useCodeChallengeTests = (tests: CodeChallengeTests) => {
-  const { code: codeEditorValue } = useGetChallengeCompletionData();
+  const { code: codeEditorValue } = useGetLearningStepCompletionData();
   const testResultsValue = useReactiveVar(testResultsVar);
 
   /*

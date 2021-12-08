@@ -1,7 +1,7 @@
 import update, { CustomCommands, Spec } from 'immutability-helper';
 import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
 import { lessonCompletionDataVar } from 'src/state/lessonCompletion/lessonCompletion.reactiveVariables';
-import { IChallengeCompletionData } from 'src/state/lessonCompletion/lessonCompletion.types';
+import { ILearningStepCompletionData } from 'src/state/lessonCompletion/lessonCompletion.types';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 
 /**
@@ -10,31 +10,29 @@ import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactive
  * to take in a challengeIndex if necessary
  * @param spec pass in the spec for the modification of the challenge data
  */
-export const updateChallengeCompletionData = <
+export const updateLearningStepCompletionData = <
   C extends CustomCommands<object> = never,
 >(
-  spec: Spec<IChallengeCompletionData, C>,
+  spec: Spec<ILearningStepCompletionData, C>,
 ) => {
   const lessonCompletionData = lessonCompletionDataVar();
   const currentSublessonIndex = currentSublessonIndexVar();
   const currentChallengeIndex = currentChallengeIndexVar();
 
-  /**
-   * TODO: is this the best place for this check? Maybe
-   * we should just ensure that the function doesn't get
-   * run at all in this situation. Not sure.
-   */
-  if (currentChallengeIndex === -1) {
-    return;
-  }
+  const updateSpec =
+    currentChallengeIndex === -1
+      ? {
+          introduction: spec,
+        }
+      : {
+          challenges: {
+            [currentChallengeIndex]: spec,
+          },
+        };
 
   // @ts-expect-error will fix later. Interesting that when I forget to include challenges it had no error
   const newLessonCompletionData = update(lessonCompletionData, {
-    [currentSublessonIndex]: {
-      challenges: {
-        [currentChallengeIndex]: spec,
-      },
-    },
+    [currentSublessonIndex]: updateSpec,
   });
   lessonCompletionDataVar(newLessonCompletionData);
 };
@@ -47,8 +45,10 @@ export const updateSublessonIntroductionCompletion = (
 
   const newLessonCompletionData = update(lessonCompletionData, {
     [sublessonIndex]: {
-      introductionCompleted: {
-        $set: introductionCompletion,
+      introduction: {
+        completed: {
+          $set: introductionCompletion,
+        },
       },
     },
   });
@@ -57,7 +57,7 @@ export const updateSublessonIntroductionCompletion = (
 };
 
 export const updateCurrentEditorValue = (value: string) => {
-  updateChallengeCompletionData({
+  updateLearningStepCompletionData({
     code: {
       $set: value,
     },
