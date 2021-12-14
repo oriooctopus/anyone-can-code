@@ -70,6 +70,7 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "file-loader": "^6.2.0",
     "formik": "^2.2.9",
+    "formik-chakra-ui": "^1.6.0",
     "framer-motion": "^4",
     "fs": "^0.0.1-security",
     "fs-extra": "^9.0.1",
@@ -101,6 +102,7 @@
     "react": "^17.0.0",
     "react-apollo": "^3.1.5",
     "react-app-polyfill": "^2.0.0",
+    "react-cookie": "^4.1.1",
     "react-dev-utils": "^11.0.3",
     "react-dom": "^17.0.0",
     "react-i18next": "11.11.0",
@@ -123,7 +125,8 @@
     "style-loader": "1.3.0",
     "ts-pnp": "1.2.0",
     "url-loader": "4.1.1",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "^7.14.9",

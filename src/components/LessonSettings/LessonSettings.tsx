@@ -18,7 +18,7 @@ import { Formik } from 'formik';
 import {
   sublessonChallengeFrequencyVar,
   sublessonTextLengthPreferenceVar,
-} from 'src/state/general';
+} from 'src/state/general/general.reactiveVariables';
 import { LessonSettingsButtonGroup } from 'components/LessonSettings/LessonSettings.styles';
 import {
   lessonSettingsSaveOptions,

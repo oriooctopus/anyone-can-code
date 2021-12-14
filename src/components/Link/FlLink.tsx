@@ -5,11 +5,20 @@ import { isExternalURL } from 'src/utils/general';
 
 export interface IFlLinkProps extends LinkProps {
   href?: string;
+  // TODO: maybe we should just have consistent styling so that this isn't a manual prop
+  underline?: boolean;
 }
 
-export const FlLink = ({ href, ...linkProps }: IFlLinkProps) => {
+export const FlLink = ({ href, underline, ...linkProps }: IFlLinkProps) => {
   if (!href) {
-    return <Link as="button" href="ewf" {...omit(linkProps, 'ref')} />;
+    return (
+      <Link
+        as="button"
+        textDecoration={underline && 'underline'}
+        href={href}
+        {...omit(linkProps, 'ref')}
+      />
+    );
   }
 
   return isExternalURL(href) ? (
