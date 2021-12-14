@@ -10,7 +10,7 @@ import {
   useSublessonNavigation,
 } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
 import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
-import { contentPanelScrollToTopFunctionVar } from 'src/state/general';
+import { contentPanelScrollToTopFunctionVar } from 'src/state/general/general.reactiveVariables';
 import { updateCurrentEditorValue } from 'src/state/lessonCompletion/lessonCompletion';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { getSublessonStartingCode } from 'src/state/sublesson/sublesson.utils';

@@ -1,7 +1,16 @@
 import { extendTheme } from '@chakra-ui/react';
 
 export default extendTheme({
-  components: { Button: { baseStyle: { _focus: { boxShadow: 'none' } } } },
+  components: {
+    Button: {
+      baseStyle: {
+        svg: {
+          display: 'unset',
+        },
+        _focus: { boxShadow: 'none' },
+      },
+    },
+  },
   fontSizes: {
     xs: '0.75rem',
     sm: '0.875rem',

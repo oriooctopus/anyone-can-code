@@ -1,16 +1,9 @@
+import {
+  SublessonTextLengthPreferenceEnum,
+  SublessonChallengeFrequencyEnum,
+  AuthModalStateEnum,
+} from './general.types';
 import { makeVar } from '@apollo/client';
-
-export enum SublessonTextLengthPreferenceEnum {
-  short = 'short',
-  medium = 'medium',
-  long = 'long',
-}
-
-export enum SublessonChallengeFrequencyEnum {
-  low = 'low',
-  medium = 'medium',
-  high = 'high',
-}
 
 // TODO: store these in local storage. Possibly via apollo cache persist
 
@@ -21,3 +14,4 @@ export const sublessonChallengeFrequencyVar = makeVar(
   SublessonChallengeFrequencyEnum.medium,
 );
 export const contentPanelScrollToTopFunctionVar = makeVar(() => null);
+export const authModalStateVar = makeVar(AuthModalStateEnum.NOT_OPEN);

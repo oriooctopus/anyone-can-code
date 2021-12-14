@@ -1,7 +1,7 @@
 import { Box, Divider } from '@chakra-ui/react';
 import '@fontsource/roboto';
 import { memo, useEffect, useRef } from 'react';
-import { contentPanelScrollToTopFunctionVar } from 'src/state/general';
+import { contentPanelScrollToTopFunctionVar } from 'src/state/general/general.reactiveVariables';
 import { lessonMenuHeight, mainNavbarHeight } from 'src/styles/constants';
 import { rem } from 'src/styles/typography/font';
 import { ContentPanelNavigationIndicators } from 'components/ContentPanel/ContentPanelNavigationIndicators';
