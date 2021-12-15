@@ -23,9 +23,9 @@ export const Navbar = memo(() => {
           Map
         </NavbarLink>
       </HStack>
-      <HStack marginLeft="auto" spacing={5}>
-        <UserMenu />
-      </HStack>
+      {/* <HStack marginLeft="auto" spacing={5}>
+          <UserMenu />
+        </HStack> */}
     </Flex>
   );
 });

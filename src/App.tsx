@@ -15,7 +15,7 @@ function App() {
     <Router>
       <SidebarOverlayContext.Provider value={{ overlayState, setOverlayState }}>
         <SidebarOverlay />
-        <AuthModal />
+        {/* <AuthModal /> */}
 
         <Switch>
           <Route exact path="/">
