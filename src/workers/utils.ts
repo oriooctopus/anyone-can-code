@@ -24,11 +24,48 @@ export const restoreConsoleLog = () => {
   console.log = console.standardLog;
 };
 
-const getCodeEvaluationHelpers = (logs: Array<Array<unknown>>) => {
+interface IFindFirstPassingLineForCondition {
+  condition: string;
+}
+
+const getCodeEvaluationHelpers = (
+  logs: Array<Array<unknown>>,
+  codeString: string,
+) => {
   const helpers = {
     // right now this only works with primitives
     wasLoggedToConsole: (val: unknown) => {
       return logs.some((logGroup) => logGroup.some((log) => log === val));
+    },
+    /**
+     * Evaluates a condition for each line of the provided code.
+     * Upon finding a line that passes it returns that line's index
+     */
+    findFirstPassingLineForCondition: ({
+      condition,
+    }: IFindFirstPassingLineForCondition) => {
+      debugger;
+      const splitCodeString = codeString.split('\n');
+      let codeToEvaluate = '';
+
+      for (let i = 0; i < splitCodeString.length; i++) {
+        const currentLine = splitCodeString[i];
+        codeToEvaluate += i === 0 ? currentLine : `\n${currentLine}`;
+        const context = getEvaluationContext(codeToEvaluate);
+        const codeWithCondition = `${codeToEvaluate}\n${condition}`;
+
+        if (evaluateWithContext(codeWithCondition, context)) {
+          return {
+            index: i,
+            passed: true,
+          };
+        }
+      }
+
+      return {
+        index: -1,
+        passed: false,
+      };
     },
     removeWhitespace: (string: string, i = 0, res = ''): string => {
       if (i >= string.length) return res;
@@ -44,9 +81,10 @@ export const getEvaluationContext = (
   code: string,
   logs?: Array<Array<unknown>>,
 ) => {
+  const _codeString = `${code}`;
   return {
-    _codeEvaluationHelpers: getCodeEvaluationHelpers(logs),
-    _codeString: `${code}`,
+    _codeEvaluationHelpers: getCodeEvaluationHelpers(logs, _codeString),
+    _codeString,
     _internalLogs: logs,
   };
 };
@@ -93,4 +131,8 @@ export const evaluateWithContext = (code: string, context = {}) => {
     const result = eval(evalString);
     return result;
   }.call(context);
+};
+
+const checkInitialAssignment = () => {
+  _codeString.split('\n');
 };
