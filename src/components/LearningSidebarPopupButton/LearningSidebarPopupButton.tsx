@@ -5,6 +5,7 @@ interface ILearningSidebarPopupButtonProps {
   children: JSX.Element;
   popupContent: React.ReactNode;
   popoverWidth?: number | string;
+  tooltipTitle: string;
 }
 
 export const LearningSidebarPopupButton = ({

@@ -16,7 +16,7 @@ import { Editor } from 'components/Editor/Editor';
 import { layoutStyles } from 'components/Layout/Layout.styles';
 import { Navbar } from 'components/Navbar/Navbar';
 
-interface IRouteParams {
+export interface ILessonRouteParams {
   slug: string;
 }
 
@@ -77,7 +77,7 @@ const LessonPage = ({ lesson }: IProps) => {
 
 export const LessonPageContainer = () => {
   const [lesson, setLesson] = useState<LessonType>(null);
-  const { slug } = useParams<IRouteParams>();
+  const { slug } = useParams<ILessonRouteParams>();
   useGetLessonDataQuery({
     variables: {
       slug,

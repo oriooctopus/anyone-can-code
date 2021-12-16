@@ -1,11 +1,12 @@
 // what if instead of red white and green, we use grey instead of red, and something else instead of white?yu
-import { Box, Flex } from '@chakra-ui/layout';
+import { Box, Flex, VStack } from '@chakra-ui/layout';
 import { Heading, IconButton, useBoolean } from '@chakra-ui/react';
 import * as React from 'react';
 import { BsJournals } from 'react-icons/bs';
 import { LessonSidebarDataFragment } from 'src/generated/graphql';
 import { rem } from 'src/styles/typography/font';
 import { LearningSidebarPopupButton } from 'components/LearningSidebarPopupButton/LearningSidebarPopupButton';
+import { LessonExternalResources } from 'components/LessonExternalResources/LessonExternalResources';
 import { useGetLessonSidebarProgressStepperData } from 'components/LessonSidebar/LessonSidebar.utils';
 import { ProgressStepper } from 'components/ProgressStepper/ProgressStepper';
 import { SyntaxHandbook } from 'components/SyntaxHandbook/SyntaxHandbook';
@@ -45,9 +46,10 @@ export const LessonSidebar = React.memo(({ sublessons }: IProps) => {
         title="Sublesson"
         steps={currentSublessonStepperData}
       />
-      <Flex marginTop="auto" justifyContent="center">
+      <VStack marginTop="auto" justifyContent="center" spacing="30px">
+        <LessonExternalResources />
         <SyntaxHandbook />
-      </Flex>
+      </VStack>
     </Flex>
   );
 });

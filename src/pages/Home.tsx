@@ -1,4 +1,4 @@
-import { Box, Text } from '@chakra-ui/layout';
+import { Box, Divider, Text } from '@chakra-ui/layout';
 import { Layout } from 'components/Layout/Layout';
 
 export const Home = () => (
@@ -8,7 +8,7 @@ export const Home = () => (
         If you are not embarrassed by the first version of your product, you've
         launched too late - Reid Hoffman
       </Text>
-      <Box my={5}>---------------------</Box>
+      <Divider my={5} />
       <Text>
         Welcome! This is a very, very, very early version of AnyoneCanCode.
         Right now we are missing a ton of important features. Our current focus

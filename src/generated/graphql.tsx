@@ -36,6 +36,92 @@ export type AdminUser = {
 
 export type Challenge = CodeChallenge | MultipleChoiceChallenge;
 
+export type ChallengeCompletion = {
+  __typename?: 'ChallengeCompletion';
+  code_challenge: Maybe<CodeChallenge>;
+  created_at: Scalars['DateTime'];
+  id: Scalars['ID'];
+  multiple_choice_challenge: Maybe<MultipleChoiceChallenge>;
+  published_at: Maybe<Scalars['DateTime']>;
+  updated_at: Scalars['DateTime'];
+  users_permissions_user: Maybe<UsersPermissionsUser>;
+};
+
+export type ChallengeCompletionAggregator = {
+  __typename?: 'ChallengeCompletionAggregator';
+  count: Maybe<Scalars['Int']>;
+  totalCount: Maybe<Scalars['Int']>;
+};
+
+export type ChallengeCompletionConnection = {
+  __typename?: 'ChallengeCompletionConnection';
+  aggregate: Maybe<ChallengeCompletionAggregator>;
+  groupBy: Maybe<ChallengeCompletionGroupBy>;
+  values: Maybe<Array<Maybe<ChallengeCompletion>>>;
+};
+
+export type ChallengeCompletionConnectionCode_Challenge = {
+  __typename?: 'ChallengeCompletionConnectionCode_challenge';
+  connection: Maybe<ChallengeCompletionConnection>;
+  key: Maybe<Scalars['ID']>;
+};
+
+export type ChallengeCompletionConnectionCreated_At = {
+  __typename?: 'ChallengeCompletionConnectionCreated_at';
+  connection: Maybe<ChallengeCompletionConnection>;
+  key: Maybe<Scalars['DateTime']>;
+};
+
+export type ChallengeCompletionConnectionId = {
+  __typename?: 'ChallengeCompletionConnectionId';
+  connection: Maybe<ChallengeCompletionConnection>;
+  key: Maybe<Scalars['ID']>;
+};
+
+export type ChallengeCompletionConnectionMultiple_Choice_Challenge = {
+  __typename?: 'ChallengeCompletionConnectionMultiple_choice_challenge';
+  connection: Maybe<ChallengeCompletionConnection>;
+  key: Maybe<Scalars['ID']>;
+};
+
+export type ChallengeCompletionConnectionPublished_At = {
+  __typename?: 'ChallengeCompletionConnectionPublished_at';
+  connection: Maybe<ChallengeCompletionConnection>;
+  key: Maybe<Scalars['DateTime']>;
+};
+
+export type ChallengeCompletionConnectionUpdated_At = {
+  __typename?: 'ChallengeCompletionConnectionUpdated_at';
+  connection: Maybe<ChallengeCompletionConnection>;
+  key: Maybe<Scalars['DateTime']>;
+};
+
+export type ChallengeCompletionConnectionUsers_Permissions_User = {
+  __typename?: 'ChallengeCompletionConnectionUsers_permissions_user';
+  connection: Maybe<ChallengeCompletionConnection>;
+  key: Maybe<Scalars['ID']>;
+};
+
+export type ChallengeCompletionGroupBy = {
+  __typename?: 'ChallengeCompletionGroupBy';
+  code_challenge: Maybe<Array<Maybe<ChallengeCompletionConnectionCode_Challenge>>>;
+  created_at: Maybe<Array<Maybe<ChallengeCompletionConnectionCreated_At>>>;
+  id: Maybe<Array<Maybe<ChallengeCompletionConnectionId>>>;
+  multiple_choice_challenge: Maybe<Array<Maybe<ChallengeCompletionConnectionMultiple_Choice_Challenge>>>;
+  published_at: Maybe<Array<Maybe<ChallengeCompletionConnectionPublished_At>>>;
+  updated_at: Maybe<Array<Maybe<ChallengeCompletionConnectionUpdated_At>>>;
+  users_permissions_user: Maybe<Array<Maybe<ChallengeCompletionConnectionUsers_Permissions_User>>>;
+};
+
+export type ChallengeCompletionInput = {
+  code_challenge: Maybe<Scalars['ID']>;
+  created_by: Maybe<Scalars['ID']>;
+  multiple_choice_challenge: Maybe<Scalars['ID']>;
+  published_at: Maybe<Scalars['DateTime']>;
+  updated_by: Maybe<Scalars['ID']>;
+  users_permissions_user: Maybe<Scalars['ID']>;
+};
+
 export type CodeChallenge = {
   __typename?: 'CodeChallenge';
   HintOld: Maybe<Array<Maybe<ComponentCodeChallengeHint>>>;
@@ -48,6 +134,7 @@ export type CodeChallenge = {
   localizations: Maybe<Array<Maybe<CodeChallenge>>>;
   prompt: Scalars['String'];
   published_at: Maybe<Scalars['DateTime']>;
+  sharedEvaluationCode: Maybe<Scalars['String']>;
   startingCode: Maybe<Scalars['String']>;
   tests: Maybe<Array<Maybe<ComponentCodeChallengeTests>>>;
   updated_at: Scalars['DateTime'];
@@ -116,6 +203,12 @@ export type CodeChallengeConnectionPublished_At = {
   key: Maybe<Scalars['DateTime']>;
 };
 
+export type CodeChallengeConnectionSharedEvaluationCode = {
+  __typename?: 'CodeChallengeConnectionSharedEvaluationCode';
+  connection: Maybe<CodeChallengeConnection>;
+  key: Maybe<Scalars['String']>;
+};
+
 export type CodeChallengeConnectionStartingCode = {
   __typename?: 'CodeChallengeConnectionStartingCode';
   connection: Maybe<CodeChallengeConnection>;
@@ -137,6 +230,7 @@ export type CodeChallengeGroupBy = {
   locale: Maybe<Array<Maybe<CodeChallengeConnectionLocale>>>;
   prompt: Maybe<Array<Maybe<CodeChallengeConnectionPrompt>>>;
   published_at: Maybe<Array<Maybe<CodeChallengeConnectionPublished_At>>>;
+  sharedEvaluationCode: Maybe<Array<Maybe<CodeChallengeConnectionSharedEvaluationCode>>>;
   startingCode: Maybe<Array<Maybe<CodeChallengeConnectionStartingCode>>>;
   updated_at: Maybe<Array<Maybe<CodeChallengeConnectionUpdated_At>>>;
 };
@@ -153,6 +247,7 @@ export type CodeChallengeInput = {
   localizations: Maybe<Array<Maybe<Scalars['ID']>>>;
   prompt: Scalars['String'];
   published_at: Maybe<Scalars['DateTime']>;
+  sharedEvaluationCode: Maybe<Scalars['String']>;
   startingCode: Maybe<Scalars['String']>;
   tests: Maybe<Array<Maybe<ComponentCodeChallengeTestInput>>>;
   updated_by: Maybe<Scalars['ID']>;
@@ -206,6 +301,20 @@ export type ComponentCodeChallengeTests = {
   id: Scalars['ID'];
   internalTest: Scalars['String'];
   label: Scalars['String'];
+};
+
+export type ComponentExternalResourceExternalResource = {
+  __typename?: 'ComponentExternalResourceExternalResource';
+  id: Scalars['ID'];
+  link: Scalars['String'];
+  name: Scalars['String'];
+  type: Enum_Componentexternalresourceexternalresource_Type;
+};
+
+export type ComponentExternalResourceExternalResourceInput = {
+  link: Scalars['String'];
+  name: Scalars['String'];
+  type: Enum_Componentexternalresourceexternalresource_Type;
 };
 
 export type ComponentModuleModuleLesson = {
@@ -383,17 +492,15 @@ export enum Enum_Componentchallengechallenge_Difficulty {
   Medium = 'medium'
 }
 
+export enum Enum_Componentexternalresourceexternalresource_Type {
+  Text = 'text',
+  Video = 'video'
+}
+
 export enum Enum_Componentsublessonchallengechallenge_Minimumchallengefrequency {
   High = 'high',
   Low = 'low',
   Medium = 'medium'
-}
-
-export enum Enum_Lessoncompletion_Confidence {
-  CompleteUnderstanding = 'completeUnderstanding',
-  LargeGaps = 'largeGaps',
-  NoUnderstanding = 'noUnderstanding',
-  UnderstoodButWithGaps = 'understoodButWithGaps'
 }
 
 export type FileInfoInput = {
@@ -438,6 +545,7 @@ export type InputId = {
 export type Lesson = {
   __typename?: 'Lesson';
   created_at: Scalars['DateTime'];
+  externalResources: Maybe<Array<Maybe<ComponentExternalResourceExternalResource>>>;
   id: Scalars['ID'];
   internalNotes: Maybe<Scalars['String']>;
   isHard: Maybe<Scalars['Boolean']>;
@@ -476,11 +584,12 @@ export type LessonAggregator = {
 
 export type LessonCompletion = {
   __typename?: 'LessonCompletion';
-  confidence: Maybe<Enum_Lessoncompletion_Confidence>;
   created_at: Scalars['DateTime'];
   id: Scalars['ID'];
+  lesson: Maybe<Lesson>;
   published_at: Maybe<Scalars['DateTime']>;
   updated_at: Scalars['DateTime'];
+  users_permissions_user: Maybe<UsersPermissionsUser>;
 };
 
 export type LessonCompletionAggregator = {
@@ -496,12 +605,6 @@ export type LessonCompletionConnection = {
   values: Maybe<Array<Maybe<LessonCompletion>>>;
 };
 
-export type LessonCompletionConnectionConfidence = {
-  __typename?: 'LessonCompletionConnectionConfidence';
-  connection: Maybe<LessonCompletionConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
 export type LessonCompletionConnectionCreated_At = {
   __typename?: 'LessonCompletionConnectionCreated_at';
   connection: Maybe<LessonCompletionConnection>;
@@ -510,6 +613,12 @@ export type LessonCompletionConnectionCreated_At = {
 
 export type LessonCompletionConnectionId = {
   __typename?: 'LessonCompletionConnectionId';
+  connection: Maybe<LessonCompletionConnection>;
+  key: Maybe<Scalars['ID']>;
+};
+
+export type LessonCompletionConnectionLesson = {
+  __typename?: 'LessonCompletionConnectionLesson';
   connection: Maybe<LessonCompletionConnection>;
   key: Maybe<Scalars['ID']>;
 };
@@ -526,20 +635,28 @@ export type LessonCompletionConnectionUpdated_At = {
   key: Maybe<Scalars['DateTime']>;
 };
 
+export type LessonCompletionConnectionUsers_Permissions_User = {
+  __typename?: 'LessonCompletionConnectionUsers_permissions_user';
+  connection: Maybe<LessonCompletionConnection>;
+  key: Maybe<Scalars['ID']>;
+};
+
 export type LessonCompletionGroupBy = {
   __typename?: 'LessonCompletionGroupBy';
-  confidence: Maybe<Array<Maybe<LessonCompletionConnectionConfidence>>>;
   created_at: Maybe<Array<Maybe<LessonCompletionConnectionCreated_At>>>;
   id: Maybe<Array<Maybe<LessonCompletionConnectionId>>>;
+  lesson: Maybe<Array<Maybe<LessonCompletionConnectionLesson>>>;
   published_at: Maybe<Array<Maybe<LessonCompletionConnectionPublished_At>>>;
   updated_at: Maybe<Array<Maybe<LessonCompletionConnectionUpdated_At>>>;
+  users_permissions_user: Maybe<Array<Maybe<LessonCompletionConnectionUsers_Permissions_User>>>;
 };
 
 export type LessonCompletionInput = {
-  confidence: Maybe<Enum_Lessoncompletion_Confidence>;
   created_by: Maybe<Scalars['ID']>;
+  lesson: Maybe<Scalars['ID']>;
   published_at: Maybe<Scalars['DateTime']>;
   updated_by: Maybe<Scalars['ID']>;
+  users_permissions_user: Maybe<Scalars['ID']>;
 };
 
 export type LessonConnection = {
@@ -632,6 +749,7 @@ export type LessonGroupBy = {
 
 export type LessonInput = {
   created_by: Maybe<Scalars['ID']>;
+  externalResources: Maybe<Array<Maybe<ComponentExternalResourceExternalResourceInput>>>;
   internalNotes: Maybe<Scalars['String']>;
   isHard: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
@@ -749,7 +867,7 @@ export type ModulesGroupBy = {
   updated_at: Maybe<Array<Maybe<ModulesConnectionUpdated_At>>>;
 };
 
-export type Morph = CodeChallenge | CodeChallengeAggregator | CodeChallengeConnection | CodeChallengeConnectionChallengeMeta | CodeChallengeConnectionCreated_At | CodeChallengeConnectionGetStartingCodeFromPreviousChallenge | CodeChallengeConnectionId | CodeChallengeConnectionLocale | CodeChallengeConnectionPrompt | CodeChallengeConnectionPublished_At | CodeChallengeConnectionStartingCode | CodeChallengeConnectionUpdated_At | CodeChallengeGroupBy | ComponentChallengeChallenge | ComponentChallengeHint | ComponentCodeChallengeHint | ComponentCodeChallengeTests | ComponentModuleModuleLesson | ComponentModuleModuleRows | ComponentMultipleChoiceChallengeOptions | ComponentSublessonSublessonDescriptions | ComponentSublessonchallengeChallenge | Course | CourseAggregator | CourseConnection | CourseConnectionCreated_At | CourseConnectionId | CourseConnectionLocale | CourseConnectionName | CourseConnectionPublished_At | CourseConnectionSlug | CourseConnectionUpdated_At | CourseGroupBy | I18NLocale | Lesson | LessonAggregator | LessonCompletion | LessonCompletionAggregator | LessonCompletionConnection | LessonCompletionConnectionConfidence | LessonCompletionConnectionCreated_At | LessonCompletionConnectionId | LessonCompletionConnectionPublished_At | LessonCompletionConnectionUpdated_At | LessonCompletionGroupBy | LessonConnection | LessonConnectionCreated_At | LessonConnectionId | LessonConnectionInternalNotes | LessonConnectionIsHard | LessonConnectionLocale | LessonConnectionModule | LessonConnectionName | LessonConnectionPublished_At | LessonConnectionSlug | LessonConnectionSyntaxEntry | LessonConnectionUpdated_At | LessonGroupBy | Modules | ModulesAggregator | ModulesConnection | ModulesConnectionCreated_At | ModulesConnectionId | ModulesConnectionLocale | ModulesConnectionName | ModulesConnectionPublished_At | ModulesConnectionUpdated_At | ModulesGroupBy | MultipleChoiceChallenge | MultipleChoiceChallengeAggregator | MultipleChoiceChallengeConnection | MultipleChoiceChallengeConnectionCanSelectMultipleOptions | MultipleChoiceChallengeConnectionChallengeMeta | MultipleChoiceChallengeConnectionCreated_At | MultipleChoiceChallengeConnectionId | MultipleChoiceChallengeConnectionPrompt | MultipleChoiceChallengeConnectionPublished_At | MultipleChoiceChallengeConnectionUpdated_At | MultipleChoiceChallengeConnectionUseMarkdownForOptionsText | MultipleChoiceChallengeGroupBy | Sublesson | SublessonAggregator | SublessonConnection | SublessonConnectionCreated_At | SublessonConnectionDescriptions | SublessonConnectionId | SublessonConnectionLesson | SublessonConnectionMinimizeEditor | SublessonConnectionName | SublessonConnectionPublished_At | SublessonConnectionSyntaxEntry | SublessonConnectionUpdated_At | SublessonGroupBy | SyntaxEntry | SyntaxEntryAggregator | SyntaxEntryAggregatorAvg | SyntaxEntryAggregatorMax | SyntaxEntryAggregatorMin | SyntaxEntryAggregatorSum | SyntaxEntryConnection | SyntaxEntryConnectionContent | SyntaxEntryConnectionCreated_At | SyntaxEntryConnectionId | SyntaxEntryConnectionLesson | SyntaxEntryConnectionMaxWidth | SyntaxEntryConnectionName | SyntaxEntryConnectionPublished_At | SyntaxEntryConnectionSublesson | SyntaxEntryConnectionUpdated_At | SyntaxEntryGroupBy | UploadFile | UploadFileAggregator | UploadFileAggregatorAvg | UploadFileAggregatorMax | UploadFileAggregatorMin | UploadFileAggregatorSum | UploadFileConnection | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionCreated_At | UploadFileConnectionExt | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionHeight | UploadFileConnectionId | UploadFileConnectionMime | UploadFileConnectionName | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | UploadFileConnectionSize | UploadFileConnectionUpdated_At | UploadFileConnectionUrl | UploadFileConnectionWidth | UploadFileGroupBy | UserPermissionsPasswordPayload | UsersPermissionsLoginPayload | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleAggregator | UsersPermissionsRoleConnection | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionType | UsersPermissionsRoleGroupBy | UsersPermissionsUser | UsersPermissionsUserAggregator | UsersPermissionsUserConnection | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserGroupBy | CreateCodeChallengePayload | CreateCoursePayload | CreateLessonCompletionPayload | CreateLessonPayload | CreateModulePayload | CreateMultipleChoiceChallengePayload | CreateRolePayload | CreateSublessonPayload | CreateSyntaxEntryPayload | CreateUserPayload | DeleteCodeChallengePayload | DeleteCoursePayload | DeleteFilePayload | DeleteLessonCompletionPayload | DeleteLessonPayload | DeleteModulePayload | DeleteMultipleChoiceChallengePayload | DeleteRolePayload | DeleteSublessonPayload | DeleteSyntaxEntryPayload | DeleteUserPayload | UpdateCodeChallengePayload | UpdateCoursePayload | UpdateLessonCompletionPayload | UpdateLessonPayload | UpdateModulePayload | UpdateMultipleChoiceChallengePayload | UpdateRolePayload | UpdateSublessonPayload | UpdateSyntaxEntryPayload | UpdateUserPayload;
+export type Morph = ChallengeCompletion | ChallengeCompletionAggregator | ChallengeCompletionConnection | ChallengeCompletionConnectionCode_Challenge | ChallengeCompletionConnectionCreated_At | ChallengeCompletionConnectionId | ChallengeCompletionConnectionMultiple_Choice_Challenge | ChallengeCompletionConnectionPublished_At | ChallengeCompletionConnectionUpdated_At | ChallengeCompletionConnectionUsers_Permissions_User | ChallengeCompletionGroupBy | CodeChallenge | CodeChallengeAggregator | CodeChallengeConnection | CodeChallengeConnectionChallengeMeta | CodeChallengeConnectionCreated_At | CodeChallengeConnectionGetStartingCodeFromPreviousChallenge | CodeChallengeConnectionId | CodeChallengeConnectionLocale | CodeChallengeConnectionPrompt | CodeChallengeConnectionPublished_At | CodeChallengeConnectionSharedEvaluationCode | CodeChallengeConnectionStartingCode | CodeChallengeConnectionUpdated_At | CodeChallengeGroupBy | ComponentChallengeChallenge | ComponentChallengeHint | ComponentCodeChallengeHint | ComponentCodeChallengeTests | ComponentExternalResourceExternalResource | ComponentModuleModuleLesson | ComponentModuleModuleRows | ComponentMultipleChoiceChallengeOptions | ComponentSublessonSublessonDescriptions | ComponentSublessonchallengeChallenge | Course | CourseAggregator | CourseConnection | CourseConnectionCreated_At | CourseConnectionId | CourseConnectionLocale | CourseConnectionName | CourseConnectionPublished_At | CourseConnectionSlug | CourseConnectionUpdated_At | CourseGroupBy | I18NLocale | Lesson | LessonAggregator | LessonCompletion | LessonCompletionAggregator | LessonCompletionConnection | LessonCompletionConnectionCreated_At | LessonCompletionConnectionId | LessonCompletionConnectionLesson | LessonCompletionConnectionPublished_At | LessonCompletionConnectionUpdated_At | LessonCompletionConnectionUsers_Permissions_User | LessonCompletionGroupBy | LessonConnection | LessonConnectionCreated_At | LessonConnectionId | LessonConnectionInternalNotes | LessonConnectionIsHard | LessonConnectionLocale | LessonConnectionModule | LessonConnectionName | LessonConnectionPublished_At | LessonConnectionSlug | LessonConnectionSyntaxEntry | LessonConnectionUpdated_At | LessonGroupBy | Modules | ModulesAggregator | ModulesConnection | ModulesConnectionCreated_At | ModulesConnectionId | ModulesConnectionLocale | ModulesConnectionName | ModulesConnectionPublished_At | ModulesConnectionUpdated_At | ModulesGroupBy | MultipleChoiceChallenge | MultipleChoiceChallengeAggregator | MultipleChoiceChallengeConnection | MultipleChoiceChallengeConnectionCanSelectMultipleOptions | MultipleChoiceChallengeConnectionChallengeMeta | MultipleChoiceChallengeConnectionCreated_At | MultipleChoiceChallengeConnectionId | MultipleChoiceChallengeConnectionPrompt | MultipleChoiceChallengeConnectionPublished_At | MultipleChoiceChallengeConnectionUpdated_At | MultipleChoiceChallengeConnectionUseMarkdownForOptionsText | MultipleChoiceChallengeGroupBy | Sublesson | SublessonAggregator | SublessonConnection | SublessonConnectionCreated_At | SublessonConnectionDescriptions | SublessonConnectionId | SublessonConnectionLesson | SublessonConnectionMinimizeEditor | SublessonConnectionName | SublessonConnectionPublished_At | SublessonConnectionSyntaxEntry | SublessonConnectionUpdated_At | SublessonGroupBy | SyntaxEntry | SyntaxEntryAggregator | SyntaxEntryAggregatorAvg | SyntaxEntryAggregatorMax | SyntaxEntryAggregatorMin | SyntaxEntryAggregatorSum | SyntaxEntryConnection | SyntaxEntryConnectionContent | SyntaxEntryConnectionCreated_At | SyntaxEntryConnectionId | SyntaxEntryConnectionLesson | SyntaxEntryConnectionMaxWidth | SyntaxEntryConnectionName | SyntaxEntryConnectionPublished_At | SyntaxEntryConnectionSublesson | SyntaxEntryConnectionUpdated_At | SyntaxEntryGroupBy | UploadFile | UploadFileAggregator | UploadFileAggregatorAvg | UploadFileAggregatorMax | UploadFileAggregatorMin | UploadFileAggregatorSum | UploadFileConnection | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionCreated_At | UploadFileConnectionExt | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionHeight | UploadFileConnectionId | UploadFileConnectionMime | UploadFileConnectionName | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | UploadFileConnectionSize | UploadFileConnectionUpdated_At | UploadFileConnectionUrl | UploadFileConnectionWidth | UploadFileGroupBy | UserPermissionsPasswordPayload | UsersPermissionsLoginPayload | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleAggregator | UsersPermissionsRoleConnection | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionType | UsersPermissionsRoleGroupBy | UsersPermissionsUser | UsersPermissionsUserAggregator | UsersPermissionsUserConnection | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserGroupBy | CreateChallengeCompletionPayload | CreateCodeChallengePayload | CreateCoursePayload | CreateLessonCompletionPayload | CreateLessonPayload | CreateModulePayload | CreateMultipleChoiceChallengePayload | CreateRolePayload | CreateSublessonPayload | CreateSyntaxEntryPayload | CreateUserPayload | DeleteChallengeCompletionPayload | DeleteCodeChallengePayload | DeleteCoursePayload | DeleteFilePayload | DeleteLessonCompletionPayload | DeleteLessonPayload | DeleteModulePayload | DeleteMultipleChoiceChallengePayload | DeleteRolePayload | DeleteSublessonPayload | DeleteSyntaxEntryPayload | DeleteUserPayload | UpdateChallengeCompletionPayload | UpdateCodeChallengePayload | UpdateCoursePayload | UpdateLessonCompletionPayload | UpdateLessonPayload | UpdateModulePayload | UpdateMultipleChoiceChallengePayload | UpdateRolePayload | UpdateSublessonPayload | UpdateSyntaxEntryPayload | UpdateUserPayload;
 
 export type MultipleChoiceChallenge = {
   __typename?: 'MultipleChoiceChallenge';
@@ -851,6 +969,7 @@ export type MultipleChoiceChallengeInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createChallengeCompletion: Maybe<CreateChallengeCompletionPayload>;
   createCodeChallenge: Maybe<CreateCodeChallengePayload>;
   createCodeChallengeLocalization: CodeChallenge;
   createCourse: Maybe<CreateCoursePayload>;
@@ -867,6 +986,7 @@ export type Mutation = {
   createSyntaxEntry: Maybe<CreateSyntaxEntryPayload>;
   /** Create a new user */
   createUser: Maybe<CreateUserPayload>;
+  deleteChallengeCompletion: Maybe<DeleteChallengeCompletionPayload>;
   deleteCodeChallenge: Maybe<DeleteCodeChallengePayload>;
   deleteCourse: Maybe<DeleteCoursePayload>;
   /** Delete one file */
@@ -887,6 +1007,7 @@ export type Mutation = {
   multipleUpload: Array<Maybe<UploadFile>>;
   register: UsersPermissionsLoginPayload;
   resetPassword: Maybe<UsersPermissionsLoginPayload>;
+  updateChallengeCompletion: Maybe<UpdateChallengeCompletionPayload>;
   updateCodeChallenge: Maybe<UpdateCodeChallengePayload>;
   updateCourse: Maybe<UpdateCoursePayload>;
   updateFileInfo: UploadFile;
@@ -901,6 +1022,11 @@ export type Mutation = {
   /** Update an existing user */
   updateUser: Maybe<UpdateUserPayload>;
   upload: UploadFile;
+};
+
+
+export type MutationCreateChallengeCompletionArgs = {
+  input: Maybe<CreateChallengeCompletionInput>;
 };
 
 
@@ -971,6 +1097,11 @@ export type MutationCreateSyntaxEntryArgs = {
 
 export type MutationCreateUserArgs = {
   input: Maybe<CreateUserInput>;
+};
+
+
+export type MutationDeleteChallengeCompletionArgs = {
+  input: Maybe<DeleteChallengeCompletionInput>;
 };
 
 
@@ -1065,6 +1196,11 @@ export type MutationResetPasswordArgs = {
 };
 
 
+export type MutationUpdateChallengeCompletionArgs = {
+  input: Maybe<UpdateChallengeCompletionInput>;
+};
+
+
 export type MutationUpdateCodeChallengeArgs = {
   input: Maybe<UpdateCodeChallengeInput>;
 };
@@ -1137,6 +1273,9 @@ export enum PublicationState {
 
 export type Query = {
   __typename?: 'Query';
+  challengeCompletion: Maybe<ChallengeCompletion>;
+  challengeCompletions: Maybe<Array<Maybe<ChallengeCompletion>>>;
+  challengeCompletionsConnection: Maybe<ChallengeCompletionConnection>;
   codeChallenge: Maybe<CodeChallenge>;
   codeChallenges: Maybe<Array<Maybe<CodeChallenge>>>;
   codeChallengesConnection: Maybe<CodeChallengeConnection>;
@@ -1145,6 +1284,7 @@ export type Query = {
   coursesConnection: Maybe<CourseConnection>;
   files: Maybe<Array<Maybe<UploadFile>>>;
   filesConnection: Maybe<UploadFileConnection>;
+  getChallenges: Maybe<Array<Challenge>>;
   getSublessonBySlugs: Sublesson;
   lesson: Maybe<Lesson>;
   lessonCompletion: Maybe<LessonCompletion>;
@@ -1173,6 +1313,29 @@ export type Query = {
   user: Maybe<UsersPermissionsUser>;
   users: Maybe<Array<Maybe<UsersPermissionsUser>>>;
   usersConnection: Maybe<UsersPermissionsUserConnection>;
+};
+
+
+export type QueryChallengeCompletionArgs = {
+  id: Scalars['ID'];
+  publicationState: Maybe<PublicationState>;
+};
+
+
+export type QueryChallengeCompletionsArgs = {
+  limit: Maybe<Scalars['Int']>;
+  publicationState: Maybe<PublicationState>;
+  sort: Maybe<Scalars['String']>;
+  start: Maybe<Scalars['Int']>;
+  where: Maybe<Scalars['JSON']>;
+};
+
+
+export type QueryChallengeCompletionsConnectionArgs = {
+  limit: Maybe<Scalars['Int']>;
+  sort: Maybe<Scalars['String']>;
+  start: Maybe<Scalars['Int']>;
+  where: Maybe<Scalars['JSON']>;
 };
 
 
@@ -1240,6 +1403,12 @@ export type QueryFilesConnectionArgs = {
   sort: Maybe<Scalars['String']>;
   start: Maybe<Scalars['Int']>;
   where: Maybe<Scalars['JSON']>;
+};
+
+
+export type QueryGetChallengesArgs = {
+  includeCompleted: Maybe<Scalars['Boolean']>;
+  lessonId: Scalars['Int'];
 };
 
 
@@ -2116,6 +2285,15 @@ export type UsersPermissionsUserGroupBy = {
   username: Maybe<Array<Maybe<UsersPermissionsUserConnectionUsername>>>;
 };
 
+export type CreateChallengeCompletionInput = {
+  data: Maybe<ChallengeCompletionInput>;
+};
+
+export type CreateChallengeCompletionPayload = {
+  __typename?: 'createChallengeCompletionPayload';
+  challengeCompletion: Maybe<ChallengeCompletion>;
+};
+
 export type CreateCodeChallengeInput = {
   data: Maybe<CodeChallengeInput>;
 };
@@ -2204,6 +2382,15 @@ export type CreateUserInput = {
 export type CreateUserPayload = {
   __typename?: 'createUserPayload';
   user: Maybe<UsersPermissionsUser>;
+};
+
+export type DeleteChallengeCompletionInput = {
+  where: Maybe<InputId>;
+};
+
+export type DeleteChallengeCompletionPayload = {
+  __typename?: 'deleteChallengeCompletionPayload';
+  challengeCompletion: Maybe<ChallengeCompletion>;
 };
 
 export type DeleteCodeChallengeInput = {
@@ -2305,6 +2492,15 @@ export type DeleteUserPayload = {
   user: Maybe<UsersPermissionsUser>;
 };
 
+export type EditChallengeCompletionInput = {
+  code_challenge: Maybe<Scalars['ID']>;
+  created_by: Maybe<Scalars['ID']>;
+  multiple_choice_challenge: Maybe<Scalars['ID']>;
+  published_at: Maybe<Scalars['DateTime']>;
+  updated_by: Maybe<Scalars['ID']>;
+  users_permissions_user: Maybe<Scalars['ID']>;
+};
+
 export type EditCodeChallengeInput = {
   HintOld: Maybe<Array<Maybe<EditComponentCodeChallengeHintInput>>>;
   InternalLabel: Maybe<Scalars['String']>;
@@ -2317,6 +2513,7 @@ export type EditCodeChallengeInput = {
   localizations: Maybe<Array<Maybe<Scalars['ID']>>>;
   prompt: Maybe<Scalars['String']>;
   published_at: Maybe<Scalars['DateTime']>;
+  sharedEvaluationCode: Maybe<Scalars['String']>;
   startingCode: Maybe<Scalars['String']>;
   tests: Maybe<Array<Maybe<EditComponentCodeChallengeTestInput>>>;
   updated_by: Maybe<Scalars['ID']>;
@@ -2345,6 +2542,13 @@ export type EditComponentCodeChallengeTestInput = {
   id: Maybe<Scalars['ID']>;
   internalTest: Maybe<Scalars['String']>;
   label: Maybe<Scalars['String']>;
+};
+
+export type EditComponentExternalResourceExternalResourceInput = {
+  id: Maybe<Scalars['ID']>;
+  link: Maybe<Scalars['String']>;
+  name: Maybe<Scalars['String']>;
+  type: Maybe<Enum_Componentexternalresourceexternalresource_Type>;
 };
 
 export type EditComponentModuleModuleLessonInput = {
@@ -2410,14 +2614,16 @@ export type EditFileInput = {
 };
 
 export type EditLessonCompletionInput = {
-  confidence: Maybe<Enum_Lessoncompletion_Confidence>;
   created_by: Maybe<Scalars['ID']>;
+  lesson: Maybe<Scalars['ID']>;
   published_at: Maybe<Scalars['DateTime']>;
   updated_by: Maybe<Scalars['ID']>;
+  users_permissions_user: Maybe<Scalars['ID']>;
 };
 
 export type EditLessonInput = {
   created_by: Maybe<Scalars['ID']>;
+  externalResources: Maybe<Array<Maybe<EditComponentExternalResourceExternalResourceInput>>>;
   internalNotes: Maybe<Scalars['String']>;
   isHard: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
@@ -2507,6 +2713,16 @@ export type EditUserInput = {
   role: Maybe<Scalars['ID']>;
   updated_by: Maybe<Scalars['ID']>;
   username: Maybe<Scalars['String']>;
+};
+
+export type UpdateChallengeCompletionInput = {
+  data: Maybe<EditChallengeCompletionInput>;
+  where: Maybe<InputId>;
+};
+
+export type UpdateChallengeCompletionPayload = {
+  __typename?: 'updateChallengeCompletionPayload';
+  challengeCompletion: Maybe<ChallengeCompletion>;
 };
 
 export type UpdateCodeChallengeInput = {
@@ -2628,6 +2844,13 @@ export type ChallengeHintFragment = { __typename?: 'ComponentChallengeHint', tex
 export type CodeChallengeDataFragment = { __typename?: 'CodeChallenge', id: string, getStartingCodeFromPreviousChallenge: boolean | null, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentCodeChallengeTests', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeHint', text: string, recommendedTimeBeforeViewing: number | null } | null> | null, challengeMeta: { __typename?: 'ComponentChallengeChallenge', difficulty: Enum_Componentchallengechallenge_Difficulty } | null };
 
 export type MultipleChoiceChallengeDataFragment = { __typename?: 'MultipleChoiceChallenge', id: string, prompt: string, canSelectMultipleOptions: boolean | null, useMarkdownForOptionsText: boolean | null, options: Array<{ __typename?: 'ComponentMultipleChoiceChallengeOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null };
+
+export type GetLessonExternalResourcesDataQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type GetLessonExternalResourcesDataQuery = { __typename?: 'Query', lessons: Array<{ __typename?: 'Lesson', externalResources: Array<{ __typename?: 'ComponentExternalResourceExternalResource', name: string, link: string, type: Enum_Componentexternalresourceexternalresource_Type } | null> | null } | null> | null };
 
 export type LessonSidebarDataFragment = { __typename?: 'Sublesson', name: string, challenges: Array<{ __typename?: 'ComponentSublessonchallengeChallenge', codeChallenge: { __typename?: 'CodeChallenge', id: string, getStartingCodeFromPreviousChallenge: boolean | null, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentCodeChallengeTests', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeHint', text: string, recommendedTimeBeforeViewing: number | null } | null> | null, challengeMeta: { __typename?: 'ComponentChallengeChallenge', difficulty: Enum_Componentchallengechallenge_Difficulty } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallenge', id: string, prompt: string, canSelectMultipleOptions: boolean | null, useMarkdownForOptionsText: boolean | null, options: Array<{ __typename?: 'ComponentMultipleChoiceChallengeOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null> | null };
 
@@ -2803,6 +3026,45 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const GetLessonExternalResourcesDataDocument = gql`
+    query getLessonExternalResourcesData($slug: String!) {
+  lessons(where: {slug: $slug}) {
+    externalResources {
+      name
+      link
+      type
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetLessonExternalResourcesDataQuery__
+ *
+ * To run a query within a React component, call `useGetLessonExternalResourcesDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLessonExternalResourcesDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLessonExternalResourcesDataQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useGetLessonExternalResourcesDataQuery(baseOptions: Apollo.QueryHookOptions<GetLessonExternalResourcesDataQuery, GetLessonExternalResourcesDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLessonExternalResourcesDataQuery, GetLessonExternalResourcesDataQueryVariables>(GetLessonExternalResourcesDataDocument, options);
+      }
+export function useGetLessonExternalResourcesDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLessonExternalResourcesDataQuery, GetLessonExternalResourcesDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLessonExternalResourcesDataQuery, GetLessonExternalResourcesDataQueryVariables>(GetLessonExternalResourcesDataDocument, options);
+        }
+export type GetLessonExternalResourcesDataQueryHookResult = ReturnType<typeof useGetLessonExternalResourcesDataQuery>;
+export type GetLessonExternalResourcesDataLazyQueryHookResult = ReturnType<typeof useGetLessonExternalResourcesDataLazyQuery>;
+export type GetLessonExternalResourcesDataQueryResult = Apollo.QueryResult<GetLessonExternalResourcesDataQuery, GetLessonExternalResourcesDataQueryVariables>;
 export const GetCourseMapOverlayDataDocument = gql`
     query getCourseMapOverlayData($slug: String!) {
   courses(where: {slug: $slug}) {
