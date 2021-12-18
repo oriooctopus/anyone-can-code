@@ -17,5 +17,5 @@ export default defineConfig({
       src: path.resolve(__dirname, './src'),
     },
   },
-  server: { port: 4000 },
+  server: { port: 4000, host: true },
 });
