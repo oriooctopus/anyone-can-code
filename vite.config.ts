@@ -22,5 +22,6 @@ export default defineConfig({
     },
   },
   server: { port: 4000, host: true },
-  base: process.env.baseURL,
+  base: '/anyone-can-code',
+  // base: process.env.baseURL,
 });
