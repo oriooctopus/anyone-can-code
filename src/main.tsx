@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import theme from 'src/styles/chakraTheme';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:1337/graphql',
+  uri: process.env.backendURL,
   cache: new InMemoryCache(),
 });
 

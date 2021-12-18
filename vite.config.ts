@@ -1,6 +1,7 @@
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
+import EnvironmentPlugin from 'vite-plugin-environment';
 import reactSvgPlugin from 'vite-plugin-react-svg';
 
 export default defineConfig({
@@ -8,6 +9,9 @@ export default defineConfig({
     react(),
     reactSvgPlugin({
       defaultExport: 'component',
+    }),
+    EnvironmentPlugin({
+      backendURL: process.env.BACKEND_URL || 'http://localhost:1337/graphql',
     }),
   ],
   resolve: {
@@ -18,5 +22,5 @@ export default defineConfig({
     },
   },
   server: { port: 4000, host: true },
-  base: '/anyone-can-code',
+  base: process.env.baseURL,
 });

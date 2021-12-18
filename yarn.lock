@@ -14585,6 +14585,11 @@ vite-babel-plugin@^0.0.2:
     "@rollup/plugin-babel" "^5.2.2"
     vite "^1.0.0-rc.9"
 
+vite-plugin-environment@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-environment/-/vite-plugin-environment-1.0.1.tgz#612d6e0cbc8de9e9d63883c54616c4923585e3ff"
+  integrity sha512-zosD4eipWFOLVG7DtcVKU/vCEXrAI/JzmoYihN/yR8DCBwXnL+zII0L18ko/kS7pLS0mUBlUzHa4e9sNbJu2sA==
+
 vite-plugin-react-svg@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/vite-plugin-react-svg/-/vite-plugin-react-svg-0.2.0.tgz#e8464187919688e4405a6f52971375fa894d7532"
