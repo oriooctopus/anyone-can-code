@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite",
     "develop": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && BACKEND_URL=http://143.198.120.197:1337/graphql vite build",
     "serve": "BASE_URL=/anyone-can-code BACKEND_URL=http://143.198.120.197:1337/graphql vite preview",
     "codegen": "graphql-codegen --config codegen.yml",
     "codegen:watch": "graphql-codegen --config codegen.yml --watch",
