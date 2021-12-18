@@ -6,9 +6,11 @@ export const CourseMapOverlayData = gql`
       name
       modules {
         name
-        lessons {
-          name
-          slug
+        ModuleLessons {
+          lesson {
+            name
+            slug
+          }
         }
       }
     }

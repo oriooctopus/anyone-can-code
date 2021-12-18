@@ -18,7 +18,7 @@ export const LessonExternalResources = () => {
   });
   const externalResources = data?.lessons?.[0]?.externalResources;
 
-  if (!externalResources) {
+  if (!externalResources?.length) {
     return null;
   }
 
@@ -44,7 +44,10 @@ export const LessonExternalResources = () => {
   );
 
   return (
-    <LearningSidebarPopupButton popupContent={popup}>
+    <LearningSidebarPopupButton
+      popupContent={popup}
+      buttonTooltip="External Resources"
+    >
       <IconButton
         aria-label="Toggle Syntax Handbook"
         icon={<BiLayerPlus size={30} />}

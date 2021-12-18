@@ -1,4 +1,3 @@
-import { isArray } from 'lodash';
 import { GetSyntaxHandbookDataQuery } from 'src/generated/graphql';
 
 function flatMap<T, U>(
@@ -16,9 +15,9 @@ export const getSyntaxHandbookEntriesFromQueryData = (
   data: GetSyntaxHandbookDataQuery,
 ) => {
   // TODO: clean this shit up
-  const lessons = data?.courses?.[0]?.modules?.[0]?.lessons || [];
+  const lessons = data?.courses?.[0]?.modules?.[0]?.ModuleLessons || [];
 
-  return flatMap(lessons, (lesson) => {
+  return flatMap(lessons, ({ lesson }) => {
     const lessonEntry = lesson?.syntaxEntry;
     const sublessonEntries = flatMap(lesson?.sublessons, ({ syntaxEntry }) => {
       return syntaxEntry ? [syntaxEntry] : [];

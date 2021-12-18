@@ -1,17 +1,18 @@
-import { Box, useDisclosure, useOutsideClick } from '@chakra-ui/react';
+import { Box, Tooltip, useDisclosure, useOutsideClick } from '@chakra-ui/react';
 import { cloneElement, useRef } from 'react';
 
 interface ILearningSidebarPopupButtonProps {
   children: JSX.Element;
   popupContent: React.ReactNode;
   popoverWidth?: number | string;
-  tooltipTitle: string;
+  buttonTooltip: string;
 }
 
 export const LearningSidebarPopupButton = ({
   children,
   popupContent,
   popoverWidth,
+  buttonTooltip,
 }: ILearningSidebarPopupButtonProps) => {
   const { isOpen, onClose, onToggle } = useDisclosure();
   const ref = useRef();
@@ -37,9 +38,11 @@ export const LearningSidebarPopupButton = ({
           {popupContent}
         </Box>
       )}
-      {cloneElement(children, {
-        onClick: onToggle,
-      })}
+      <Tooltip label={buttonTooltip}>
+        {cloneElement(children, {
+          onClick: onToggle,
+        })}
+      </Tooltip>
     </Box>
   );
 };

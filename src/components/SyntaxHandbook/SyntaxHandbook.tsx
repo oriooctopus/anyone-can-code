@@ -56,7 +56,10 @@ export const SyntaxHandbook = () => {
   );
 
   return (
-    <LearningSidebarPopupButton popupContent={popup}>
+    <LearningSidebarPopupButton
+      buttonTooltip="Syntax Handbook"
+      popupContent={popup}
+    >
       <IconButton
         aria-label="Toggle Syntax Handbook"
         icon={<BsJournals size={30} />}

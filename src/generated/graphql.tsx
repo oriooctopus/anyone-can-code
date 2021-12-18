@@ -307,33 +307,32 @@ export type ComponentExternalResourceExternalResource = {
   __typename?: 'ComponentExternalResourceExternalResource';
   id: Scalars['ID'];
   link: Scalars['String'];
-  name: Scalars['String'];
+  name: Maybe<Scalars['String']>;
   type: Enum_Componentexternalresourceexternalresource_Type;
 };
 
 export type ComponentExternalResourceExternalResourceInput = {
   link: Scalars['String'];
-  name: Scalars['String'];
+  name: Maybe<Scalars['String']>;
   type: Enum_Componentexternalresourceexternalresource_Type;
-};
-
-export type ComponentModuleModuleLesson = {
-  __typename?: 'ComponentModuleModuleLesson';
-  id: Scalars['ID'];
-  lesson: Maybe<Lesson>;
 };
 
 export type ComponentModuleModuleLessonInput = {
   lesson: Maybe<Scalars['ID']>;
 };
 
+export type ComponentModuleModuleLessons = {
+  __typename?: 'ComponentModuleModuleLessons';
+  id: Scalars['ID'];
+  lesson: Maybe<Lesson>;
+};
+
 export type ComponentModuleModuleRowInput = {
-  Lesson: Maybe<Array<Maybe<ComponentModuleModuleLessonInput>>>;
+  _: Maybe<Scalars['String']>;
 };
 
 export type ComponentModuleModuleRows = {
   __typename?: 'ComponentModuleModuleRows';
-  Lesson: Maybe<Array<Maybe<ComponentModuleModuleLesson>>>;
   id: Scalars['ID'];
 };
 
@@ -771,6 +770,7 @@ export type LocaleInput = {
 };
 
 export type ModuleInput = {
+  ModuleLessons: Maybe<Array<Maybe<ComponentModuleModuleLessonInput>>>;
   created_by: Maybe<Scalars['ID']>;
   lessons: Maybe<Array<Maybe<Scalars['ID']>>>;
   locale: Maybe<Scalars['String']>;
@@ -782,6 +782,7 @@ export type ModuleInput = {
 
 export type Modules = {
   __typename?: 'Modules';
+  ModuleLessons: Maybe<Array<Maybe<ComponentModuleModuleLessons>>>;
   created_at: Scalars['DateTime'];
   id: Scalars['ID'];
   lessons: Maybe<Array<Maybe<Lesson>>>;
@@ -867,7 +868,7 @@ export type ModulesGroupBy = {
   updated_at: Maybe<Array<Maybe<ModulesConnectionUpdated_At>>>;
 };
 
-export type Morph = ChallengeCompletion | ChallengeCompletionAggregator | ChallengeCompletionConnection | ChallengeCompletionConnectionCode_Challenge | ChallengeCompletionConnectionCreated_At | ChallengeCompletionConnectionId | ChallengeCompletionConnectionMultiple_Choice_Challenge | ChallengeCompletionConnectionPublished_At | ChallengeCompletionConnectionUpdated_At | ChallengeCompletionConnectionUsers_Permissions_User | ChallengeCompletionGroupBy | CodeChallenge | CodeChallengeAggregator | CodeChallengeConnection | CodeChallengeConnectionChallengeMeta | CodeChallengeConnectionCreated_At | CodeChallengeConnectionGetStartingCodeFromPreviousChallenge | CodeChallengeConnectionId | CodeChallengeConnectionLocale | CodeChallengeConnectionPrompt | CodeChallengeConnectionPublished_At | CodeChallengeConnectionSharedEvaluationCode | CodeChallengeConnectionStartingCode | CodeChallengeConnectionUpdated_At | CodeChallengeGroupBy | ComponentChallengeChallenge | ComponentChallengeHint | ComponentCodeChallengeHint | ComponentCodeChallengeTests | ComponentExternalResourceExternalResource | ComponentModuleModuleLesson | ComponentModuleModuleRows | ComponentMultipleChoiceChallengeOptions | ComponentSublessonSublessonDescriptions | ComponentSublessonchallengeChallenge | Course | CourseAggregator | CourseConnection | CourseConnectionCreated_At | CourseConnectionId | CourseConnectionLocale | CourseConnectionName | CourseConnectionPublished_At | CourseConnectionSlug | CourseConnectionUpdated_At | CourseGroupBy | I18NLocale | Lesson | LessonAggregator | LessonCompletion | LessonCompletionAggregator | LessonCompletionConnection | LessonCompletionConnectionCreated_At | LessonCompletionConnectionId | LessonCompletionConnectionLesson | LessonCompletionConnectionPublished_At | LessonCompletionConnectionUpdated_At | LessonCompletionConnectionUsers_Permissions_User | LessonCompletionGroupBy | LessonConnection | LessonConnectionCreated_At | LessonConnectionId | LessonConnectionInternalNotes | LessonConnectionIsHard | LessonConnectionLocale | LessonConnectionModule | LessonConnectionName | LessonConnectionPublished_At | LessonConnectionSlug | LessonConnectionSyntaxEntry | LessonConnectionUpdated_At | LessonGroupBy | Modules | ModulesAggregator | ModulesConnection | ModulesConnectionCreated_At | ModulesConnectionId | ModulesConnectionLocale | ModulesConnectionName | ModulesConnectionPublished_At | ModulesConnectionUpdated_At | ModulesGroupBy | MultipleChoiceChallenge | MultipleChoiceChallengeAggregator | MultipleChoiceChallengeConnection | MultipleChoiceChallengeConnectionCanSelectMultipleOptions | MultipleChoiceChallengeConnectionChallengeMeta | MultipleChoiceChallengeConnectionCreated_At | MultipleChoiceChallengeConnectionId | MultipleChoiceChallengeConnectionPrompt | MultipleChoiceChallengeConnectionPublished_At | MultipleChoiceChallengeConnectionUpdated_At | MultipleChoiceChallengeConnectionUseMarkdownForOptionsText | MultipleChoiceChallengeGroupBy | Sublesson | SublessonAggregator | SublessonConnection | SublessonConnectionCreated_At | SublessonConnectionDescriptions | SublessonConnectionId | SublessonConnectionLesson | SublessonConnectionMinimizeEditor | SublessonConnectionName | SublessonConnectionPublished_At | SublessonConnectionSyntaxEntry | SublessonConnectionUpdated_At | SublessonGroupBy | SyntaxEntry | SyntaxEntryAggregator | SyntaxEntryAggregatorAvg | SyntaxEntryAggregatorMax | SyntaxEntryAggregatorMin | SyntaxEntryAggregatorSum | SyntaxEntryConnection | SyntaxEntryConnectionContent | SyntaxEntryConnectionCreated_At | SyntaxEntryConnectionId | SyntaxEntryConnectionLesson | SyntaxEntryConnectionMaxWidth | SyntaxEntryConnectionName | SyntaxEntryConnectionPublished_At | SyntaxEntryConnectionSublesson | SyntaxEntryConnectionUpdated_At | SyntaxEntryGroupBy | UploadFile | UploadFileAggregator | UploadFileAggregatorAvg | UploadFileAggregatorMax | UploadFileAggregatorMin | UploadFileAggregatorSum | UploadFileConnection | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionCreated_At | UploadFileConnectionExt | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionHeight | UploadFileConnectionId | UploadFileConnectionMime | UploadFileConnectionName | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | UploadFileConnectionSize | UploadFileConnectionUpdated_At | UploadFileConnectionUrl | UploadFileConnectionWidth | UploadFileGroupBy | UserPermissionsPasswordPayload | UsersPermissionsLoginPayload | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleAggregator | UsersPermissionsRoleConnection | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionType | UsersPermissionsRoleGroupBy | UsersPermissionsUser | UsersPermissionsUserAggregator | UsersPermissionsUserConnection | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserGroupBy | CreateChallengeCompletionPayload | CreateCodeChallengePayload | CreateCoursePayload | CreateLessonCompletionPayload | CreateLessonPayload | CreateModulePayload | CreateMultipleChoiceChallengePayload | CreateRolePayload | CreateSublessonPayload | CreateSyntaxEntryPayload | CreateUserPayload | DeleteChallengeCompletionPayload | DeleteCodeChallengePayload | DeleteCoursePayload | DeleteFilePayload | DeleteLessonCompletionPayload | DeleteLessonPayload | DeleteModulePayload | DeleteMultipleChoiceChallengePayload | DeleteRolePayload | DeleteSublessonPayload | DeleteSyntaxEntryPayload | DeleteUserPayload | UpdateChallengeCompletionPayload | UpdateCodeChallengePayload | UpdateCoursePayload | UpdateLessonCompletionPayload | UpdateLessonPayload | UpdateModulePayload | UpdateMultipleChoiceChallengePayload | UpdateRolePayload | UpdateSublessonPayload | UpdateSyntaxEntryPayload | UpdateUserPayload;
+export type Morph = ChallengeCompletion | ChallengeCompletionAggregator | ChallengeCompletionConnection | ChallengeCompletionConnectionCode_Challenge | ChallengeCompletionConnectionCreated_At | ChallengeCompletionConnectionId | ChallengeCompletionConnectionMultiple_Choice_Challenge | ChallengeCompletionConnectionPublished_At | ChallengeCompletionConnectionUpdated_At | ChallengeCompletionConnectionUsers_Permissions_User | ChallengeCompletionGroupBy | CodeChallenge | CodeChallengeAggregator | CodeChallengeConnection | CodeChallengeConnectionChallengeMeta | CodeChallengeConnectionCreated_At | CodeChallengeConnectionGetStartingCodeFromPreviousChallenge | CodeChallengeConnectionId | CodeChallengeConnectionLocale | CodeChallengeConnectionPrompt | CodeChallengeConnectionPublished_At | CodeChallengeConnectionSharedEvaluationCode | CodeChallengeConnectionStartingCode | CodeChallengeConnectionUpdated_At | CodeChallengeGroupBy | ComponentChallengeChallenge | ComponentChallengeHint | ComponentCodeChallengeHint | ComponentCodeChallengeTests | ComponentExternalResourceExternalResource | ComponentModuleModuleLessons | ComponentModuleModuleRows | ComponentMultipleChoiceChallengeOptions | ComponentSublessonSublessonDescriptions | ComponentSublessonchallengeChallenge | Course | CourseAggregator | CourseConnection | CourseConnectionCreated_At | CourseConnectionId | CourseConnectionLocale | CourseConnectionName | CourseConnectionPublished_At | CourseConnectionSlug | CourseConnectionUpdated_At | CourseGroupBy | I18NLocale | Lesson | LessonAggregator | LessonCompletion | LessonCompletionAggregator | LessonCompletionConnection | LessonCompletionConnectionCreated_At | LessonCompletionConnectionId | LessonCompletionConnectionLesson | LessonCompletionConnectionPublished_At | LessonCompletionConnectionUpdated_At | LessonCompletionConnectionUsers_Permissions_User | LessonCompletionGroupBy | LessonConnection | LessonConnectionCreated_At | LessonConnectionId | LessonConnectionInternalNotes | LessonConnectionIsHard | LessonConnectionLocale | LessonConnectionModule | LessonConnectionName | LessonConnectionPublished_At | LessonConnectionSlug | LessonConnectionSyntaxEntry | LessonConnectionUpdated_At | LessonGroupBy | Modules | ModulesAggregator | ModulesConnection | ModulesConnectionCreated_At | ModulesConnectionId | ModulesConnectionLocale | ModulesConnectionName | ModulesConnectionPublished_At | ModulesConnectionUpdated_At | ModulesGroupBy | MultipleChoiceChallenge | MultipleChoiceChallengeAggregator | MultipleChoiceChallengeConnection | MultipleChoiceChallengeConnectionCanSelectMultipleOptions | MultipleChoiceChallengeConnectionChallengeMeta | MultipleChoiceChallengeConnectionCreated_At | MultipleChoiceChallengeConnectionId | MultipleChoiceChallengeConnectionPrompt | MultipleChoiceChallengeConnectionPublished_At | MultipleChoiceChallengeConnectionUpdated_At | MultipleChoiceChallengeConnectionUseMarkdownForOptionsText | MultipleChoiceChallengeGroupBy | Sublesson | SublessonAggregator | SublessonConnection | SublessonConnectionCreated_At | SublessonConnectionDescriptions | SublessonConnectionId | SublessonConnectionLesson | SublessonConnectionMinimizeEditor | SublessonConnectionName | SublessonConnectionPublished_At | SublessonConnectionSyntaxEntry | SublessonConnectionUpdated_At | SublessonGroupBy | SyntaxEntry | SyntaxEntryAggregator | SyntaxEntryAggregatorAvg | SyntaxEntryAggregatorMax | SyntaxEntryAggregatorMin | SyntaxEntryAggregatorSum | SyntaxEntryConnection | SyntaxEntryConnectionContent | SyntaxEntryConnectionCreated_At | SyntaxEntryConnectionId | SyntaxEntryConnectionLesson | SyntaxEntryConnectionMaxWidth | SyntaxEntryConnectionName | SyntaxEntryConnectionPublished_At | SyntaxEntryConnectionSublesson | SyntaxEntryConnectionUpdated_At | SyntaxEntryGroupBy | UploadFile | UploadFileAggregator | UploadFileAggregatorAvg | UploadFileAggregatorMax | UploadFileAggregatorMin | UploadFileAggregatorSum | UploadFileConnection | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionCreated_At | UploadFileConnectionExt | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionHeight | UploadFileConnectionId | UploadFileConnectionMime | UploadFileConnectionName | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | UploadFileConnectionSize | UploadFileConnectionUpdated_At | UploadFileConnectionUrl | UploadFileConnectionWidth | UploadFileGroupBy | UserPermissionsPasswordPayload | UsersPermissionsLoginPayload | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleAggregator | UsersPermissionsRoleConnection | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionType | UsersPermissionsRoleGroupBy | UsersPermissionsUser | UsersPermissionsUserAggregator | UsersPermissionsUserConnection | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserGroupBy | CreateChallengeCompletionPayload | CreateCodeChallengePayload | CreateCoursePayload | CreateLessonCompletionPayload | CreateLessonPayload | CreateModulePayload | CreateMultipleChoiceChallengePayload | CreateRolePayload | CreateSublessonPayload | CreateSyntaxEntryPayload | CreateUserPayload | DeleteChallengeCompletionPayload | DeleteCodeChallengePayload | DeleteCoursePayload | DeleteFilePayload | DeleteLessonCompletionPayload | DeleteLessonPayload | DeleteModulePayload | DeleteMultipleChoiceChallengePayload | DeleteRolePayload | DeleteSublessonPayload | DeleteSyntaxEntryPayload | DeleteUserPayload | UpdateChallengeCompletionPayload | UpdateCodeChallengePayload | UpdateCoursePayload | UpdateLessonCompletionPayload | UpdateLessonPayload | UpdateModulePayload | UpdateMultipleChoiceChallengePayload | UpdateRolePayload | UpdateSublessonPayload | UpdateSyntaxEntryPayload | UpdateUserPayload;
 
 export type MultipleChoiceChallenge = {
   __typename?: 'MultipleChoiceChallenge';
@@ -2557,7 +2558,6 @@ export type EditComponentModuleModuleLessonInput = {
 };
 
 export type EditComponentModuleModuleRowInput = {
-  Lesson: Maybe<Array<Maybe<EditComponentModuleModuleLessonInput>>>;
   id: Maybe<Scalars['ID']>;
 };
 
@@ -2645,6 +2645,7 @@ export type EditLocaleInput = {
 };
 
 export type EditModuleInput = {
+  ModuleLessons: Maybe<Array<Maybe<EditComponentModuleModuleLessonInput>>>;
   created_by: Maybe<Scalars['ID']>;
   lessons: Maybe<Array<Maybe<Scalars['ID']>>>;
   locale: Maybe<Scalars['String']>;
@@ -2850,7 +2851,7 @@ export type GetLessonExternalResourcesDataQueryVariables = Exact<{
 }>;
 
 
-export type GetLessonExternalResourcesDataQuery = { __typename?: 'Query', lessons: Array<{ __typename?: 'Lesson', externalResources: Array<{ __typename?: 'ComponentExternalResourceExternalResource', name: string, link: string, type: Enum_Componentexternalresourceexternalresource_Type } | null> | null } | null> | null };
+export type GetLessonExternalResourcesDataQuery = { __typename?: 'Query', lessons: Array<{ __typename?: 'Lesson', externalResources: Array<{ __typename?: 'ComponentExternalResourceExternalResource', name: string | null, link: string, type: Enum_Componentexternalresourceexternalresource_Type } | null> | null } | null> | null };
 
 export type LessonSidebarDataFragment = { __typename?: 'Sublesson', name: string, challenges: Array<{ __typename?: 'ComponentSublessonchallengeChallenge', codeChallenge: { __typename?: 'CodeChallenge', id: string, getStartingCodeFromPreviousChallenge: boolean | null, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentCodeChallengeTests', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeHint', text: string, recommendedTimeBeforeViewing: number | null } | null> | null, challengeMeta: { __typename?: 'ComponentChallengeChallenge', difficulty: Enum_Componentchallengechallenge_Difficulty } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallenge', id: string, prompt: string, canSelectMultipleOptions: boolean | null, useMarkdownForOptionsText: boolean | null, options: Array<{ __typename?: 'ComponentMultipleChoiceChallengeOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null> | null };
 
@@ -2859,14 +2860,14 @@ export type GetCourseMapOverlayDataQueryVariables = Exact<{
 }>;
 
 
-export type GetCourseMapOverlayDataQuery = { __typename?: 'Query', courses: Array<{ __typename?: 'Course', name: string, modules: Array<{ __typename?: 'Modules', name: string, lessons: Array<{ __typename?: 'Lesson', name: string, slug: string } | null> | null } | null> | null } | null> | null };
+export type GetCourseMapOverlayDataQuery = { __typename?: 'Query', courses: Array<{ __typename?: 'Course', name: string, modules: Array<{ __typename?: 'Modules', name: string, ModuleLessons: Array<{ __typename?: 'ComponentModuleModuleLessons', lesson: { __typename?: 'Lesson', name: string, slug: string } | null } | null> | null } | null> | null } | null> | null };
 
 export type GetSyntaxHandbookDataQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type GetSyntaxHandbookDataQuery = { __typename?: 'Query', courses: Array<{ __typename?: 'Course', modules: Array<{ __typename?: 'Modules', lessons: Array<{ __typename?: 'Lesson', syntaxEntry: { __typename?: 'SyntaxEntry', content: string, name: string, maxWidth: number | null } | null, sublessons: Array<{ __typename?: 'Sublesson', syntaxEntry: { __typename?: 'SyntaxEntry', content: string, name: string, maxWidth: number | null } | null } | null> | null } | null> | null } | null> | null } | null> | null };
+export type GetSyntaxHandbookDataQuery = { __typename?: 'Query', courses: Array<{ __typename?: 'Course', modules: Array<{ __typename?: 'Modules', ModuleLessons: Array<{ __typename?: 'ComponentModuleModuleLessons', lesson: { __typename?: 'Lesson', syntaxEntry: { __typename?: 'SyntaxEntry', content: string, name: string, maxWidth: number | null } | null, sublessons: Array<{ __typename?: 'Sublesson', syntaxEntry: { __typename?: 'SyntaxEntry', content: string, name: string, maxWidth: number | null } | null } | null> | null } | null } | null> | null } | null> | null } | null> | null };
 
 export type GetLessonDataQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -3071,9 +3072,11 @@ export const GetCourseMapOverlayDataDocument = gql`
     name
     modules {
       name
-      lessons {
-        name
-        slug
+      ModuleLessons {
+        lesson {
+          name
+          slug
+        }
       }
     }
   }
@@ -3111,17 +3114,19 @@ export const GetSyntaxHandbookDataDocument = gql`
     query getSyntaxHandbookData($slug: String!) {
   courses(where: {slug: $slug}) {
     modules {
-      lessons {
-        syntaxEntry {
-          content
-          name
-          maxWidth
-        }
-        sublessons {
+      ModuleLessons {
+        lesson {
           syntaxEntry {
             content
             name
             maxWidth
+          }
+          sublessons {
+            syntaxEntry {
+              content
+              name
+              maxWidth
+            }
           }
         }
       }

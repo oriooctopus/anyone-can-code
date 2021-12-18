@@ -25,9 +25,9 @@ export const CourseMapOverlay = () => {
               <Heading fontSize="26px" p={4}>
                 {moduleData.name}
               </Heading>
-              {moduleData.lessons &&
-                moduleData.lessons?.map(
-                  (lesson) =>
+              {moduleData.ModuleLessons &&
+                moduleData.ModuleLessons?.map(
+                  ({ lesson }) =>
                     lesson && (
                       <CourseMapOverlayLesson
                         name={lesson.name}
