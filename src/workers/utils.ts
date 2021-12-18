@@ -132,7 +132,3 @@ export const evaluateWithContext = (code: string, context = {}) => {
     return result;
   }.call(context);
 };
-
-const checkInitialAssignment = () => {
-  _codeString.split('\n');
-};

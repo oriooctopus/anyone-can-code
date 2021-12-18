@@ -36,6 +36,7 @@ export const SyntaxHandbook = () => {
           }
           popoverWidth={maxWidth || 400}
           key={name}
+          buttonTooltip="Syntax Handbook"
         >
           <Button
             borderTop={index === 0 && '1px solid black'}
