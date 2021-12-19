@@ -12,7 +12,7 @@ function App() {
   const [overlayState, setOverlayState] = useState<TSidebarOverlayState>();
 
   return (
-    <Router basename={process.env.PUBLIC_URL}>
+    <Router>
       <SidebarOverlayContext.Provider value={{ overlayState, setOverlayState }}>
         <SidebarOverlay />
         {/* <AuthModal /> */}
@@ -21,6 +21,9 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
+          <Route path="/about">
+           test1234
+           </Route>
           <Route path="/lesson/:slug">
             <LessonPageContainer />
           </Route>
