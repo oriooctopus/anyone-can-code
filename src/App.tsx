@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Home } from 'src/pages/Home';
 import { LessonPageContainer } from 'src/pages/Lesson/Lesson';
 import { PageNotFound } from 'src/pages/PageNotFound';
@@ -12,7 +12,7 @@ function App() {
   const [overlayState, setOverlayState] = useState<TSidebarOverlayState>();
 
   return (
-    <Router basename="/">
+    <Router basename={process.env.PUBLIC_URL}>
       <SidebarOverlayContext.Provider value={{ overlayState, setOverlayState }}>
         <SidebarOverlay />
         {/* <AuthModal /> */}
