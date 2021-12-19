@@ -4,7 +4,7 @@
 set -e
 
 # build
-npm run build
+# npm run build
 
 # navigate into the build output directory
 cd dist
@@ -12,12 +12,12 @@ cd dist
 # if you are deploying to a custom domain
 # echo 'www.example.com' > CNAME
 
-git init
-git add -A
-git commit -m 'deploy'
+# git init
+# git add -A
+# git commit -m 'deploy'
 
 # if you are deploying to https://<USERNAME>.github.io
-git push -f https://github.com/oriooctopus/oriooctopus.github.io.git main
+git push -f https://github.com/oriooctopus/oriooctopus.github.io master
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
 # git push -f https://github.com/oriooctopus/anyone-can-code.git master:gh-pages
