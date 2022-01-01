@@ -37,6 +37,9 @@ const getCodeEvaluationHelpers = (
     wasLoggedToConsole: (val: unknown) => {
       return logs.some((logGroup) => logGroup.some((log) => log === val));
     },
+    wasFunctionInvoked: (functionName: string) => {
+      return codeString.trim().includes(`${functionName}()`);
+    },
     /**
      * Evaluates a condition for each line of the provided code.
      * Upon finding a line that passes it returns that line's index
@@ -84,6 +87,7 @@ export const getEvaluationContext = (
   const _codeString = `${code}`;
   return {
     _codeEvaluationHelpers: getCodeEvaluationHelpers(logs, _codeString),
+    _helpers: getCodeEvaluationHelpers(logs, _codeString),
     _codeString,
     _internalLogs: logs,
   };
