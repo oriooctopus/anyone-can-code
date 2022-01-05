@@ -1,7 +1,7 @@
 overwrite: true
 schema:
   - client-schema.graphql
-  - http://localhost:1337/graphql
+  - https://acc-v-4-obk5u.ondigitalocean.app/graphql
 documents:
   - 'src/**/*.graphql'
   - 'src/**/*.query.{ts,tsx}'

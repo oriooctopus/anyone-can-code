@@ -2,35 +2,35 @@ import gql from 'graphql-tag';
 import { challengeHintsData } from 'components/ChallengeHints/ChallengeHints.query';
 
 export const codeChallengeData = gql`
-  fragment codeChallengeData on CodeChallenge {
+  fragment codeChallengeData on CodeChallengeEntity {
     id
-    tests {
-      internalTest
-      label
+    attributes {
+      tests {
+        internalTest
+        label
+      }
+      hints {
+        ...challengeHint
+      }
+      getStartingCodeFromPreviousChallenge
+      startingCode
+      prompt
     }
-    hints {
-      ...challengeHint
-    }
-    getStartingCodeFromPreviousChallenge
-    challengeMeta {
-      difficulty
-    }
-    startingCode
-    prompt
   }
   ${challengeHintsData}
 `;
 
 export const multipleChoiceChallengeData = gql`
-  fragment multipleChoiceChallengeData on MultipleChoiceChallenge {
+  fragment multipleChoiceChallengeData on MultipleChoiceChallengeEntity {
     id
-    prompt
-    options {
-      text
-      isCorrect
-      incorrectChoiceExplanation
+    attributes {
+      prompt
+      options {
+        text
+        isCorrect
+        incorrectChoiceExplanation
+      }
+      canSelectMultipleOptions
     }
-    canSelectMultipleOptions
-    useMarkdownForOptionsText
   }
 `;

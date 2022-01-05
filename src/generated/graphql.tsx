@@ -12,495 +12,315 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
-  Date: any;
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
-  /** The `Long` scalar type represents 52-bit integers */
-  Long: any;
-  /** A time string with format: HH:mm:ss.SSS */
-  Time: any;
   /** The `Upload` scalar type represents a file upload. */
   Upload: any;
 };
 
-export type AdminUser = {
-  __typename?: 'AdminUser';
-  firstname: Scalars['String'];
-  id: Scalars['ID'];
-  lastname: Scalars['String'];
-  username: Maybe<Scalars['String']>;
-};
-
-export type Challenge = CodeChallenge | MultipleChoiceChallenge;
-
-export type ChallengeCompletion = {
-  __typename?: 'ChallengeCompletion';
-  code_challenge: Maybe<CodeChallenge>;
-  created_at: Scalars['DateTime'];
-  id: Scalars['ID'];
-  multiple_choice_challenge: Maybe<MultipleChoiceChallenge>;
-  published_at: Maybe<Scalars['DateTime']>;
-  updated_at: Scalars['DateTime'];
-  users_permissions_user: Maybe<UsersPermissionsUser>;
-};
-
-export type ChallengeCompletionAggregator = {
-  __typename?: 'ChallengeCompletionAggregator';
-  count: Maybe<Scalars['Int']>;
-  totalCount: Maybe<Scalars['Int']>;
-};
-
-export type ChallengeCompletionConnection = {
-  __typename?: 'ChallengeCompletionConnection';
-  aggregate: Maybe<ChallengeCompletionAggregator>;
-  groupBy: Maybe<ChallengeCompletionGroupBy>;
-  values: Maybe<Array<Maybe<ChallengeCompletion>>>;
-};
-
-export type ChallengeCompletionConnectionCode_Challenge = {
-  __typename?: 'ChallengeCompletionConnectionCode_challenge';
-  connection: Maybe<ChallengeCompletionConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type ChallengeCompletionConnectionCreated_At = {
-  __typename?: 'ChallengeCompletionConnectionCreated_at';
-  connection: Maybe<ChallengeCompletionConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type ChallengeCompletionConnectionId = {
-  __typename?: 'ChallengeCompletionConnectionId';
-  connection: Maybe<ChallengeCompletionConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type ChallengeCompletionConnectionMultiple_Choice_Challenge = {
-  __typename?: 'ChallengeCompletionConnectionMultiple_choice_challenge';
-  connection: Maybe<ChallengeCompletionConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type ChallengeCompletionConnectionPublished_At = {
-  __typename?: 'ChallengeCompletionConnectionPublished_at';
-  connection: Maybe<ChallengeCompletionConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type ChallengeCompletionConnectionUpdated_At = {
-  __typename?: 'ChallengeCompletionConnectionUpdated_at';
-  connection: Maybe<ChallengeCompletionConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type ChallengeCompletionConnectionUsers_Permissions_User = {
-  __typename?: 'ChallengeCompletionConnectionUsers_permissions_user';
-  connection: Maybe<ChallengeCompletionConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type ChallengeCompletionGroupBy = {
-  __typename?: 'ChallengeCompletionGroupBy';
-  code_challenge: Maybe<Array<Maybe<ChallengeCompletionConnectionCode_Challenge>>>;
-  created_at: Maybe<Array<Maybe<ChallengeCompletionConnectionCreated_At>>>;
-  id: Maybe<Array<Maybe<ChallengeCompletionConnectionId>>>;
-  multiple_choice_challenge: Maybe<Array<Maybe<ChallengeCompletionConnectionMultiple_Choice_Challenge>>>;
-  published_at: Maybe<Array<Maybe<ChallengeCompletionConnectionPublished_At>>>;
-  updated_at: Maybe<Array<Maybe<ChallengeCompletionConnectionUpdated_At>>>;
-  users_permissions_user: Maybe<Array<Maybe<ChallengeCompletionConnectionUsers_Permissions_User>>>;
-};
-
-export type ChallengeCompletionInput = {
-  code_challenge: Maybe<Scalars['ID']>;
-  created_by: Maybe<Scalars['ID']>;
-  multiple_choice_challenge: Maybe<Scalars['ID']>;
-  published_at: Maybe<Scalars['DateTime']>;
-  updated_by: Maybe<Scalars['ID']>;
-  users_permissions_user: Maybe<Scalars['ID']>;
+export type BooleanFilterInput = {
+  and: Maybe<Array<Maybe<Scalars['Boolean']>>>;
+  between: Maybe<Array<Maybe<Scalars['Boolean']>>>;
+  contains: Maybe<Scalars['Boolean']>;
+  containsi: Maybe<Scalars['Boolean']>;
+  endsWith: Maybe<Scalars['Boolean']>;
+  eq: Maybe<Scalars['Boolean']>;
+  gt: Maybe<Scalars['Boolean']>;
+  gte: Maybe<Scalars['Boolean']>;
+  in: Maybe<Array<Maybe<Scalars['Boolean']>>>;
+  lt: Maybe<Scalars['Boolean']>;
+  lte: Maybe<Scalars['Boolean']>;
+  ne: Maybe<Scalars['Boolean']>;
+  not: Maybe<BooleanFilterInput>;
+  notContains: Maybe<Scalars['Boolean']>;
+  notContainsi: Maybe<Scalars['Boolean']>;
+  notIn: Maybe<Array<Maybe<Scalars['Boolean']>>>;
+  notNull: Maybe<Scalars['Boolean']>;
+  null: Maybe<Scalars['Boolean']>;
+  or: Maybe<Array<Maybe<Scalars['Boolean']>>>;
+  startsWith: Maybe<Scalars['Boolean']>;
 };
 
 export type CodeChallenge = {
   __typename?: 'CodeChallenge';
-  HintOld: Maybe<Array<Maybe<ComponentCodeChallengeHint>>>;
-  challengeMeta: Maybe<ComponentChallengeChallenge>;
-  created_at: Scalars['DateTime'];
+  createdAt: Maybe<Scalars['DateTime']>;
   getStartingCodeFromPreviousChallenge: Maybe<Scalars['Boolean']>;
-  hints: Maybe<Array<Maybe<ComponentChallengeHint>>>;
-  id: Scalars['ID'];
-  locale: Maybe<Scalars['String']>;
-  localizations: Maybe<Array<Maybe<CodeChallenge>>>;
+  hints: Maybe<Array<Maybe<ComponentChallengeChallengeHints>>>;
   prompt: Scalars['String'];
-  published_at: Maybe<Scalars['DateTime']>;
-  sharedEvaluationCode: Maybe<Scalars['String']>;
+  publishedAt: Maybe<Scalars['DateTime']>;
   startingCode: Maybe<Scalars['String']>;
-  tests: Maybe<Array<Maybe<ComponentCodeChallengeTests>>>;
-  updated_at: Scalars['DateTime'];
+  tests: Maybe<Array<Maybe<ComponentChallengeCodeChallengeTest>>>;
+  updatedAt: Maybe<Scalars['DateTime']>;
 };
 
 
-export type CodeChallengeLocalizationsArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+export type CodeChallengeHintsArgs = {
+  filters: Maybe<ComponentChallengeChallengeHintsFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
-export type CodeChallengeAggregator = {
-  __typename?: 'CodeChallengeAggregator';
-  count: Maybe<Scalars['Int']>;
-  totalCount: Maybe<Scalars['Int']>;
+
+export type CodeChallengeTestsArgs = {
+  filters: Maybe<ComponentChallengeCodeChallengeTestFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
-export type CodeChallengeConnection = {
-  __typename?: 'CodeChallengeConnection';
-  aggregate: Maybe<CodeChallengeAggregator>;
-  groupBy: Maybe<CodeChallengeGroupBy>;
-  values: Maybe<Array<Maybe<CodeChallenge>>>;
+export type CodeChallengeEntity = {
+  __typename?: 'CodeChallengeEntity';
+  attributes: Maybe<CodeChallenge>;
+  id: Maybe<Scalars['ID']>;
 };
 
-export type CodeChallengeConnectionChallengeMeta = {
-  __typename?: 'CodeChallengeConnectionChallengeMeta';
-  connection: Maybe<CodeChallengeConnection>;
-  key: Maybe<Scalars['ID']>;
+export type CodeChallengeEntityResponse = {
+  __typename?: 'CodeChallengeEntityResponse';
+  data: Maybe<CodeChallengeEntity>;
 };
 
-export type CodeChallengeConnectionCreated_At = {
-  __typename?: 'CodeChallengeConnectionCreated_at';
-  connection: Maybe<CodeChallengeConnection>;
-  key: Maybe<Scalars['DateTime']>;
+export type CodeChallengeEntityResponseCollection = {
+  __typename?: 'CodeChallengeEntityResponseCollection';
+  data: Array<CodeChallengeEntity>;
+  meta: ResponseCollectionMeta;
 };
 
-export type CodeChallengeConnectionGetStartingCodeFromPreviousChallenge = {
-  __typename?: 'CodeChallengeConnectionGetStartingCodeFromPreviousChallenge';
-  connection: Maybe<CodeChallengeConnection>;
-  key: Maybe<Scalars['Boolean']>;
-};
-
-export type CodeChallengeConnectionId = {
-  __typename?: 'CodeChallengeConnectionId';
-  connection: Maybe<CodeChallengeConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type CodeChallengeConnectionLocale = {
-  __typename?: 'CodeChallengeConnectionLocale';
-  connection: Maybe<CodeChallengeConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type CodeChallengeConnectionPrompt = {
-  __typename?: 'CodeChallengeConnectionPrompt';
-  connection: Maybe<CodeChallengeConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type CodeChallengeConnectionPublished_At = {
-  __typename?: 'CodeChallengeConnectionPublished_at';
-  connection: Maybe<CodeChallengeConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type CodeChallengeConnectionSharedEvaluationCode = {
-  __typename?: 'CodeChallengeConnectionSharedEvaluationCode';
-  connection: Maybe<CodeChallengeConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type CodeChallengeConnectionStartingCode = {
-  __typename?: 'CodeChallengeConnectionStartingCode';
-  connection: Maybe<CodeChallengeConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type CodeChallengeConnectionUpdated_At = {
-  __typename?: 'CodeChallengeConnectionUpdated_at';
-  connection: Maybe<CodeChallengeConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type CodeChallengeGroupBy = {
-  __typename?: 'CodeChallengeGroupBy';
-  challengeMeta: Maybe<Array<Maybe<CodeChallengeConnectionChallengeMeta>>>;
-  created_at: Maybe<Array<Maybe<CodeChallengeConnectionCreated_At>>>;
-  getStartingCodeFromPreviousChallenge: Maybe<Array<Maybe<CodeChallengeConnectionGetStartingCodeFromPreviousChallenge>>>;
-  id: Maybe<Array<Maybe<CodeChallengeConnectionId>>>;
-  locale: Maybe<Array<Maybe<CodeChallengeConnectionLocale>>>;
-  prompt: Maybe<Array<Maybe<CodeChallengeConnectionPrompt>>>;
-  published_at: Maybe<Array<Maybe<CodeChallengeConnectionPublished_At>>>;
-  sharedEvaluationCode: Maybe<Array<Maybe<CodeChallengeConnectionSharedEvaluationCode>>>;
-  startingCode: Maybe<Array<Maybe<CodeChallengeConnectionStartingCode>>>;
-  updated_at: Maybe<Array<Maybe<CodeChallengeConnectionUpdated_At>>>;
+export type CodeChallengeFiltersInput = {
+  and: Maybe<Array<Maybe<CodeChallengeFiltersInput>>>;
+  createdAt: Maybe<DateTimeFilterInput>;
+  getStartingCodeFromPreviousChallenge: Maybe<BooleanFilterInput>;
+  id: Maybe<IdFilterInput>;
+  internalLabel: Maybe<StringFilterInput>;
+  internalNotes: Maybe<StringFilterInput>;
+  not: Maybe<CodeChallengeFiltersInput>;
+  or: Maybe<Array<Maybe<CodeChallengeFiltersInput>>>;
+  prompt: Maybe<StringFilterInput>;
+  publishedAt: Maybe<DateTimeFilterInput>;
+  startingCode: Maybe<StringFilterInput>;
+  updatedAt: Maybe<DateTimeFilterInput>;
 };
 
 export type CodeChallengeInput = {
-  HintOld: Maybe<Array<Maybe<ComponentCodeChallengeHintInput>>>;
-  InternalLabel: Scalars['String'];
-  challengeMeta: Maybe<ComponentChallengeChallengeInput>;
-  created_by: Maybe<Scalars['ID']>;
   getStartingCodeFromPreviousChallenge: Maybe<Scalars['Boolean']>;
-  hints: Maybe<Array<Maybe<ComponentChallengeHintInput>>>;
+  hints: Maybe<Array<Maybe<ComponentChallengeChallengeHintsInput>>>;
+  internalLabel: Maybe<Scalars['String']>;
   internalNotes: Maybe<Scalars['String']>;
-  locale: Maybe<Scalars['String']>;
-  localizations: Maybe<Array<Maybe<Scalars['ID']>>>;
-  prompt: Scalars['String'];
-  published_at: Maybe<Scalars['DateTime']>;
-  sharedEvaluationCode: Maybe<Scalars['String']>;
+  prompt: Maybe<Scalars['String']>;
+  publishedAt: Maybe<Scalars['DateTime']>;
   startingCode: Maybe<Scalars['String']>;
-  tests: Maybe<Array<Maybe<ComponentCodeChallengeTestInput>>>;
-  updated_by: Maybe<Scalars['ID']>;
+  tests: Maybe<Array<Maybe<ComponentChallengeCodeChallengeTestInput>>>;
 };
 
-export type ComponentChallengeChallenge = {
-  __typename?: 'ComponentChallengeChallenge';
-  difficulty: Enum_Componentchallengechallenge_Difficulty;
-  id: Scalars['ID'];
-  lessonOnly: Maybe<Scalars['Boolean']>;
-};
-
-export type ComponentChallengeChallengeInput = {
-  difficulty: Maybe<Enum_Componentchallengechallenge_Difficulty>;
-  lessonOnly: Maybe<Scalars['Boolean']>;
-};
-
-export type ComponentChallengeHint = {
-  __typename?: 'ComponentChallengeHint';
+export type ComponentChallengeChallengeHints = {
+  __typename?: 'ComponentChallengeChallengeHints';
   id: Scalars['ID'];
   recommendedTimeBeforeViewing: Maybe<Scalars['Float']>;
   text: Scalars['String'];
 };
 
-export type ComponentChallengeHintInput = {
+export type ComponentChallengeChallengeHintsFiltersInput = {
+  and: Maybe<Array<Maybe<ComponentChallengeChallengeHintsFiltersInput>>>;
+  not: Maybe<ComponentChallengeChallengeHintsFiltersInput>;
+  or: Maybe<Array<Maybe<ComponentChallengeChallengeHintsFiltersInput>>>;
+  recommendedTimeBeforeViewing: Maybe<FloatFilterInput>;
+  text: Maybe<StringFilterInput>;
+};
+
+export type ComponentChallengeChallengeHintsInput = {
+  id: Maybe<Scalars['ID']>;
   recommendedTimeBeforeViewing: Maybe<Scalars['Float']>;
-  text: Scalars['String'];
+  text: Maybe<Scalars['String']>;
 };
 
-export type ComponentCodeChallengeHint = {
-  __typename?: 'ComponentCodeChallengeHint';
-  id: Scalars['ID'];
-  recommendTimeBeforeViewing: Maybe<Scalars['Float']>;
-  text: Scalars['String'];
-};
-
-export type ComponentCodeChallengeHintInput = {
-  recommendTimeBeforeViewing: Maybe<Scalars['Float']>;
-  text: Scalars['String'];
-};
-
-export type ComponentCodeChallengeTestInput = {
-  furtherExplanation: Maybe<Scalars['String']>;
-  internalTest: Scalars['String'];
-  label: Scalars['String'];
-};
-
-export type ComponentCodeChallengeTests = {
-  __typename?: 'ComponentCodeChallengeTests';
+export type ComponentChallengeCodeChallengeTest = {
+  __typename?: 'ComponentChallengeCodeChallengeTest';
   furtherExplanation: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   internalTest: Scalars['String'];
   label: Scalars['String'];
 };
 
-export type ComponentExternalResourceExternalResource = {
-  __typename?: 'ComponentExternalResourceExternalResource';
-  id: Scalars['ID'];
-  link: Scalars['String'];
-  name: Maybe<Scalars['String']>;
-  type: Enum_Componentexternalresourceexternalresource_Type;
+export type ComponentChallengeCodeChallengeTestFiltersInput = {
+  and: Maybe<Array<Maybe<ComponentChallengeCodeChallengeTestFiltersInput>>>;
+  furtherExplanation: Maybe<StringFilterInput>;
+  internalTest: Maybe<StringFilterInput>;
+  label: Maybe<StringFilterInput>;
+  not: Maybe<ComponentChallengeCodeChallengeTestFiltersInput>;
+  or: Maybe<Array<Maybe<ComponentChallengeCodeChallengeTestFiltersInput>>>;
 };
 
-export type ComponentExternalResourceExternalResourceInput = {
-  link: Scalars['String'];
-  name: Maybe<Scalars['String']>;
-  type: Enum_Componentexternalresourceexternalresource_Type;
+export type ComponentChallengeCodeChallengeTestInput = {
+  furtherExplanation: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['ID']>;
+  internalTest: Maybe<Scalars['String']>;
+  label: Maybe<Scalars['String']>;
 };
 
-export type ComponentModuleModuleLessonInput = {
-  lesson: Maybe<Scalars['ID']>;
-};
-
-export type ComponentModuleModuleLessons = {
-  __typename?: 'ComponentModuleModuleLessons';
-  id: Scalars['ID'];
-  lesson: Maybe<Lesson>;
-};
-
-export type ComponentModuleModuleRowInput = {
-  _: Maybe<Scalars['String']>;
-};
-
-export type ComponentModuleModuleRows = {
-  __typename?: 'ComponentModuleModuleRows';
-  id: Scalars['ID'];
-};
-
-export type ComponentMultipleChoiceChallengeOptionInput = {
-  incorrectChoiceExplanation: Maybe<Scalars['String']>;
-  isCorrect: Maybe<Scalars['Boolean']>;
-  text: Scalars['String'];
-};
-
-export type ComponentMultipleChoiceChallengeOptions = {
-  __typename?: 'ComponentMultipleChoiceChallengeOptions';
+export type ComponentChallengeMultipleChoiceOptions = {
+  __typename?: 'ComponentChallengeMultipleChoiceOptions';
   id: Scalars['ID'];
   incorrectChoiceExplanation: Maybe<Scalars['String']>;
   isCorrect: Maybe<Scalars['Boolean']>;
   text: Scalars['String'];
 };
 
-export type ComponentSublessonSublessonDescriptionInput = {
-  long: Maybe<Scalars['String']>;
-  medium: Scalars['String'];
-  short: Maybe<Scalars['String']>;
+export type ComponentChallengeMultipleChoiceOptionsFiltersInput = {
+  and: Maybe<Array<Maybe<ComponentChallengeMultipleChoiceOptionsFiltersInput>>>;
+  incorrectChoiceExplanation: Maybe<StringFilterInput>;
+  isCorrect: Maybe<BooleanFilterInput>;
+  not: Maybe<ComponentChallengeMultipleChoiceOptionsFiltersInput>;
+  or: Maybe<Array<Maybe<ComponentChallengeMultipleChoiceOptionsFiltersInput>>>;
+  text: Maybe<StringFilterInput>;
 };
 
-export type ComponentSublessonSublessonDescriptions = {
-  __typename?: 'ComponentSublessonSublessonDescriptions';
+export type ComponentChallengeMultipleChoiceOptionsInput = {
+  id: Maybe<Scalars['ID']>;
+  incorrectChoiceExplanation: Maybe<Scalars['String']>;
+  isCorrect: Maybe<Scalars['Boolean']>;
+  text: Maybe<Scalars['String']>;
+};
+
+export type ComponentContentChallenges = {
+  __typename?: 'ComponentContentChallenges';
+  codeChallenge: Maybe<CodeChallengeEntityResponse>;
   id: Scalars['ID'];
-  long: Maybe<Scalars['String']>;
-  medium: Scalars['String'];
-  short: Maybe<Scalars['String']>;
+  multipleChoiceChallenge: Maybe<MultipleChoiceChallengeEntityResponse>;
 };
 
-export type ComponentSublessonchallengeChallenge = {
-  __typename?: 'ComponentSublessonchallengeChallenge';
-  MinimumChallengeFrequency: Enum_Componentsublessonchallengechallenge_Minimumchallengefrequency;
-  codeChallenge: Maybe<CodeChallenge>;
-  id: Scalars['ID'];
-  multipleChoiceChallenge: Maybe<MultipleChoiceChallenge>;
+export type ComponentContentChallengesFiltersInput = {
+  and: Maybe<Array<Maybe<ComponentContentChallengesFiltersInput>>>;
+  codeChallenge: Maybe<CodeChallengeFiltersInput>;
+  multipleChoiceChallenge: Maybe<MultipleChoiceChallengeFiltersInput>;
+  not: Maybe<ComponentContentChallengesFiltersInput>;
+  or: Maybe<Array<Maybe<ComponentContentChallengesFiltersInput>>>;
 };
 
-export type ComponentSublessonchallengeChallengeInput = {
-  MinimumChallengeFrequency: Maybe<Enum_Componentsublessonchallengechallenge_Minimumchallengefrequency>;
+export type ComponentContentChallengesInput = {
   codeChallenge: Maybe<Scalars['ID']>;
+  id: Maybe<Scalars['ID']>;
   multipleChoiceChallenge: Maybe<Scalars['ID']>;
+};
+
+export type ComponentContentExternalResource = {
+  __typename?: 'ComponentContentExternalResource';
+  id: Scalars['ID'];
+  link: Scalars['String'];
+  name: Maybe<Scalars['String']>;
+  type: Maybe<Scalars['String']>;
+};
+
+export type ComponentContentExternalResourceFiltersInput = {
+  and: Maybe<Array<Maybe<ComponentContentExternalResourceFiltersInput>>>;
+  link: Maybe<StringFilterInput>;
+  name: Maybe<StringFilterInput>;
+  not: Maybe<ComponentContentExternalResourceFiltersInput>;
+  or: Maybe<Array<Maybe<ComponentContentExternalResourceFiltersInput>>>;
+  type: Maybe<StringFilterInput>;
+};
+
+export type ComponentContentExternalResourceInput = {
+  id: Maybe<Scalars['ID']>;
+  link: Maybe<Scalars['String']>;
+  name: Maybe<Scalars['String']>;
+  type: Maybe<Scalars['String']>;
+};
+
+export type ComponentMiscModuleLesson = {
+  __typename?: 'ComponentMiscModuleLesson';
+  id: Scalars['ID'];
+  lesson: Maybe<LessonEntityResponse>;
+};
+
+export type ComponentMiscModuleLessonFiltersInput = {
+  and: Maybe<Array<Maybe<ComponentMiscModuleLessonFiltersInput>>>;
+  lesson: Maybe<LessonFiltersInput>;
+  not: Maybe<ComponentMiscModuleLessonFiltersInput>;
+  or: Maybe<Array<Maybe<ComponentMiscModuleLessonFiltersInput>>>;
+};
+
+export type ComponentMiscModuleLessonInput = {
+  id: Maybe<Scalars['ID']>;
+  lesson: Maybe<Scalars['ID']>;
 };
 
 export type Course = {
   __typename?: 'Course';
-  created_at: Scalars['DateTime'];
-  id: Scalars['ID'];
-  locale: Maybe<Scalars['String']>;
-  localizations: Maybe<Array<Maybe<Course>>>;
-  modules: Maybe<Array<Maybe<Modules>>>;
+  createdAt: Maybe<Scalars['DateTime']>;
+  modules: Maybe<ModuleRelationResponseCollection>;
   name: Scalars['String'];
-  published_at: Maybe<Scalars['DateTime']>;
+  publishedAt: Maybe<Scalars['DateTime']>;
   slug: Scalars['String'];
-  updated_at: Scalars['DateTime'];
-};
-
-
-export type CourseLocalizationsArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+  updatedAt: Maybe<Scalars['DateTime']>;
 };
 
 
 export type CourseModulesArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+  filters: Maybe<ModuleFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  publicationState?: Maybe<PublicationState>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
-export type CourseAggregator = {
-  __typename?: 'CourseAggregator';
-  count: Maybe<Scalars['Int']>;
-  totalCount: Maybe<Scalars['Int']>;
+export type CourseEntity = {
+  __typename?: 'CourseEntity';
+  attributes: Maybe<Course>;
+  id: Maybe<Scalars['ID']>;
 };
 
-export type CourseConnection = {
-  __typename?: 'CourseConnection';
-  aggregate: Maybe<CourseAggregator>;
-  groupBy: Maybe<CourseGroupBy>;
-  values: Maybe<Array<Maybe<Course>>>;
+export type CourseEntityResponse = {
+  __typename?: 'CourseEntityResponse';
+  data: Maybe<CourseEntity>;
 };
 
-export type CourseConnectionCreated_At = {
-  __typename?: 'CourseConnectionCreated_at';
-  connection: Maybe<CourseConnection>;
-  key: Maybe<Scalars['DateTime']>;
+export type CourseEntityResponseCollection = {
+  __typename?: 'CourseEntityResponseCollection';
+  data: Array<CourseEntity>;
+  meta: ResponseCollectionMeta;
 };
 
-export type CourseConnectionId = {
-  __typename?: 'CourseConnectionId';
-  connection: Maybe<CourseConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type CourseConnectionLocale = {
-  __typename?: 'CourseConnectionLocale';
-  connection: Maybe<CourseConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type CourseConnectionName = {
-  __typename?: 'CourseConnectionName';
-  connection: Maybe<CourseConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type CourseConnectionPublished_At = {
-  __typename?: 'CourseConnectionPublished_at';
-  connection: Maybe<CourseConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type CourseConnectionSlug = {
-  __typename?: 'CourseConnectionSlug';
-  connection: Maybe<CourseConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type CourseConnectionUpdated_At = {
-  __typename?: 'CourseConnectionUpdated_at';
-  connection: Maybe<CourseConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type CourseGroupBy = {
-  __typename?: 'CourseGroupBy';
-  created_at: Maybe<Array<Maybe<CourseConnectionCreated_At>>>;
-  id: Maybe<Array<Maybe<CourseConnectionId>>>;
-  locale: Maybe<Array<Maybe<CourseConnectionLocale>>>;
-  name: Maybe<Array<Maybe<CourseConnectionName>>>;
-  published_at: Maybe<Array<Maybe<CourseConnectionPublished_At>>>;
-  slug: Maybe<Array<Maybe<CourseConnectionSlug>>>;
-  updated_at: Maybe<Array<Maybe<CourseConnectionUpdated_At>>>;
+export type CourseFiltersInput = {
+  and: Maybe<Array<Maybe<CourseFiltersInput>>>;
+  createdAt: Maybe<DateTimeFilterInput>;
+  id: Maybe<IdFilterInput>;
+  modules: Maybe<ModuleFiltersInput>;
+  name: Maybe<StringFilterInput>;
+  not: Maybe<CourseFiltersInput>;
+  or: Maybe<Array<Maybe<CourseFiltersInput>>>;
+  publishedAt: Maybe<DateTimeFilterInput>;
+  slug: Maybe<StringFilterInput>;
+  updatedAt: Maybe<DateTimeFilterInput>;
 };
 
 export type CourseInput = {
-  created_by: Maybe<Scalars['ID']>;
-  locale: Maybe<Scalars['String']>;
-  localizations: Maybe<Array<Maybe<Scalars['ID']>>>;
   modules: Maybe<Array<Maybe<Scalars['ID']>>>;
-  name: Scalars['String'];
-  published_at: Maybe<Scalars['DateTime']>;
-  slug: Scalars['String'];
-  updated_by: Maybe<Scalars['ID']>;
+  name: Maybe<Scalars['String']>;
+  publishedAt: Maybe<Scalars['DateTime']>;
+  slug: Maybe<Scalars['String']>;
 };
 
-export enum Enum_Componentchallengechallenge_Difficulty {
-  Easy = 'easy',
-  ExtraHard = 'extraHard',
-  Hard = 'hard',
-  Medium = 'medium'
-}
-
-export enum Enum_Componentexternalresourceexternalresource_Type {
-  Text = 'text',
-  Video = 'video'
-}
-
-export enum Enum_Componentsublessonchallengechallenge_Minimumchallengefrequency {
-  High = 'high',
-  Low = 'low',
-  Medium = 'medium'
-}
+export type DateTimeFilterInput = {
+  and: Maybe<Array<Maybe<Scalars['DateTime']>>>;
+  between: Maybe<Array<Maybe<Scalars['DateTime']>>>;
+  contains: Maybe<Scalars['DateTime']>;
+  containsi: Maybe<Scalars['DateTime']>;
+  endsWith: Maybe<Scalars['DateTime']>;
+  eq: Maybe<Scalars['DateTime']>;
+  gt: Maybe<Scalars['DateTime']>;
+  gte: Maybe<Scalars['DateTime']>;
+  in: Maybe<Array<Maybe<Scalars['DateTime']>>>;
+  lt: Maybe<Scalars['DateTime']>;
+  lte: Maybe<Scalars['DateTime']>;
+  ne: Maybe<Scalars['DateTime']>;
+  not: Maybe<DateTimeFilterInput>;
+  notContains: Maybe<Scalars['DateTime']>;
+  notContainsi: Maybe<Scalars['DateTime']>;
+  notIn: Maybe<Array<Maybe<Scalars['DateTime']>>>;
+  notNull: Maybe<Scalars['Boolean']>;
+  null: Maybe<Scalars['Boolean']>;
+  or: Maybe<Array<Maybe<Scalars['DateTime']>>>;
+  startsWith: Maybe<Scalars['DateTime']>;
+};
 
 export type FileInfoInput = {
   alternativeText: Maybe<Scalars['String']>;
@@ -508,656 +328,490 @@ export type FileInfoInput = {
   name: Maybe<Scalars['String']>;
 };
 
-export type FileInput = {
-  alternativeText: Maybe<Scalars['String']>;
-  caption: Maybe<Scalars['String']>;
-  created_by: Maybe<Scalars['ID']>;
-  ext: Maybe<Scalars['String']>;
-  formats: Maybe<Scalars['JSON']>;
-  hash: Scalars['String'];
-  height: Maybe<Scalars['Int']>;
-  mime: Scalars['String'];
-  name: Scalars['String'];
-  previewUrl: Maybe<Scalars['String']>;
-  provider: Scalars['String'];
-  provider_metadata: Maybe<Scalars['JSON']>;
-  related: Maybe<Array<Maybe<Scalars['ID']>>>;
-  size: Scalars['Float'];
-  updated_by: Maybe<Scalars['ID']>;
-  url: Scalars['String'];
-  width: Maybe<Scalars['Int']>;
+export type FloatFilterInput = {
+  and: Maybe<Array<Maybe<Scalars['Float']>>>;
+  between: Maybe<Array<Maybe<Scalars['Float']>>>;
+  contains: Maybe<Scalars['Float']>;
+  containsi: Maybe<Scalars['Float']>;
+  endsWith: Maybe<Scalars['Float']>;
+  eq: Maybe<Scalars['Float']>;
+  gt: Maybe<Scalars['Float']>;
+  gte: Maybe<Scalars['Float']>;
+  in: Maybe<Array<Maybe<Scalars['Float']>>>;
+  lt: Maybe<Scalars['Float']>;
+  lte: Maybe<Scalars['Float']>;
+  ne: Maybe<Scalars['Float']>;
+  not: Maybe<FloatFilterInput>;
+  notContains: Maybe<Scalars['Float']>;
+  notContainsi: Maybe<Scalars['Float']>;
+  notIn: Maybe<Array<Maybe<Scalars['Float']>>>;
+  notNull: Maybe<Scalars['Boolean']>;
+  null: Maybe<Scalars['Boolean']>;
+  or: Maybe<Array<Maybe<Scalars['Float']>>>;
+  startsWith: Maybe<Scalars['Float']>;
 };
+
+export type GenericMorph = CodeChallenge | ComponentChallengeChallengeHints | ComponentChallengeCodeChallengeTest | ComponentChallengeMultipleChoiceOptions | ComponentContentChallenges | ComponentContentExternalResource | ComponentMiscModuleLesson | Course | I18NLocale | Lesson | Module | MultipleChoiceChallenge | Sublesson | SyntaxEntry | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
   code: Maybe<Scalars['String']>;
-  created_at: Scalars['DateTime'];
-  id: Scalars['ID'];
+  createdAt: Maybe<Scalars['DateTime']>;
   name: Maybe<Scalars['String']>;
-  updated_at: Scalars['DateTime'];
+  updatedAt: Maybe<Scalars['DateTime']>;
 };
 
-export type InputId = {
-  id: Scalars['ID'];
+export type I18NLocaleEntity = {
+  __typename?: 'I18NLocaleEntity';
+  attributes: Maybe<I18NLocale>;
+  id: Maybe<Scalars['ID']>;
+};
+
+export type I18NLocaleEntityResponse = {
+  __typename?: 'I18NLocaleEntityResponse';
+  data: Maybe<I18NLocaleEntity>;
+};
+
+export type I18NLocaleEntityResponseCollection = {
+  __typename?: 'I18NLocaleEntityResponseCollection';
+  data: Array<I18NLocaleEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type I18NLocaleFiltersInput = {
+  and: Maybe<Array<Maybe<I18NLocaleFiltersInput>>>;
+  code: Maybe<StringFilterInput>;
+  createdAt: Maybe<DateTimeFilterInput>;
+  id: Maybe<IdFilterInput>;
+  name: Maybe<StringFilterInput>;
+  not: Maybe<I18NLocaleFiltersInput>;
+  or: Maybe<Array<Maybe<I18NLocaleFiltersInput>>>;
+  updatedAt: Maybe<DateTimeFilterInput>;
+};
+
+export type IdFilterInput = {
+  and: Maybe<Array<Maybe<Scalars['ID']>>>;
+  between: Maybe<Array<Maybe<Scalars['ID']>>>;
+  contains: Maybe<Scalars['ID']>;
+  containsi: Maybe<Scalars['ID']>;
+  endsWith: Maybe<Scalars['ID']>;
+  eq: Maybe<Scalars['ID']>;
+  gt: Maybe<Scalars['ID']>;
+  gte: Maybe<Scalars['ID']>;
+  in: Maybe<Array<Maybe<Scalars['ID']>>>;
+  lt: Maybe<Scalars['ID']>;
+  lte: Maybe<Scalars['ID']>;
+  ne: Maybe<Scalars['ID']>;
+  not: Maybe<IdFilterInput>;
+  notContains: Maybe<Scalars['ID']>;
+  notContainsi: Maybe<Scalars['ID']>;
+  notIn: Maybe<Array<Maybe<Scalars['ID']>>>;
+  notNull: Maybe<Scalars['Boolean']>;
+  null: Maybe<Scalars['Boolean']>;
+  or: Maybe<Array<Maybe<Scalars['ID']>>>;
+  startsWith: Maybe<Scalars['ID']>;
+};
+
+export type IntFilterInput = {
+  and: Maybe<Array<Maybe<Scalars['Int']>>>;
+  between: Maybe<Array<Maybe<Scalars['Int']>>>;
+  contains: Maybe<Scalars['Int']>;
+  containsi: Maybe<Scalars['Int']>;
+  endsWith: Maybe<Scalars['Int']>;
+  eq: Maybe<Scalars['Int']>;
+  gt: Maybe<Scalars['Int']>;
+  gte: Maybe<Scalars['Int']>;
+  in: Maybe<Array<Maybe<Scalars['Int']>>>;
+  lt: Maybe<Scalars['Int']>;
+  lte: Maybe<Scalars['Int']>;
+  ne: Maybe<Scalars['Int']>;
+  not: Maybe<IntFilterInput>;
+  notContains: Maybe<Scalars['Int']>;
+  notContainsi: Maybe<Scalars['Int']>;
+  notIn: Maybe<Array<Maybe<Scalars['Int']>>>;
+  notNull: Maybe<Scalars['Boolean']>;
+  null: Maybe<Scalars['Boolean']>;
+  or: Maybe<Array<Maybe<Scalars['Int']>>>;
+  startsWith: Maybe<Scalars['Int']>;
+};
+
+export type JsonFilterInput = {
+  and: Maybe<Array<Maybe<Scalars['JSON']>>>;
+  between: Maybe<Array<Maybe<Scalars['JSON']>>>;
+  contains: Maybe<Scalars['JSON']>;
+  containsi: Maybe<Scalars['JSON']>;
+  endsWith: Maybe<Scalars['JSON']>;
+  eq: Maybe<Scalars['JSON']>;
+  gt: Maybe<Scalars['JSON']>;
+  gte: Maybe<Scalars['JSON']>;
+  in: Maybe<Array<Maybe<Scalars['JSON']>>>;
+  lt: Maybe<Scalars['JSON']>;
+  lte: Maybe<Scalars['JSON']>;
+  ne: Maybe<Scalars['JSON']>;
+  not: Maybe<JsonFilterInput>;
+  notContains: Maybe<Scalars['JSON']>;
+  notContainsi: Maybe<Scalars['JSON']>;
+  notIn: Maybe<Array<Maybe<Scalars['JSON']>>>;
+  notNull: Maybe<Scalars['Boolean']>;
+  null: Maybe<Scalars['Boolean']>;
+  or: Maybe<Array<Maybe<Scalars['JSON']>>>;
+  startsWith: Maybe<Scalars['JSON']>;
 };
 
 export type Lesson = {
   __typename?: 'Lesson';
-  created_at: Scalars['DateTime'];
-  externalResources: Maybe<Array<Maybe<ComponentExternalResourceExternalResource>>>;
-  id: Scalars['ID'];
+  createdAt: Maybe<Scalars['DateTime']>;
+  externalResources: Maybe<Array<Maybe<ComponentContentExternalResource>>>;
   internalNotes: Maybe<Scalars['String']>;
   isHard: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-  localizations: Maybe<Array<Maybe<Lesson>>>;
-  module: Maybe<Modules>;
+  module: Maybe<ModuleEntityResponse>;
   name: Scalars['String'];
-  published_at: Maybe<Scalars['DateTime']>;
+  publishedAt: Maybe<Scalars['DateTime']>;
   slug: Scalars['String'];
-  sublessons: Maybe<Array<Maybe<Sublesson>>>;
-  syntaxEntry: Maybe<SyntaxEntry>;
-  updated_at: Scalars['DateTime'];
+  sublessons: Maybe<SublessonRelationResponseCollection>;
+  syntaxEntry: Maybe<SyntaxEntryEntityResponse>;
+  updatedAt: Maybe<Scalars['DateTime']>;
 };
 
 
-export type LessonLocalizationsArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+export type LessonExternalResourcesArgs = {
+  filters: Maybe<ComponentContentExternalResourceFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
 export type LessonSublessonsArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+  filters: Maybe<SublessonFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  publicationState?: Maybe<PublicationState>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
-export type LessonAggregator = {
-  __typename?: 'LessonAggregator';
-  count: Maybe<Scalars['Int']>;
-  totalCount: Maybe<Scalars['Int']>;
+export type LessonEntity = {
+  __typename?: 'LessonEntity';
+  attributes: Maybe<Lesson>;
+  id: Maybe<Scalars['ID']>;
 };
 
-export type LessonCompletion = {
-  __typename?: 'LessonCompletion';
-  created_at: Scalars['DateTime'];
-  id: Scalars['ID'];
-  lesson: Maybe<Lesson>;
-  published_at: Maybe<Scalars['DateTime']>;
-  updated_at: Scalars['DateTime'];
-  users_permissions_user: Maybe<UsersPermissionsUser>;
+export type LessonEntityResponse = {
+  __typename?: 'LessonEntityResponse';
+  data: Maybe<LessonEntity>;
 };
 
-export type LessonCompletionAggregator = {
-  __typename?: 'LessonCompletionAggregator';
-  count: Maybe<Scalars['Int']>;
-  totalCount: Maybe<Scalars['Int']>;
+export type LessonEntityResponseCollection = {
+  __typename?: 'LessonEntityResponseCollection';
+  data: Array<LessonEntity>;
+  meta: ResponseCollectionMeta;
 };
 
-export type LessonCompletionConnection = {
-  __typename?: 'LessonCompletionConnection';
-  aggregate: Maybe<LessonCompletionAggregator>;
-  groupBy: Maybe<LessonCompletionGroupBy>;
-  values: Maybe<Array<Maybe<LessonCompletion>>>;
-};
-
-export type LessonCompletionConnectionCreated_At = {
-  __typename?: 'LessonCompletionConnectionCreated_at';
-  connection: Maybe<LessonCompletionConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type LessonCompletionConnectionId = {
-  __typename?: 'LessonCompletionConnectionId';
-  connection: Maybe<LessonCompletionConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type LessonCompletionConnectionLesson = {
-  __typename?: 'LessonCompletionConnectionLesson';
-  connection: Maybe<LessonCompletionConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type LessonCompletionConnectionPublished_At = {
-  __typename?: 'LessonCompletionConnectionPublished_at';
-  connection: Maybe<LessonCompletionConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type LessonCompletionConnectionUpdated_At = {
-  __typename?: 'LessonCompletionConnectionUpdated_at';
-  connection: Maybe<LessonCompletionConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type LessonCompletionConnectionUsers_Permissions_User = {
-  __typename?: 'LessonCompletionConnectionUsers_permissions_user';
-  connection: Maybe<LessonCompletionConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type LessonCompletionGroupBy = {
-  __typename?: 'LessonCompletionGroupBy';
-  created_at: Maybe<Array<Maybe<LessonCompletionConnectionCreated_At>>>;
-  id: Maybe<Array<Maybe<LessonCompletionConnectionId>>>;
-  lesson: Maybe<Array<Maybe<LessonCompletionConnectionLesson>>>;
-  published_at: Maybe<Array<Maybe<LessonCompletionConnectionPublished_At>>>;
-  updated_at: Maybe<Array<Maybe<LessonCompletionConnectionUpdated_At>>>;
-  users_permissions_user: Maybe<Array<Maybe<LessonCompletionConnectionUsers_Permissions_User>>>;
-};
-
-export type LessonCompletionInput = {
-  created_by: Maybe<Scalars['ID']>;
-  lesson: Maybe<Scalars['ID']>;
-  published_at: Maybe<Scalars['DateTime']>;
-  updated_by: Maybe<Scalars['ID']>;
-  users_permissions_user: Maybe<Scalars['ID']>;
-};
-
-export type LessonConnection = {
-  __typename?: 'LessonConnection';
-  aggregate: Maybe<LessonAggregator>;
-  groupBy: Maybe<LessonGroupBy>;
-  values: Maybe<Array<Maybe<Lesson>>>;
-};
-
-export type LessonConnectionCreated_At = {
-  __typename?: 'LessonConnectionCreated_at';
-  connection: Maybe<LessonConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type LessonConnectionId = {
-  __typename?: 'LessonConnectionId';
-  connection: Maybe<LessonConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type LessonConnectionInternalNotes = {
-  __typename?: 'LessonConnectionInternalNotes';
-  connection: Maybe<LessonConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type LessonConnectionIsHard = {
-  __typename?: 'LessonConnectionIsHard';
-  connection: Maybe<LessonConnection>;
-  key: Maybe<Scalars['Boolean']>;
-};
-
-export type LessonConnectionLocale = {
-  __typename?: 'LessonConnectionLocale';
-  connection: Maybe<LessonConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type LessonConnectionModule = {
-  __typename?: 'LessonConnectionModule';
-  connection: Maybe<LessonConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type LessonConnectionName = {
-  __typename?: 'LessonConnectionName';
-  connection: Maybe<LessonConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type LessonConnectionPublished_At = {
-  __typename?: 'LessonConnectionPublished_at';
-  connection: Maybe<LessonConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type LessonConnectionSlug = {
-  __typename?: 'LessonConnectionSlug';
-  connection: Maybe<LessonConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type LessonConnectionSyntaxEntry = {
-  __typename?: 'LessonConnectionSyntaxEntry';
-  connection: Maybe<LessonConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type LessonConnectionUpdated_At = {
-  __typename?: 'LessonConnectionUpdated_at';
-  connection: Maybe<LessonConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type LessonGroupBy = {
-  __typename?: 'LessonGroupBy';
-  created_at: Maybe<Array<Maybe<LessonConnectionCreated_At>>>;
-  id: Maybe<Array<Maybe<LessonConnectionId>>>;
-  internalNotes: Maybe<Array<Maybe<LessonConnectionInternalNotes>>>;
-  isHard: Maybe<Array<Maybe<LessonConnectionIsHard>>>;
-  locale: Maybe<Array<Maybe<LessonConnectionLocale>>>;
-  module: Maybe<Array<Maybe<LessonConnectionModule>>>;
-  name: Maybe<Array<Maybe<LessonConnectionName>>>;
-  published_at: Maybe<Array<Maybe<LessonConnectionPublished_At>>>;
-  slug: Maybe<Array<Maybe<LessonConnectionSlug>>>;
-  syntaxEntry: Maybe<Array<Maybe<LessonConnectionSyntaxEntry>>>;
-  updated_at: Maybe<Array<Maybe<LessonConnectionUpdated_At>>>;
+export type LessonFiltersInput = {
+  and: Maybe<Array<Maybe<LessonFiltersInput>>>;
+  createdAt: Maybe<DateTimeFilterInput>;
+  id: Maybe<IdFilterInput>;
+  internalNotes: Maybe<StringFilterInput>;
+  isHard: Maybe<BooleanFilterInput>;
+  module: Maybe<ModuleFiltersInput>;
+  name: Maybe<StringFilterInput>;
+  not: Maybe<LessonFiltersInput>;
+  or: Maybe<Array<Maybe<LessonFiltersInput>>>;
+  publishedAt: Maybe<DateTimeFilterInput>;
+  slug: Maybe<StringFilterInput>;
+  sublessons: Maybe<SublessonFiltersInput>;
+  syntaxEntry: Maybe<SyntaxEntryFiltersInput>;
+  updatedAt: Maybe<DateTimeFilterInput>;
 };
 
 export type LessonInput = {
-  created_by: Maybe<Scalars['ID']>;
-  externalResources: Maybe<Array<Maybe<ComponentExternalResourceExternalResourceInput>>>;
+  externalResources: Maybe<Array<Maybe<ComponentContentExternalResourceInput>>>;
   internalNotes: Maybe<Scalars['String']>;
   isHard: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-  localizations: Maybe<Array<Maybe<Scalars['ID']>>>;
   module: Maybe<Scalars['ID']>;
-  name: Scalars['String'];
-  published_at: Maybe<Scalars['DateTime']>;
-  slug: Scalars['String'];
+  name: Maybe<Scalars['String']>;
+  publishedAt: Maybe<Scalars['DateTime']>;
+  slug: Maybe<Scalars['String']>;
   sublessons: Maybe<Array<Maybe<Scalars['ID']>>>;
   syntaxEntry: Maybe<Scalars['ID']>;
-  updated_by: Maybe<Scalars['ID']>;
 };
 
-export type LocaleInput = {
-  code: Maybe<Scalars['String']>;
-  created_by: Maybe<Scalars['ID']>;
-  name: Maybe<Scalars['String']>;
-  updated_by: Maybe<Scalars['ID']>;
+export type LessonRelationResponseCollection = {
+  __typename?: 'LessonRelationResponseCollection';
+  data: Array<LessonEntity>;
+};
+
+export type Module = {
+  __typename?: 'Module';
+  createdAt: Maybe<Scalars['DateTime']>;
+  lessons: Maybe<LessonRelationResponseCollection>;
+  moduleLessons: Maybe<Array<Maybe<ComponentMiscModuleLesson>>>;
+  name: Scalars['String'];
+  publishedAt: Maybe<Scalars['DateTime']>;
+  updatedAt: Maybe<Scalars['DateTime']>;
+};
+
+
+export type ModuleLessonsArgs = {
+  filters: Maybe<LessonFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  publicationState?: Maybe<PublicationState>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+
+export type ModuleModuleLessonsArgs = {
+  filters: Maybe<ComponentMiscModuleLessonFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type ModuleEntity = {
+  __typename?: 'ModuleEntity';
+  attributes: Maybe<Module>;
+  id: Maybe<Scalars['ID']>;
+};
+
+export type ModuleEntityResponse = {
+  __typename?: 'ModuleEntityResponse';
+  data: Maybe<ModuleEntity>;
+};
+
+export type ModuleEntityResponseCollection = {
+  __typename?: 'ModuleEntityResponseCollection';
+  data: Array<ModuleEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type ModuleFiltersInput = {
+  and: Maybe<Array<Maybe<ModuleFiltersInput>>>;
+  createdAt: Maybe<DateTimeFilterInput>;
+  id: Maybe<IdFilterInput>;
+  lessons: Maybe<LessonFiltersInput>;
+  name: Maybe<StringFilterInput>;
+  not: Maybe<ModuleFiltersInput>;
+  or: Maybe<Array<Maybe<ModuleFiltersInput>>>;
+  publishedAt: Maybe<DateTimeFilterInput>;
+  updatedAt: Maybe<DateTimeFilterInput>;
 };
 
 export type ModuleInput = {
-  ModuleLessons: Maybe<Array<Maybe<ComponentModuleModuleLessonInput>>>;
-  created_by: Maybe<Scalars['ID']>;
   lessons: Maybe<Array<Maybe<Scalars['ID']>>>;
-  locale: Maybe<Scalars['String']>;
-  localizations: Maybe<Array<Maybe<Scalars['ID']>>>;
-  name: Scalars['String'];
-  published_at: Maybe<Scalars['DateTime']>;
-  updated_by: Maybe<Scalars['ID']>;
+  moduleLessons: Maybe<Array<Maybe<ComponentMiscModuleLessonInput>>>;
+  name: Maybe<Scalars['String']>;
+  publishedAt: Maybe<Scalars['DateTime']>;
 };
 
-export type Modules = {
-  __typename?: 'Modules';
-  ModuleLessons: Maybe<Array<Maybe<ComponentModuleModuleLessons>>>;
-  created_at: Scalars['DateTime'];
-  id: Scalars['ID'];
-  lessons: Maybe<Array<Maybe<Lesson>>>;
-  locale: Maybe<Scalars['String']>;
-  localizations: Maybe<Array<Maybe<Modules>>>;
-  name: Scalars['String'];
-  published_at: Maybe<Scalars['DateTime']>;
-  updated_at: Scalars['DateTime'];
+export type ModuleRelationResponseCollection = {
+  __typename?: 'ModuleRelationResponseCollection';
+  data: Array<ModuleEntity>;
 };
-
-
-export type ModulesLessonsArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
-};
-
-
-export type ModulesLocalizationsArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
-};
-
-export type ModulesAggregator = {
-  __typename?: 'ModulesAggregator';
-  count: Maybe<Scalars['Int']>;
-  totalCount: Maybe<Scalars['Int']>;
-};
-
-export type ModulesConnection = {
-  __typename?: 'ModulesConnection';
-  aggregate: Maybe<ModulesAggregator>;
-  groupBy: Maybe<ModulesGroupBy>;
-  values: Maybe<Array<Maybe<Modules>>>;
-};
-
-export type ModulesConnectionCreated_At = {
-  __typename?: 'ModulesConnectionCreated_at';
-  connection: Maybe<ModulesConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type ModulesConnectionId = {
-  __typename?: 'ModulesConnectionId';
-  connection: Maybe<ModulesConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type ModulesConnectionLocale = {
-  __typename?: 'ModulesConnectionLocale';
-  connection: Maybe<ModulesConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type ModulesConnectionName = {
-  __typename?: 'ModulesConnectionName';
-  connection: Maybe<ModulesConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type ModulesConnectionPublished_At = {
-  __typename?: 'ModulesConnectionPublished_at';
-  connection: Maybe<ModulesConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type ModulesConnectionUpdated_At = {
-  __typename?: 'ModulesConnectionUpdated_at';
-  connection: Maybe<ModulesConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type ModulesGroupBy = {
-  __typename?: 'ModulesGroupBy';
-  created_at: Maybe<Array<Maybe<ModulesConnectionCreated_At>>>;
-  id: Maybe<Array<Maybe<ModulesConnectionId>>>;
-  locale: Maybe<Array<Maybe<ModulesConnectionLocale>>>;
-  name: Maybe<Array<Maybe<ModulesConnectionName>>>;
-  published_at: Maybe<Array<Maybe<ModulesConnectionPublished_At>>>;
-  updated_at: Maybe<Array<Maybe<ModulesConnectionUpdated_At>>>;
-};
-
-export type Morph = ChallengeCompletion | ChallengeCompletionAggregator | ChallengeCompletionConnection | ChallengeCompletionConnectionCode_Challenge | ChallengeCompletionConnectionCreated_At | ChallengeCompletionConnectionId | ChallengeCompletionConnectionMultiple_Choice_Challenge | ChallengeCompletionConnectionPublished_At | ChallengeCompletionConnectionUpdated_At | ChallengeCompletionConnectionUsers_Permissions_User | ChallengeCompletionGroupBy | CodeChallenge | CodeChallengeAggregator | CodeChallengeConnection | CodeChallengeConnectionChallengeMeta | CodeChallengeConnectionCreated_At | CodeChallengeConnectionGetStartingCodeFromPreviousChallenge | CodeChallengeConnectionId | CodeChallengeConnectionLocale | CodeChallengeConnectionPrompt | CodeChallengeConnectionPublished_At | CodeChallengeConnectionSharedEvaluationCode | CodeChallengeConnectionStartingCode | CodeChallengeConnectionUpdated_At | CodeChallengeGroupBy | ComponentChallengeChallenge | ComponentChallengeHint | ComponentCodeChallengeHint | ComponentCodeChallengeTests | ComponentExternalResourceExternalResource | ComponentModuleModuleLessons | ComponentModuleModuleRows | ComponentMultipleChoiceChallengeOptions | ComponentSublessonSublessonDescriptions | ComponentSublessonchallengeChallenge | Course | CourseAggregator | CourseConnection | CourseConnectionCreated_At | CourseConnectionId | CourseConnectionLocale | CourseConnectionName | CourseConnectionPublished_At | CourseConnectionSlug | CourseConnectionUpdated_At | CourseGroupBy | I18NLocale | Lesson | LessonAggregator | LessonCompletion | LessonCompletionAggregator | LessonCompletionConnection | LessonCompletionConnectionCreated_At | LessonCompletionConnectionId | LessonCompletionConnectionLesson | LessonCompletionConnectionPublished_At | LessonCompletionConnectionUpdated_At | LessonCompletionConnectionUsers_Permissions_User | LessonCompletionGroupBy | LessonConnection | LessonConnectionCreated_At | LessonConnectionId | LessonConnectionInternalNotes | LessonConnectionIsHard | LessonConnectionLocale | LessonConnectionModule | LessonConnectionName | LessonConnectionPublished_At | LessonConnectionSlug | LessonConnectionSyntaxEntry | LessonConnectionUpdated_At | LessonGroupBy | Modules | ModulesAggregator | ModulesConnection | ModulesConnectionCreated_At | ModulesConnectionId | ModulesConnectionLocale | ModulesConnectionName | ModulesConnectionPublished_At | ModulesConnectionUpdated_At | ModulesGroupBy | MultipleChoiceChallenge | MultipleChoiceChallengeAggregator | MultipleChoiceChallengeConnection | MultipleChoiceChallengeConnectionCanSelectMultipleOptions | MultipleChoiceChallengeConnectionChallengeMeta | MultipleChoiceChallengeConnectionCreated_At | MultipleChoiceChallengeConnectionId | MultipleChoiceChallengeConnectionPrompt | MultipleChoiceChallengeConnectionPublished_At | MultipleChoiceChallengeConnectionUpdated_At | MultipleChoiceChallengeConnectionUseMarkdownForOptionsText | MultipleChoiceChallengeGroupBy | Sublesson | SublessonAggregator | SublessonConnection | SublessonConnectionCreated_At | SublessonConnectionDescriptions | SublessonConnectionId | SublessonConnectionLesson | SublessonConnectionMinimizeEditor | SublessonConnectionName | SublessonConnectionPublished_At | SublessonConnectionSyntaxEntry | SublessonConnectionUpdated_At | SublessonGroupBy | SyntaxEntry | SyntaxEntryAggregator | SyntaxEntryAggregatorAvg | SyntaxEntryAggregatorMax | SyntaxEntryAggregatorMin | SyntaxEntryAggregatorSum | SyntaxEntryConnection | SyntaxEntryConnectionContent | SyntaxEntryConnectionCreated_At | SyntaxEntryConnectionId | SyntaxEntryConnectionLesson | SyntaxEntryConnectionMaxWidth | SyntaxEntryConnectionName | SyntaxEntryConnectionPublished_At | SyntaxEntryConnectionSublesson | SyntaxEntryConnectionUpdated_At | SyntaxEntryGroupBy | UploadFile | UploadFileAggregator | UploadFileAggregatorAvg | UploadFileAggregatorMax | UploadFileAggregatorMin | UploadFileAggregatorSum | UploadFileConnection | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionCreated_At | UploadFileConnectionExt | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionHeight | UploadFileConnectionId | UploadFileConnectionMime | UploadFileConnectionName | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | UploadFileConnectionSize | UploadFileConnectionUpdated_At | UploadFileConnectionUrl | UploadFileConnectionWidth | UploadFileGroupBy | UserPermissionsPasswordPayload | UsersPermissionsLoginPayload | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleAggregator | UsersPermissionsRoleConnection | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionType | UsersPermissionsRoleGroupBy | UsersPermissionsUser | UsersPermissionsUserAggregator | UsersPermissionsUserConnection | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserGroupBy | CreateChallengeCompletionPayload | CreateCodeChallengePayload | CreateCoursePayload | CreateLessonCompletionPayload | CreateLessonPayload | CreateModulePayload | CreateMultipleChoiceChallengePayload | CreateRolePayload | CreateSublessonPayload | CreateSyntaxEntryPayload | CreateUserPayload | DeleteChallengeCompletionPayload | DeleteCodeChallengePayload | DeleteCoursePayload | DeleteFilePayload | DeleteLessonCompletionPayload | DeleteLessonPayload | DeleteModulePayload | DeleteMultipleChoiceChallengePayload | DeleteRolePayload | DeleteSublessonPayload | DeleteSyntaxEntryPayload | DeleteUserPayload | UpdateChallengeCompletionPayload | UpdateCodeChallengePayload | UpdateCoursePayload | UpdateLessonCompletionPayload | UpdateLessonPayload | UpdateModulePayload | UpdateMultipleChoiceChallengePayload | UpdateRolePayload | UpdateSublessonPayload | UpdateSyntaxEntryPayload | UpdateUserPayload;
 
 export type MultipleChoiceChallenge = {
   __typename?: 'MultipleChoiceChallenge';
   canSelectMultipleOptions: Maybe<Scalars['Boolean']>;
-  challengeMeta: Maybe<ComponentChallengeChallenge>;
-  created_at: Scalars['DateTime'];
-  id: Scalars['ID'];
-  options: Maybe<Array<Maybe<ComponentMultipleChoiceChallengeOptions>>>;
+  createdAt: Maybe<Scalars['DateTime']>;
+  internalLabel: Scalars['String'];
+  options: Maybe<Array<Maybe<ComponentChallengeMultipleChoiceOptions>>>;
   prompt: Scalars['String'];
-  published_at: Maybe<Scalars['DateTime']>;
-  updated_at: Scalars['DateTime'];
-  useMarkdownForOptionsText: Maybe<Scalars['Boolean']>;
+  publishedAt: Maybe<Scalars['DateTime']>;
+  updatedAt: Maybe<Scalars['DateTime']>;
 };
 
-export type MultipleChoiceChallengeAggregator = {
-  __typename?: 'MultipleChoiceChallengeAggregator';
-  count: Maybe<Scalars['Int']>;
-  totalCount: Maybe<Scalars['Int']>;
+
+export type MultipleChoiceChallengeOptionsArgs = {
+  filters: Maybe<ComponentChallengeMultipleChoiceOptionsFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
-export type MultipleChoiceChallengeConnection = {
-  __typename?: 'MultipleChoiceChallengeConnection';
-  aggregate: Maybe<MultipleChoiceChallengeAggregator>;
-  groupBy: Maybe<MultipleChoiceChallengeGroupBy>;
-  values: Maybe<Array<Maybe<MultipleChoiceChallenge>>>;
+export type MultipleChoiceChallengeEntity = {
+  __typename?: 'MultipleChoiceChallengeEntity';
+  attributes: Maybe<MultipleChoiceChallenge>;
+  id: Maybe<Scalars['ID']>;
 };
 
-export type MultipleChoiceChallengeConnectionCanSelectMultipleOptions = {
-  __typename?: 'MultipleChoiceChallengeConnectionCanSelectMultipleOptions';
-  connection: Maybe<MultipleChoiceChallengeConnection>;
-  key: Maybe<Scalars['Boolean']>;
+export type MultipleChoiceChallengeEntityResponse = {
+  __typename?: 'MultipleChoiceChallengeEntityResponse';
+  data: Maybe<MultipleChoiceChallengeEntity>;
 };
 
-export type MultipleChoiceChallengeConnectionChallengeMeta = {
-  __typename?: 'MultipleChoiceChallengeConnectionChallengeMeta';
-  connection: Maybe<MultipleChoiceChallengeConnection>;
-  key: Maybe<Scalars['ID']>;
+export type MultipleChoiceChallengeEntityResponseCollection = {
+  __typename?: 'MultipleChoiceChallengeEntityResponseCollection';
+  data: Array<MultipleChoiceChallengeEntity>;
+  meta: ResponseCollectionMeta;
 };
 
-export type MultipleChoiceChallengeConnectionCreated_At = {
-  __typename?: 'MultipleChoiceChallengeConnectionCreated_at';
-  connection: Maybe<MultipleChoiceChallengeConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type MultipleChoiceChallengeConnectionId = {
-  __typename?: 'MultipleChoiceChallengeConnectionId';
-  connection: Maybe<MultipleChoiceChallengeConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type MultipleChoiceChallengeConnectionPrompt = {
-  __typename?: 'MultipleChoiceChallengeConnectionPrompt';
-  connection: Maybe<MultipleChoiceChallengeConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type MultipleChoiceChallengeConnectionPublished_At = {
-  __typename?: 'MultipleChoiceChallengeConnectionPublished_at';
-  connection: Maybe<MultipleChoiceChallengeConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type MultipleChoiceChallengeConnectionUpdated_At = {
-  __typename?: 'MultipleChoiceChallengeConnectionUpdated_at';
-  connection: Maybe<MultipleChoiceChallengeConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type MultipleChoiceChallengeConnectionUseMarkdownForOptionsText = {
-  __typename?: 'MultipleChoiceChallengeConnectionUseMarkdownForOptionsText';
-  connection: Maybe<MultipleChoiceChallengeConnection>;
-  key: Maybe<Scalars['Boolean']>;
-};
-
-export type MultipleChoiceChallengeGroupBy = {
-  __typename?: 'MultipleChoiceChallengeGroupBy';
-  canSelectMultipleOptions: Maybe<Array<Maybe<MultipleChoiceChallengeConnectionCanSelectMultipleOptions>>>;
-  challengeMeta: Maybe<Array<Maybe<MultipleChoiceChallengeConnectionChallengeMeta>>>;
-  created_at: Maybe<Array<Maybe<MultipleChoiceChallengeConnectionCreated_At>>>;
-  id: Maybe<Array<Maybe<MultipleChoiceChallengeConnectionId>>>;
-  prompt: Maybe<Array<Maybe<MultipleChoiceChallengeConnectionPrompt>>>;
-  published_at: Maybe<Array<Maybe<MultipleChoiceChallengeConnectionPublished_At>>>;
-  updated_at: Maybe<Array<Maybe<MultipleChoiceChallengeConnectionUpdated_At>>>;
-  useMarkdownForOptionsText: Maybe<Array<Maybe<MultipleChoiceChallengeConnectionUseMarkdownForOptionsText>>>;
+export type MultipleChoiceChallengeFiltersInput = {
+  and: Maybe<Array<Maybe<MultipleChoiceChallengeFiltersInput>>>;
+  canSelectMultipleOptions: Maybe<BooleanFilterInput>;
+  createdAt: Maybe<DateTimeFilterInput>;
+  id: Maybe<IdFilterInput>;
+  internalLabel: Maybe<StringFilterInput>;
+  not: Maybe<MultipleChoiceChallengeFiltersInput>;
+  or: Maybe<Array<Maybe<MultipleChoiceChallengeFiltersInput>>>;
+  prompt: Maybe<StringFilterInput>;
+  publishedAt: Maybe<DateTimeFilterInput>;
+  updatedAt: Maybe<DateTimeFilterInput>;
 };
 
 export type MultipleChoiceChallengeInput = {
-  InternalLabel: Maybe<Scalars['String']>;
   canSelectMultipleOptions: Maybe<Scalars['Boolean']>;
-  challengeMeta: ComponentChallengeChallengeInput;
-  created_by: Maybe<Scalars['ID']>;
-  options: Maybe<Array<ComponentMultipleChoiceChallengeOptionInput>>;
-  prompt: Scalars['String'];
-  published_at: Maybe<Scalars['DateTime']>;
-  updated_by: Maybe<Scalars['ID']>;
-  useMarkdownForOptionsText: Maybe<Scalars['Boolean']>;
+  internalLabel: Maybe<Scalars['String']>;
+  options: Maybe<Array<Maybe<ComponentChallengeMultipleChoiceOptionsInput>>>;
+  prompt: Maybe<Scalars['String']>;
+  publishedAt: Maybe<Scalars['DateTime']>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createChallengeCompletion: Maybe<CreateChallengeCompletionPayload>;
-  createCodeChallenge: Maybe<CreateCodeChallengePayload>;
-  createCodeChallengeLocalization: CodeChallenge;
-  createCourse: Maybe<CreateCoursePayload>;
-  createCourseLocalization: Course;
-  createLesson: Maybe<CreateLessonPayload>;
-  createLessonCompletion: Maybe<CreateLessonCompletionPayload>;
-  createLessonLocalization: Lesson;
-  createModule: Maybe<CreateModulePayload>;
-  createModuleLocalization: Modules;
-  createMultipleChoiceChallenge: Maybe<CreateMultipleChoiceChallengePayload>;
+  createCodeChallenge: Maybe<CodeChallengeEntityResponse>;
+  createCourse: Maybe<CourseEntityResponse>;
+  createLesson: Maybe<LessonEntityResponse>;
+  createModule: Maybe<ModuleEntityResponse>;
+  createMultipleChoiceChallenge: Maybe<MultipleChoiceChallengeEntityResponse>;
+  createSublesson: Maybe<SublessonEntityResponse>;
+  createSyntaxEntry: Maybe<SyntaxEntryEntityResponse>;
+  createUploadFile: Maybe<UploadFileEntityResponse>;
   /** Create a new role */
-  createRole: Maybe<CreateRolePayload>;
-  createSublesson: Maybe<CreateSublessonPayload>;
-  createSyntaxEntry: Maybe<CreateSyntaxEntryPayload>;
+  createUsersPermissionsRole: Maybe<UsersPermissionsCreateRolePayload>;
   /** Create a new user */
-  createUser: Maybe<CreateUserPayload>;
-  deleteChallengeCompletion: Maybe<DeleteChallengeCompletionPayload>;
-  deleteCodeChallenge: Maybe<DeleteCodeChallengePayload>;
-  deleteCourse: Maybe<DeleteCoursePayload>;
-  /** Delete one file */
-  deleteFile: Maybe<DeleteFilePayload>;
-  deleteLesson: Maybe<DeleteLessonPayload>;
-  deleteLessonCompletion: Maybe<DeleteLessonCompletionPayload>;
-  deleteModule: Maybe<DeleteModulePayload>;
-  deleteMultipleChoiceChallenge: Maybe<DeleteMultipleChoiceChallengePayload>;
+  createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  deleteCodeChallenge: Maybe<CodeChallengeEntityResponse>;
+  deleteCourse: Maybe<CourseEntityResponse>;
+  deleteLesson: Maybe<LessonEntityResponse>;
+  deleteModule: Maybe<ModuleEntityResponse>;
+  deleteMultipleChoiceChallenge: Maybe<MultipleChoiceChallengeEntityResponse>;
+  deleteSublesson: Maybe<SublessonEntityResponse>;
+  deleteSyntaxEntry: Maybe<SyntaxEntryEntityResponse>;
+  deleteUploadFile: Maybe<UploadFileEntityResponse>;
   /** Delete an existing role */
-  deleteRole: Maybe<DeleteRolePayload>;
-  deleteSublesson: Maybe<DeleteSublessonPayload>;
-  deleteSyntaxEntry: Maybe<DeleteSyntaxEntryPayload>;
-  /** Delete an existing user */
-  deleteUser: Maybe<DeleteUserPayload>;
-  emailConfirmation: Maybe<UsersPermissionsLoginPayload>;
-  forgotPassword: Maybe<UserPermissionsPasswordPayload>;
-  login: UsersPermissionsLoginPayload;
-  multipleUpload: Array<Maybe<UploadFile>>;
-  register: UsersPermissionsLoginPayload;
-  resetPassword: Maybe<UsersPermissionsLoginPayload>;
-  updateChallengeCompletion: Maybe<UpdateChallengeCompletionPayload>;
-  updateCodeChallenge: Maybe<UpdateCodeChallengePayload>;
-  updateCourse: Maybe<UpdateCoursePayload>;
-  updateFileInfo: UploadFile;
-  updateLesson: Maybe<UpdateLessonPayload>;
-  updateLessonCompletion: Maybe<UpdateLessonCompletionPayload>;
-  updateModule: Maybe<UpdateModulePayload>;
-  updateMultipleChoiceChallenge: Maybe<UpdateMultipleChoiceChallengePayload>;
-  /** Update an existing role */
-  updateRole: Maybe<UpdateRolePayload>;
-  updateSublesson: Maybe<UpdateSublessonPayload>;
-  updateSyntaxEntry: Maybe<UpdateSyntaxEntryPayload>;
+  deleteUsersPermissionsRole: Maybe<UsersPermissionsDeleteRolePayload>;
   /** Update an existing user */
-  updateUser: Maybe<UpdateUserPayload>;
-  upload: UploadFile;
-};
-
-
-export type MutationCreateChallengeCompletionArgs = {
-  input: Maybe<CreateChallengeCompletionInput>;
+  deleteUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  /** Confirm an email users email address */
+  emailConfirmation: Maybe<UsersPermissionsLoginPayload>;
+  /** Request a reset password token */
+  forgotPassword: Maybe<UsersPermissionsPasswordPayload>;
+  login: UsersPermissionsLoginPayload;
+  multipleUpload: Array<Maybe<UploadFileEntityResponse>>;
+  /** Register a user */
+  register: UsersPermissionsLoginPayload;
+  removeFile: Maybe<UploadFileEntityResponse>;
+  /** Reset user password. Confirm with a code (resetToken from forgotPassword) */
+  resetPassword: Maybe<UsersPermissionsLoginPayload>;
+  updateCodeChallenge: Maybe<CodeChallengeEntityResponse>;
+  updateCourse: Maybe<CourseEntityResponse>;
+  updateFileInfo: UploadFileEntityResponse;
+  updateLesson: Maybe<LessonEntityResponse>;
+  updateModule: Maybe<ModuleEntityResponse>;
+  updateMultipleChoiceChallenge: Maybe<MultipleChoiceChallengeEntityResponse>;
+  updateSublesson: Maybe<SublessonEntityResponse>;
+  updateSyntaxEntry: Maybe<SyntaxEntryEntityResponse>;
+  updateUploadFile: Maybe<UploadFileEntityResponse>;
+  /** Update an existing role */
+  updateUsersPermissionsRole: Maybe<UsersPermissionsUpdateRolePayload>;
+  /** Update an existing user */
+  updateUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  upload: UploadFileEntityResponse;
 };
 
 
 export type MutationCreateCodeChallengeArgs = {
-  input: Maybe<CreateCodeChallengeInput>;
-};
-
-
-export type MutationCreateCodeChallengeLocalizationArgs = {
-  input: UpdateCodeChallengeInput;
+  data: CodeChallengeInput;
 };
 
 
 export type MutationCreateCourseArgs = {
-  input: Maybe<CreateCourseInput>;
-};
-
-
-export type MutationCreateCourseLocalizationArgs = {
-  input: UpdateCourseInput;
+  data: CourseInput;
 };
 
 
 export type MutationCreateLessonArgs = {
-  input: Maybe<CreateLessonInput>;
-};
-
-
-export type MutationCreateLessonCompletionArgs = {
-  input: Maybe<CreateLessonCompletionInput>;
-};
-
-
-export type MutationCreateLessonLocalizationArgs = {
-  input: UpdateLessonInput;
+  data: LessonInput;
 };
 
 
 export type MutationCreateModuleArgs = {
-  input: Maybe<CreateModuleInput>;
-};
-
-
-export type MutationCreateModuleLocalizationArgs = {
-  input: UpdateModuleInput;
+  data: ModuleInput;
 };
 
 
 export type MutationCreateMultipleChoiceChallengeArgs = {
-  input: Maybe<CreateMultipleChoiceChallengeInput>;
-};
-
-
-export type MutationCreateRoleArgs = {
-  input: Maybe<CreateRoleInput>;
+  data: MultipleChoiceChallengeInput;
 };
 
 
 export type MutationCreateSublessonArgs = {
-  input: Maybe<CreateSublessonInput>;
+  data: SublessonInput;
 };
 
 
 export type MutationCreateSyntaxEntryArgs = {
-  input: Maybe<CreateSyntaxEntryInput>;
+  data: SyntaxEntryInput;
 };
 
 
-export type MutationCreateUserArgs = {
-  input: Maybe<CreateUserInput>;
+export type MutationCreateUploadFileArgs = {
+  data: UploadFileInput;
 };
 
 
-export type MutationDeleteChallengeCompletionArgs = {
-  input: Maybe<DeleteChallengeCompletionInput>;
+export type MutationCreateUsersPermissionsRoleArgs = {
+  data: UsersPermissionsRoleInput;
+};
+
+
+export type MutationCreateUsersPermissionsUserArgs = {
+  data: UsersPermissionsUserInput;
 };
 
 
 export type MutationDeleteCodeChallengeArgs = {
-  input: Maybe<DeleteCodeChallengeInput>;
+  id: Scalars['ID'];
 };
 
 
 export type MutationDeleteCourseArgs = {
-  input: Maybe<DeleteCourseInput>;
-};
-
-
-export type MutationDeleteFileArgs = {
-  input: Maybe<DeleteFileInput>;
+  id: Scalars['ID'];
 };
 
 
 export type MutationDeleteLessonArgs = {
-  input: Maybe<DeleteLessonInput>;
-};
-
-
-export type MutationDeleteLessonCompletionArgs = {
-  input: Maybe<DeleteLessonCompletionInput>;
+  id: Scalars['ID'];
 };
 
 
 export type MutationDeleteModuleArgs = {
-  input: Maybe<DeleteModuleInput>;
+  id: Scalars['ID'];
 };
 
 
 export type MutationDeleteMultipleChoiceChallengeArgs = {
-  input: Maybe<DeleteMultipleChoiceChallengeInput>;
-};
-
-
-export type MutationDeleteRoleArgs = {
-  input: Maybe<DeleteRoleInput>;
+  id: Scalars['ID'];
 };
 
 
 export type MutationDeleteSublessonArgs = {
-  input: Maybe<DeleteSublessonInput>;
+  id: Scalars['ID'];
 };
 
 
 export type MutationDeleteSyntaxEntryArgs = {
-  input: Maybe<DeleteSyntaxEntryInput>;
+  id: Scalars['ID'];
 };
 
 
-export type MutationDeleteUserArgs = {
-  input: Maybe<DeleteUserInput>;
+export type MutationDeleteUploadFileArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDeleteUsersPermissionsRoleArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDeleteUsersPermissionsUserArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -1181,12 +835,16 @@ export type MutationMultipleUploadArgs = {
   files: Array<Maybe<Scalars['Upload']>>;
   ref: Maybe<Scalars['String']>;
   refId: Maybe<Scalars['ID']>;
-  source: Maybe<Scalars['String']>;
 };
 
 
 export type MutationRegisterArgs = {
   input: UsersPermissionsRegisterInput;
+};
+
+
+export type MutationRemoveFileArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -1197,64 +855,69 @@ export type MutationResetPasswordArgs = {
 };
 
 
-export type MutationUpdateChallengeCompletionArgs = {
-  input: Maybe<UpdateChallengeCompletionInput>;
-};
-
-
 export type MutationUpdateCodeChallengeArgs = {
-  input: Maybe<UpdateCodeChallengeInput>;
+  data: CodeChallengeInput;
+  id: Scalars['ID'];
 };
 
 
 export type MutationUpdateCourseArgs = {
-  input: Maybe<UpdateCourseInput>;
+  data: CourseInput;
+  id: Scalars['ID'];
 };
 
 
 export type MutationUpdateFileInfoArgs = {
   id: Scalars['ID'];
-  info: FileInfoInput;
+  info: Maybe<FileInfoInput>;
 };
 
 
 export type MutationUpdateLessonArgs = {
-  input: Maybe<UpdateLessonInput>;
-};
-
-
-export type MutationUpdateLessonCompletionArgs = {
-  input: Maybe<UpdateLessonCompletionInput>;
+  data: LessonInput;
+  id: Scalars['ID'];
 };
 
 
 export type MutationUpdateModuleArgs = {
-  input: Maybe<UpdateModuleInput>;
+  data: ModuleInput;
+  id: Scalars['ID'];
 };
 
 
 export type MutationUpdateMultipleChoiceChallengeArgs = {
-  input: Maybe<UpdateMultipleChoiceChallengeInput>;
-};
-
-
-export type MutationUpdateRoleArgs = {
-  input: Maybe<UpdateRoleInput>;
+  data: MultipleChoiceChallengeInput;
+  id: Scalars['ID'];
 };
 
 
 export type MutationUpdateSublessonArgs = {
-  input: Maybe<UpdateSublessonInput>;
+  data: SublessonInput;
+  id: Scalars['ID'];
 };
 
 
 export type MutationUpdateSyntaxEntryArgs = {
-  input: Maybe<UpdateSyntaxEntryInput>;
+  data: SyntaxEntryInput;
+  id: Scalars['ID'];
 };
 
 
-export type MutationUpdateUserArgs = {
-  input: Maybe<UpdateUserInput>;
+export type MutationUpdateUploadFileArgs = {
+  data: UploadFileInput;
+  id: Scalars['ID'];
+};
+
+
+export type MutationUpdateUsersPermissionsRoleArgs = {
+  data: UsersPermissionsRoleInput;
+  id: Scalars['ID'];
+};
+
+
+export type MutationUpdateUsersPermissionsUserArgs = {
+  data: UsersPermissionsUserInput;
+  id: Scalars['ID'];
 };
 
 
@@ -1264,7 +927,21 @@ export type MutationUploadArgs = {
   info: Maybe<FileInfoInput>;
   ref: Maybe<Scalars['String']>;
   refId: Maybe<Scalars['ID']>;
-  source: Maybe<Scalars['String']>;
+};
+
+export type Pagination = {
+  __typename?: 'Pagination';
+  page: Scalars['Int'];
+  pageCount: Scalars['Int'];
+  pageSize: Scalars['Int'];
+  total: Scalars['Int'];
+};
+
+export type PaginationArg = {
+  limit: Maybe<Scalars['Int']>;
+  page: Maybe<Scalars['Int']>;
+  pageSize: Maybe<Scalars['Int']>;
+  start: Maybe<Scalars['Int']>;
 };
 
 export enum PublicationState {
@@ -1274,811 +951,412 @@ export enum PublicationState {
 
 export type Query = {
   __typename?: 'Query';
-  challengeCompletion: Maybe<ChallengeCompletion>;
-  challengeCompletions: Maybe<Array<Maybe<ChallengeCompletion>>>;
-  challengeCompletionsConnection: Maybe<ChallengeCompletionConnection>;
-  codeChallenge: Maybe<CodeChallenge>;
-  codeChallenges: Maybe<Array<Maybe<CodeChallenge>>>;
-  codeChallengesConnection: Maybe<CodeChallengeConnection>;
-  course: Maybe<Course>;
-  courses: Maybe<Array<Maybe<Course>>>;
-  coursesConnection: Maybe<CourseConnection>;
-  files: Maybe<Array<Maybe<UploadFile>>>;
-  filesConnection: Maybe<UploadFileConnection>;
-  getChallenges: Maybe<Array<Challenge>>;
-  getSublessonBySlugs: Sublesson;
-  lesson: Maybe<Lesson>;
-  lessonCompletion: Maybe<LessonCompletion>;
-  lessonCompletions: Maybe<Array<Maybe<LessonCompletion>>>;
-  lessonCompletionsConnection: Maybe<LessonCompletionConnection>;
-  lessons: Maybe<Array<Maybe<Lesson>>>;
-  lessonsConnection: Maybe<LessonConnection>;
+  codeChallenge: Maybe<CodeChallengeEntityResponse>;
+  codeChallenges: Maybe<CodeChallengeEntityResponseCollection>;
+  course: Maybe<CourseEntityResponse>;
+  courses: Maybe<CourseEntityResponseCollection>;
+  i18NLocale: Maybe<I18NLocaleEntityResponse>;
+  i18NLocales: Maybe<I18NLocaleEntityResponseCollection>;
+  lesson: Maybe<LessonEntityResponse>;
+  lessons: Maybe<LessonEntityResponseCollection>;
   me: Maybe<UsersPermissionsMe>;
-  module: Maybe<Modules>;
-  modules: Maybe<Array<Maybe<Modules>>>;
-  modulesConnection: Maybe<ModulesConnection>;
-  multipleChoiceChallenge: Maybe<MultipleChoiceChallenge>;
-  multipleChoiceChallenges: Maybe<Array<Maybe<MultipleChoiceChallenge>>>;
-  multipleChoiceChallengesConnection: Maybe<MultipleChoiceChallengeConnection>;
-  nextLessonSlug: Maybe<Scalars['String']>;
-  role: Maybe<UsersPermissionsRole>;
-  /** Retrieve all the existing roles. You can't apply filters on this query. */
-  roles: Maybe<Array<Maybe<UsersPermissionsRole>>>;
-  rolesConnection: Maybe<UsersPermissionsRoleConnection>;
-  sublesson: Maybe<Sublesson>;
-  sublessons: Maybe<Array<Maybe<Sublesson>>>;
-  sublessonsConnection: Maybe<SublessonConnection>;
-  syntaxEntries: Maybe<Array<Maybe<SyntaxEntry>>>;
-  syntaxEntriesConnection: Maybe<SyntaxEntryConnection>;
-  syntaxEntry: Maybe<SyntaxEntry>;
-  user: Maybe<UsersPermissionsUser>;
-  users: Maybe<Array<Maybe<UsersPermissionsUser>>>;
-  usersConnection: Maybe<UsersPermissionsUserConnection>;
-};
-
-
-export type QueryChallengeCompletionArgs = {
-  id: Scalars['ID'];
-  publicationState: Maybe<PublicationState>;
-};
-
-
-export type QueryChallengeCompletionsArgs = {
-  limit: Maybe<Scalars['Int']>;
-  publicationState: Maybe<PublicationState>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
-};
-
-
-export type QueryChallengeCompletionsConnectionArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+  module: Maybe<ModuleEntityResponse>;
+  modules: Maybe<ModuleEntityResponseCollection>;
+  multipleChoiceChallenge: Maybe<MultipleChoiceChallengeEntityResponse>;
+  multipleChoiceChallenges: Maybe<MultipleChoiceChallengeEntityResponseCollection>;
+  sublesson: Maybe<SublessonEntityResponse>;
+  sublessons: Maybe<SublessonEntityResponseCollection>;
+  syntaxEntries: Maybe<SyntaxEntryEntityResponseCollection>;
+  syntaxEntry: Maybe<SyntaxEntryEntityResponse>;
+  uploadFile: Maybe<UploadFileEntityResponse>;
+  uploadFiles: Maybe<UploadFileEntityResponseCollection>;
+  usersPermissionsRole: Maybe<UsersPermissionsRoleEntityResponse>;
+  usersPermissionsRoles: Maybe<UsersPermissionsRoleEntityResponseCollection>;
+  usersPermissionsUser: Maybe<UsersPermissionsUserEntityResponse>;
+  usersPermissionsUsers: Maybe<UsersPermissionsUserEntityResponseCollection>;
 };
 
 
 export type QueryCodeChallengeArgs = {
-  id: Scalars['ID'];
-  publicationState: Maybe<PublicationState>;
+  id: Maybe<Scalars['ID']>;
 };
 
 
 export type QueryCodeChallengesArgs = {
-  limit: Maybe<Scalars['Int']>;
-  locale: Maybe<Scalars['String']>;
-  publicationState: Maybe<PublicationState>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
-};
-
-
-export type QueryCodeChallengesConnectionArgs = {
-  limit: Maybe<Scalars['Int']>;
-  locale: Maybe<Scalars['String']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+  filters: Maybe<CodeChallengeFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  publicationState?: Maybe<PublicationState>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
 export type QueryCourseArgs = {
-  id: Scalars['ID'];
-  publicationState: Maybe<PublicationState>;
+  id: Maybe<Scalars['ID']>;
 };
 
 
 export type QueryCoursesArgs = {
-  limit: Maybe<Scalars['Int']>;
-  locale: Maybe<Scalars['String']>;
-  publicationState: Maybe<PublicationState>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+  filters: Maybe<CourseFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  publicationState?: Maybe<PublicationState>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
-export type QueryCoursesConnectionArgs = {
-  limit: Maybe<Scalars['Int']>;
-  locale: Maybe<Scalars['String']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+export type QueryI18NLocaleArgs = {
+  id: Maybe<Scalars['ID']>;
 };
 
 
-export type QueryFilesArgs = {
-  limit: Maybe<Scalars['Int']>;
-  publicationState: Maybe<PublicationState>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
-};
-
-
-export type QueryFilesConnectionArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
-};
-
-
-export type QueryGetChallengesArgs = {
-  includeCompleted: Maybe<Scalars['Boolean']>;
-  lessonId: Scalars['Int'];
-};
-
-
-export type QueryGetSublessonBySlugsArgs = {
-  id: Scalars['ID'];
-  lessonSlug: Scalars['String'];
-  sublessonSlug: Scalars['String'];
+export type QueryI18NLocalesArgs = {
+  filters: Maybe<I18NLocaleFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
 export type QueryLessonArgs = {
-  id: Scalars['ID'];
-  publicationState: Maybe<PublicationState>;
-};
-
-
-export type QueryLessonCompletionArgs = {
-  id: Scalars['ID'];
-  publicationState: Maybe<PublicationState>;
-};
-
-
-export type QueryLessonCompletionsArgs = {
-  limit: Maybe<Scalars['Int']>;
-  publicationState: Maybe<PublicationState>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
-};
-
-
-export type QueryLessonCompletionsConnectionArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+  id: Maybe<Scalars['ID']>;
 };
 
 
 export type QueryLessonsArgs = {
-  limit: Maybe<Scalars['Int']>;
-  locale: Maybe<Scalars['String']>;
-  publicationState: Maybe<PublicationState>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
-};
-
-
-export type QueryLessonsConnectionArgs = {
-  limit: Maybe<Scalars['Int']>;
-  locale: Maybe<Scalars['String']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+  filters: Maybe<LessonFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  publicationState?: Maybe<PublicationState>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
 export type QueryModuleArgs = {
-  id: Scalars['ID'];
-  publicationState: Maybe<PublicationState>;
+  id: Maybe<Scalars['ID']>;
 };
 
 
 export type QueryModulesArgs = {
-  limit: Maybe<Scalars['Int']>;
-  locale: Maybe<Scalars['String']>;
-  publicationState: Maybe<PublicationState>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
-};
-
-
-export type QueryModulesConnectionArgs = {
-  limit: Maybe<Scalars['Int']>;
-  locale: Maybe<Scalars['String']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+  filters: Maybe<ModuleFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  publicationState?: Maybe<PublicationState>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
 export type QueryMultipleChoiceChallengeArgs = {
-  id: Scalars['ID'];
-  publicationState: Maybe<PublicationState>;
+  id: Maybe<Scalars['ID']>;
 };
 
 
 export type QueryMultipleChoiceChallengesArgs = {
-  limit: Maybe<Scalars['Int']>;
-  publicationState: Maybe<PublicationState>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
-};
-
-
-export type QueryMultipleChoiceChallengesConnectionArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
-};
-
-
-export type QueryNextLessonSlugArgs = {
-  currentLessonId: Scalars['Int'];
-};
-
-
-export type QueryRoleArgs = {
-  id: Scalars['ID'];
-  publicationState: Maybe<PublicationState>;
-};
-
-
-export type QueryRolesArgs = {
-  limit: Maybe<Scalars['Int']>;
-  publicationState: Maybe<PublicationState>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
-};
-
-
-export type QueryRolesConnectionArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+  filters: Maybe<MultipleChoiceChallengeFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  publicationState?: Maybe<PublicationState>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
 export type QuerySublessonArgs = {
-  id: Scalars['ID'];
-  publicationState: Maybe<PublicationState>;
+  id: Maybe<Scalars['ID']>;
 };
 
 
 export type QuerySublessonsArgs = {
-  limit: Maybe<Scalars['Int']>;
-  publicationState: Maybe<PublicationState>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
-};
-
-
-export type QuerySublessonsConnectionArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+  filters: Maybe<SublessonFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  publicationState?: Maybe<PublicationState>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
 export type QuerySyntaxEntriesArgs = {
-  limit: Maybe<Scalars['Int']>;
-  publicationState: Maybe<PublicationState>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
-};
-
-
-export type QuerySyntaxEntriesConnectionArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+  filters: Maybe<SyntaxEntryFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  publicationState?: Maybe<PublicationState>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
 export type QuerySyntaxEntryArgs = {
-  id: Scalars['ID'];
-  publicationState: Maybe<PublicationState>;
+  id: Maybe<Scalars['ID']>;
 };
 
 
-export type QueryUserArgs = {
-  id: Scalars['ID'];
-  publicationState: Maybe<PublicationState>;
+export type QueryUploadFileArgs = {
+  id: Maybe<Scalars['ID']>;
 };
 
 
-export type QueryUsersArgs = {
-  limit: Maybe<Scalars['Int']>;
-  publicationState: Maybe<PublicationState>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+export type QueryUploadFilesArgs = {
+  filters: Maybe<UploadFileFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
-export type QueryUsersConnectionArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+export type QueryUsersPermissionsRoleArgs = {
+  id: Maybe<Scalars['ID']>;
 };
 
-export type RoleInput = {
-  created_by: Maybe<Scalars['ID']>;
-  description: Maybe<Scalars['String']>;
-  name: Scalars['String'];
-  permissions: Maybe<Array<Maybe<Scalars['ID']>>>;
-  type: Maybe<Scalars['String']>;
-  updated_by: Maybe<Scalars['ID']>;
-  users: Maybe<Array<Maybe<Scalars['ID']>>>;
+
+export type QueryUsersPermissionsRolesArgs = {
+  filters: Maybe<UsersPermissionsRoleFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+
+export type QueryUsersPermissionsUserArgs = {
+  id: Maybe<Scalars['ID']>;
+};
+
+
+export type QueryUsersPermissionsUsersArgs = {
+  filters: Maybe<UsersPermissionsUserFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type ResponseCollectionMeta = {
+  __typename?: 'ResponseCollectionMeta';
+  pagination: Pagination;
+};
+
+export type StringFilterInput = {
+  and: Maybe<Array<Maybe<Scalars['String']>>>;
+  between: Maybe<Array<Maybe<Scalars['String']>>>;
+  contains: Maybe<Scalars['String']>;
+  containsi: Maybe<Scalars['String']>;
+  endsWith: Maybe<Scalars['String']>;
+  eq: Maybe<Scalars['String']>;
+  gt: Maybe<Scalars['String']>;
+  gte: Maybe<Scalars['String']>;
+  in: Maybe<Array<Maybe<Scalars['String']>>>;
+  lt: Maybe<Scalars['String']>;
+  lte: Maybe<Scalars['String']>;
+  ne: Maybe<Scalars['String']>;
+  not: Maybe<StringFilterInput>;
+  notContains: Maybe<Scalars['String']>;
+  notContainsi: Maybe<Scalars['String']>;
+  notIn: Maybe<Array<Maybe<Scalars['String']>>>;
+  notNull: Maybe<Scalars['Boolean']>;
+  null: Maybe<Scalars['Boolean']>;
+  or: Maybe<Array<Maybe<Scalars['String']>>>;
+  startsWith: Maybe<Scalars['String']>;
 };
 
 export type Sublesson = {
   __typename?: 'Sublesson';
-  challenges: Maybe<Array<Maybe<ComponentSublessonchallengeChallenge>>>;
-  created_at: Scalars['DateTime'];
-  descriptions: Maybe<ComponentSublessonSublessonDescriptions>;
-  id: Scalars['ID'];
-  lesson: Maybe<Lesson>;
-  minimizeEditor: Maybe<Scalars['Boolean']>;
+  challenges: Maybe<Array<Maybe<ComponentContentChallenges>>>;
+  createdAt: Maybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  lesson: Maybe<LessonEntityResponse>;
   name: Scalars['String'];
-  published_at: Maybe<Scalars['DateTime']>;
-  syntaxEntry: Maybe<SyntaxEntry>;
-  updated_at: Scalars['DateTime'];
+  publishedAt: Maybe<Scalars['DateTime']>;
+  syntaxEntry: Maybe<SyntaxEntryEntityResponse>;
+  updatedAt: Maybe<Scalars['DateTime']>;
 };
 
-export type SublessonAggregator = {
-  __typename?: 'SublessonAggregator';
-  count: Maybe<Scalars['Int']>;
-  totalCount: Maybe<Scalars['Int']>;
+
+export type SublessonChallengesArgs = {
+  filters: Maybe<ComponentContentChallengesFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
-export type SublessonConnection = {
-  __typename?: 'SublessonConnection';
-  aggregate: Maybe<SublessonAggregator>;
-  groupBy: Maybe<SublessonGroupBy>;
-  values: Maybe<Array<Maybe<Sublesson>>>;
+export type SublessonEntity = {
+  __typename?: 'SublessonEntity';
+  attributes: Maybe<Sublesson>;
+  id: Maybe<Scalars['ID']>;
 };
 
-export type SublessonConnectionCreated_At = {
-  __typename?: 'SublessonConnectionCreated_at';
-  connection: Maybe<SublessonConnection>;
-  key: Maybe<Scalars['DateTime']>;
+export type SublessonEntityResponse = {
+  __typename?: 'SublessonEntityResponse';
+  data: Maybe<SublessonEntity>;
 };
 
-export type SublessonConnectionDescriptions = {
-  __typename?: 'SublessonConnectionDescriptions';
-  connection: Maybe<SublessonConnection>;
-  key: Maybe<Scalars['ID']>;
+export type SublessonEntityResponseCollection = {
+  __typename?: 'SublessonEntityResponseCollection';
+  data: Array<SublessonEntity>;
+  meta: ResponseCollectionMeta;
 };
 
-export type SublessonConnectionId = {
-  __typename?: 'SublessonConnectionId';
-  connection: Maybe<SublessonConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type SublessonConnectionLesson = {
-  __typename?: 'SublessonConnectionLesson';
-  connection: Maybe<SublessonConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type SublessonConnectionMinimizeEditor = {
-  __typename?: 'SublessonConnectionMinimizeEditor';
-  connection: Maybe<SublessonConnection>;
-  key: Maybe<Scalars['Boolean']>;
-};
-
-export type SublessonConnectionName = {
-  __typename?: 'SublessonConnectionName';
-  connection: Maybe<SublessonConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type SublessonConnectionPublished_At = {
-  __typename?: 'SublessonConnectionPublished_at';
-  connection: Maybe<SublessonConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type SublessonConnectionSyntaxEntry = {
-  __typename?: 'SublessonConnectionSyntaxEntry';
-  connection: Maybe<SublessonConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type SublessonConnectionUpdated_At = {
-  __typename?: 'SublessonConnectionUpdated_at';
-  connection: Maybe<SublessonConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type SublessonGroupBy = {
-  __typename?: 'SublessonGroupBy';
-  created_at: Maybe<Array<Maybe<SublessonConnectionCreated_At>>>;
-  descriptions: Maybe<Array<Maybe<SublessonConnectionDescriptions>>>;
-  id: Maybe<Array<Maybe<SublessonConnectionId>>>;
-  lesson: Maybe<Array<Maybe<SublessonConnectionLesson>>>;
-  minimizeEditor: Maybe<Array<Maybe<SublessonConnectionMinimizeEditor>>>;
-  name: Maybe<Array<Maybe<SublessonConnectionName>>>;
-  published_at: Maybe<Array<Maybe<SublessonConnectionPublished_At>>>;
-  syntaxEntry: Maybe<Array<Maybe<SublessonConnectionSyntaxEntry>>>;
-  updated_at: Maybe<Array<Maybe<SublessonConnectionUpdated_At>>>;
+export type SublessonFiltersInput = {
+  and: Maybe<Array<Maybe<SublessonFiltersInput>>>;
+  createdAt: Maybe<DateTimeFilterInput>;
+  description: Maybe<StringFilterInput>;
+  id: Maybe<IdFilterInput>;
+  internalNotes: Maybe<StringFilterInput>;
+  lesson: Maybe<LessonFiltersInput>;
+  name: Maybe<StringFilterInput>;
+  not: Maybe<SublessonFiltersInput>;
+  or: Maybe<Array<Maybe<SublessonFiltersInput>>>;
+  publishedAt: Maybe<DateTimeFilterInput>;
+  syntaxEntry: Maybe<SyntaxEntryFiltersInput>;
+  updatedAt: Maybe<DateTimeFilterInput>;
 };
 
 export type SublessonInput = {
-  InternalMaintenanceNotes: Maybe<Scalars['String']>;
-  challenges: Maybe<Array<Maybe<ComponentSublessonchallengeChallengeInput>>>;
-  created_by: Maybe<Scalars['ID']>;
-  descriptions: ComponentSublessonSublessonDescriptionInput;
+  challenges: Maybe<Array<Maybe<ComponentContentChallengesInput>>>;
+  description: Maybe<Scalars['String']>;
+  internalNotes: Maybe<Scalars['String']>;
   lesson: Maybe<Scalars['ID']>;
-  minimizeEditor: Maybe<Scalars['Boolean']>;
-  name: Scalars['String'];
-  published_at: Maybe<Scalars['DateTime']>;
+  name: Maybe<Scalars['String']>;
+  publishedAt: Maybe<Scalars['DateTime']>;
   syntaxEntry: Maybe<Scalars['ID']>;
-  updated_by: Maybe<Scalars['ID']>;
+};
+
+export type SublessonRelationResponseCollection = {
+  __typename?: 'SublessonRelationResponseCollection';
+  data: Array<SublessonEntity>;
 };
 
 export type SyntaxEntry = {
   __typename?: 'SyntaxEntry';
   content: Scalars['String'];
-  created_at: Scalars['DateTime'];
-  id: Scalars['ID'];
-  lesson: Maybe<Lesson>;
+  createdAt: Maybe<Scalars['DateTime']>;
+  internalNotes: Maybe<Scalars['String']>;
+  lesson: Maybe<LessonEntityResponse>;
   maxWidth: Maybe<Scalars['Int']>;
   name: Scalars['String'];
-  published_at: Maybe<Scalars['DateTime']>;
-  sublesson: Maybe<Sublesson>;
-  updated_at: Scalars['DateTime'];
+  publishedAt: Maybe<Scalars['DateTime']>;
+  sublesson: Maybe<SublessonEntityResponse>;
+  updatedAt: Maybe<Scalars['DateTime']>;
 };
 
-export type SyntaxEntryAggregator = {
-  __typename?: 'SyntaxEntryAggregator';
-  avg: Maybe<SyntaxEntryAggregatorAvg>;
-  count: Maybe<Scalars['Int']>;
-  max: Maybe<SyntaxEntryAggregatorMax>;
-  min: Maybe<SyntaxEntryAggregatorMin>;
-  sum: Maybe<SyntaxEntryAggregatorSum>;
-  totalCount: Maybe<Scalars['Int']>;
+export type SyntaxEntryEntity = {
+  __typename?: 'SyntaxEntryEntity';
+  attributes: Maybe<SyntaxEntry>;
+  id: Maybe<Scalars['ID']>;
 };
 
-export type SyntaxEntryAggregatorAvg = {
-  __typename?: 'SyntaxEntryAggregatorAvg';
-  maxWidth: Maybe<Scalars['Float']>;
+export type SyntaxEntryEntityResponse = {
+  __typename?: 'SyntaxEntryEntityResponse';
+  data: Maybe<SyntaxEntryEntity>;
 };
 
-export type SyntaxEntryAggregatorMax = {
-  __typename?: 'SyntaxEntryAggregatorMax';
-  maxWidth: Maybe<Scalars['Float']>;
+export type SyntaxEntryEntityResponseCollection = {
+  __typename?: 'SyntaxEntryEntityResponseCollection';
+  data: Array<SyntaxEntryEntity>;
+  meta: ResponseCollectionMeta;
 };
 
-export type SyntaxEntryAggregatorMin = {
-  __typename?: 'SyntaxEntryAggregatorMin';
-  maxWidth: Maybe<Scalars['Float']>;
-};
-
-export type SyntaxEntryAggregatorSum = {
-  __typename?: 'SyntaxEntryAggregatorSum';
-  maxWidth: Maybe<Scalars['Float']>;
-};
-
-export type SyntaxEntryConnection = {
-  __typename?: 'SyntaxEntryConnection';
-  aggregate: Maybe<SyntaxEntryAggregator>;
-  groupBy: Maybe<SyntaxEntryGroupBy>;
-  values: Maybe<Array<Maybe<SyntaxEntry>>>;
-};
-
-export type SyntaxEntryConnectionContent = {
-  __typename?: 'SyntaxEntryConnectionContent';
-  connection: Maybe<SyntaxEntryConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type SyntaxEntryConnectionCreated_At = {
-  __typename?: 'SyntaxEntryConnectionCreated_at';
-  connection: Maybe<SyntaxEntryConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type SyntaxEntryConnectionId = {
-  __typename?: 'SyntaxEntryConnectionId';
-  connection: Maybe<SyntaxEntryConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type SyntaxEntryConnectionLesson = {
-  __typename?: 'SyntaxEntryConnectionLesson';
-  connection: Maybe<SyntaxEntryConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type SyntaxEntryConnectionMaxWidth = {
-  __typename?: 'SyntaxEntryConnectionMaxWidth';
-  connection: Maybe<SyntaxEntryConnection>;
-  key: Maybe<Scalars['Int']>;
-};
-
-export type SyntaxEntryConnectionName = {
-  __typename?: 'SyntaxEntryConnectionName';
-  connection: Maybe<SyntaxEntryConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type SyntaxEntryConnectionPublished_At = {
-  __typename?: 'SyntaxEntryConnectionPublished_at';
-  connection: Maybe<SyntaxEntryConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type SyntaxEntryConnectionSublesson = {
-  __typename?: 'SyntaxEntryConnectionSublesson';
-  connection: Maybe<SyntaxEntryConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type SyntaxEntryConnectionUpdated_At = {
-  __typename?: 'SyntaxEntryConnectionUpdated_at';
-  connection: Maybe<SyntaxEntryConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type SyntaxEntryGroupBy = {
-  __typename?: 'SyntaxEntryGroupBy';
-  content: Maybe<Array<Maybe<SyntaxEntryConnectionContent>>>;
-  created_at: Maybe<Array<Maybe<SyntaxEntryConnectionCreated_At>>>;
-  id: Maybe<Array<Maybe<SyntaxEntryConnectionId>>>;
-  lesson: Maybe<Array<Maybe<SyntaxEntryConnectionLesson>>>;
-  maxWidth: Maybe<Array<Maybe<SyntaxEntryConnectionMaxWidth>>>;
-  name: Maybe<Array<Maybe<SyntaxEntryConnectionName>>>;
-  published_at: Maybe<Array<Maybe<SyntaxEntryConnectionPublished_At>>>;
-  sublesson: Maybe<Array<Maybe<SyntaxEntryConnectionSublesson>>>;
-  updated_at: Maybe<Array<Maybe<SyntaxEntryConnectionUpdated_At>>>;
+export type SyntaxEntryFiltersInput = {
+  and: Maybe<Array<Maybe<SyntaxEntryFiltersInput>>>;
+  content: Maybe<StringFilterInput>;
+  createdAt: Maybe<DateTimeFilterInput>;
+  id: Maybe<IdFilterInput>;
+  internalNotes: Maybe<StringFilterInput>;
+  lesson: Maybe<LessonFiltersInput>;
+  maxWidth: Maybe<IntFilterInput>;
+  name: Maybe<StringFilterInput>;
+  not: Maybe<SyntaxEntryFiltersInput>;
+  or: Maybe<Array<Maybe<SyntaxEntryFiltersInput>>>;
+  publishedAt: Maybe<DateTimeFilterInput>;
+  sublesson: Maybe<SublessonFiltersInput>;
+  updatedAt: Maybe<DateTimeFilterInput>;
 };
 
 export type SyntaxEntryInput = {
-  InternalNotes: Maybe<Scalars['String']>;
-  content: Scalars['String'];
-  created_by: Maybe<Scalars['ID']>;
+  content: Maybe<Scalars['String']>;
+  internalNotes: Maybe<Scalars['String']>;
   lesson: Maybe<Scalars['ID']>;
   maxWidth: Maybe<Scalars['Int']>;
-  name: Scalars['String'];
-  published_at: Maybe<Scalars['DateTime']>;
+  name: Maybe<Scalars['String']>;
+  publishedAt: Maybe<Scalars['DateTime']>;
   sublesson: Maybe<Scalars['ID']>;
-  updated_by: Maybe<Scalars['ID']>;
 };
 
 export type UploadFile = {
   __typename?: 'UploadFile';
   alternativeText: Maybe<Scalars['String']>;
   caption: Maybe<Scalars['String']>;
-  created_at: Scalars['DateTime'];
+  createdAt: Maybe<Scalars['DateTime']>;
   ext: Maybe<Scalars['String']>;
   formats: Maybe<Scalars['JSON']>;
   hash: Scalars['String'];
   height: Maybe<Scalars['Int']>;
-  id: Scalars['ID'];
   mime: Scalars['String'];
   name: Scalars['String'];
   previewUrl: Maybe<Scalars['String']>;
   provider: Scalars['String'];
   provider_metadata: Maybe<Scalars['JSON']>;
-  related: Maybe<Array<Maybe<Morph>>>;
+  related: Maybe<Array<Maybe<GenericMorph>>>;
   size: Scalars['Float'];
-  updated_at: Scalars['DateTime'];
+  updatedAt: Maybe<Scalars['DateTime']>;
   url: Scalars['String'];
   width: Maybe<Scalars['Int']>;
 };
 
-
-export type UploadFileRelatedArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+export type UploadFileEntity = {
+  __typename?: 'UploadFileEntity';
+  attributes: Maybe<UploadFile>;
+  id: Maybe<Scalars['ID']>;
 };
 
-export type UploadFileAggregator = {
-  __typename?: 'UploadFileAggregator';
-  avg: Maybe<UploadFileAggregatorAvg>;
-  count: Maybe<Scalars['Int']>;
-  max: Maybe<UploadFileAggregatorMax>;
-  min: Maybe<UploadFileAggregatorMin>;
-  sum: Maybe<UploadFileAggregatorSum>;
-  totalCount: Maybe<Scalars['Int']>;
+export type UploadFileEntityResponse = {
+  __typename?: 'UploadFileEntityResponse';
+  data: Maybe<UploadFileEntity>;
 };
 
-export type UploadFileAggregatorAvg = {
-  __typename?: 'UploadFileAggregatorAvg';
-  height: Maybe<Scalars['Float']>;
-  size: Maybe<Scalars['Float']>;
-  width: Maybe<Scalars['Float']>;
+export type UploadFileEntityResponseCollection = {
+  __typename?: 'UploadFileEntityResponseCollection';
+  data: Array<UploadFileEntity>;
+  meta: ResponseCollectionMeta;
 };
 
-export type UploadFileAggregatorMax = {
-  __typename?: 'UploadFileAggregatorMax';
-  height: Maybe<Scalars['Float']>;
-  size: Maybe<Scalars['Float']>;
-  width: Maybe<Scalars['Float']>;
+export type UploadFileFiltersInput = {
+  alternativeText: Maybe<StringFilterInput>;
+  and: Maybe<Array<Maybe<UploadFileFiltersInput>>>;
+  caption: Maybe<StringFilterInput>;
+  createdAt: Maybe<DateTimeFilterInput>;
+  ext: Maybe<StringFilterInput>;
+  formats: Maybe<JsonFilterInput>;
+  hash: Maybe<StringFilterInput>;
+  height: Maybe<IntFilterInput>;
+  id: Maybe<IdFilterInput>;
+  mime: Maybe<StringFilterInput>;
+  name: Maybe<StringFilterInput>;
+  not: Maybe<UploadFileFiltersInput>;
+  or: Maybe<Array<Maybe<UploadFileFiltersInput>>>;
+  previewUrl: Maybe<StringFilterInput>;
+  provider: Maybe<StringFilterInput>;
+  provider_metadata: Maybe<JsonFilterInput>;
+  size: Maybe<FloatFilterInput>;
+  updatedAt: Maybe<DateTimeFilterInput>;
+  url: Maybe<StringFilterInput>;
+  width: Maybe<IntFilterInput>;
 };
 
-export type UploadFileAggregatorMin = {
-  __typename?: 'UploadFileAggregatorMin';
-  height: Maybe<Scalars['Float']>;
-  size: Maybe<Scalars['Float']>;
-  width: Maybe<Scalars['Float']>;
-};
-
-export type UploadFileAggregatorSum = {
-  __typename?: 'UploadFileAggregatorSum';
-  height: Maybe<Scalars['Float']>;
-  size: Maybe<Scalars['Float']>;
-  width: Maybe<Scalars['Float']>;
-};
-
-export type UploadFileConnection = {
-  __typename?: 'UploadFileConnection';
-  aggregate: Maybe<UploadFileAggregator>;
-  groupBy: Maybe<UploadFileGroupBy>;
-  values: Maybe<Array<Maybe<UploadFile>>>;
-};
-
-export type UploadFileConnectionAlternativeText = {
-  __typename?: 'UploadFileConnectionAlternativeText';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type UploadFileConnectionCaption = {
-  __typename?: 'UploadFileConnectionCaption';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type UploadFileConnectionCreated_At = {
-  __typename?: 'UploadFileConnectionCreated_at';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type UploadFileConnectionExt = {
-  __typename?: 'UploadFileConnectionExt';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type UploadFileConnectionFormats = {
-  __typename?: 'UploadFileConnectionFormats';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['JSON']>;
-};
-
-export type UploadFileConnectionHash = {
-  __typename?: 'UploadFileConnectionHash';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type UploadFileConnectionHeight = {
-  __typename?: 'UploadFileConnectionHeight';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['Int']>;
-};
-
-export type UploadFileConnectionId = {
-  __typename?: 'UploadFileConnectionId';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type UploadFileConnectionMime = {
-  __typename?: 'UploadFileConnectionMime';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type UploadFileConnectionName = {
-  __typename?: 'UploadFileConnectionName';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type UploadFileConnectionPreviewUrl = {
-  __typename?: 'UploadFileConnectionPreviewUrl';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type UploadFileConnectionProvider = {
-  __typename?: 'UploadFileConnectionProvider';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type UploadFileConnectionProvider_Metadata = {
-  __typename?: 'UploadFileConnectionProvider_metadata';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['JSON']>;
-};
-
-export type UploadFileConnectionSize = {
-  __typename?: 'UploadFileConnectionSize';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['Float']>;
-};
-
-export type UploadFileConnectionUpdated_At = {
-  __typename?: 'UploadFileConnectionUpdated_at';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type UploadFileConnectionUrl = {
-  __typename?: 'UploadFileConnectionUrl';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type UploadFileConnectionWidth = {
-  __typename?: 'UploadFileConnectionWidth';
-  connection: Maybe<UploadFileConnection>;
-  key: Maybe<Scalars['Int']>;
-};
-
-export type UploadFileGroupBy = {
-  __typename?: 'UploadFileGroupBy';
-  alternativeText: Maybe<Array<Maybe<UploadFileConnectionAlternativeText>>>;
-  caption: Maybe<Array<Maybe<UploadFileConnectionCaption>>>;
-  created_at: Maybe<Array<Maybe<UploadFileConnectionCreated_At>>>;
-  ext: Maybe<Array<Maybe<UploadFileConnectionExt>>>;
-  formats: Maybe<Array<Maybe<UploadFileConnectionFormats>>>;
-  hash: Maybe<Array<Maybe<UploadFileConnectionHash>>>;
-  height: Maybe<Array<Maybe<UploadFileConnectionHeight>>>;
-  id: Maybe<Array<Maybe<UploadFileConnectionId>>>;
-  mime: Maybe<Array<Maybe<UploadFileConnectionMime>>>;
-  name: Maybe<Array<Maybe<UploadFileConnectionName>>>;
-  previewUrl: Maybe<Array<Maybe<UploadFileConnectionPreviewUrl>>>;
-  provider: Maybe<Array<Maybe<UploadFileConnectionProvider>>>;
-  provider_metadata: Maybe<Array<Maybe<UploadFileConnectionProvider_Metadata>>>;
-  size: Maybe<Array<Maybe<UploadFileConnectionSize>>>;
-  updated_at: Maybe<Array<Maybe<UploadFileConnectionUpdated_At>>>;
-  url: Maybe<Array<Maybe<UploadFileConnectionUrl>>>;
-  width: Maybe<Array<Maybe<UploadFileConnectionWidth>>>;
-};
-
-export type UserInput = {
-  blocked: Maybe<Scalars['Boolean']>;
-  confirmationToken: Maybe<Scalars['String']>;
-  confirmed: Maybe<Scalars['Boolean']>;
-  created_by: Maybe<Scalars['ID']>;
-  email: Scalars['String'];
-  password: Maybe<Scalars['String']>;
+export type UploadFileInput = {
+  alternativeText: Maybe<Scalars['String']>;
+  caption: Maybe<Scalars['String']>;
+  ext: Maybe<Scalars['String']>;
+  formats: Maybe<Scalars['JSON']>;
+  hash: Maybe<Scalars['String']>;
+  height: Maybe<Scalars['Int']>;
+  mime: Maybe<Scalars['String']>;
+  name: Maybe<Scalars['String']>;
+  previewUrl: Maybe<Scalars['String']>;
   provider: Maybe<Scalars['String']>;
-  resetPasswordToken: Maybe<Scalars['String']>;
-  role: Maybe<Scalars['ID']>;
-  updated_by: Maybe<Scalars['ID']>;
-  username: Scalars['String'];
+  provider_metadata: Maybe<Scalars['JSON']>;
+  size: Maybe<Scalars['Float']>;
+  url: Maybe<Scalars['String']>;
+  width: Maybe<Scalars['Int']>;
 };
 
-export type UserPermissionsPasswordPayload = {
-  __typename?: 'UserPermissionsPasswordPayload';
+export type UsersPermissionsCreateRolePayload = {
+  __typename?: 'UsersPermissionsCreateRolePayload';
+  ok: Scalars['Boolean'];
+};
+
+export type UsersPermissionsDeleteRolePayload = {
+  __typename?: 'UsersPermissionsDeleteRolePayload';
   ok: Scalars['Boolean'];
 };
 
 export type UsersPermissionsLoginInput = {
   identifier: Scalars['String'];
   password: Scalars['String'];
-  provider: Maybe<Scalars['String']>;
+  provider: Scalars['String'];
 };
 
 export type UsersPermissionsLoginPayload = {
@@ -2091,7 +1369,7 @@ export type UsersPermissionsMe = {
   __typename?: 'UsersPermissionsMe';
   blocked: Maybe<Scalars['Boolean']>;
   confirmed: Maybe<Scalars['Boolean']>;
-  email: Scalars['String'];
+  email: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   role: Maybe<UsersPermissionsMeRole>;
   username: Scalars['String'];
@@ -2105,15 +1383,39 @@ export type UsersPermissionsMeRole = {
   type: Maybe<Scalars['String']>;
 };
 
+export type UsersPermissionsPasswordPayload = {
+  __typename?: 'UsersPermissionsPasswordPayload';
+  ok: Scalars['Boolean'];
+};
+
 export type UsersPermissionsPermission = {
   __typename?: 'UsersPermissionsPermission';
   action: Scalars['String'];
-  controller: Scalars['String'];
-  enabled: Scalars['Boolean'];
-  id: Scalars['ID'];
-  policy: Maybe<Scalars['String']>;
-  role: Maybe<UsersPermissionsRole>;
-  type: Scalars['String'];
+  createdAt: Maybe<Scalars['DateTime']>;
+  role: Maybe<UsersPermissionsRoleEntityResponse>;
+  updatedAt: Maybe<Scalars['DateTime']>;
+};
+
+export type UsersPermissionsPermissionEntity = {
+  __typename?: 'UsersPermissionsPermissionEntity';
+  attributes: Maybe<UsersPermissionsPermission>;
+  id: Maybe<Scalars['ID']>;
+};
+
+export type UsersPermissionsPermissionFiltersInput = {
+  action: Maybe<StringFilterInput>;
+  and: Maybe<Array<Maybe<UsersPermissionsPermissionFiltersInput>>>;
+  createdAt: Maybe<DateTimeFilterInput>;
+  id: Maybe<IdFilterInput>;
+  not: Maybe<UsersPermissionsPermissionFiltersInput>;
+  or: Maybe<Array<Maybe<UsersPermissionsPermissionFiltersInput>>>;
+  role: Maybe<UsersPermissionsRoleFiltersInput>;
+  updatedAt: Maybe<DateTimeFilterInput>;
+};
+
+export type UsersPermissionsPermissionRelationResponseCollection = {
+  __typename?: 'UsersPermissionsPermissionRelationResponseCollection';
+  data: Array<UsersPermissionsPermissionEntity>;
 };
 
 export type UsersPermissionsRegisterInput = {
@@ -2124,706 +1426,135 @@ export type UsersPermissionsRegisterInput = {
 
 export type UsersPermissionsRole = {
   __typename?: 'UsersPermissionsRole';
+  createdAt: Maybe<Scalars['DateTime']>;
   description: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
   name: Scalars['String'];
-  permissions: Maybe<Array<Maybe<UsersPermissionsPermission>>>;
+  permissions: Maybe<UsersPermissionsPermissionRelationResponseCollection>;
   type: Maybe<Scalars['String']>;
-  users: Maybe<Array<Maybe<UsersPermissionsUser>>>;
+  updatedAt: Maybe<Scalars['DateTime']>;
+  users: Maybe<UsersPermissionsUserRelationResponseCollection>;
 };
 
 
 export type UsersPermissionsRolePermissionsArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+  filters: Maybe<UsersPermissionsPermissionFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
 export type UsersPermissionsRoleUsersArgs = {
-  limit: Maybe<Scalars['Int']>;
-  sort: Maybe<Scalars['String']>;
-  start: Maybe<Scalars['Int']>;
-  where: Maybe<Scalars['JSON']>;
+  filters: Maybe<UsersPermissionsUserFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
-export type UsersPermissionsRoleAggregator = {
-  __typename?: 'UsersPermissionsRoleAggregator';
-  count: Maybe<Scalars['Int']>;
-  totalCount: Maybe<Scalars['Int']>;
+export type UsersPermissionsRoleEntity = {
+  __typename?: 'UsersPermissionsRoleEntity';
+  attributes: Maybe<UsersPermissionsRole>;
+  id: Maybe<Scalars['ID']>;
 };
 
-export type UsersPermissionsRoleConnection = {
-  __typename?: 'UsersPermissionsRoleConnection';
-  aggregate: Maybe<UsersPermissionsRoleAggregator>;
-  groupBy: Maybe<UsersPermissionsRoleGroupBy>;
-  values: Maybe<Array<Maybe<UsersPermissionsRole>>>;
+export type UsersPermissionsRoleEntityResponse = {
+  __typename?: 'UsersPermissionsRoleEntityResponse';
+  data: Maybe<UsersPermissionsRoleEntity>;
 };
 
-export type UsersPermissionsRoleConnectionDescription = {
-  __typename?: 'UsersPermissionsRoleConnectionDescription';
-  connection: Maybe<UsersPermissionsRoleConnection>;
-  key: Maybe<Scalars['String']>;
+export type UsersPermissionsRoleEntityResponseCollection = {
+  __typename?: 'UsersPermissionsRoleEntityResponseCollection';
+  data: Array<UsersPermissionsRoleEntity>;
+  meta: ResponseCollectionMeta;
 };
 
-export type UsersPermissionsRoleConnectionId = {
-  __typename?: 'UsersPermissionsRoleConnectionId';
-  connection: Maybe<UsersPermissionsRoleConnection>;
-  key: Maybe<Scalars['ID']>;
+export type UsersPermissionsRoleFiltersInput = {
+  and: Maybe<Array<Maybe<UsersPermissionsRoleFiltersInput>>>;
+  createdAt: Maybe<DateTimeFilterInput>;
+  description: Maybe<StringFilterInput>;
+  id: Maybe<IdFilterInput>;
+  name: Maybe<StringFilterInput>;
+  not: Maybe<UsersPermissionsRoleFiltersInput>;
+  or: Maybe<Array<Maybe<UsersPermissionsRoleFiltersInput>>>;
+  permissions: Maybe<UsersPermissionsPermissionFiltersInput>;
+  type: Maybe<StringFilterInput>;
+  updatedAt: Maybe<DateTimeFilterInput>;
+  users: Maybe<UsersPermissionsUserFiltersInput>;
 };
 
-export type UsersPermissionsRoleConnectionName = {
-  __typename?: 'UsersPermissionsRoleConnectionName';
-  connection: Maybe<UsersPermissionsRoleConnection>;
-  key: Maybe<Scalars['String']>;
+export type UsersPermissionsRoleInput = {
+  description: Maybe<Scalars['String']>;
+  name: Maybe<Scalars['String']>;
+  permissions: Maybe<Array<Maybe<Scalars['ID']>>>;
+  type: Maybe<Scalars['String']>;
+  users: Maybe<Array<Maybe<Scalars['ID']>>>;
 };
 
-export type UsersPermissionsRoleConnectionType = {
-  __typename?: 'UsersPermissionsRoleConnectionType';
-  connection: Maybe<UsersPermissionsRoleConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type UsersPermissionsRoleGroupBy = {
-  __typename?: 'UsersPermissionsRoleGroupBy';
-  description: Maybe<Array<Maybe<UsersPermissionsRoleConnectionDescription>>>;
-  id: Maybe<Array<Maybe<UsersPermissionsRoleConnectionId>>>;
-  name: Maybe<Array<Maybe<UsersPermissionsRoleConnectionName>>>;
-  type: Maybe<Array<Maybe<UsersPermissionsRoleConnectionType>>>;
+export type UsersPermissionsUpdateRolePayload = {
+  __typename?: 'UsersPermissionsUpdateRolePayload';
+  ok: Scalars['Boolean'];
 };
 
 export type UsersPermissionsUser = {
   __typename?: 'UsersPermissionsUser';
   blocked: Maybe<Scalars['Boolean']>;
   confirmed: Maybe<Scalars['Boolean']>;
-  created_at: Scalars['DateTime'];
+  createdAt: Maybe<Scalars['DateTime']>;
   email: Scalars['String'];
-  id: Scalars['ID'];
   provider: Maybe<Scalars['String']>;
-  role: Maybe<UsersPermissionsRole>;
-  updated_at: Scalars['DateTime'];
+  role: Maybe<UsersPermissionsRoleEntityResponse>;
+  updatedAt: Maybe<Scalars['DateTime']>;
   username: Scalars['String'];
 };
 
-export type UsersPermissionsUserAggregator = {
-  __typename?: 'UsersPermissionsUserAggregator';
-  count: Maybe<Scalars['Int']>;
-  totalCount: Maybe<Scalars['Int']>;
-};
-
-export type UsersPermissionsUserConnection = {
-  __typename?: 'UsersPermissionsUserConnection';
-  aggregate: Maybe<UsersPermissionsUserAggregator>;
-  groupBy: Maybe<UsersPermissionsUserGroupBy>;
-  values: Maybe<Array<Maybe<UsersPermissionsUser>>>;
-};
-
-export type UsersPermissionsUserConnectionBlocked = {
-  __typename?: 'UsersPermissionsUserConnectionBlocked';
-  connection: Maybe<UsersPermissionsUserConnection>;
-  key: Maybe<Scalars['Boolean']>;
-};
-
-export type UsersPermissionsUserConnectionConfirmed = {
-  __typename?: 'UsersPermissionsUserConnectionConfirmed';
-  connection: Maybe<UsersPermissionsUserConnection>;
-  key: Maybe<Scalars['Boolean']>;
-};
-
-export type UsersPermissionsUserConnectionCreated_At = {
-  __typename?: 'UsersPermissionsUserConnectionCreated_at';
-  connection: Maybe<UsersPermissionsUserConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type UsersPermissionsUserConnectionEmail = {
-  __typename?: 'UsersPermissionsUserConnectionEmail';
-  connection: Maybe<UsersPermissionsUserConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type UsersPermissionsUserConnectionId = {
-  __typename?: 'UsersPermissionsUserConnectionId';
-  connection: Maybe<UsersPermissionsUserConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type UsersPermissionsUserConnectionProvider = {
-  __typename?: 'UsersPermissionsUserConnectionProvider';
-  connection: Maybe<UsersPermissionsUserConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type UsersPermissionsUserConnectionRole = {
-  __typename?: 'UsersPermissionsUserConnectionRole';
-  connection: Maybe<UsersPermissionsUserConnection>;
-  key: Maybe<Scalars['ID']>;
-};
-
-export type UsersPermissionsUserConnectionUpdated_At = {
-  __typename?: 'UsersPermissionsUserConnectionUpdated_at';
-  connection: Maybe<UsersPermissionsUserConnection>;
-  key: Maybe<Scalars['DateTime']>;
-};
-
-export type UsersPermissionsUserConnectionUsername = {
-  __typename?: 'UsersPermissionsUserConnectionUsername';
-  connection: Maybe<UsersPermissionsUserConnection>;
-  key: Maybe<Scalars['String']>;
-};
-
-export type UsersPermissionsUserGroupBy = {
-  __typename?: 'UsersPermissionsUserGroupBy';
-  blocked: Maybe<Array<Maybe<UsersPermissionsUserConnectionBlocked>>>;
-  confirmed: Maybe<Array<Maybe<UsersPermissionsUserConnectionConfirmed>>>;
-  created_at: Maybe<Array<Maybe<UsersPermissionsUserConnectionCreated_At>>>;
-  email: Maybe<Array<Maybe<UsersPermissionsUserConnectionEmail>>>;
-  id: Maybe<Array<Maybe<UsersPermissionsUserConnectionId>>>;
-  provider: Maybe<Array<Maybe<UsersPermissionsUserConnectionProvider>>>;
-  role: Maybe<Array<Maybe<UsersPermissionsUserConnectionRole>>>;
-  updated_at: Maybe<Array<Maybe<UsersPermissionsUserConnectionUpdated_At>>>;
-  username: Maybe<Array<Maybe<UsersPermissionsUserConnectionUsername>>>;
-};
-
-export type CreateChallengeCompletionInput = {
-  data: Maybe<ChallengeCompletionInput>;
-};
-
-export type CreateChallengeCompletionPayload = {
-  __typename?: 'createChallengeCompletionPayload';
-  challengeCompletion: Maybe<ChallengeCompletion>;
-};
-
-export type CreateCodeChallengeInput = {
-  data: Maybe<CodeChallengeInput>;
-};
-
-export type CreateCodeChallengePayload = {
-  __typename?: 'createCodeChallengePayload';
-  codeChallenge: Maybe<CodeChallenge>;
-};
-
-export type CreateCourseInput = {
-  data: Maybe<CourseInput>;
-};
-
-export type CreateCoursePayload = {
-  __typename?: 'createCoursePayload';
-  course: Maybe<Course>;
-};
-
-export type CreateLessonCompletionInput = {
-  data: Maybe<LessonCompletionInput>;
-};
-
-export type CreateLessonCompletionPayload = {
-  __typename?: 'createLessonCompletionPayload';
-  lessonCompletion: Maybe<LessonCompletion>;
-};
-
-export type CreateLessonInput = {
-  data: Maybe<LessonInput>;
-};
-
-export type CreateLessonPayload = {
-  __typename?: 'createLessonPayload';
-  lesson: Maybe<Lesson>;
-};
-
-export type CreateModuleInput = {
-  data: Maybe<ModuleInput>;
-};
-
-export type CreateModulePayload = {
-  __typename?: 'createModulePayload';
-  module: Maybe<Modules>;
-};
-
-export type CreateMultipleChoiceChallengeInput = {
-  data: Maybe<MultipleChoiceChallengeInput>;
-};
-
-export type CreateMultipleChoiceChallengePayload = {
-  __typename?: 'createMultipleChoiceChallengePayload';
-  multipleChoiceChallenge: Maybe<MultipleChoiceChallenge>;
-};
-
-export type CreateRoleInput = {
-  data: Maybe<RoleInput>;
-};
-
-export type CreateRolePayload = {
-  __typename?: 'createRolePayload';
-  role: Maybe<UsersPermissionsRole>;
-};
-
-export type CreateSublessonInput = {
-  data: Maybe<SublessonInput>;
-};
-
-export type CreateSublessonPayload = {
-  __typename?: 'createSublessonPayload';
-  sublesson: Maybe<Sublesson>;
-};
-
-export type CreateSyntaxEntryInput = {
-  data: Maybe<SyntaxEntryInput>;
-};
-
-export type CreateSyntaxEntryPayload = {
-  __typename?: 'createSyntaxEntryPayload';
-  syntaxEntry: Maybe<SyntaxEntry>;
-};
-
-export type CreateUserInput = {
-  data: Maybe<UserInput>;
-};
-
-export type CreateUserPayload = {
-  __typename?: 'createUserPayload';
-  user: Maybe<UsersPermissionsUser>;
-};
-
-export type DeleteChallengeCompletionInput = {
-  where: Maybe<InputId>;
-};
-
-export type DeleteChallengeCompletionPayload = {
-  __typename?: 'deleteChallengeCompletionPayload';
-  challengeCompletion: Maybe<ChallengeCompletion>;
-};
-
-export type DeleteCodeChallengeInput = {
-  where: Maybe<InputId>;
-};
-
-export type DeleteCodeChallengePayload = {
-  __typename?: 'deleteCodeChallengePayload';
-  codeChallenge: Maybe<CodeChallenge>;
-};
-
-export type DeleteCourseInput = {
-  where: Maybe<InputId>;
-};
-
-export type DeleteCoursePayload = {
-  __typename?: 'deleteCoursePayload';
-  course: Maybe<Course>;
-};
-
-export type DeleteFileInput = {
-  where: Maybe<InputId>;
-};
-
-export type DeleteFilePayload = {
-  __typename?: 'deleteFilePayload';
-  file: Maybe<UploadFile>;
-};
-
-export type DeleteLessonCompletionInput = {
-  where: Maybe<InputId>;
-};
-
-export type DeleteLessonCompletionPayload = {
-  __typename?: 'deleteLessonCompletionPayload';
-  lessonCompletion: Maybe<LessonCompletion>;
-};
-
-export type DeleteLessonInput = {
-  where: Maybe<InputId>;
-};
-
-export type DeleteLessonPayload = {
-  __typename?: 'deleteLessonPayload';
-  lesson: Maybe<Lesson>;
-};
-
-export type DeleteModuleInput = {
-  where: Maybe<InputId>;
-};
-
-export type DeleteModulePayload = {
-  __typename?: 'deleteModulePayload';
-  module: Maybe<Modules>;
-};
-
-export type DeleteMultipleChoiceChallengeInput = {
-  where: Maybe<InputId>;
-};
-
-export type DeleteMultipleChoiceChallengePayload = {
-  __typename?: 'deleteMultipleChoiceChallengePayload';
-  multipleChoiceChallenge: Maybe<MultipleChoiceChallenge>;
-};
-
-export type DeleteRoleInput = {
-  where: Maybe<InputId>;
-};
-
-export type DeleteRolePayload = {
-  __typename?: 'deleteRolePayload';
-  role: Maybe<UsersPermissionsRole>;
-};
-
-export type DeleteSublessonInput = {
-  where: Maybe<InputId>;
-};
-
-export type DeleteSublessonPayload = {
-  __typename?: 'deleteSublessonPayload';
-  sublesson: Maybe<Sublesson>;
-};
-
-export type DeleteSyntaxEntryInput = {
-  where: Maybe<InputId>;
-};
-
-export type DeleteSyntaxEntryPayload = {
-  __typename?: 'deleteSyntaxEntryPayload';
-  syntaxEntry: Maybe<SyntaxEntry>;
-};
-
-export type DeleteUserInput = {
-  where: Maybe<InputId>;
-};
-
-export type DeleteUserPayload = {
-  __typename?: 'deleteUserPayload';
-  user: Maybe<UsersPermissionsUser>;
-};
-
-export type EditChallengeCompletionInput = {
-  code_challenge: Maybe<Scalars['ID']>;
-  created_by: Maybe<Scalars['ID']>;
-  multiple_choice_challenge: Maybe<Scalars['ID']>;
-  published_at: Maybe<Scalars['DateTime']>;
-  updated_by: Maybe<Scalars['ID']>;
-  users_permissions_user: Maybe<Scalars['ID']>;
-};
-
-export type EditCodeChallengeInput = {
-  HintOld: Maybe<Array<Maybe<EditComponentCodeChallengeHintInput>>>;
-  InternalLabel: Maybe<Scalars['String']>;
-  challengeMeta: Maybe<EditComponentChallengeChallengeInput>;
-  created_by: Maybe<Scalars['ID']>;
-  getStartingCodeFromPreviousChallenge: Maybe<Scalars['Boolean']>;
-  hints: Maybe<Array<Maybe<EditComponentChallengeHintInput>>>;
-  internalNotes: Maybe<Scalars['String']>;
-  locale: Maybe<Scalars['String']>;
-  localizations: Maybe<Array<Maybe<Scalars['ID']>>>;
-  prompt: Maybe<Scalars['String']>;
-  published_at: Maybe<Scalars['DateTime']>;
-  sharedEvaluationCode: Maybe<Scalars['String']>;
-  startingCode: Maybe<Scalars['String']>;
-  tests: Maybe<Array<Maybe<EditComponentCodeChallengeTestInput>>>;
-  updated_by: Maybe<Scalars['ID']>;
-};
-
-export type EditComponentChallengeChallengeInput = {
-  difficulty: Maybe<Enum_Componentchallengechallenge_Difficulty>;
-  id: Maybe<Scalars['ID']>;
-  lessonOnly: Maybe<Scalars['Boolean']>;
-};
-
-export type EditComponentChallengeHintInput = {
-  id: Maybe<Scalars['ID']>;
-  recommendedTimeBeforeViewing: Maybe<Scalars['Float']>;
-  text: Maybe<Scalars['String']>;
-};
-
-export type EditComponentCodeChallengeHintInput = {
-  id: Maybe<Scalars['ID']>;
-  recommendTimeBeforeViewing: Maybe<Scalars['Float']>;
-  text: Maybe<Scalars['String']>;
-};
-
-export type EditComponentCodeChallengeTestInput = {
-  furtherExplanation: Maybe<Scalars['String']>;
-  id: Maybe<Scalars['ID']>;
-  internalTest: Maybe<Scalars['String']>;
-  label: Maybe<Scalars['String']>;
-};
-
-export type EditComponentExternalResourceExternalResourceInput = {
-  id: Maybe<Scalars['ID']>;
-  link: Maybe<Scalars['String']>;
-  name: Maybe<Scalars['String']>;
-  type: Maybe<Enum_Componentexternalresourceexternalresource_Type>;
-};
-
-export type EditComponentModuleModuleLessonInput = {
-  id: Maybe<Scalars['ID']>;
-  lesson: Maybe<Scalars['ID']>;
-};
-
-export type EditComponentModuleModuleRowInput = {
+export type UsersPermissionsUserEntity = {
+  __typename?: 'UsersPermissionsUserEntity';
+  attributes: Maybe<UsersPermissionsUser>;
   id: Maybe<Scalars['ID']>;
 };
 
-export type EditComponentMultipleChoiceChallengeOptionInput = {
-  id: Maybe<Scalars['ID']>;
-  incorrectChoiceExplanation: Maybe<Scalars['String']>;
-  isCorrect: Maybe<Scalars['Boolean']>;
-  text: Maybe<Scalars['String']>;
+export type UsersPermissionsUserEntityResponse = {
+  __typename?: 'UsersPermissionsUserEntityResponse';
+  data: Maybe<UsersPermissionsUserEntity>;
 };
 
-export type EditComponentSublessonSublessonDescriptionInput = {
-  id: Maybe<Scalars['ID']>;
-  long: Maybe<Scalars['String']>;
-  medium: Maybe<Scalars['String']>;
-  short: Maybe<Scalars['String']>;
+export type UsersPermissionsUserEntityResponseCollection = {
+  __typename?: 'UsersPermissionsUserEntityResponseCollection';
+  data: Array<UsersPermissionsUserEntity>;
+  meta: ResponseCollectionMeta;
 };
 
-export type EditComponentSublessonchallengeChallengeInput = {
-  MinimumChallengeFrequency: Maybe<Enum_Componentsublessonchallengechallenge_Minimumchallengefrequency>;
-  codeChallenge: Maybe<Scalars['ID']>;
-  id: Maybe<Scalars['ID']>;
-  multipleChoiceChallenge: Maybe<Scalars['ID']>;
+export type UsersPermissionsUserFiltersInput = {
+  and: Maybe<Array<Maybe<UsersPermissionsUserFiltersInput>>>;
+  blocked: Maybe<BooleanFilterInput>;
+  confirmationToken: Maybe<StringFilterInput>;
+  confirmed: Maybe<BooleanFilterInput>;
+  createdAt: Maybe<DateTimeFilterInput>;
+  email: Maybe<StringFilterInput>;
+  id: Maybe<IdFilterInput>;
+  not: Maybe<UsersPermissionsUserFiltersInput>;
+  or: Maybe<Array<Maybe<UsersPermissionsUserFiltersInput>>>;
+  password: Maybe<StringFilterInput>;
+  provider: Maybe<StringFilterInput>;
+  resetPasswordToken: Maybe<StringFilterInput>;
+  role: Maybe<UsersPermissionsRoleFiltersInput>;
+  updatedAt: Maybe<DateTimeFilterInput>;
+  username: Maybe<StringFilterInput>;
 };
 
-export type EditCourseInput = {
-  created_by: Maybe<Scalars['ID']>;
-  locale: Maybe<Scalars['String']>;
-  localizations: Maybe<Array<Maybe<Scalars['ID']>>>;
-  modules: Maybe<Array<Maybe<Scalars['ID']>>>;
-  name: Maybe<Scalars['String']>;
-  published_at: Maybe<Scalars['DateTime']>;
-  slug: Maybe<Scalars['String']>;
-  updated_by: Maybe<Scalars['ID']>;
-};
-
-export type EditFileInput = {
-  alternativeText: Maybe<Scalars['String']>;
-  caption: Maybe<Scalars['String']>;
-  created_by: Maybe<Scalars['ID']>;
-  ext: Maybe<Scalars['String']>;
-  formats: Maybe<Scalars['JSON']>;
-  hash: Maybe<Scalars['String']>;
-  height: Maybe<Scalars['Int']>;
-  mime: Maybe<Scalars['String']>;
-  name: Maybe<Scalars['String']>;
-  previewUrl: Maybe<Scalars['String']>;
-  provider: Maybe<Scalars['String']>;
-  provider_metadata: Maybe<Scalars['JSON']>;
-  related: Maybe<Array<Maybe<Scalars['ID']>>>;
-  size: Maybe<Scalars['Float']>;
-  updated_by: Maybe<Scalars['ID']>;
-  url: Maybe<Scalars['String']>;
-  width: Maybe<Scalars['Int']>;
-};
-
-export type EditLessonCompletionInput = {
-  created_by: Maybe<Scalars['ID']>;
-  lesson: Maybe<Scalars['ID']>;
-  published_at: Maybe<Scalars['DateTime']>;
-  updated_by: Maybe<Scalars['ID']>;
-  users_permissions_user: Maybe<Scalars['ID']>;
-};
-
-export type EditLessonInput = {
-  created_by: Maybe<Scalars['ID']>;
-  externalResources: Maybe<Array<Maybe<EditComponentExternalResourceExternalResourceInput>>>;
-  internalNotes: Maybe<Scalars['String']>;
-  isHard: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-  localizations: Maybe<Array<Maybe<Scalars['ID']>>>;
-  module: Maybe<Scalars['ID']>;
-  name: Maybe<Scalars['String']>;
-  published_at: Maybe<Scalars['DateTime']>;
-  slug: Maybe<Scalars['String']>;
-  sublessons: Maybe<Array<Maybe<Scalars['ID']>>>;
-  syntaxEntry: Maybe<Scalars['ID']>;
-  updated_by: Maybe<Scalars['ID']>;
-};
-
-export type EditLocaleInput = {
-  code: Maybe<Scalars['String']>;
-  created_by: Maybe<Scalars['ID']>;
-  name: Maybe<Scalars['String']>;
-  updated_by: Maybe<Scalars['ID']>;
-};
-
-export type EditModuleInput = {
-  ModuleLessons: Maybe<Array<Maybe<EditComponentModuleModuleLessonInput>>>;
-  created_by: Maybe<Scalars['ID']>;
-  lessons: Maybe<Array<Maybe<Scalars['ID']>>>;
-  locale: Maybe<Scalars['String']>;
-  localizations: Maybe<Array<Maybe<Scalars['ID']>>>;
-  name: Maybe<Scalars['String']>;
-  published_at: Maybe<Scalars['DateTime']>;
-  updated_by: Maybe<Scalars['ID']>;
-};
-
-export type EditMultipleChoiceChallengeInput = {
-  InternalLabel: Maybe<Scalars['String']>;
-  canSelectMultipleOptions: Maybe<Scalars['Boolean']>;
-  challengeMeta: Maybe<EditComponentChallengeChallengeInput>;
-  created_by: Maybe<Scalars['ID']>;
-  options: Maybe<Array<Maybe<EditComponentMultipleChoiceChallengeOptionInput>>>;
-  prompt: Maybe<Scalars['String']>;
-  published_at: Maybe<Scalars['DateTime']>;
-  updated_by: Maybe<Scalars['ID']>;
-  useMarkdownForOptionsText: Maybe<Scalars['Boolean']>;
-};
-
-export type EditRoleInput = {
-  created_by: Maybe<Scalars['ID']>;
-  description: Maybe<Scalars['String']>;
-  name: Maybe<Scalars['String']>;
-  permissions: Maybe<Array<Maybe<Scalars['ID']>>>;
-  type: Maybe<Scalars['String']>;
-  updated_by: Maybe<Scalars['ID']>;
-  users: Maybe<Array<Maybe<Scalars['ID']>>>;
-};
-
-export type EditSublessonInput = {
-  InternalMaintenanceNotes: Maybe<Scalars['String']>;
-  challenges: Maybe<Array<Maybe<EditComponentSublessonchallengeChallengeInput>>>;
-  created_by: Maybe<Scalars['ID']>;
-  descriptions: Maybe<EditComponentSublessonSublessonDescriptionInput>;
-  lesson: Maybe<Scalars['ID']>;
-  minimizeEditor: Maybe<Scalars['Boolean']>;
-  name: Maybe<Scalars['String']>;
-  published_at: Maybe<Scalars['DateTime']>;
-  syntaxEntry: Maybe<Scalars['ID']>;
-  updated_by: Maybe<Scalars['ID']>;
-};
-
-export type EditSyntaxEntryInput = {
-  InternalNotes: Maybe<Scalars['String']>;
-  content: Maybe<Scalars['String']>;
-  created_by: Maybe<Scalars['ID']>;
-  lesson: Maybe<Scalars['ID']>;
-  maxWidth: Maybe<Scalars['Int']>;
-  name: Maybe<Scalars['String']>;
-  published_at: Maybe<Scalars['DateTime']>;
-  sublesson: Maybe<Scalars['ID']>;
-  updated_by: Maybe<Scalars['ID']>;
-};
-
-export type EditUserInput = {
+export type UsersPermissionsUserInput = {
   blocked: Maybe<Scalars['Boolean']>;
   confirmationToken: Maybe<Scalars['String']>;
   confirmed: Maybe<Scalars['Boolean']>;
-  created_by: Maybe<Scalars['ID']>;
   email: Maybe<Scalars['String']>;
   password: Maybe<Scalars['String']>;
   provider: Maybe<Scalars['String']>;
   resetPasswordToken: Maybe<Scalars['String']>;
   role: Maybe<Scalars['ID']>;
-  updated_by: Maybe<Scalars['ID']>;
   username: Maybe<Scalars['String']>;
 };
 
-export type UpdateChallengeCompletionInput = {
-  data: Maybe<EditChallengeCompletionInput>;
-  where: Maybe<InputId>;
-};
-
-export type UpdateChallengeCompletionPayload = {
-  __typename?: 'updateChallengeCompletionPayload';
-  challengeCompletion: Maybe<ChallengeCompletion>;
-};
-
-export type UpdateCodeChallengeInput = {
-  data: Maybe<EditCodeChallengeInput>;
-  where: Maybe<InputId>;
-};
-
-export type UpdateCodeChallengePayload = {
-  __typename?: 'updateCodeChallengePayload';
-  codeChallenge: Maybe<CodeChallenge>;
-};
-
-export type UpdateCourseInput = {
-  data: Maybe<EditCourseInput>;
-  where: Maybe<InputId>;
-};
-
-export type UpdateCoursePayload = {
-  __typename?: 'updateCoursePayload';
-  course: Maybe<Course>;
-};
-
-export type UpdateLessonCompletionInput = {
-  data: Maybe<EditLessonCompletionInput>;
-  where: Maybe<InputId>;
-};
-
-export type UpdateLessonCompletionPayload = {
-  __typename?: 'updateLessonCompletionPayload';
-  lessonCompletion: Maybe<LessonCompletion>;
-};
-
-export type UpdateLessonInput = {
-  data: Maybe<EditLessonInput>;
-  where: Maybe<InputId>;
-};
-
-export type UpdateLessonPayload = {
-  __typename?: 'updateLessonPayload';
-  lesson: Maybe<Lesson>;
-};
-
-export type UpdateModuleInput = {
-  data: Maybe<EditModuleInput>;
-  where: Maybe<InputId>;
-};
-
-export type UpdateModulePayload = {
-  __typename?: 'updateModulePayload';
-  module: Maybe<Modules>;
-};
-
-export type UpdateMultipleChoiceChallengeInput = {
-  data: Maybe<EditMultipleChoiceChallengeInput>;
-  where: Maybe<InputId>;
-};
-
-export type UpdateMultipleChoiceChallengePayload = {
-  __typename?: 'updateMultipleChoiceChallengePayload';
-  multipleChoiceChallenge: Maybe<MultipleChoiceChallenge>;
-};
-
-export type UpdateRoleInput = {
-  data: Maybe<EditRoleInput>;
-  where: Maybe<InputId>;
-};
-
-export type UpdateRolePayload = {
-  __typename?: 'updateRolePayload';
-  role: Maybe<UsersPermissionsRole>;
-};
-
-export type UpdateSublessonInput = {
-  data: Maybe<EditSublessonInput>;
-  where: Maybe<InputId>;
-};
-
-export type UpdateSublessonPayload = {
-  __typename?: 'updateSublessonPayload';
-  sublesson: Maybe<Sublesson>;
-};
-
-export type UpdateSyntaxEntryInput = {
-  data: Maybe<EditSyntaxEntryInput>;
-  where: Maybe<InputId>;
-};
-
-export type UpdateSyntaxEntryPayload = {
-  __typename?: 'updateSyntaxEntryPayload';
-  syntaxEntry: Maybe<SyntaxEntry>;
-};
-
-export type UpdateUserInput = {
-  data: Maybe<EditUserInput>;
-  where: Maybe<InputId>;
-};
-
-export type UpdateUserPayload = {
-  __typename?: 'updateUserPayload';
-  user: Maybe<UsersPermissionsUser>;
+export type UsersPermissionsUserRelationResponseCollection = {
+  __typename?: 'UsersPermissionsUserRelationResponseCollection';
+  data: Array<UsersPermissionsUserEntity>;
 };
 
 export type LoginMutationVariables = Exact<{
@@ -2840,122 +1571,127 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UsersPermissionsLoginPayload', jwt: string | null } };
 
-export type ChallengeHintFragment = { __typename?: 'ComponentChallengeHint', text: string, recommendedTimeBeforeViewing: number | null };
+export type ChallengeHintFragment = { __typename?: 'ComponentChallengeChallengeHints', text: string, recommendedTimeBeforeViewing: number | null };
 
-export type CodeChallengeDataFragment = { __typename?: 'CodeChallenge', id: string, getStartingCodeFromPreviousChallenge: boolean | null, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentCodeChallengeTests', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeHint', text: string, recommendedTimeBeforeViewing: number | null } | null> | null, challengeMeta: { __typename?: 'ComponentChallengeChallenge', difficulty: Enum_Componentchallengechallenge_Difficulty } | null };
+export type CodeChallengeDataFragment = { __typename?: 'CodeChallengeEntity', id: string | null, attributes: { __typename?: 'CodeChallenge', getStartingCodeFromPreviousChallenge: boolean | null, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentChallengeCodeChallengeTest', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeChallengeHints', text: string, recommendedTimeBeforeViewing: number | null } | null> | null } | null };
 
-export type MultipleChoiceChallengeDataFragment = { __typename?: 'MultipleChoiceChallenge', id: string, prompt: string, canSelectMultipleOptions: boolean | null, useMarkdownForOptionsText: boolean | null, options: Array<{ __typename?: 'ComponentMultipleChoiceChallengeOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null };
+export type MultipleChoiceChallengeDataFragment = { __typename?: 'MultipleChoiceChallengeEntity', id: string | null, attributes: { __typename?: 'MultipleChoiceChallenge', prompt: string, canSelectMultipleOptions: boolean | null, options: Array<{ __typename?: 'ComponentChallengeMultipleChoiceOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null };
 
 export type GetLessonExternalResourcesDataQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type GetLessonExternalResourcesDataQuery = { __typename?: 'Query', lessons: Array<{ __typename?: 'Lesson', externalResources: Array<{ __typename?: 'ComponentExternalResourceExternalResource', name: string | null, link: string, type: Enum_Componentexternalresourceexternalresource_Type } | null> | null } | null> | null };
+export type GetLessonExternalResourcesDataQuery = { __typename?: 'Query', lessons: { __typename?: 'LessonEntityResponseCollection', data: Array<{ __typename?: 'LessonEntity', attributes: { __typename?: 'Lesson', externalResources: Array<{ __typename?: 'ComponentContentExternalResource', name: string | null, link: string, type: string | null } | null> | null } | null }> } | null };
 
-export type LessonSidebarDataFragment = { __typename?: 'Sublesson', name: string, challenges: Array<{ __typename?: 'ComponentSublessonchallengeChallenge', codeChallenge: { __typename?: 'CodeChallenge', id: string, getStartingCodeFromPreviousChallenge: boolean | null, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentCodeChallengeTests', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeHint', text: string, recommendedTimeBeforeViewing: number | null } | null> | null, challengeMeta: { __typename?: 'ComponentChallengeChallenge', difficulty: Enum_Componentchallengechallenge_Difficulty } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallenge', id: string, prompt: string, canSelectMultipleOptions: boolean | null, useMarkdownForOptionsText: boolean | null, options: Array<{ __typename?: 'ComponentMultipleChoiceChallengeOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null> | null };
+export type LessonSidebarDataFragment = { __typename?: 'SublessonEntity', attributes: { __typename?: 'Sublesson', name: string, challenges: Array<{ __typename?: 'ComponentContentChallenges', codeChallenge: { __typename?: 'CodeChallengeEntityResponse', data: { __typename?: 'CodeChallengeEntity', id: string | null, attributes: { __typename?: 'CodeChallenge', getStartingCodeFromPreviousChallenge: boolean | null, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentChallengeCodeChallengeTest', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeChallengeHints', text: string, recommendedTimeBeforeViewing: number | null } | null> | null } | null } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallengeEntityResponse', data: { __typename?: 'MultipleChoiceChallengeEntity', id: string | null, attributes: { __typename?: 'MultipleChoiceChallenge', prompt: string, canSelectMultipleOptions: boolean | null, options: Array<{ __typename?: 'ComponentChallengeMultipleChoiceOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null } | null } | null> | null } | null };
 
 export type GetCourseMapOverlayDataQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type GetCourseMapOverlayDataQuery = { __typename?: 'Query', courses: Array<{ __typename?: 'Course', name: string, modules: Array<{ __typename?: 'Modules', name: string, ModuleLessons: Array<{ __typename?: 'ComponentModuleModuleLessons', lesson: { __typename?: 'Lesson', name: string, slug: string } | null } | null> | null } | null> | null } | null> | null };
+export type GetCourseMapOverlayDataQuery = { __typename?: 'Query', courses: { __typename?: 'CourseEntityResponseCollection', data: Array<{ __typename?: 'CourseEntity', attributes: { __typename?: 'Course', name: string, modules: { __typename?: 'ModuleRelationResponseCollection', data: Array<{ __typename?: 'ModuleEntity', attributes: { __typename?: 'Module', name: string, moduleLessons: Array<{ __typename?: 'ComponentMiscModuleLesson', lesson: { __typename?: 'LessonEntityResponse', data: { __typename?: 'LessonEntity', attributes: { __typename?: 'Lesson', name: string, slug: string } | null } | null } | null } | null> | null } | null }> } | null } | null }> } | null };
 
 export type GetSyntaxHandbookDataQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type GetSyntaxHandbookDataQuery = { __typename?: 'Query', courses: Array<{ __typename?: 'Course', modules: Array<{ __typename?: 'Modules', ModuleLessons: Array<{ __typename?: 'ComponentModuleModuleLessons', lesson: { __typename?: 'Lesson', syntaxEntry: { __typename?: 'SyntaxEntry', content: string, name: string, maxWidth: number | null } | null, sublessons: Array<{ __typename?: 'Sublesson', syntaxEntry: { __typename?: 'SyntaxEntry', content: string, name: string, maxWidth: number | null } | null } | null> | null } | null } | null> | null } | null> | null } | null> | null };
+export type GetSyntaxHandbookDataQuery = { __typename?: 'Query', courses: { __typename?: 'CourseEntityResponseCollection', data: Array<{ __typename?: 'CourseEntity', attributes: { __typename?: 'Course', modules: { __typename?: 'ModuleRelationResponseCollection', data: Array<{ __typename?: 'ModuleEntity', attributes: { __typename?: 'Module', moduleLessons: Array<{ __typename?: 'ComponentMiscModuleLesson', lesson: { __typename?: 'LessonEntityResponse', data: { __typename?: 'LessonEntity', attributes: { __typename?: 'Lesson', syntaxEntry: { __typename?: 'SyntaxEntryEntityResponse', data: { __typename?: 'SyntaxEntryEntity', attributes: { __typename?: 'SyntaxEntry', content: string, name: string, maxWidth: number | null } | null } | null } | null, sublessons: { __typename?: 'SublessonRelationResponseCollection', data: Array<{ __typename?: 'SublessonEntity', attributes: { __typename?: 'Sublesson', syntaxEntry: { __typename?: 'SyntaxEntryEntityResponse', data: { __typename?: 'SyntaxEntryEntity', attributes: { __typename?: 'SyntaxEntry', content: string, name: string, maxWidth: number | null } | null } | null } | null } | null }> } | null } | null } | null } | null } | null> | null } | null }> } | null } | null }> } | null };
 
 export type GetLessonDataQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-export type GetLessonDataQuery = { __typename?: 'Query', lessons: Array<{ __typename?: 'Lesson', id: string, name: string, sublessons: Array<{ __typename?: 'Sublesson', name: string, id: string, descriptions: { __typename?: 'ComponentSublessonSublessonDescriptions', short: string | null, medium: string, long: string | null } | null, lesson: { __typename?: 'Lesson', id: string, name: string } | null, challenges: Array<{ __typename?: 'ComponentSublessonchallengeChallenge', id: string, codeChallenge: { __typename?: 'CodeChallenge', id: string, getStartingCodeFromPreviousChallenge: boolean | null, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentCodeChallengeTests', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeHint', text: string, recommendedTimeBeforeViewing: number | null } | null> | null, challengeMeta: { __typename?: 'ComponentChallengeChallenge', difficulty: Enum_Componentchallengechallenge_Difficulty } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallenge', id: string, prompt: string, canSelectMultipleOptions: boolean | null, useMarkdownForOptionsText: boolean | null, options: Array<{ __typename?: 'ComponentMultipleChoiceChallengeOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null> | null } | null> | null } | null> | null };
+export type GetLessonDataQuery = { __typename?: 'Query', lessons: { __typename?: 'LessonEntityResponseCollection', data: Array<{ __typename?: 'LessonEntity', id: string | null, attributes: { __typename?: 'Lesson', name: string, sublessons: { __typename?: 'SublessonRelationResponseCollection', data: Array<{ __typename?: 'SublessonEntity', id: string | null, attributes: { __typename?: 'Sublesson', name: string, description: string, lesson: { __typename?: 'LessonEntityResponse', data: { __typename?: 'LessonEntity', id: string | null, attributes: { __typename?: 'Lesson', name: string } | null } | null } | null, challenges: Array<{ __typename?: 'ComponentContentChallenges', id: string, codeChallenge: { __typename?: 'CodeChallengeEntityResponse', data: { __typename?: 'CodeChallengeEntity', id: string | null, attributes: { __typename?: 'CodeChallenge', getStartingCodeFromPreviousChallenge: boolean | null, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentChallengeCodeChallengeTest', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeChallengeHints', text: string, recommendedTimeBeforeViewing: number | null } | null> | null } | null } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallengeEntityResponse', data: { __typename?: 'MultipleChoiceChallengeEntity', id: string | null, attributes: { __typename?: 'MultipleChoiceChallenge', prompt: string, canSelectMultipleOptions: boolean | null, options: Array<{ __typename?: 'ComponentChallengeMultipleChoiceOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null } | null } | null> | null } | null }> } | null } | null }> } | null };
 
-export type SublessonInstructionsDataFragment = { __typename?: 'Sublesson', name: string, id: string, descriptions: { __typename?: 'ComponentSublessonSublessonDescriptions', short: string | null, medium: string, long: string | null } | null, lesson: { __typename?: 'Lesson', id: string, name: string } | null, challenges: Array<{ __typename?: 'ComponentSublessonchallengeChallenge', id: string, codeChallenge: { __typename?: 'CodeChallenge', id: string, getStartingCodeFromPreviousChallenge: boolean | null, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentCodeChallengeTests', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeHint', text: string, recommendedTimeBeforeViewing: number | null } | null> | null, challengeMeta: { __typename?: 'ComponentChallengeChallenge', difficulty: Enum_Componentchallengechallenge_Difficulty } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallenge', id: string, prompt: string, canSelectMultipleOptions: boolean | null, useMarkdownForOptionsText: boolean | null, options: Array<{ __typename?: 'ComponentMultipleChoiceChallengeOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null> | null };
-
-export type GetSublessonNavigationDataQueryVariables = Exact<{
-  currentLessonId: Scalars['Int'];
-}>;
-
-
-export type GetSublessonNavigationDataQuery = { __typename?: 'Query', nextLessonSlug: string | null };
+export type SublessonInstructionsDataFragment = { __typename?: 'SublessonEntity', id: string | null, attributes: { __typename?: 'Sublesson', name: string, description: string, lesson: { __typename?: 'LessonEntityResponse', data: { __typename?: 'LessonEntity', id: string | null, attributes: { __typename?: 'Lesson', name: string } | null } | null } | null, challenges: Array<{ __typename?: 'ComponentContentChallenges', id: string, codeChallenge: { __typename?: 'CodeChallengeEntityResponse', data: { __typename?: 'CodeChallengeEntity', id: string | null, attributes: { __typename?: 'CodeChallenge', getStartingCodeFromPreviousChallenge: boolean | null, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentChallengeCodeChallengeTest', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeChallengeHints', text: string, recommendedTimeBeforeViewing: number | null } | null> | null } | null } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallengeEntityResponse', data: { __typename?: 'MultipleChoiceChallengeEntity', id: string | null, attributes: { __typename?: 'MultipleChoiceChallenge', prompt: string, canSelectMultipleOptions: boolean | null, options: Array<{ __typename?: 'ComponentChallengeMultipleChoiceOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null } | null } | null> | null } | null };
 
 export const ChallengeHintFragmentDoc = gql`
-    fragment challengeHint on ComponentChallengeHint {
+    fragment challengeHint on ComponentChallengeChallengeHints {
   text
   recommendedTimeBeforeViewing
 }
     `;
 export const CodeChallengeDataFragmentDoc = gql`
-    fragment codeChallengeData on CodeChallenge {
+    fragment codeChallengeData on CodeChallengeEntity {
   id
-  tests {
-    internalTest
-    label
+  attributes {
+    tests {
+      internalTest
+      label
+    }
+    hints {
+      ...challengeHint
+    }
+    getStartingCodeFromPreviousChallenge
+    startingCode
+    prompt
   }
-  hints {
-    ...challengeHint
-  }
-  getStartingCodeFromPreviousChallenge
-  challengeMeta {
-    difficulty
-  }
-  startingCode
-  prompt
 }
     ${ChallengeHintFragmentDoc}`;
 export const MultipleChoiceChallengeDataFragmentDoc = gql`
-    fragment multipleChoiceChallengeData on MultipleChoiceChallenge {
+    fragment multipleChoiceChallengeData on MultipleChoiceChallengeEntity {
   id
-  prompt
-  options {
-    text
-    isCorrect
-    incorrectChoiceExplanation
+  attributes {
+    prompt
+    options {
+      text
+      isCorrect
+      incorrectChoiceExplanation
+    }
+    canSelectMultipleOptions
   }
-  canSelectMultipleOptions
-  useMarkdownForOptionsText
 }
     `;
 export const LessonSidebarDataFragmentDoc = gql`
-    fragment lessonSidebarData on Sublesson {
-  name
-  challenges {
-    codeChallenge {
-      ...codeChallengeData
-    }
-    multipleChoiceChallenge {
-      ...multipleChoiceChallengeData
+    fragment lessonSidebarData on SublessonEntity {
+  attributes {
+    name
+    challenges {
+      codeChallenge {
+        data {
+          ...codeChallengeData
+        }
+      }
+      multipleChoiceChallenge {
+        data {
+          ...multipleChoiceChallengeData
+        }
+      }
     }
   }
 }
     ${CodeChallengeDataFragmentDoc}
 ${MultipleChoiceChallengeDataFragmentDoc}`;
 export const SublessonInstructionsDataFragmentDoc = gql`
-    fragment sublessonInstructionsData on Sublesson {
-  name
+    fragment sublessonInstructionsData on SublessonEntity {
   id
-  descriptions {
-    short
-    medium
-    long
-  }
-  lesson {
-    id
+  attributes {
     name
-  }
-  challenges {
-    id
-    codeChallenge {
-      ...codeChallengeData
+    description
+    lesson {
+      data {
+        id
+        attributes {
+          name
+        }
+      }
     }
-    multipleChoiceChallenge {
-      ...multipleChoiceChallengeData
+    challenges {
+      id
+      codeChallenge {
+        data {
+          ...codeChallengeData
+        }
+      }
+      multipleChoiceChallenge {
+        data {
+          ...multipleChoiceChallengeData
+        }
+      }
     }
   }
 }
@@ -3029,11 +1765,15 @@ export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
 export const GetLessonExternalResourcesDataDocument = gql`
     query getLessonExternalResourcesData($slug: String!) {
-  lessons(where: {slug: $slug}) {
-    externalResources {
-      name
-      link
-      type
+  lessons(filters: {slug: {eq: $slug}}) {
+    data {
+      attributes {
+        externalResources {
+          name
+          link
+          type
+        }
+      }
     }
   }
 }
@@ -3068,14 +1808,26 @@ export type GetLessonExternalResourcesDataLazyQueryHookResult = ReturnType<typeo
 export type GetLessonExternalResourcesDataQueryResult = Apollo.QueryResult<GetLessonExternalResourcesDataQuery, GetLessonExternalResourcesDataQueryVariables>;
 export const GetCourseMapOverlayDataDocument = gql`
     query getCourseMapOverlayData($slug: String!) {
-  courses(where: {slug: $slug}) {
-    name
-    modules {
-      name
-      ModuleLessons {
-        lesson {
-          name
-          slug
+  courses(filters: {slug: {eq: $slug}}) {
+    data {
+      attributes {
+        name
+        modules {
+          data {
+            attributes {
+              name
+              moduleLessons {
+                lesson {
+                  data {
+                    attributes {
+                      name
+                      slug
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -3112,20 +1864,44 @@ export type GetCourseMapOverlayDataLazyQueryHookResult = ReturnType<typeof useGe
 export type GetCourseMapOverlayDataQueryResult = Apollo.QueryResult<GetCourseMapOverlayDataQuery, GetCourseMapOverlayDataQueryVariables>;
 export const GetSyntaxHandbookDataDocument = gql`
     query getSyntaxHandbookData($slug: String!) {
-  courses(where: {slug: $slug}) {
-    modules {
-      ModuleLessons {
-        lesson {
-          syntaxEntry {
-            content
-            name
-            maxWidth
-          }
-          sublessons {
-            syntaxEntry {
-              content
-              name
-              maxWidth
+  courses(filters: {slug: {eq: $slug}}) {
+    data {
+      attributes {
+        modules {
+          data {
+            attributes {
+              moduleLessons {
+                lesson {
+                  data {
+                    attributes {
+                      syntaxEntry {
+                        data {
+                          attributes {
+                            content
+                            name
+                            maxWidth
+                          }
+                        }
+                      }
+                      sublessons {
+                        data {
+                          attributes {
+                            syntaxEntry {
+                              data {
+                                attributes {
+                                  content
+                                  name
+                                  maxWidth
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -3164,12 +1940,18 @@ export type GetSyntaxHandbookDataLazyQueryHookResult = ReturnType<typeof useGetS
 export type GetSyntaxHandbookDataQueryResult = Apollo.QueryResult<GetSyntaxHandbookDataQuery, GetSyntaxHandbookDataQueryVariables>;
 export const GetLessonDataDocument = gql`
     query getLessonData($slug: String!) {
-  lessons(where: {slug: $slug}) {
-    id
-    name
-    sublessons {
-      ...sublessonInstructionsData
-      ...lessonSidebarData
+  lessons(filters: {slug: {eq: $slug}}) {
+    data {
+      id
+      attributes {
+        name
+        sublessons {
+          data {
+            ...sublessonInstructionsData
+            ...lessonSidebarData
+          }
+        }
+      }
     }
   }
 }
@@ -3203,36 +1985,3 @@ export function useGetLessonDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetLessonDataQueryHookResult = ReturnType<typeof useGetLessonDataQuery>;
 export type GetLessonDataLazyQueryHookResult = ReturnType<typeof useGetLessonDataLazyQuery>;
 export type GetLessonDataQueryResult = Apollo.QueryResult<GetLessonDataQuery, GetLessonDataQueryVariables>;
-export const GetSublessonNavigationDataDocument = gql`
-    query getSublessonNavigationData($currentLessonId: Int!) {
-  nextLessonSlug(currentLessonId: $currentLessonId)
-}
-    `;
-
-/**
- * __useGetSublessonNavigationDataQuery__
- *
- * To run a query within a React component, call `useGetSublessonNavigationDataQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetSublessonNavigationDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetSublessonNavigationDataQuery({
- *   variables: {
- *      currentLessonId: // value for 'currentLessonId'
- *   },
- * });
- */
-export function useGetSublessonNavigationDataQuery(baseOptions: Apollo.QueryHookOptions<GetSublessonNavigationDataQuery, GetSublessonNavigationDataQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetSublessonNavigationDataQuery, GetSublessonNavigationDataQueryVariables>(GetSublessonNavigationDataDocument, options);
-      }
-export function useGetSublessonNavigationDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSublessonNavigationDataQuery, GetSublessonNavigationDataQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetSublessonNavigationDataQuery, GetSublessonNavigationDataQueryVariables>(GetSublessonNavigationDataDocument, options);
-        }
-export type GetSublessonNavigationDataQueryHookResult = ReturnType<typeof useGetSublessonNavigationDataQuery>;
-export type GetSublessonNavigationDataLazyQueryHookResult = ReturnType<typeof useGetSublessonNavigationDataLazyQuery>;
-export type GetSublessonNavigationDataQueryResult = Apollo.QueryResult<GetSublessonNavigationDataQuery, GetSublessonNavigationDataQueryVariables>;

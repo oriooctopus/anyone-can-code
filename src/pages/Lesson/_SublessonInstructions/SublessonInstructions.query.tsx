@@ -5,25 +5,31 @@ import {
 } from 'components/Challenges/Challenge.query';
 
 export const sublessonInstructionsData = gql`
-  fragment sublessonInstructionsData on Sublesson {
-    name
+  fragment sublessonInstructionsData on SublessonEntity {
     id
-    descriptions {
-      short
-      medium
-      long
-    }
-    lesson {
-      id
+    attributes {
       name
-    }
-    challenges {
-      id
-      codeChallenge {
-        ...codeChallengeData
+      description
+      lesson {
+        data {
+          id
+          attributes {
+            name
+          }
+        }
       }
-      multipleChoiceChallenge {
-        ...multipleChoiceChallengeData
+      challenges {
+        id
+        codeChallenge {
+          data {
+            ...codeChallengeData
+          }
+        }
+        multipleChoiceChallenge {
+          data {
+            ...multipleChoiceChallengeData
+          }
+        }
       }
     }
   }

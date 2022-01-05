@@ -3,7 +3,7 @@
   "name": "anyone-can-code-new-frontend",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "yarn develop",
     "develop": "vite",
     "build": "tsc && BACKEND_URL=http://143.198.120.197:1337/graphql vite build",
     "serve": "BASE_URL=/anyone-can-code BACKEND_URL=http://143.198.120.197:1337/graphql vite preview",

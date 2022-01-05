@@ -1,14 +1,20 @@
 import gql from 'graphql-tag';
 
 export const lessonSidebarData = gql`
-  fragment lessonSidebarData on Sublesson {
-    name
-    challenges {
-      codeChallenge {
-        ...codeChallengeData
-      }
-      multipleChoiceChallenge {
-        ...multipleChoiceChallengeData
+  fragment lessonSidebarData on SublessonEntity {
+    attributes {
+      name
+      challenges {
+        codeChallenge {
+          data {
+            ...codeChallengeData
+          }
+        }
+        multipleChoiceChallenge {
+          data {
+            ...multipleChoiceChallengeData
+          }
+        }
       }
     }
   }
