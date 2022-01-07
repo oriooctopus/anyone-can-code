@@ -81,7 +81,7 @@ export const useGetLessonSidebarProgressStepperData = (
     }));
 
   const allSublessonsStepperData = sublessons.map(
-    ({ name }, sublessonIndex) => ({
+    ({ attributes: { name } }, sublessonIndex) => ({
       onClick: () => setSublessonIndex(sublessonIndex),
       hoverText: name,
       state: allSublessonCompletions[sublessonIndex],

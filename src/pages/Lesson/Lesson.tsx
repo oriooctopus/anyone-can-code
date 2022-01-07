@@ -22,7 +22,7 @@ export interface ILessonRouteParams {
 
 // TODO: Fix once we upgrade strapi
 export type LessonType = NonNullable<
-  NonNullable<GetLessonDataQuery['lessons']>[number]
+  NonNullable<GetLessonDataQuery['lessons']['data']>[number]
 >;
 
 interface IProps {
@@ -30,7 +30,7 @@ interface IProps {
 }
 
 const LessonPage = ({ lesson }: IProps) => {
-  const sublessons = lesson.sublessons || [];
+  const sublessons = lesson.attributes.sublessons.data || [];
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
   const currentSublesson = sublessons[currentSublessonIndex];
   const totalSublessons = sublessons.length;
@@ -42,7 +42,8 @@ const LessonPage = ({ lesson }: IProps) => {
    */
   const lastChallengeIndexOfPreviousSublesson =
     currentSublessonIndex > 0
-      ? (sublessons?.[currentSublessonIndex - 1]?.challenges?.length || 0) - 1
+      ? (sublessons?.[currentSublessonIndex - 1]?.attributes.challenges
+          ?.length || 0) - 1
       : undefined;
 
   useEffect(() => {
@@ -83,7 +84,7 @@ export const LessonPageContainer = () => {
       slug,
     },
     onCompleted: (data) => {
-      const lessonData = data?.lessons?.[0];
+      const lessonData = data?.lessons?.data?.[0];
       /**
        * It's important that the lesson completion data is reset
        * before the lesson value is provided. This is to avoid race
@@ -94,7 +95,7 @@ export const LessonPageContainer = () => {
     },
   });
 
-  const sublessons = lesson?.sublessons;
+  const sublessons = lesson?.attributes.sublessons.data;
 
   return (
     <Flex {...layoutStyles} overflow="hidden">

@@ -21,11 +21,8 @@ type props = {
 
 export const MultipleChoiceChallenge = ({
   challenge: {
-    canSelectMultipleOptions,
     id,
-    options = [],
-    prompt,
-    useMarkdownForOptionsText,
+    attributes: { canSelectMultipleOptions, options = [], prompt },
   },
   nextButtonText,
   onClickNext,
@@ -86,7 +83,7 @@ export const MultipleChoiceChallenge = ({
           showOptionIncorrectExplanation={shouldShowOptionIncorrectExplanation(
             index,
           )}
-          useMarkdown={useMarkdownForOptionsText}
+          useMarkdown={true}
           key={text}
         />
       ))}

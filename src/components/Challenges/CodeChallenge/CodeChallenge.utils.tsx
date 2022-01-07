@@ -1,7 +1,6 @@
 import { useReactiveVar } from '@apollo/client';
 import { useRef } from 'react';
 import { runTests } from 'src/codeRunning/codeRunning';
-import { CodeChallengeDataFragment } from 'src/generated/graphql';
 import { failChallenge, passChallenge } from 'src/state/challenge/challenge';
 import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
 import { testResultsVar } from 'src/state/challenge/codeChallenge/codeChallenge.reactiveVariables';

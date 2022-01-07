@@ -13,7 +13,7 @@ export const Challenge = ({
   nextButtonText,
   onClickNext,
 }: ChallengeProps) => {
-  if (challenge.__typename === 'CodeChallenge') {
+  if (challenge.__typename === 'CodeChallengeEntity') {
     return (
       <CodeChallenge
         challenge={challenge}
@@ -21,7 +21,7 @@ export const Challenge = ({
         onClickNext={onClickNext}
       />
     );
-  } else if (challenge.__typename === 'MultipleChoiceChallenge') {
+  } else if (challenge.__typename === 'MultipleChoiceChallengeEntity') {
     return (
       <MultipleChoiceChallenge
         challenge={challenge}

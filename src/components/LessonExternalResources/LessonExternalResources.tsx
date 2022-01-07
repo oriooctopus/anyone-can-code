@@ -1,11 +1,9 @@
-import { Box, Button, IconButton } from '@chakra-ui/react';
-import { Icon } from '@iconify/react';
+import { Box, IconButton } from '@chakra-ui/react';
 import { BiLayerPlus } from 'react-icons/bi';
 import { useParams } from 'react-router-dom';
 import { useGetLessonExternalResourcesDataQuery } from 'src/generated/graphql';
 import { ILessonRouteParams } from 'src/pages/Lesson/Lesson';
 import { LearningSidebarPopupButton } from 'components/LearningSidebarPopupButton/LearningSidebarPopupButton';
-import { getLessonExternalResourcesData } from 'components/LessonExternalResources/LessonExternalResources.query';
 import { FlLink } from 'components/Link/FlLink';
 
 export const LessonExternalResources = () => {
@@ -16,7 +14,9 @@ export const LessonExternalResources = () => {
       slug,
     },
   });
-  const externalResources = data?.lessons?.[0]?.externalResources;
+
+  const externalResources =
+    data?.lessons?.data?.[0].attributes.externalResources;
 
   if (!externalResources?.length) {
     return null;

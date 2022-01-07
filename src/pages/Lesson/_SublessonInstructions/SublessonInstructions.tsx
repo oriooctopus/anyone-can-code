@@ -40,9 +40,11 @@ export const SublessonInstructions = React.memo(
     const contentPanelScrollToTopFunction = useReactiveVar(
       contentPanelScrollToTopFunctionVar,
     );
-    const description = useGetLessonDescription(sublesson.descriptions);
+    const description = useGetLessonDescription(
+      sublesson.attributes.description,
+    );
     const parsedChallenges = getChallengesFromSublessonChallenges(
-      sublesson.challenges,
+      sublesson.attributes.challenges,
     );
     const currentChallenge = parsedChallenges[currentChallengeIndex];
     const { isEndOfLesson, onClickNext } = useSublessonNavigation({
@@ -56,14 +58,16 @@ export const SublessonInstructions = React.memo(
 
     const sublessonText = (
       <>
-        <Text fontSize="26px">{sublesson.name}</Text>
+        <Text fontSize="26px">{sublesson.attributes.name}</Text>
         <Markdown containerOverrides={{ mb: '35px', mt: '10px' }}>
           {description}
         </Markdown>
 
         {isIntroduction && (
           <ChallengeButton onClick={onClickNext}>
-            {sublesson.challenges.length ? 'Begin Challenges' : nextButtonText}
+            {sublesson.attributes.challenges.length
+              ? 'Begin Challenges'
+              : nextButtonText}
           </ChallengeButton>
         )}
       </>
@@ -94,7 +98,7 @@ export const SublessonInstructions = React.memo(
       >
         <>
           <Text fontSize="13px" textTransform="uppercase">
-            {sublesson.lesson?.name}
+            {sublesson.attributes.lesson?.data.attributes.name}
           </Text>
           {isIntroduction ? (
             sublessonText

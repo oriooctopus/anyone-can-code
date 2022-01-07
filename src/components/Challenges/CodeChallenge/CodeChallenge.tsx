@@ -29,7 +29,10 @@ export const CodeChallenge = ({
   nextButtonText,
   onClickNext,
 }: CodeChallengeProps) => {
-  const { id, hints, tests, prompt } = challenge;
+  const {
+    id,
+    attributes: { hints, tests, prompt },
+  } = challenge;
   const { runTests } = useCodeChallengeTests(tests);
   // I now need to differentiate two functions. Reset challenge which is truly to reset it, and another function to get the when a challenge loads.
   const resetChallenge = (ignoreCurrentChallengeStoredCode?: boolean) => {
@@ -82,7 +85,7 @@ export const CodeChallenge = ({
 };
 
 interface ITestsProps {
-  tests: CodeChallengeProps['challenge']['tests'];
+  tests: CodeChallengeProps['challenge']['attributes']['tests'];
 }
 
 const Tests = ({ tests }: ITestsProps) => {

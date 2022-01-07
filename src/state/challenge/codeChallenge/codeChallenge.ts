@@ -13,8 +13,8 @@ export const getCodeChallengeStartingCode = (
   challenge: CodeChallengeDataFragment,
   ignoreCurrentChallengeStoredCode?: boolean,
 ) => {
-  const { challengeMeta, startingCode, getStartingCodeFromPreviousChallenge } =
-    challenge;
+  const { startingCode, getStartingCodeFromPreviousChallenge } =
+    challenge.attributes;
   const storedCode = getLearningStepCompletionData({})?.code;
   const previousChallengeStoredCode =
     getStartingCodeFromPreviousChallenge &&
@@ -32,8 +32,6 @@ export const getCodeChallengeStartingCode = (
     return startingCode;
   } else if (previousChallengeStoredCode) {
     return previousChallengeStoredCode;
-  } else if (challengeMeta?.difficulty === 'hard') {
-    return 'This is a hard challenge. Expect to struggle. TODO: Add more text to this and improve the message';
   } else {
     return '';
   }

@@ -25,34 +25,45 @@ export const SyntaxHandbook = () => {
       <Heading margin="20px 0 16px 12px" size="md">
         Syntax Handbook
       </Heading>
-      {syntaxEntries.map(({ content, maxWidth, name }, index) => (
-        <LearningSidebarPopupButton
-          popupContent={
-            <Markdown
-              containerOverrides={{ padding: '16px', borderRadius: '10px' }}
-            >
-              {content}
-            </Markdown>
-          }
-          popoverWidth={maxWidth || 400}
-          key={name}
-          buttonTooltip="Syntax Handbook"
-        >
-          <Button
-            borderTop={index === 0 && '1px solid black'}
-            borderBottom="1px solid black"
-            borderRadius={0}
-            borderBottomRadius={index === syntaxEntries.length - 1 ? '20px' : 0}
-            padding="14px 18px"
-            onClick={() => {}}
-            variant="ghost"
-            width="100%"
-            justifyContent="start"
+      {syntaxEntries.map(
+        (
+          {
+            data: {
+              attributes: { content, maxWidth, name },
+            },
+          },
+          index,
+        ) => (
+          <LearningSidebarPopupButton
+            popupContent={
+              <Markdown
+                containerOverrides={{ padding: '16px', borderRadius: '10px' }}
+              >
+                {content}
+              </Markdown>
+            }
+            popoverWidth={maxWidth || 400}
+            key={name}
+            buttonTooltip="Syntax Handbook"
           >
-            {name}
-          </Button>
-        </LearningSidebarPopupButton>
-      ))}
+            <Button
+              borderTop={index === 0 && '1px solid black'}
+              borderBottom="1px solid black"
+              borderRadius={0}
+              borderBottomRadius={
+                index === syntaxEntries.length - 1 ? '20px' : 0
+              }
+              padding="14px 18px"
+              onClick={() => {}}
+              variant="ghost"
+              width="100%"
+              justifyContent="start"
+            >
+              {name}
+            </Button>
+          </LearningSidebarPopupButton>
+        ),
+      )}
     </Box>
   );
 

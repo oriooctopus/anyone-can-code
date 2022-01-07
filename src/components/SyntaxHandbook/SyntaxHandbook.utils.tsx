@@ -15,14 +15,29 @@ export const getSyntaxHandbookEntriesFromQueryData = (
   data: GetSyntaxHandbookDataQuery,
 ) => {
   // TODO: clean this shit up
-  const lessons = data?.courses?.[0]?.modules?.[0]?.ModuleLessons || [];
+  const lessons =
+    data?.courses?.data?.[0].attributes.modules.data?.[0]?.attributes
+      ?.moduleLessons || [];
 
-  return flatMap(lessons, ({ lesson }) => {
-    const lessonEntry = lesson?.syntaxEntry;
-    const sublessonEntries = flatMap(lesson?.sublessons, ({ syntaxEntry }) => {
-      return syntaxEntry ? [syntaxEntry] : [];
-    });
+  return flatMap(
+    lessons,
+    ({
+      lesson: {
+        data: { attributes: lesson },
+      },
+    }) => {
+      const lessonEntry = lesson?.syntaxEntry;
+      debugger;
+      const sublessonEntries = flatMap(
+        lesson?.sublessons.data,
+        ({ attributes: { syntaxEntry } }) => {
+          return syntaxEntry ? [syntaxEntry] : [];
+        },
+      );
 
-    return lessonEntry ? [lessonEntry, ...sublessonEntries] : sublessonEntries;
-  });
+      return lessonEntry
+        ? [lessonEntry, ...sublessonEntries]
+        : sublessonEntries;
+    },
+  );
 };

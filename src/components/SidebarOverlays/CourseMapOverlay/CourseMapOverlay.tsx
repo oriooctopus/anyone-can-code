@@ -12,22 +12,30 @@ export const CourseMapOverlay = () => {
     },
   });
 
-  const course = data?.courses?.[0];
+  const course = data?.courses?.data?.[0];
   // for these kinds of things, it might be cleaner to have them return an array when empty
-  const modules = course?.modules?.filter((module) => Boolean(module)) || [];
+  const modules =
+    (course?.attributes?.modules.data || []).filter((module) =>
+      Boolean(module),
+    ) || [];
+  debugger;
 
   return (
     <SidebarOverlayBase>
       {modules.map(
-        (moduleData) =>
+        ({ attributes: moduleData }) =>
           moduleData && (
             <Box key={moduleData.name}>
               <Heading fontSize="26px" p={4}>
                 {moduleData.name}
               </Heading>
-              {moduleData.ModuleLessons &&
-                moduleData.ModuleLessons?.map(
-                  ({ lesson }) =>
+              {moduleData.moduleLessons &&
+                moduleData.moduleLessons?.map(
+                  ({
+                    lesson: {
+                      data: { attributes: lesson },
+                    },
+                  }) =>
                     lesson && (
                       <CourseMapOverlayLesson
                         name={lesson.name}

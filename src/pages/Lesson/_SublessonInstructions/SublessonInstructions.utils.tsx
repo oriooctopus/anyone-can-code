@@ -1,8 +1,7 @@
 import { useReactiveVar } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 import {
-  SublessonInstructionsDataFragment,
-  useGetSublessonNavigationDataQuery,
+  SublessonInstructionsDataFragment, // useGetSublessonNavigationDataQuery,
 } from 'src/generated/graphql';
 import { setChallengeIndex } from 'src/state/challenge/challenge';
 import {
@@ -25,17 +24,17 @@ import { ChallengeFragment } from 'src/types/generalTypes';
  * convert it to the Challenge union type
  */
 export const getChallengeFromSublessonChallenge = (
-  challenge: SublessonInstructionsDataFragment['challenges'][number],
+  challenge: SublessonInstructionsDataFragment['attributes']['challenges'][number],
 ): ChallengeFragment => {
   if (Boolean(challenge) === false) {
     return null;
   }
 
   // TODO: make this code more elegant
-  if (challenge.codeChallenge) {
-    return challenge.codeChallenge;
-  } else if (challenge.multipleChoiceChallenge) {
-    return challenge.multipleChoiceChallenge;
+  if (challenge.codeChallenge.data) {
+    return challenge.codeChallenge.data;
+  } else if (challenge.multipleChoiceChallenge.data) {
+    return challenge.multipleChoiceChallenge.data;
   }
 
   throw new Error(
@@ -44,7 +43,7 @@ export const getChallengeFromSublessonChallenge = (
 };
 
 export const getChallengesFromSublessonChallenges = (
-  challenges: SublessonInstructionsDataFragment['challenges'],
+  challenges: SublessonInstructionsDataFragment['attributes']['challenges'],
 ): Array<ChallengeFragment> => {
   return (challenges || []).flatMap(getChallengeFromSublessonChallenge);
 };
@@ -63,7 +62,7 @@ const descriptionPreferenceToNumericalValueMap: Record<
 const fallbackDirection = 'higher'; // later on we can make this configurable
 
 const makeDescriptionsIntoArray = (
-  descriptions: SublessonInstructionsDataFragment['descriptions'],
+  descriptions: SublessonInstructionsDataFragment['attributes']['description'],
 ) => {
   const descriptionsArray = [] as Array<string>;
   Object.entries(descriptions).forEach(([key, description]) => {
@@ -78,7 +77,7 @@ const makeDescriptionsIntoArray = (
 };
 
 export const useGetLessonDescription = (
-  descriptions: SublessonInstructionsDataFragment['descriptions'],
+  descriptions: SublessonInstructionsDataFragment['attributes']['description'],
 ) => {
   const preference = useReactiveVar(sublessonTextLengthPreferenceVar);
   const descriptionsByIndex = makeDescriptionsIntoArray(descriptions);
@@ -119,12 +118,17 @@ type useSublessonNavigationProps = {
 };
 
 export const useSublessonNavigation = ({
-  sublesson: { challenges, lesson },
+  sublesson: {
+    attributes: { challenges, lesson },
+  },
   totalSublessons,
 }: useSublessonNavigationProps) => {
   const history = useHistory();
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
   const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
+  const useGetSublessonNavigationDataQuery = () => {
+    return { data: {} };
+  };
   const { data } = useGetSublessonNavigationDataQuery({
     variables: { currentLessonId: Number(lesson.id) },
   });

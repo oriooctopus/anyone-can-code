@@ -12,29 +12,31 @@ import {
 } from 'src/state/lessonCompletion/lessonCompletion.types';
 import { resetSublesson } from 'src/state/sublesson/sublesson';
 
-export const resetLesson = (lesson: LessonType) => {
+export const resetLesson = ({ attributes: lesson }: LessonType) => {
   const newLessonCompletionData: lessonCompletionDataType =
-    lesson.sublessons.map(({ challenges }): ISublessonCompletionData => {
-      return {
-        challenges: challenges.map((challenge) => {
-          const formattedChallenge =
-            getChallengeFromSublessonChallenge(challenge);
-          const startingCode =
-            formattedChallenge.__typename === 'CodeChallenge'
-              ? getCodeChallengeStartingCode(
-                  // @ts-expect-error will fix later
-                  challenge as CodeChallengeDataFragment,
-                  false,
-                )
-              : '';
+    lesson.sublessons.data.map(
+      ({ attributes: { challenges } }): ISublessonCompletionData => {
+        return {
+          challenges: challenges.map((challenge) => {
+            const formattedChallenge =
+              getChallengeFromSublessonChallenge(challenge);
+            const startingCode =
+              formattedChallenge.__typename === 'CodeChallengeEntity'
+                ? getCodeChallengeStartingCode(
+                    // @ts-expect-error will fix later
+                    challenge as CodeChallengeDataFragment,
+                    false,
+                  )
+                : '';
 
-          return {
-            startingCode,
-          };
-        }),
-        introduction: {},
-      };
-    });
+            return {
+              startingCode,
+            };
+          }),
+          introduction: {},
+        };
+      },
+    );
 
   lessonCompletionDataVar(newLessonCompletionData);
   resetSublesson();
