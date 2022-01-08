@@ -14,7 +14,7 @@ export const getCodeChallengeStartingCode = (
   ignoreCurrentChallengeStoredCode?: boolean,
 ) => {
   const { startingCode, getStartingCodeFromPreviousChallenge } =
-    challenge.attributes;
+    challenge.attributes || {};
   const storedCode = getLearningStepCompletionData({})?.code;
   const previousChallengeStoredCode =
     getStartingCodeFromPreviousChallenge &&

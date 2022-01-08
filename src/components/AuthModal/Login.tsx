@@ -1,4 +1,3 @@
-import { Box, FormErrorMessage, Text } from '@chakra-ui/react';
 import { Formik } from 'formik';
 import { InputControl } from 'formik-chakra-ui';
 import { useState } from 'react';
@@ -42,17 +41,17 @@ export const Login = () => {
         },
       },
     })
-      .then(
-        ({
-          data: {
-            login: { jwt },
-          },
-        }) => {
-          // console.log('jwt', jwt);
+      .then(({ data }) => {
+        const jwt = data?.login?.jwt;
+
+        if (jwt) {
           setAuthToken(jwt);
-          closeAuthModal();
-        },
-      )
+        } else {
+          throw new Error('JWT is empty');
+        }
+
+        closeAuthModal();
+      })
       .catch(() => setDidSubmissionFail(true));
 
   return (

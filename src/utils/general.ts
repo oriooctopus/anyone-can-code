@@ -8,6 +8,18 @@ export const encodeToBase64String = (value: any): string =>
 export const decodeBase64String = (base64String: string): any =>
   JSON.parse(atob(base64String));
 
+export const getErrorMessage = (error: unknown) => {
+  if (error instanceof Error) return error.message;
+  return String(error);
+};
+
+// to be passed into filter
+export const notEmpty = <TValue>(
+  value: TValue | null | undefined,
+): value is TValue => {
+  return value !== null && value !== undefined;
+};
+
 export const isExternalURL = (url: string) => {
   if (typeof location === 'undefined') {
     return true;

@@ -47,7 +47,7 @@ export const SyntaxHandbook = () => {
             buttonTooltip="Syntax Handbook"
           >
             <Button
-              borderTop={index === 0 && '1px solid black'}
+              borderTop={index === 0 ? '1px solid black' : ''}
               borderBottom="1px solid black"
               borderRadius={0}
               borderBottomRadius={

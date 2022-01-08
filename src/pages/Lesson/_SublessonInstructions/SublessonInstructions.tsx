@@ -6,7 +6,6 @@ import { SublessonInstructionsDataFragment } from 'src/generated/graphql';
 import {
   getChallengesFromSublessonChallenges,
   isSublessonIntroduction,
-  useGetLessonDescription,
   useSublessonNavigation,
 } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
 import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
@@ -40,17 +39,19 @@ export const SublessonInstructions = React.memo(
     const contentPanelScrollToTopFunction = useReactiveVar(
       contentPanelScrollToTopFunctionVar,
     );
-    const description = useGetLessonDescription(
-      sublesson.attributes.description,
-    );
-    const parsedChallenges = getChallengesFromSublessonChallenges(
-      sublesson.attributes.challenges,
-    );
-    const currentChallenge = parsedChallenges[currentChallengeIndex];
     const { isEndOfLesson, onClickNext } = useSublessonNavigation({
       sublesson,
       totalSublessons,
     });
+
+    if (!sublesson.attributes) {
+      return null;
+    }
+
+    const { challenges, description, name } = sublesson.attributes;
+
+    const parsedChallenges = getChallengesFromSublessonChallenges(challenges);
+    const currentChallenge = parsedChallenges[currentChallengeIndex];
     const nextButtonText = isEndOfLesson ? 'Go to next lesson' : 'Next';
     const isIntroduction = isSublessonIntroduction(currentChallengeIndex);
 
@@ -58,16 +59,14 @@ export const SublessonInstructions = React.memo(
 
     const sublessonText = (
       <>
-        <Text fontSize="26px">{sublesson.attributes.name}</Text>
+        <Text fontSize="26px">{name}</Text>
         <Markdown containerOverrides={{ mb: '35px', mt: '10px' }}>
           {description}
         </Markdown>
 
         {isIntroduction && (
           <ChallengeButton onClick={onClickNext}>
-            {sublesson.attributes.challenges.length
-              ? 'Begin Challenges'
-              : nextButtonText}
+            {challenges?.length ? 'Begin Challenges' : nextButtonText}
           </ChallengeButton>
         )}
       </>
@@ -93,12 +92,12 @@ export const SublessonInstructions = React.memo(
 
     return (
       <ContentPanel
-        onGoBack={showGoBackIndicator && onGoBack}
+        onGoBack={showGoBackIndicator ? onGoBack : undefined}
         secondaryContent={!isIntroduction && sublessonText}
       >
         <>
           <Text fontSize="13px" textTransform="uppercase">
-            {sublesson.attributes.lesson?.data.attributes.name}
+            {sublesson.attributes?.lesson?.data?.attributes?.name}
           </Text>
           {isIntroduction ? (
             sublessonText

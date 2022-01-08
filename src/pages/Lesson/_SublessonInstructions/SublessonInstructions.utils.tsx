@@ -16,6 +16,8 @@ import { lessonCompletionDataVar } from 'src/state/lessonCompletion/lessonComple
 import { resetSublesson } from 'src/state/sublesson/sublesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { ChallengeFragment } from 'src/types/generalTypes';
+import { notEmpty } from 'src/utils/general';
+import { NN } from 'src/utils/typescriptUtils';
 
 /*
  * Because the CMS does not allow for proper union types we
@@ -24,88 +26,33 @@ import { ChallengeFragment } from 'src/types/generalTypes';
  * convert it to the Challenge union type
  */
 export const getChallengeFromSublessonChallenge = (
-  challenge: SublessonInstructionsDataFragment['attributes']['challenges'][number],
+  sublessonChallenge: NN<
+    NN<
+      NN<SublessonInstructionsDataFragment['attributes']>['challenges']
+    >[number]
+  >,
 ): ChallengeFragment => {
-  if (Boolean(challenge) === false) {
-    return null;
-  }
-
   // TODO: make this code more elegant
-  if (challenge.codeChallenge.data) {
-    return challenge.codeChallenge.data;
-  } else if (challenge.multipleChoiceChallenge.data) {
-    return challenge.multipleChoiceChallenge.data;
+  if (sublessonChallenge.codeChallenge?.data) {
+    return sublessonChallenge.codeChallenge.data;
+  } else if (sublessonChallenge.multipleChoiceChallenge?.data) {
+    return sublessonChallenge.multipleChoiceChallenge.data;
   }
 
   throw new Error(
-    `Sublesson challenge of id ${challenge.id} did not contain any challenges. Is the challenge/sublesson still a draft?`,
+    `Sublesson challenge of id ${sublessonChallenge.id} did not contain any challenges. Is the challenge/sublesson still a draft?`,
   );
 };
 
 export const getChallengesFromSublessonChallenges = (
-  challenges: SublessonInstructionsDataFragment['attributes']['challenges'],
+  challenges: NN<SublessonInstructionsDataFragment['attributes']>['challenges'],
 ): Array<ChallengeFragment> => {
-  return (challenges || []).flatMap(getChallengeFromSublessonChallenge);
+  return (challenges || [])
+    .filter(notEmpty)
+    .flatMap(getChallengeFromSublessonChallenge);
 };
 
 export const isSublessonIntroduction = (index: number) => index === -1;
-
-const descriptionPreferenceToNumericalValueMap: Record<
-  SublessonTextLengthPreferenceEnum,
-  number
-> = {
-  [SublessonTextLengthPreferenceEnum.short]: 0,
-  [SublessonTextLengthPreferenceEnum.medium]: 1,
-  [SublessonTextLengthPreferenceEnum.long]: 2,
-};
-
-const fallbackDirection = 'higher'; // later on we can make this configurable
-
-const makeDescriptionsIntoArray = (
-  descriptions: SublessonInstructionsDataFragment['attributes']['description'],
-) => {
-  const descriptionsArray = [] as Array<string>;
-  Object.entries(descriptions).forEach(([key, description]) => {
-    const descriptionLocation =
-      descriptionPreferenceToNumericalValueMap[
-        key as keyof typeof descriptionPreferenceToNumericalValueMap
-      ];
-    descriptionsArray[descriptionLocation] = description;
-  });
-
-  return descriptionsArray;
-};
-
-export const useGetLessonDescription = (
-  descriptions: SublessonInstructionsDataFragment['attributes']['description'],
-) => {
-  const preference = useReactiveVar(sublessonTextLengthPreferenceVar);
-  const descriptionsByIndex = makeDescriptionsIntoArray(descriptions);
-  const preferredIndex = descriptionPreferenceToNumericalValueMap[preference];
-
-  if (descriptionsByIndex[preferredIndex]) {
-    return descriptionsByIndex[preferredIndex];
-  }
-
-  const closestHigher = descriptionsByIndex
-    .slice(preferredIndex + 1)
-    .filter((el) => Boolean(el))[0];
-  const closestLower = descriptionsByIndex
-    .slice(0, preferredIndex)
-    .filter((el) => Boolean(el))
-    .reverse()[0];
-
-  if (!closestHigher && !closestLower) {
-    throw new Error('No description exists');
-  }
-
-  const firstChoice =
-    fallbackDirection === 'higher' ? closestHigher : closestLower;
-  const secondChoice =
-    fallbackDirection === 'higher' ? closestLower : closestHigher;
-
-  return firstChoice || secondChoice;
-};
 
 export const setSublessonIndex = (lessonIndex: number) => {
   currentSublessonIndexVar(lessonIndex);
@@ -119,6 +66,7 @@ type useSublessonNavigationProps = {
 
 export const useSublessonNavigation = ({
   sublesson: {
+    // @ts-expect-error nextLesson temporary silence
     attributes: { challenges, lesson },
   },
   totalSublessons,
@@ -129,6 +77,7 @@ export const useSublessonNavigation = ({
   const useGetSublessonNavigationDataQuery = () => {
     return { data: {} };
   };
+  // @ts-expect-error nextLesson temporary silence
   const { data } = useGetSublessonNavigationDataQuery({
     variables: { currentLessonId: Number(lesson.id) },
   });
@@ -149,6 +98,7 @@ export const useSublessonNavigation = ({
     } else if (!isLastSublesson) {
       setSublessonIndex(currentSublessonIndex + 1);
     } else {
+      // @ts-expect-error nextLesson temporary silence
       history.push(`/lesson/${data?.nextLessonSlug}`);
     }
   };

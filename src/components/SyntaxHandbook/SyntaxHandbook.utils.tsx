@@ -1,4 +1,5 @@
 import { GetSyntaxHandbookDataQuery } from 'src/generated/graphql';
+import { notEmpty } from 'src/utils/general';
 
 function flatMap<T, U>(
   array: T[],
@@ -15,29 +16,22 @@ export const getSyntaxHandbookEntriesFromQueryData = (
   data: GetSyntaxHandbookDataQuery,
 ) => {
   // TODO: clean this shit up
-  const lessons =
-    data?.courses?.data?.[0].attributes.modules.data?.[0]?.attributes
-      ?.moduleLessons || [];
-
-  return flatMap(
-    lessons,
-    ({
-      lesson: {
-        data: { attributes: lesson },
-      },
-    }) => {
-      const lessonEntry = lesson?.syntaxEntry;
-      debugger;
-      const sublessonEntries = flatMap(
-        lesson?.sublessons.data,
-        ({ attributes: { syntaxEntry } }) => {
-          return syntaxEntry ? [syntaxEntry] : [];
-        },
-      );
-
-      return lessonEntry
-        ? [lessonEntry, ...sublessonEntries]
-        : sublessonEntries;
-    },
+  const lessons = flatMap(
+    (
+      data?.courses?.data?.[0].attributes?.modules?.data?.[0]?.attributes
+        ?.moduleLessons || []
+    ).filter(notEmpty),
+    ({ lesson }) => (lesson?.data?.attributes ? [lesson.data.attributes] : []),
   );
+
+  return flatMap(lessons, ({ syntaxEntry: lessonEntry, sublessons }) => {
+    const sublessonEntries = flatMap(
+      sublessons?.data || [],
+      ({ attributes }) => {
+        return attributes?.syntaxEntry ? [attributes.syntaxEntry] : [];
+      },
+    );
+
+    return lessonEntry ? [lessonEntry, ...sublessonEntries] : sublessonEntries;
+  });
 };

@@ -13,5 +13,5 @@ export const sublessonTextLengthPreferenceVar = makeVar(
 export const sublessonChallengeFrequencyVar = makeVar(
   SublessonChallengeFrequencyEnum.medium,
 );
-export const contentPanelScrollToTopFunctionVar = makeVar(() => null);
+export const contentPanelScrollToTopFunctionVar = makeVar(() => {});
 export const authModalStateVar = makeVar(AuthModalStateEnum.NOT_OPEN);

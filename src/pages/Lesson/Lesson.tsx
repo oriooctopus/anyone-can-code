@@ -20,18 +20,21 @@ export interface ILessonRouteParams {
   slug: string;
 }
 
-// TODO: Fix once we upgrade strapi
-export type LessonType = NonNullable<
-  NonNullable<GetLessonDataQuery['lessons']['data']>[number]
->;
+export type LessonType =
+  | NonNullable<GetLessonDataQuery['lessons']>['data'][number];
 
 interface IProps {
-  lesson: LessonType;
+  lesson: LessonType | undefined;
 }
 
 const LessonPage = ({ lesson }: IProps) => {
-  const sublessons = lesson.attributes.sublessons.data || [];
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
+
+  if (!lesson) {
+    return null;
+  }
+
+  const sublessons = lesson?.attributes?.sublessons?.data || [];
   const currentSublesson = sublessons[currentSublessonIndex];
   const totalSublessons = sublessons.length;
   /*
@@ -42,7 +45,7 @@ const LessonPage = ({ lesson }: IProps) => {
    */
   const lastChallengeIndexOfPreviousSublesson =
     currentSublessonIndex > 0
-      ? (sublessons?.[currentSublessonIndex - 1]?.attributes.challenges
+      ? (sublessons?.[currentSublessonIndex - 1]?.attributes?.challenges
           ?.length || 0) - 1
       : undefined;
 
@@ -77,7 +80,7 @@ const LessonPage = ({ lesson }: IProps) => {
 };
 
 export const LessonPageContainer = () => {
-  const [lesson, setLesson] = useState<LessonType>(null);
+  const [lesson, setLesson] = useState<LessonType>();
   const { slug } = useParams<ILessonRouteParams>();
   useGetLessonDataQuery({
     variables: {
@@ -95,7 +98,7 @@ export const LessonPageContainer = () => {
     },
   });
 
-  const sublessons = lesson?.attributes.sublessons.data;
+  const sublessons = lesson?.attributes?.sublessons?.data;
 
   return (
     <Flex {...layoutStyles} overflow="hidden">

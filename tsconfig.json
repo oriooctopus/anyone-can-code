@@ -16,7 +16,7 @@
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": false, // will reenable once I upgrade strapi to v4
+    "strict": true, // will reenable once I upgrade strapi to v4
     "target": "es5"
   },
   "exclude": ["node_modules"],

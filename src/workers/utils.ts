@@ -1,4 +1,5 @@
 import { removeJSComments } from '../utils/curriculum-helpers';
+import { getErrorMessage } from 'src/utils/general';
 
 type consoleLogOverride = (data: unknown[]) => void;
 
@@ -82,7 +83,7 @@ const getCodeEvaluationHelpers = (
 
 export const getEvaluationContext = (
   code: string,
-  logs?: Array<Array<unknown>>,
+  logs: Array<Array<unknown>> = [],
 ) => {
   const _codeString = `${code}`;
   return {
@@ -93,7 +94,7 @@ export const getEvaluationContext = (
   };
 };
 
-export const getCode = (code = '', removeComments: boolean) =>
+export const getCode = (code = '', removeComments?: boolean) =>
   removeComments ? removeJSComments(code) : code;
 
 export const getConsoleLogsFromCodeEvaluation = (
@@ -115,7 +116,7 @@ export const getConsoleLogsFromCodeEvaluation = (
       context,
     );
   } catch (e) {
-    logs.push(e.toString());
+    logs.push(getErrorMessage(e));
   }
 
   restoreConsoleLog();
