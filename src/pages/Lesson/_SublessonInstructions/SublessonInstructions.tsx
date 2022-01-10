@@ -19,6 +19,7 @@ import { ContentPanel } from 'components/ContentPanel/ContentPanel';
 import Markdown from 'components/Markdown/Markdown';
 
 type props = {
+  // so sublesson would be normalized
   sublesson: SublessonInstructionsDataFragment;
   totalSublessons: number;
   /*

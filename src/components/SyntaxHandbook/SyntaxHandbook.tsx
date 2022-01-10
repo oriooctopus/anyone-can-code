@@ -1,9 +1,19 @@
-import { Box, Button, Heading, IconButton, Text } from '@chakra-ui/react';
+import { Box, Button, Heading, IconButton } from '@chakra-ui/react';
 import { BsJournals } from 'react-icons/bs';
-import { useGetSyntaxHandbookDataQuery } from 'src/generated/graphql';
+import {
+  GetSyntaxHandbookDataQuery,
+  useGetSyntaxHandbookDataQuery,
+} from 'src/generated/graphql';
+import {
+  FlattenAttributes,
+  normalize,
+  normalizeDataArray,
+} from 'src/utils/general';
 import { LearningSidebarPopupButton } from 'components/LearningSidebarPopupButton/LearningSidebarPopupButton';
 import Markdown from 'components/Markdown/Markdown';
 import { getSyntaxHandbookEntriesFromQueryData } from 'components/SyntaxHandbook/SyntaxHandbook.utils';
+
+type test2 = FlattenAttributes<GetSyntaxHandbookDataQuery['courses']>;
 
 export const SyntaxHandbook = () => {
   const { data } = useGetSyntaxHandbookDataQuery({
@@ -12,6 +22,16 @@ export const SyntaxHandbook = () => {
       slug: 'js-foundations',
     },
   });
+
+  if (!data?.courses) {
+    return null;
+  }
+
+  const help = data;
+  data.courses;
+
+  const test = normalizeDataArray(data.courses);
+  const b = test[0];
 
   const syntaxEntries = getSyntaxHandbookEntriesFromQueryData(data);
 
@@ -25,15 +45,15 @@ export const SyntaxHandbook = () => {
       <Heading margin="20px 0 16px 12px" size="md">
         Syntax Handbook
       </Heading>
-      {syntaxEntries.map(
-        (
-          {
-            data: {
-              attributes: { content, maxWidth, name },
-            },
-          },
-          index,
-        ) => (
+      {syntaxEntries.map(({ data }, index) => {
+        if (!data?.attributes) {
+          return null;
+        }
+
+        const {
+          attributes: { content, maxWidth, name },
+        } = data;
+        return (
           <LearningSidebarPopupButton
             popupContent={
               <Markdown
@@ -62,8 +82,8 @@ export const SyntaxHandbook = () => {
               {name}
             </Button>
           </LearningSidebarPopupButton>
-        ),
-      )}
+        );
+      })}
     </Box>
   );
 

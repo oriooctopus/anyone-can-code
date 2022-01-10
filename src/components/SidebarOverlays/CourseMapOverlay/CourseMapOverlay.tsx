@@ -1,5 +1,6 @@
 import { Box, Heading } from '@chakra-ui/react';
 import { useGetCourseMapOverlayDataQuery } from 'src/generated/graphql';
+import { notEmpty } from 'src/utils/general';
 import { CourseMapOverlayLesson } from 'components/SidebarOverlays/CourseMapOverlay/CourseMapOverlay.styles';
 import { SidebarOverlayBase } from 'components/SidebarOverlays/SidebarOverlayBase/SidebarOverlayBase';
 
@@ -15,10 +16,9 @@ export const CourseMapOverlay = () => {
   const course = data?.courses?.data?.[0];
   // for these kinds of things, it might be cleaner to have them return an array when empty
   const modules =
-    (course?.attributes?.modules.data || []).filter((module) =>
+    (course?.attributes?.modules?.data || []).filter((module) =>
       Boolean(module),
     ) || [];
-  debugger;
 
   return (
     <SidebarOverlayBase>
@@ -30,19 +30,17 @@ export const CourseMapOverlay = () => {
                 {moduleData.name}
               </Heading>
               {moduleData.moduleLessons &&
-                moduleData.moduleLessons?.map(
-                  ({
-                    lesson: {
-                      data: { attributes: lesson },
-                    },
-                  }) =>
-                    lesson && (
-                      <CourseMapOverlayLesson
-                        name={lesson.name}
-                        slug={lesson.slug}
-                      />
-                    ),
-                )}
+                moduleData.moduleLessons?.map((moduleLesson) => {
+                  const { name, slug } =
+                    moduleLesson?.lesson?.data?.attributes || {};
+                  return (
+                    <CourseMapOverlayLesson
+                      name={name}
+                      slug={slug}
+                      key={name}
+                    />
+                  );
+                })}
             </Box>
           ),
       )}

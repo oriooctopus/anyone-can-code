@@ -16,7 +16,7 @@ import { lessonCompletionDataVar } from 'src/state/lessonCompletion/lessonComple
 import { resetSublesson } from 'src/state/sublesson/sublesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { ChallengeFragment } from 'src/types/generalTypes';
-import { notEmpty } from 'src/utils/general';
+import { normalize, notEmpty } from 'src/utils/general';
 import { NN } from 'src/utils/typescriptUtils';
 
 /*
@@ -77,10 +77,12 @@ export const useSublessonNavigation = ({
   const useGetSublessonNavigationDataQuery = () => {
     return { data: {} };
   };
+
   // @ts-expect-error nextLesson temporary silence
   const { data } = useGetSublessonNavigationDataQuery({
     variables: { currentLessonId: Number(lesson.id) },
   });
+
   const isLastChallenge = currentChallengeIndex + 1 === challenges.length;
   const isLastSublesson = currentSublessonIndex + 1 === totalSublessons;
   const isEndOfLesson = isLastChallenge && isLastSublesson;
