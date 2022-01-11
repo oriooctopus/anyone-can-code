@@ -10,6 +10,7 @@ import { lessonCompletionDataType } from 'src/state/lessonCompletion/lessonCompl
 import { resetSublesson } from 'src/state/sublesson/sublesson';
 import { notEmpty } from 'src/utils/general';
 
+// I stopped in the middle of converting the lesson stuff
 export const resetLesson = ({ attributes: lesson }: LessonType) => {
   const newLessonCompletionData: lessonCompletionDataType = (
     lesson?.sublessons?.data || []

@@ -12,6 +12,7 @@ import { SublessonInstructions } from 'src/pages/Lesson/_SublessonInstructions/S
 import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
 import { resetLesson } from 'src/state/lesson/lesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
+import { NormalizeStrapi, normalizeStrapiData } from 'src/utils/general';
 import { Editor } from 'components/Editor/Editor';
 import { layoutStyles } from 'components/Layout/Layout.styles';
 import { Navbar } from 'components/Navbar/Navbar';
@@ -20,8 +21,9 @@ export interface ILessonRouteParams {
   slug: string;
 }
 
-export type LessonType =
-  | NonNullable<GetLessonDataQuery['lessons']>['data'][number];
+export type LessonType = NormalizeStrapi<
+  NonNullable<GetLessonDataQuery['lessons']>
+>[number];
 
 interface IProps {
   lesson: LessonType | undefined;
@@ -86,8 +88,13 @@ export const LessonPageContainer = () => {
     variables: {
       slug,
     },
-    onCompleted: (data) => {
-      const lessonData = data?.lessons?.data?.[0];
+    onCompleted: (result) => {
+      if (!result?.lessons) {
+        throw new Error('No lessons found');
+      }
+
+      // This query should be changed to just return one, which I think is now possible anyways with v4
+      const [lessonData] = normalizeStrapiData(result?.lessons);
       /**
        * It's important that the lesson completion data is reset
        * before the lesson value is provided. This is to avoid race

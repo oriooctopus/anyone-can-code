@@ -21,37 +21,17 @@ type SimpleFlatten<T> = T extends object
     >
   : T;
 
-// export type FlattenDataArray<O extends { data: Array<infer Type extends {attributes: object} : never>}> = Array<
+// export type FlattenData<O extends { data: Array<infer Type extends {attributes: object} : never>}> = Array<
 //   NN<Type>
 // >;
-export type FlattenDataArray<O> = O extends { data: Array<infer dataObj> }
-  ? Array<dataObj>
-  : never;
 
-// the problem is that strapi object is wrong, it messes up the levels
-// type GetAttributes<internal> = {
-//   data: { attributes: internal }[];
-// };
-type StrapiObject = {
-  data: { attributes: obj }[];
-};
-// type StrapiObject = {
-//   data: { attributes: object }[];
-// };
+// this name is probably not accurate, will revisit later
+type StrapiCollection<T> = { attributes: T };
 
-// type hmm<O> = O extends StrapiObject<infer internal> ? number : never;
+// type NestedStrapiObject = StrapiObject<StrapiObject>;
 
-// type hmm2 = hmm<{ data: { a: 1234; attributes: 23 }[] }>;
+// next step is to test how the typing works for when data is null.
 
-// export type FlattenStrapi<O> = O extends StrapiObject<infer internal>
-//   ? FlattenAttributes<FlattenDataArray<internal>>
-//   : never;
-
-// export type FlattenAttributes<O extends object> = O extends { attributes: any }
-//   ? Object.Omit<O, 'attributes'> & O['attributes']
-//   : O extends { attributes: any }[]
-//   ? (O[number]['attributes'] & Object.Omit<O[number], 'attributes'>)[]
-//   : never;
 export type FlattenAttributes<O extends object> = O extends {
   attributes: any;
 }[]
@@ -60,21 +40,36 @@ export type FlattenAttributes<O extends object> = O extends {
   ? Object.Omit<O, 'attributes'> & O['attributes']
   : never;
 
-export type FlattenStrapi<O> = O extends StrapiObject
-  ? FlattenAttributes<FlattenDataArray<O>>
+export type FlattenStrapiParam = StrapiObject[] | StrapiObject;
+
+// I'm also assuming that if data is singular and null it's because of weird typing stuff from strapi's part and just get rid of it. Technically, this could lead to errors, but I can't imagine any situation right now where it would. But still, stay on the lookout
+export type NormalizeStrapi<O extends FlattenStrapiParam> =
+  O extends StrapiObject[]
+    ? FlattenAttributes<FlattenData<O>>[]
+    : O extends StrapiObject
+    ? FlattenAttributes<FlattenData<O>>
+    : never;
+
+type StrapiObject<T = object | null> = {
+  data: StrapiCollection<T>[] | StrapiCollection<T> | null;
+};
+
+export type FlattenData<O> = O extends { data: Array<infer dataObj> }
+  ? Array<dataObj>
+  : O extends { data: infer dataObj }
+  ? /**
+     * For some reason the data object is considered by strapi to
+     * be nullable. I haven't seen any valid reason for this so I've
+     * removed it. But that might change in the future if I find a
+     * valid reason
+     */
+    NonNullable<dataObj>
   : never;
 
-// type test = FlattenStrapi<{
-//   data: {
-//     attributes: {
-//       1: 2;
-//     };
-//   }[];
-// }>;
-type base = NN<GetSyntaxHandbookDataQuery['courses']>;
-type oneLayer = FlattenStrapi<base>[number]['modules'];
-// type secondLayer = FlattenAttributes<oneLayer>;
-// type maybe = FlattenAttributes<test>;
+// export type FlattenStrapiDeep<O> = O extends NestedStrapiObject ? FlattenStrapiDeep<
+
+// you have to call the inner part and access it
+// and actually you'll have to go through every key too
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const encodeToBase64String = (value: any): string =>
@@ -121,20 +116,17 @@ function flatMap<T, U>(
 //   }
 // };
 
-export const normalizeDataArray = <T extends StrapiObject>({
+// I am pretty sure I'm stripping null. Which is good, but it
+// should be more explicit/configurable. Will revisit later
+export const normalizeStrapiData = <T extends StrapiObject>({
   data,
-}: T): FlattenStrapi<T> => {
-  return flatMap(data, ({ attributes }) =>
-    attributes ? [attributes] : [],
-  ) as FlattenStrapi<T>;
-
-  if (!data) {
-    // temporary
-    return [] as FlattenAttributes<T>[];
-  } else {
+}: T): NormalizeStrapi<T> => {
+  if (Array.isArray(data)) {
     return flatMap(data, ({ attributes }) =>
       attributes ? [attributes] : [],
-    ) as FlattenAttributes<T>[];
+    ) as NormalizeStrapi<T>;
+  } else {
+    return data?.attributes as NormalizeStrapi<T>;
   }
 };
 

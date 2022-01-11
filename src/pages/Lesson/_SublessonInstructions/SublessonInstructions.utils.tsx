@@ -9,14 +9,11 @@ import {
   currentChallengeIndexVar,
 } from 'src/state/challenge/challenge.reactiveVariables';
 import { ChallengeAttemptStatusEnum } from 'src/state/challenge/challenge.types';
-import { sublessonTextLengthPreferenceVar } from 'src/state/general/general.reactiveVariables';
-import { SublessonTextLengthPreferenceEnum } from 'src/state/general/general.types';
 import { updateSublessonIntroductionCompletion } from 'src/state/lessonCompletion/lessonCompletion';
-import { lessonCompletionDataVar } from 'src/state/lessonCompletion/lessonCompletion.reactiveVariables';
 import { resetSublesson } from 'src/state/sublesson/sublesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { ChallengeFragment } from 'src/types/generalTypes';
-import { normalize, notEmpty } from 'src/utils/general';
+import { notEmpty } from 'src/utils/general';
 import { NN } from 'src/utils/typescriptUtils';
 
 /*

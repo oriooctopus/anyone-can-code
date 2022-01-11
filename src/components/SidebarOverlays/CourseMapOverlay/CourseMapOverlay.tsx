@@ -1,6 +1,6 @@
 import { Box, Heading } from '@chakra-ui/react';
 import { useGetCourseMapOverlayDataQuery } from 'src/generated/graphql';
-import { normalizeDataArray, notEmpty } from 'src/utils/general';
+import { normalizeStrapiData, notEmpty } from 'src/utils/general';
 import { CourseMapOverlayLesson } from 'components/SidebarOverlays/CourseMapOverlay/CourseMapOverlay.styles';
 import { SidebarOverlayBase } from 'components/SidebarOverlays/SidebarOverlayBase/SidebarOverlayBase';
 
@@ -17,40 +17,35 @@ export const CourseMapOverlay = () => {
     return null;
   }
 
-  const test = normalizeDataArray(data.courses);
-  console.log('test', test);
+  // right now we're just getting the first one, this should be optimized in the query level
+  const [{ modules }] = normalizeStrapiData(data.courses);
 
-  const course = data?.courses?.data?.[0];
-  // for these kinds of things, it might be cleaner to have them return an array when empty
-  const modules =
-    (course?.attributes?.modules?.data || []).filter((module) =>
-      Boolean(module),
-    ) || [];
+  if (!modules) {
+    return null;
+  }
+
+  const normalizedModules = normalizeStrapiData(modules);
 
   return (
     <SidebarOverlayBase>
-      {modules.map(
-        ({ attributes: moduleData }) =>
-          moduleData && (
-            <Box key={moduleData.name}>
-              <Heading fontSize="26px" p={4}>
-                {moduleData.name}
-              </Heading>
-              {moduleData.moduleLessons &&
-                moduleData.moduleLessons?.map((moduleLesson) => {
-                  const { name, slug } =
-                    moduleLesson?.lesson?.data?.attributes || {};
-                  return (
-                    <CourseMapOverlayLesson
-                      name={name}
-                      slug={slug}
-                      key={name}
-                    />
-                  );
-                })}
-            </Box>
-          ),
-      )}
+      {normalizedModules.map(({ moduleLessons, name: moduleName }) => (
+        <Box key={moduleName}>
+          <Heading fontSize="26px" p={4}>
+            {moduleName}
+          </Heading>
+          {(moduleLessons || []).map((moduleLesson) => {
+            if (!moduleLesson?.lesson) {
+              return null;
+            }
+
+            const { name, slug } = normalizeStrapiData(moduleLesson?.lesson);
+
+            return (
+              <CourseMapOverlayLesson name={name} slug={slug} key={name} />
+            );
+          })}
+        </Box>
+      ))}
     </SidebarOverlayBase>
   );
 };

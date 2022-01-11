@@ -7,10 +7,9 @@ import {
 } from 'src/generated/graphql';
 import {
   FlattenAttributes,
-  FlattenDataArray,
-  FlattenStrapi,
-  normalize,
-  normalizeDataArray,
+  FlattenData,
+  NormalizeStrapi,
+  normalizeStrapiData,
 } from 'src/utils/general';
 import { NN } from 'src/utils/typescriptUtils';
 import { LearningSidebarPopupButton } from 'components/LearningSidebarPopupButton/LearningSidebarPopupButton';
@@ -19,8 +18,8 @@ import { getSyntaxHandbookEntriesFromQueryData } from 'components/SyntaxHandbook
 
 // type test2 = FlattenAttributes<NN<GetSyntaxHandbookDataQuery['courses']>>;
 type base = NN<GetSyntaxHandbookDataQuery['courses']>;
-type test4 = FlattenDataArray<base>;
-type test5 = FlattenStrapi<base>;
+type test4 = FlattenData<base>;
+type test5 = NormalizeStrapi<base>;
 type test3 = FlattenAttributes<SublessonEntity>['challenges'];
 
 export const SyntaxHandbook = () => {
@@ -38,8 +37,7 @@ export const SyntaxHandbook = () => {
   const help = data;
   data.courses;
 
-  const test = normalizeDataArray(data.courses);
-  const b = test[0];
+  const test = normalizeStrapiData(data.courses);
 
   const syntaxEntries = getSyntaxHandbookEntriesFromQueryData(data);
 

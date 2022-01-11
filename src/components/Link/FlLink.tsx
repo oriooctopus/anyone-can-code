@@ -14,7 +14,7 @@ export const FlLink = ({ href, underline, ...linkProps }: IFlLinkProps) => {
     return (
       <Link
         as="button"
-        textDecoration={underline && 'underline'}
+        textDecoration={underline ? 'underline' : undefined}
         href={href}
         {...omit(linkProps, 'ref')}
       />
