@@ -2,18 +2,26 @@ import { Box, Button, Heading, IconButton } from '@chakra-ui/react';
 import { BsJournals } from 'react-icons/bs';
 import {
   GetSyntaxHandbookDataQuery,
+  SublessonEntity,
   useGetSyntaxHandbookDataQuery,
 } from 'src/generated/graphql';
 import {
   FlattenAttributes,
+  FlattenDataArray,
+  FlattenStrapi,
   normalize,
   normalizeDataArray,
 } from 'src/utils/general';
+import { NN } from 'src/utils/typescriptUtils';
 import { LearningSidebarPopupButton } from 'components/LearningSidebarPopupButton/LearningSidebarPopupButton';
 import Markdown from 'components/Markdown/Markdown';
 import { getSyntaxHandbookEntriesFromQueryData } from 'components/SyntaxHandbook/SyntaxHandbook.utils';
 
-type test2 = FlattenAttributes<GetSyntaxHandbookDataQuery['courses']>;
+// type test2 = FlattenAttributes<NN<GetSyntaxHandbookDataQuery['courses']>>;
+type base = NN<GetSyntaxHandbookDataQuery['courses']>;
+type test4 = FlattenDataArray<base>;
+type test5 = FlattenStrapi<base>;
+type test3 = FlattenAttributes<SublessonEntity>['challenges'];
 
 export const SyntaxHandbook = () => {
   const { data } = useGetSyntaxHandbookDataQuery({

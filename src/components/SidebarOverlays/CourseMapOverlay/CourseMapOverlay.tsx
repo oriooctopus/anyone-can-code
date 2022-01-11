@@ -1,6 +1,6 @@
 import { Box, Heading } from '@chakra-ui/react';
 import { useGetCourseMapOverlayDataQuery } from 'src/generated/graphql';
-import { notEmpty } from 'src/utils/general';
+import { normalizeDataArray, notEmpty } from 'src/utils/general';
 import { CourseMapOverlayLesson } from 'components/SidebarOverlays/CourseMapOverlay/CourseMapOverlay.styles';
 import { SidebarOverlayBase } from 'components/SidebarOverlays/SidebarOverlayBase/SidebarOverlayBase';
 
@@ -12,6 +12,13 @@ export const CourseMapOverlay = () => {
       slug: 'js-foundations',
     },
   });
+
+  if (!data?.courses) {
+    return null;
+  }
+
+  const test = normalizeDataArray(data.courses);
+  console.log('test', test);
 
   const course = data?.courses?.data?.[0];
   // for these kinds of things, it might be cleaner to have them return an array when empty

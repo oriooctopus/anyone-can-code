@@ -16,7 +16,7 @@ export const LessonExternalResources = () => {
   });
 
   const externalResources =
-    data?.lessons?.data?.[0].attributes.externalResources;
+    data?.lessons?.data?.[0].attributes?.externalResources;
 
   if (!externalResources?.length) {
     return null;
