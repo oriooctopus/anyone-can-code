@@ -36,7 +36,9 @@ const LessonPage = ({ lesson }: IProps) => {
     return null;
   }
 
-  const sublessons = lesson?.attributes?.sublessons?.data || [];
+  const sublessons = lesson?.sublessons
+    ? normalizeStrapiData(lesson?.sublessons)
+    : [];
   const currentSublesson = sublessons[currentSublessonIndex];
   const totalSublessons = sublessons.length;
   /*
@@ -47,8 +49,7 @@ const LessonPage = ({ lesson }: IProps) => {
    */
   const lastChallengeIndexOfPreviousSublesson =
     currentSublessonIndex > 0
-      ? (sublessons?.[currentSublessonIndex - 1]?.attributes?.challenges
-          ?.length || 0) - 1
+      ? (sublessons?.[currentSublessonIndex - 1]?.challenges?.length || 0) - 1
       : undefined;
 
   useEffect(() => {
@@ -92,6 +93,7 @@ export const LessonPageContainer = () => {
       if (!result?.lessons) {
         throw new Error('No lessons found');
       }
+      console.log('lesson', result?.lessons);
 
       // This query should be changed to just return one, which I think is now possible anyways with v4
       const [lessonData] = normalizeStrapiData(result?.lessons);
@@ -105,7 +107,9 @@ export const LessonPageContainer = () => {
     },
   });
 
-  const sublessons = lesson?.attributes?.sublessons?.data;
+  const sublessons = lesson?.sublessons
+    ? normalizeStrapiData(lesson.sublessons)
+    : [];
 
   return (
     <Flex {...layoutStyles} overflow="hidden">
@@ -113,7 +117,7 @@ export const LessonPageContainer = () => {
         <Navbar />
         {lesson && <LessonPage lesson={lesson} />}
       </Box>
-      {sublessons && <LessonSidebar sublessons={sublessons} />}
+      {sublessons.length && <LessonSidebar sublessons={sublessons} />}
     </Flex>
   );
 };
