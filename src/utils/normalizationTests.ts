@@ -2,18 +2,46 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { A, Object } from 'ts-toolbelt';
-import { FlattenStrapiParam, NormalizeStrapi } from 'src/utils/general';
+import {
+  FlattenStrapiParam,
+  NormalizeStrapi,
+  Nullable,
+  NullableTernary,
+} from 'src/utils/general';
+
+// export type RecursiveNormalizeSingular<O extends object> = {
+//   [P in keyof O]: O[P] extends FlattenStrapiParam
+//     ? RecursiveNormalize<NormalizeStrapi<O[P]>> &
+//         Object.Omit<O[P], 'data' | 'attributes'>
+//     : O[P];
+// };
 
 export type RecursiveNormalizeSingular<O extends object> = {
-  [P in keyof O]: O[P] extends FlattenStrapiParam
-    ? RecursiveNormalize<NormalizeStrapi<O[P]>> &
-        Object.Omit<O[P], 'data' | 'attributes'>
-    : O[P];
+  [P in keyof O]: NullableTernary<
+    O[P],
+    FlattenStrapiParam,
+    RecursiveNormalize<NormalizeStrapi<O[P]>>,
+    O[P]
+  >;
 };
+
+// export type RecursiveNormalizeSingular<O extends object> = {
+//   [P in keyof O]: O[P] extends FlattenStrapiParam
+//     ? RecursiveNormalize<NormalizeStrapi<O[P]>> &
+//         Object.Omit<O[P], 'data' | 'attributes'>
+//     : O[P] extends Nullable<FlattenStrapiParam>
+//     ?
+//         | (RecursiveNormalize<NormalizeStrapi<O[P]>> &
+//             Object.Omit<NonNullable<O[P]>, 'data' | 'attributes'>)
+//         | null
+//     : O[P];
+// };
 
 export type RecursiveNormalize<O extends object> = O extends Array<infer inner>
   ? inner extends object
     ? RecursiveNormalizeSingular<inner>[]
+    : inner extends Nullable<object>
+    ? RecursiveNormalizeSingular<NonNullable<inner>>[] | null
     : never
   : RecursiveNormalizeSingular<O>;
 

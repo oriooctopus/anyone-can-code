@@ -34,6 +34,25 @@ export type StrapiAttributesObject = {
 
 export type Nullable<T> = T | null;
 
+/**
+ * An example describes this best:
+ * type type1 = number | null;
+ * type test = type1 extends number ? 'this is a number' : 'this is definitely not a number' // will be 'this is definitely not a number' even though it could be a number
+ * type test = NullableTernary<type1, number, 'this can be a number', 'this cannot be a number'> // will be 'this can be a number' | null
+ *
+ * This allows us to more elegantly handle ternarys on nullable types
+ */
+export type NullableTernary<
+  typeToBeTested,
+  extensionToTest,
+  exprIfTrue,
+  exprIfFalse,
+> = typeToBeTested extends extensionToTest
+  ? exprIfTrue
+  : typeToBeTested extends Nullable<extensionToTest>
+  ? exprIfTrue | null
+  : exprIfFalse;
+
 export type FlattenAttributes<O extends object> =
   O extends StrapiAttributesObject[]
     ? (O[number]['attributes'] & Object.Omit<O[number], 'attributes'>)[]

@@ -13,6 +13,7 @@ import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactive
 import { resetLesson } from 'src/state/lesson/lesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { NormalizeStrapi, normalizeStrapiData } from 'src/utils/general';
+import { RecursiveNormalize } from 'src/utils/normalizationTests';
 import { Editor } from 'components/Editor/Editor';
 import { layoutStyles } from 'components/Layout/Layout.styles';
 import { Navbar } from 'components/Navbar/Navbar';
@@ -21,8 +22,11 @@ export interface ILessonRouteParams {
   slug: string;
 }
 
-export type LessonType = NormalizeStrapi<
-  NonNullable<GetLessonDataQuery['lessons']>
+// export type LessonTypeOld = NormalizeStrapi<
+//   NonNullable<GetLessonDataQuery['lessons']>
+// >[number];
+export type LessonType = NonNullable<
+  RecursiveNormalize<GetLessonDataQuery>['lessons']
 >[number];
 
 interface IProps {
