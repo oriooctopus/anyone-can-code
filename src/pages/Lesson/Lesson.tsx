@@ -12,8 +12,12 @@ import { SublessonInstructions } from 'src/pages/Lesson/_SublessonInstructions/S
 import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
 import { resetLesson } from 'src/state/lesson/lesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
-import { NormalizeStrapi, normalizeStrapiData } from 'src/utils/general';
-import { RecursiveNormalize } from 'src/utils/normalizationTests';
+import {
+  NormalizeStrapi,
+  normalizeStrapiData,
+  recursiveNormalize,
+  RecursiveNormalize,
+} from 'src/utils/general';
 import { Editor } from 'components/Editor/Editor';
 import { layoutStyles } from 'components/Layout/Layout.styles';
 import { Navbar } from 'components/Navbar/Navbar';
@@ -22,12 +26,15 @@ export interface ILessonRouteParams {
   slug: string;
 }
 
-// export type LessonTypeOld = NormalizeStrapi<
+// export type LessonType = NormalizeStrapi<
 //   NonNullable<GetLessonDataQuery['lessons']>
 // >[number];
 export type LessonType = NonNullable<
   RecursiveNormalize<GetLessonDataQuery>['lessons']
 >[number];
+type mm = NonNullable<
+  NonNullable<LessonType['sublessons']>[number]['lesson']
+>['name'];
 
 interface IProps {
   lesson: LessonType | undefined;
@@ -40,9 +47,7 @@ const LessonPage = ({ lesson }: IProps) => {
     return null;
   }
 
-  const sublessons = lesson?.sublessons
-    ? normalizeStrapiData(lesson?.sublessons)
-    : [];
+  const sublessons = lesson?.sublessons || [];
   const currentSublesson = sublessons[currentSublessonIndex];
   const totalSublessons = sublessons.length;
   /*
@@ -98,9 +103,11 @@ export const LessonPageContainer = () => {
         throw new Error('No lessons found');
       }
       console.log('lesson', result?.lessons);
+      console.log('recursive ', recursiveNormalize(result));
 
       // This query should be changed to just return one, which I think is now possible anyways with v4
-      const [lessonData] = normalizeStrapiData(result?.lessons);
+      const [lessonData] = recursiveNormalize(result)?.lessons || [];
+
       /**
        * It's important that the lesson completion data is reset
        * before the lesson value is provided. This is to avoid race
@@ -111,17 +118,15 @@ export const LessonPageContainer = () => {
     },
   });
 
-  const sublessons = lesson?.sublessons
-    ? normalizeStrapiData(lesson.sublessons)
-    : [];
-
   return (
     <Flex {...layoutStyles} overflow="hidden">
       <Box pl="2px" mr={{ md: '20px', lg: '30px', xl: '40px' }}>
         <Navbar />
-        {lesson && <LessonPage lesson={lesson} />}
+        <LessonPage lesson={lesson} />
       </Box>
-      {sublessons.length && <LessonSidebar sublessons={sublessons} />}
+      {lesson?.sublessons?.length && (
+        <LessonSidebar sublessons={lesson?.sublessons} />
+      )}
     </Flex>
   );
 };

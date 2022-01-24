@@ -8,33 +8,34 @@ import { getCodeChallengeStartingCode } from 'src/state/challenge/codeChallenge/
 import { lessonCompletionDataVar } from 'src/state/lessonCompletion/lessonCompletion.reactiveVariables';
 import { lessonCompletionDataType } from 'src/state/lessonCompletion/lessonCompletion.types';
 import { resetSublesson } from 'src/state/sublesson/sublesson';
-import { normalizeStrapiData, notEmpty } from 'src/utils/general';
+import { notEmpty } from 'src/utils/general';
 
 // I stopped in the middle of converting the lesson stuff
 export const resetLesson = ({ sublessons }: LessonType) => {
-  if (!sublessons?.data) {
+  if (!sublessons) {
     return [];
   }
 
-  const newLessonCompletionData: lessonCompletionDataType = normalizeStrapiData(
-    sublessons,
-  ).map(({ challenges }) => ({
-    challenges: (challenges || []).filter(notEmpty).map((challenge) => {
-      const formattedChallenge = getChallengeFromSublessonChallenge(challenge);
-      const startingCode =
-        formattedChallenge.__typename === 'CodeChallengeEntity'
-          ? getCodeChallengeStartingCode(
-              formattedChallenge as CodeChallengeDataFragment,
-              false,
-            )
-          : '';
+  const newLessonCompletionData: lessonCompletionDataType = sublessons.map(
+    ({ challenges }) => ({
+      challenges: (challenges || []).filter(notEmpty).map((challenge) => {
+        const formattedChallenge =
+          getChallengeFromSublessonChallenge(challenge);
+        const startingCode =
+          formattedChallenge.__typename === 'CodeChallengeEntity'
+            ? getCodeChallengeStartingCode(
+                formattedChallenge as CodeChallengeDataFragment,
+                false,
+              )
+            : '';
 
-      return {
-        startingCode,
-      };
+        return {
+          startingCode,
+        };
+      }),
+      introduction: {},
     }),
-    introduction: {},
-  }));
+  );
 
   lessonCompletionDataVar(newLessonCompletionData);
   resetSublesson();

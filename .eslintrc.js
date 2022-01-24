@@ -27,5 +27,6 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'unused-imports/no-unused-imports': 'error',
+    'max-len': 80,
   },
 };

@@ -1,5 +1,6 @@
 import { renderToStaticMarkup } from 'react-dom/server';
-import { Object } from 'ts-toolbelt';
+import { O } from 'ts-toolbelt';
+import { GetLessonDataQuery } from 'src/generated/graphql';
 
 type ObjKeyof<T> = T extends object ? keyof T : never;
 type KeyofKeyof<T> = ObjKeyof<T> | { [K in keyof T]: ObjKeyof<T[K]> }[keyof T];
@@ -25,8 +26,6 @@ type SimpleFlatten<T> = T extends object
 // this name is probably not accurate, will revisit later
 
 // type NestedStrapiCollectionWithData = StrapiCollectionWithData<StrapiCollectionWithData>;
-
-// next step is to test how the typing works for when data is null.
 
 export type StrapiAttributesObject = {
   attributes: any;
@@ -55,25 +54,50 @@ export type NullableTernary<
 
 export type FlattenAttributes<O extends object> =
   O extends StrapiAttributesObject[]
-    ? (O[number]['attributes'] & Object.Omit<O[number], 'attributes'>)[]
+    ? (O[number]['attributes'] & O.Omit<O[number], 'attributes'>)[]
     : O extends StrapiAttributesObject
-    ? Object.Omit<O, 'attributes'> & O['attributes']
+    ? O.Omit<O, 'attributes'> & O['attributes']
     : never;
 
 export type FlattenStrapiParam =
   | StrapiCollectionWithDataResponse
-  | StrapiAttributesObject;
+  | StrapiAttributesObject
+  | null;
 
-type StrapiCollectionWithData<T = object | null> = {
-  data: StrapiCollection<T>[] | StrapiCollection<T> | [] | null;
+type StrapiCollectionWithData = {
+  data: StrapiAttributesObject[] | StrapiAttributesObject | [] | null;
+};
+
+export type RecursiveFlattenParam = {
+  [key: string]: FlattenStrapiParam;
 };
 
 type StrapiCollectionWithDataResponse =
   | StrapiCollectionWithData[]
   | StrapiCollectionWithData;
 
+// this probably should be renamed
+export type RecursiveNormalizeSingular<O extends object> = {
+  [P in keyof O]: NullableTernary<
+    O[P],
+    FlattenStrapiParam,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    RecursiveNormalize<NormalizeStrapi<O[P]>>,
+    O[P]
+  >;
+};
+
+export type RecursiveNormalize<O extends object> = O extends Array<infer inner>
+  ? inner extends object
+    ? RecursiveNormalizeSingular<NonNullable<inner>>[]
+    : inner extends Nullable<object>
+    ? RecursiveNormalizeSingular<NonNullable<inner>>[] | null
+    : never
+  : RecursiveNormalizeSingular<O>;
+
 export type FlattenData<O> = O extends { data: Array<infer dataObj> }
-  ? Array<dataObj>
+  ? Array<NonNullable<dataObj>>
   : O extends { data: infer dataObj }
   ? /**
      * For some reason the data object is considered by strapi to
@@ -95,11 +119,28 @@ export type NormalizeStrapiCollectionWithData<
   ? FlattenAttributes<FlattenData<O>>
   : never;
 
-export type NormalizeStrapi<O> = O extends StrapiCollectionWithDataResponse
-  ? NormalizeStrapiCollectionWithData<O>
-  : O extends StrapiAttributesObject
-  ? FlattenAttributes<O>
-  : never;
+type base = NonNullable<GetLessonDataQuery['lessons']>['data'][number];
+// type baseTest = NonNullable<NonNullable<NonNullable<base>['attributes']>['sublessons']>['data'];
+// type baseTest = FlattenAttributes<NonNullable<base>>['sublessons'];
+
+// type test = {data: [null, {attributes: {name: 'efwe'}}]};
+// type t = NormalizeStrapiCollectionWithData<test>;
+
+export type NormalizeStrapi<O extends FlattenStrapiParam> =
+  O extends StrapiCollectionWithDataResponse
+    ? NormalizeStrapiCollectionWithData<O>
+    : O extends StrapiAttributesObject
+    ? FlattenAttributes<O>
+    : null;
+
+// export type test<O extends FlattenStrapiParam> =
+//   O extends StrapiCollectionWithDataResponse
+//     ? NormalizeStrapiCollectionWithData<O>
+//     : O extends StrapiAttributesObject
+//     ? FlattenAttributes<O>
+//     : null;
+
+// const tol = null as test<{attributes: {name: 'aef'}}>;
 
 // export type NormalizeStrapiCollectionResponse<O extends FlattenStrapiParam> =
 
@@ -155,30 +196,87 @@ function flatMap<T, U>(
 //   }
 // };
 
+const isStrapiCollectionWithData = (
+  arg: object,
+): arg is StrapiCollectionWithData => {
+  return !!arg && 'data' in arg;
+};
+
+const isStrapiAttributesObject = (
+  arg: object,
+): arg is StrapiAttributesObject => {
+  return !!arg && 'attributes' in arg;
+};
+
+const isFlattenStrapiParam = (arg: unknown): arg is FlattenStrapiParam => {
+  if (Array.isArray(arg)) {
+    return arg.every((item) => isFlattenStrapiParam(item));
+    // return arg.every(isFlattenStrapiParam);
+  } else if (arg === null) {
+    // it's fine for this to be true or false tbh
+    return true;
+  } else if (typeof arg !== 'object') {
+    return false;
+  } else if (isStrapiAttributesObject(arg)) {
+    return true;
+  } else if (isStrapiCollectionWithData(arg)) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const recursiveNormalize = <T extends object>(
+  param: T,
+): RecursiveNormalize<T> => {
+  if (Array.isArray(param)) {
+    return param.map(recursiveNormalize) as RecursiveNormalize<T>;
+  }
+
+  return Object.fromEntries(
+    Object.entries(param).map(([key, val]) => [
+      key,
+      isFlattenStrapiParam(val)
+        ? recursiveNormalize(normalizeStrapiData(val))
+        : val,
+    ]),
+  ) as RecursiveNormalize<T>;
+};
+
 // I am pretty sure I'm stripping null. Which is good, but it
 // should be more explicit/configurable. Will revisit later
 export const normalizeStrapiData = <T extends FlattenStrapiParam>(
   param: T,
 ): NormalizeStrapi<T> => {
-  // add a typeguard for better assertion that this is the attributes object
-  if (!Array.isArray(param) && 'attributes' in param) {
-    return param.attributes;
-  } else if ('data' in param) {
-    // for some reason param is type never. fix that.
-    const dataProp = (param as StrapiCollectionWithData)?.data;
+  if (param === null) {
+    return null as NormalizeStrapi<T>;
+  } else if (isStrapiAttributesObject(param)) {
+    return isFlattenStrapiParam(param.attributes)
+      ? normalizeStrapiData(param.attributes)
+      : param.attributes;
+  } else if (isStrapiCollectionWithData(param)) {
+    const { data } = param;
 
-    if (Array.isArray(dataProp)) {
-      return flatMap(dataProp, (item) =>
-        item?.attributes ? [item?.attributes] : [],
+    if (Array.isArray(data)) {
+      return flatMap(data, (item) =>
+        item.attributes ? [item.attributes] : [],
       ) as NormalizeStrapi<T>;
     }
 
-    return dataProp?.attributes as NormalizeStrapi<T>;
+    return data?.attributes as NormalizeStrapi<T>;
   } else {
-    // handles the array of StrapiCollectionWithData
     return param.map(normalizeStrapiData) as NormalizeStrapi<T>;
   }
 };
+
+// (RecursiveNoramlize) function that takes in an object or array, and just handles arrays basically
+// I think this could be not necessary
+// (RecursiveNormalizeSingular) function that takes in an object and normalizes any keys within.
+// I believe this is where I have to align things
+
+// Ok I do need one layer to handle an object with unknown keys and one layer to actually sanitize the keys
+// NormalizeStrapiData needs to just return the NormalizeStrapi
+// This means that in RecursiveNormalize, it shoudl call normalize strapi and then run recursive normalize on the result rather than relying on normalizeStrapi
 
 export const isExternalURL = (url: string) => {
   if (typeof location === 'undefined') {
