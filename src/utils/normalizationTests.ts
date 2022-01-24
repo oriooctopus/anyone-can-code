@@ -1,4 +1,4 @@
-import { RecursiveNormalize } from 'src/utils/general';
+import { RecursiveNormalize } from 'src/utils/normalizeStrapi';
 
 type t = RecursiveNormalize<typeof data>;
 

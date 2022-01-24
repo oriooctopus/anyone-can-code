@@ -13,7 +13,8 @@ import { updateSublessonIntroductionCompletion } from 'src/state/lessonCompletio
 import { resetSublesson } from 'src/state/sublesson/sublesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { ChallengeFragment } from 'src/types/generalTypes';
-import { notEmpty, RecursiveNormalize } from 'src/utils/general';
+import { notEmpty } from 'src/utils/general';
+import { RecursiveNormalize } from 'src/utils/normalizeStrapi';
 import { NN } from 'src/utils/typescriptUtils';
 
 /*

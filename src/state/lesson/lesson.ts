@@ -9,6 +9,7 @@ import { lessonCompletionDataVar } from 'src/state/lessonCompletion/lessonComple
 import { lessonCompletionDataType } from 'src/state/lessonCompletion/lessonCompletion.types';
 import { resetSublesson } from 'src/state/sublesson/sublesson';
 import { notEmpty } from 'src/utils/general';
+import { RecursiveNormalize } from 'src/utils/normalizeStrapi';
 
 // I stopped in the middle of converting the lesson stuff
 export const resetLesson = ({ sublessons }: LessonType) => {
@@ -24,7 +25,7 @@ export const resetLesson = ({ sublessons }: LessonType) => {
         const startingCode =
           formattedChallenge.__typename === 'CodeChallengeEntity'
             ? getCodeChallengeStartingCode(
-                formattedChallenge as CodeChallengeDataFragment,
+                formattedChallenge as RecursiveNormalize<CodeChallengeDataFragment>,
                 false,
               )
             : '';

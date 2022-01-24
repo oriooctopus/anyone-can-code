@@ -5,22 +5,11 @@ import {
   SublessonEntity,
   useGetSyntaxHandbookDataQuery,
 } from 'src/generated/graphql';
-import {
-  FlattenAttributes,
-  FlattenData,
-  NormalizeStrapi,
-  normalizeStrapiData,
-} from 'src/utils/general';
+import { recursiveNormalize } from 'src/utils/normalizeStrapi';
 import { NN } from 'src/utils/typescriptUtils';
 import { LearningSidebarPopupButton } from 'components/LearningSidebarPopupButton/LearningSidebarPopupButton';
 import Markdown from 'components/Markdown/Markdown';
 import { getSyntaxHandbookEntriesFromQueryData } from 'components/SyntaxHandbook/SyntaxHandbook.utils';
-
-// type test2 = FlattenAttributes<NN<GetSyntaxHandbookDataQuery['courses']>>;
-type base = NN<GetSyntaxHandbookDataQuery['courses']>;
-type test4 = FlattenData<base>;
-type test5 = NormalizeStrapi<base>;
-type test3 = FlattenAttributes<SublessonEntity>['challenges'];
 
 export const SyntaxHandbook = () => {
   const { data } = useGetSyntaxHandbookDataQuery({
@@ -33,11 +22,6 @@ export const SyntaxHandbook = () => {
   if (!data?.courses) {
     return null;
   }
-
-  const help = data;
-  data.courses;
-
-  const test = normalizeStrapiData(data.courses);
 
   const syntaxEntries = getSyntaxHandbookEntriesFromQueryData(data);
 

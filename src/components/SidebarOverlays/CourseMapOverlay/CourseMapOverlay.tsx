@@ -1,6 +1,6 @@
 import { Box, Heading } from '@chakra-ui/react';
 import { useGetCourseMapOverlayDataQuery } from 'src/generated/graphql';
-import { normalizeStrapiData, notEmpty } from 'src/utils/general';
+import { notEmpty } from 'src/utils/general';
 import { CourseMapOverlayLesson } from 'components/SidebarOverlays/CourseMapOverlay/CourseMapOverlay.styles';
 import { SidebarOverlayBase } from 'components/SidebarOverlays/SidebarOverlayBase/SidebarOverlayBase';
 
@@ -49,3 +49,6 @@ export const CourseMapOverlay = () => {
     </SidebarOverlayBase>
   );
 };
+function normalizeStrapiData(modules: any) {
+  throw new Error('Function not implemented.');
+}

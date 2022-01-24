@@ -7,7 +7,7 @@ import { CodeChallengeDataFragment } from 'src/generated/graphql';
 import { getCodeChallengeStartingCode } from 'src/state/challenge/codeChallenge/codeChallenge';
 import { testResultsVar } from 'src/state/challenge/codeChallenge/codeChallenge.reactiveVariables';
 import { updateCurrentEditorValue } from 'src/state/lessonCompletion/lessonCompletion';
-import { RecursiveNormalize } from 'src/utils/general';
+import { RecursiveNormalize } from 'src/utils/normalizeStrapi';
 import { ChallengeHints } from 'components/ChallengeHints/ChallengeHints';
 import {
   ChallengeButton,

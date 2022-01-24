@@ -13,11 +13,9 @@ import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactive
 import { resetLesson } from 'src/state/lesson/lesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import {
-  NormalizeStrapi,
-  normalizeStrapiData,
   recursiveNormalize,
   RecursiveNormalize,
-} from 'src/utils/general';
+} from 'src/utils/normalizeStrapi';
 import { Editor } from 'components/Editor/Editor';
 import { layoutStyles } from 'components/Layout/Layout.styles';
 import { Navbar } from 'components/Navbar/Navbar';
@@ -26,15 +24,9 @@ export interface ILessonRouteParams {
   slug: string;
 }
 
-// export type LessonType = NormalizeStrapi<
-//   NonNullable<GetLessonDataQuery['lessons']>
-// >[number];
 export type LessonType = NonNullable<
   RecursiveNormalize<GetLessonDataQuery>['lessons']
 >[number];
-type mm = NonNullable<
-  NonNullable<LessonType['sublessons']>[number]['lesson']
->['name'];
 
 interface IProps {
   lesson: LessonType | undefined;
@@ -98,7 +90,115 @@ export const LessonPageContainer = () => {
         throw new Error('No lessons found');
       }
       console.log('lesson', result?.lessons);
+      console.log('another test', recursiveNormalize(result.lessons));
       console.log('recursive ', recursiveNormalize(result));
+      console.log(
+        'this is what it would be',
+        recursiveNormalize({
+          __typename: 'LessonEntityResponseCollection',
+          data: [
+            {
+              __typename: 'LessonEntity',
+              id: '6',
+              attributes: {
+                __typename: 'Lesson',
+                name: 'Getting Started with Variables',
+                sublessons: {
+                  __typename: 'SublessonRelationResponseCollection',
+                  data: [
+                    {
+                      __typename: 'SublessonEntity',
+                      id: '5',
+                      attributes: {
+                        __typename: 'Sublesson',
+                        name: 'Camel Casing',
+                        description:
+                          'In Javascript, the standard way to write our variables is called camel casing. Camel casing means having no spaces between words, and capitalizing every word besides the first word. Here are some examples. On the left side is how we might write it in English, and on the right is how it will look when camel-cased:\n\n- my full name -> myFullName\n- total lessons -> totalLessons\n- a very long sentence about camel-casing -> aVeryLongSentenceAboutCamelCasing',
+                        lesson: {
+                          __typename: 'LessonEntityResponse',
+                          data: {
+                            __typename: 'LessonEntity',
+                            id: '6',
+                            attributes: {
+                              __typename: 'Lesson',
+                              name: 'Getting Started with Variables',
+                            },
+                          },
+                        },
+                        challenges: [
+                          {
+                            __typename: 'ComponentContentChallenges',
+                            id: '10',
+                            codeChallenge: {
+                              __typename: 'CodeChallengeEntityResponse',
+                              data: null,
+                            },
+                            multipleChoiceChallenge: {
+                              __typename:
+                                'MultipleChoiceChallengeEntityResponse',
+                              data: {
+                                __typename: 'MultipleChoiceChallengeEntity',
+                                id: '10',
+                                attributes: {
+                                  __typename: 'MultipleChoiceChallenge',
+                                  prompt:
+                                    'Which of the following variable names is camel cased? Select all that apply',
+                                  options: [
+                                    {
+                                      __typename:
+                                        'ComponentChallengeMultipleChoiceOptions',
+                                      text: 'MyCoolHouse',
+                                      isCorrect: false,
+                                      incorrectChoiceExplanation:
+                                        'This casing is known as PascalCase',
+                                    },
+                                    {
+                                      __typename:
+                                        'ComponentChallengeMultipleChoiceOptions',
+                                      text: 'nextLesson',
+                                      isCorrect: true,
+                                      incorrectChoiceExplanation: null,
+                                    },
+                                    {
+                                      __typename:
+                                        'ComponentChallengeMultipleChoiceOptions',
+                                      text: 'my_city',
+                                      isCorrect: false,
+                                      incorrectChoiceExplanation:
+                                        'This casing is known as snake_case',
+                                    },
+                                    {
+                                      __typename:
+                                        'ComponentChallengeMultipleChoiceOptions',
+                                      text: 'TOTAL_REFRIGERATORS',
+                                      isCorrect: false,
+                                      incorrectChoiceExplanation:
+                                        'THIS CASING IS KNOWN AS UPPER_CASE_SNAKE_CASE',
+                                    },
+                                    {
+                                      __typename:
+                                        'ComponentChallengeMultipleChoiceOptions',
+                                      text: 'favorite-animal',
+                                      isCorrect: false,
+                                      incorrectChoiceExplanation:
+                                        'This casing is known as kebab-case',
+                                    },
+                                  ],
+                                  canSelectMultipleOptions: true,
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          ],
+        }),
+      );
 
       // This query should be changed to just return one, which I think is now possible anyways with v4
       const [lessonData] = recursiveNormalize(result)?.lessons || [];

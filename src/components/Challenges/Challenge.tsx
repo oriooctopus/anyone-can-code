@@ -1,5 +1,5 @@
 import { ChallengeFragment } from 'src/types/generalTypes';
-import { RecursiveNormalize } from 'src/utils/general';
+import { RecursiveNormalize } from 'src/utils/normalizeStrapi';
 import { CodeChallenge } from 'components/Challenges/CodeChallenge/CodeChallenge';
 import { MultipleChoiceChallenge } from 'components/Challenges/MultipleChoiceChallenge/MultipleChoiceChallenge';
 

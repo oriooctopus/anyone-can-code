@@ -2,7 +2,7 @@ import {
   CodeChallengeDataFragment,
   MultipleChoiceChallengeDataFragment,
 } from 'src/generated/graphql';
-import { RecursiveNormalize } from 'src/utils/general';
+import { RecursiveNormalize } from 'src/utils/normalizeStrapi';
 
 // export type UnparsedChallengeFragment = ComponentSublessonchallengeChallenge.
 

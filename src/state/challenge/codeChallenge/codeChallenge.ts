@@ -1,6 +1,6 @@
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
 import { testResultsVar } from 'src/state/challenge/codeChallenge/codeChallenge.reactiveVariables';
-import { RecursiveNormalize } from 'src/utils/general';
+import { RecursiveNormalize } from 'src/utils/normalizeStrapi';
 import {
   getLearningStepCompletionData,
   getStoredCodeFromLastChallengeData,
