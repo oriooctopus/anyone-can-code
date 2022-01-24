@@ -42,10 +42,13 @@ interface IProps {
 
 const LessonPage = ({ lesson }: IProps) => {
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
-
-  if (!lesson) {
-    return null;
-  }
+  useEffect(() => {
+    // TODO: set types for these
+    // @ts-expect-error will fix later
+    window.setSublesson = currentSublessonIndexVar;
+    // @ts-expect-error will fix later
+    window.setChallenge = currentChallengeIndexVar;
+  }, []);
 
   const sublessons = lesson?.sublessons || [];
   const currentSublesson = sublessons[currentSublessonIndex];
@@ -60,14 +63,6 @@ const LessonPage = ({ lesson }: IProps) => {
     currentSublessonIndex > 0
       ? (sublessons?.[currentSublessonIndex - 1]?.challenges?.length || 0) - 1
       : undefined;
-
-  useEffect(() => {
-    // TODO: set types for these
-    // @ts-expect-error will fix later
-    window.setSublesson = currentSublessonIndexVar;
-    // @ts-expect-error will fix later
-    window.setChallenge = currentChallengeIndexVar;
-  }, []);
 
   if (!currentSublesson) {
     return <span>no sublesson</span>;

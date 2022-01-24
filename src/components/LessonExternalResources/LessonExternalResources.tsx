@@ -3,6 +3,7 @@ import { BiLayerPlus } from 'react-icons/bi';
 import { useParams } from 'react-router-dom';
 import { useGetLessonExternalResourcesDataQuery } from 'src/generated/graphql';
 import { ILessonRouteParams } from 'src/pages/Lesson/Lesson';
+import { notEmpty } from 'src/utils/general';
 import { LearningSidebarPopupButton } from 'components/LearningSidebarPopupButton/LearningSidebarPopupButton';
 import { FlLink } from 'components/Link/FlLink';
 
@@ -24,9 +25,9 @@ export const LessonExternalResources = () => {
 
   const popup = (
     <Box>
-      {externalResources.map(({ link, name, type }, index) => (
+      {externalResources.filter(notEmpty).map(({ link, name, type }, index) => (
         <FlLink
-          borderTop={index === 0 && '1px solid black'}
+          borderTop={index === 0 ? '1px solid black' : ''}
           borderBottom="1px solid black"
           borderRadius={0}
           borderBottomRadius={

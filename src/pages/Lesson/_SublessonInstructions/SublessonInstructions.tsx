@@ -30,18 +30,14 @@ type props = {
   lastChallengeIndexOfPreviousSublesson: number | undefined;
 };
 
-type t = RecursiveNormalize<SublessonInstructionsDataFragment>['attributes'];
-type tr = RecursiveNormalize<SublessonInstructionsDataFragment>;
-type y = SublessonInstructionsDataFragment;
-
-// type iu = NullableTernary<tr['attributes']
-
 export const SublessonInstructions = React.memo(
   ({
     lastChallengeIndexOfPreviousSublesson,
     sublesson,
     totalSublessons,
   }: props) => {
+    debugger;
+    console.log('sublesson', sublesson);
     const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
     const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
     const contentPanelScrollToTopFunction = useReactiveVar(

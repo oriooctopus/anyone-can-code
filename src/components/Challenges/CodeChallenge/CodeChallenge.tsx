@@ -7,6 +7,7 @@ import { CodeChallengeDataFragment } from 'src/generated/graphql';
 import { getCodeChallengeStartingCode } from 'src/state/challenge/codeChallenge/codeChallenge';
 import { testResultsVar } from 'src/state/challenge/codeChallenge/codeChallenge.reactiveVariables';
 import { updateCurrentEditorValue } from 'src/state/lessonCompletion/lessonCompletion';
+import { RecursiveNormalize } from 'src/utils/general';
 import { ChallengeHints } from 'components/ChallengeHints/ChallengeHints';
 import {
   ChallengeButton,
@@ -19,7 +20,7 @@ import {
 import TestCaseResult from 'components/TestCaseResult/TestCaseResult';
 
 export type CodeChallengeProps = {
-  challenge: CodeChallengeDataFragment;
+  challenge: RecursiveNormalize<CodeChallengeDataFragment>;
   nextButtonText: string;
   onClickNext: () => void;
 };
@@ -29,10 +30,7 @@ export const CodeChallenge = ({
   nextButtonText,
   onClickNext,
 }: CodeChallengeProps) => {
-  const {
-    id,
-    attributes: { hints, tests, prompt },
-  } = challenge;
+  const { id, hints, tests, prompt } = challenge;
   const { runTests } = useCodeChallengeTests(tests);
   // I now need to differentiate two functions. Reset challenge which is truly to reset it, and another function to get the when a challenge loads.
   const resetChallenge = (ignoreCurrentChallengeStoredCode?: boolean) => {

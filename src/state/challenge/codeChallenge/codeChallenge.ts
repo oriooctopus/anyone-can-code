@@ -1,5 +1,6 @@
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
 import { testResultsVar } from 'src/state/challenge/codeChallenge/codeChallenge.reactiveVariables';
+import { RecursiveNormalize } from 'src/utils/general';
 import {
   getLearningStepCompletionData,
   getStoredCodeFromLastChallengeData,
@@ -10,11 +11,11 @@ export const resetTestResults = () => {
 };
 
 export const getCodeChallengeStartingCode = (
-  challenge: CodeChallengeDataFragment,
+  challenge: RecursiveNormalize<CodeChallengeDataFragment>,
   ignoreCurrentChallengeStoredCode?: boolean,
 ) => {
   const { startingCode, getStartingCodeFromPreviousChallenge } =
-    challenge.attributes || {};
+    challenge || {};
   const storedCode = getLearningStepCompletionData({})?.code;
   const previousChallengeStoredCode =
     getStartingCodeFromPreviousChallenge &&

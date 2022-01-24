@@ -225,7 +225,10 @@ export const recursiveNormalize = <T extends object>(
   param: T,
 ): RecursiveNormalize<T> => {
   if (Array.isArray(param)) {
-    return param.map(recursiveNormalize) as RecursiveNormalize<T>;
+    return param.map((item) =>
+      // @ts-expect-error I don't think this is actually a problem. We'll see
+      recursiveNormalize(item),
+    ) as RecursiveNormalize<T>;
   }
 
   return Object.fromEntries(
