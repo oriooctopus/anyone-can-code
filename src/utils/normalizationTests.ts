@@ -236,7 +236,7 @@ type howItsFailingNow = RecursiveNormalize<base>;
 // type butShouldntThisWork = RecursiveNormalize<howItsFailingNow>;
 // this is what I need to get it to do
 type works = RecursiveNormalize<base[number]>;
-type same = RecursiveNormalizeSingular<base[number]>;
+type same = RecursiveNormalizeStrapiObjects<base[number]>;
 
 // because RecursiveNormalize doesn't work on an array
 // but then why is there no type error?

@@ -13,7 +13,7 @@ import { updateSublessonIntroductionCompletion } from 'src/state/lessonCompletio
 import { resetSublesson } from 'src/state/sublesson/sublesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { ChallengeFragment } from 'src/types/generalTypes';
-import { notEmpty } from 'src/utils/general';
+import { notEmpty, RecursiveNormalize } from 'src/utils/general';
 import { NN } from 'src/utils/typescriptUtils';
 
 /*
@@ -57,15 +57,12 @@ export const setSublessonIndex = (lessonIndex: number) => {
 };
 
 type useSublessonNavigationProps = {
-  sublesson: SublessonInstructionsDataFragment;
+  sublesson: RecursiveNormalize<SublessonInstructionsDataFragment>;
   totalSublessons: number;
 };
 
 export const useSublessonNavigation = ({
-  sublesson: {
-    // @ts-expect-error nextLesson temporary silence
-    attributes: { challenges, lesson },
-  },
+  sublesson: { challenges, lesson },
   totalSublessons,
 }: useSublessonNavigationProps) => {
   const history = useHistory();
@@ -77,10 +74,10 @@ export const useSublessonNavigation = ({
 
   // @ts-expect-error nextLesson temporary silence
   const { data } = useGetSublessonNavigationDataQuery({
-    variables: { currentLessonId: Number(lesson.id) },
+    variables: { currentLessonId: Number(lesson?.id) },
   });
 
-  const isLastChallenge = currentChallengeIndex + 1 === challenges.length;
+  const isLastChallenge = currentChallengeIndex + 1 === challenges?.length;
   const isLastSublesson = currentSublessonIndex + 1 === totalSublessons;
   const isEndOfLesson = isLastChallenge && isLastSublesson;
   const isIntroduction = isSublessonIntroduction(currentChallengeIndex);

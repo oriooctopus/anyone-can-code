@@ -32,6 +32,9 @@ type props = {
 
 type t = RecursiveNormalize<SublessonInstructionsDataFragment>['attributes'];
 type tr = RecursiveNormalize<SublessonInstructionsDataFragment>;
+type y = SublessonInstructionsDataFragment;
+
+// type iu = NullableTernary<tr['attributes']
 
 export const SublessonInstructions = React.memo(
   ({
@@ -49,11 +52,7 @@ export const SublessonInstructions = React.memo(
       totalSublessons,
     });
 
-    if (!sublesson.attributes) {
-      return null;
-    }
-
-    const { challenges, description, name } = sublesson.attributes;
+    const { challenges, description, name, lesson } = sublesson;
 
     const parsedChallenges = getChallengesFromSublessonChallenges(challenges);
     const currentChallenge = parsedChallenges[currentChallengeIndex];
@@ -102,7 +101,7 @@ export const SublessonInstructions = React.memo(
       >
         <>
           <Text fontSize="13px" textTransform="uppercase">
-            {sublesson.attributes?.lesson?.data?.attributes?.name}
+            {lesson?.name}
           </Text>
           {isIntroduction ? (
             sublessonText

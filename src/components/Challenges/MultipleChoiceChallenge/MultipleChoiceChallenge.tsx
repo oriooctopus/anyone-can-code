@@ -7,6 +7,7 @@ import { failChallenge, passChallenge } from 'src/state/challenge/challenge';
 import { challengeAttemptStatusVar } from 'src/state/challenge/challenge.reactiveVariables';
 import { ChallengeAttemptStatusEnum } from 'src/state/challenge/challenge.types';
 import { multipleChoiceOptionSelectionsVar } from 'src/state/challenge/multipleChoiceChallenge/multipleChoiceChallenge.reactiveVariables';
+import { NormalizeStrapi, notEmpty } from 'src/utils/general';
 import {
   ChallengeButton,
   ChallengeMarkdown,
@@ -14,16 +15,13 @@ import {
 import { MultipleChoiceChallengeOption } from 'components/Challenges/MultipleChoiceChallenge/MultipleChoiceChallengeOption';
 
 type props = {
-  challenge: MultipleChoiceChallengeDataFragment;
+  challenge: NormalizeStrapi<MultipleChoiceChallengeDataFragment>;
   nextButtonText: string;
   onClickNext: () => void;
 };
 
 export const MultipleChoiceChallenge = ({
-  challenge: {
-    id,
-    attributes: { canSelectMultipleOptions, options = [], prompt },
-  },
+  challenge: { id, canSelectMultipleOptions, options = [], prompt },
   nextButtonText,
   onClickNext,
 }: props) => {
@@ -33,11 +31,11 @@ export const MultipleChoiceChallenge = ({
     challengeAttemptStatus === ChallengeAttemptStatusEnum.passed;
 
   const isOptionCorrect = (index: number) =>
-    Boolean(options[index].isCorrect) === Boolean(optionSelections[index]);
+    Boolean(options?.[index]?.isCorrect) === Boolean(optionSelections[index]);
 
   const shouldShowOptionIncorrectExplanation = (index: number) =>
     challengeAttemptStatus === ChallengeAttemptStatusEnum.failed &&
-    options[index].incorrectChoiceExplanation &&
+    options?.[index]?.incorrectChoiceExplanation &&
     !isOptionCorrect(index);
 
   useEffect(() => {
@@ -45,7 +43,7 @@ export const MultipleChoiceChallenge = ({
   }, [id]);
 
   const onSubmit = () => {
-    const isSubmissionCorrect = options.every((_, index) =>
+    const isSubmissionCorrect = options?.every((_, index) =>
       isOptionCorrect(index),
     );
 
@@ -74,19 +72,21 @@ export const MultipleChoiceChallenge = ({
         Select the correct option:
       </Text>
       <ChallengeMarkdown>{prompt}</ChallengeMarkdown>
-      {options.map(({ incorrectChoiceExplanation, text }, index) => (
-        <MultipleChoiceChallengeOption
-          text={text}
-          incorrectChoiceExplanation={incorrectChoiceExplanation}
-          isOptionSelected={isOptionSelected(index)}
-          onClickOption={() => onClickOption(index)}
-          showOptionIncorrectExplanation={shouldShowOptionIncorrectExplanation(
-            index,
-          )}
-          useMarkdown={true}
-          key={text}
-        />
-      ))}
+      {options
+        ?.filter(notEmpty)
+        .map(({ incorrectChoiceExplanation, text }, index) => (
+          <MultipleChoiceChallengeOption
+            text={text}
+            incorrectChoiceExplanation={incorrectChoiceExplanation}
+            isOptionSelected={isOptionSelected(index)}
+            onClickOption={() => onClickOption(index)}
+            showOptionIncorrectExplanation={shouldShowOptionIncorrectExplanation(
+              index,
+            )}
+            useMarkdown={true}
+            key={text}
+          />
+        ))}
       <Box mt="auto" position="relative" width="100%">
         {hasUserPassed ? (
           <ChallengeButton onClick={onClickNext}>

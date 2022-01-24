@@ -72,34 +72,66 @@ export type RecursiveFlattenParam = {
   [key: string]: FlattenStrapiParam;
 };
 
+// perhaps FlattenStrapiParamSingular idk?
+type StrapiFlattenableObjectTempName =
+  | StrapiAttributesObject
+  | StrapiCollectionWithData;
+
 type StrapiCollectionWithDataResponse =
   | StrapiCollectionWithData[]
   | StrapiCollectionWithData;
 
+export type RecursiveNormalizeStrapiObject<O extends object> =
+  O extends StrapiFlattenableObjectTempName
+    ? RecursiveNormalize<NormalizeStrapi<O>>
+    : {
+        [P in keyof O]: NullableTernary<
+          O[P],
+          FlattenStrapiParam,
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          RecursiveNormalize<NormalizeStrapi<O[P]>>,
+          O[P]
+        >;
+      };
+
+export type RecursiveNormalize<O extends object> = O extends Array<infer inner>
+  ? inner extends object
+    ? RecursiveNormalizeStrapiObject<NonNullable<inner>>[]
+    : inner extends Nullable<object>
+    ? RecursiveNormalizeStrapiObject<NonNullable<inner>>[] | null
+    : never
+  : RecursiveNormalizeStrapiObject<O>;
+
 // this probably should be renamed
-export type RecursiveNormalizeSingular<O extends object> = {
-  [P in keyof O]: NullableTernary<
-    O[P],
-    FlattenStrapiParam,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    RecursiveNormalize<NormalizeStrapi<O[P]>>,
-    O[P]
-  >;
-};
+// export type RecursiveNormalizeSingular<O extends object> = {
+//   [P in keyof O]: NullableTernary<
+//     O[P],
+//     FlattenStrapiParam,
+//     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//     // @ts-expect-error
+//     RecursiveNormalize<NormalizeStrapi<O[P]>>,
+//     O[P]
+//   >;
+// };
+
+// so this is the parent recurser. Actaully wait
+// I think it should go RecursiveNormalize -> RecursiveNormalizeUnnamedLol -> RecursiveNormalizeStrapiObject
+// everything needs to be renamed obviously, lol
+// Potential top layer, just
+// RecursiveNormalize handles Arrays -> NormalizeStrapiArrays
+// RecursiveNormalizeUnnamedLol handles objects that could potentially themselves be FlattenStrapiParams -> NormalizeStrapiFlattenableObjects
+// RecursiveNormalizeStrapiObject handles objects that potentially have FlattenStrapiParams within them -> NormalizeStrapiFlattenable
+// export type RecursiveNormalizeUnnamedLol<O extends object> =
+//   O extends FlattenStrapiParam
+//     ? RecursiveNormalizeUnnamedLol<NormalizeStrapi<O>>
+//     : RecursiveNormalizeStrapiObject<O>;
+
 // so when it gets here, 'attributes' is the key and therefore the value inside isn't recognizeable as a FlattenStrapiParam.
 // In this case I believe we need to check the key
 // But not only that, I believe that we need to handle it in a different way
 // NormalizeStrapi also isn't built to handle it, it's meant to handle an object containing attributes/data, not the value of attributes itself.
 // However, perhaps we could add an extra check before the object iteration runs to check if the object itself is a data/attributes object
-
-export type RecursiveNormalize<O extends object> = O extends Array<infer inner>
-  ? inner extends object
-    ? RecursiveNormalizeSingular<NonNullable<inner>>[]
-    : inner extends Nullable<object>
-    ? RecursiveNormalizeSingular<NonNullable<inner>>[] | null
-    : never
-  : RecursiveNormalizeSingular<O>;
 
 export type FlattenData<O> = O extends { data: Array<infer dataObj> }
   ? Array<NonNullable<dataObj>>
@@ -234,7 +266,7 @@ export const normalizeStrapiData = <T extends FlattenStrapiParam>(
 
 // (RecursiveNoramlize) function that takes in an object or array, and just handles arrays basically
 // I think this could be not necessary
-// (RecursiveNormalizeSingular) function that takes in an object and normalizes any keys within.
+// (RecursiveNormalizeStrapiObject) function that takes in an object and normalizes any keys within.
 // I believe this is where I have to align things
 
 // Ok I do need one layer to handle an object with unknown keys and one layer to actually sanitize the keys
