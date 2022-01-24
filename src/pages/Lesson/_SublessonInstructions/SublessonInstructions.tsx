@@ -13,6 +13,7 @@ import { contentPanelScrollToTopFunctionVar } from 'src/state/general/general.re
 import { updateCurrentEditorValue } from 'src/state/lessonCompletion/lessonCompletion';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { getSublessonStartingCode } from 'src/state/sublesson/sublesson.utils';
+import { RecursiveNormalize } from 'src/utils/general';
 import { Challenge } from 'components/Challenges/Challenge';
 import { ChallengeButton } from 'components/Challenges/Challenge.styles';
 import { ContentPanel } from 'components/ContentPanel/ContentPanel';
@@ -20,7 +21,7 @@ import Markdown from 'components/Markdown/Markdown';
 
 type props = {
   // so sublesson would be normalized
-  sublesson: SublessonInstructionsDataFragment;
+  sublesson: RecursiveNormalize<SublessonInstructionsDataFragment>;
   totalSublessons: number;
   /*
    * When a user presses 'go back' at the beginning of a sublesson,
@@ -28,6 +29,9 @@ type props = {
    */
   lastChallengeIndexOfPreviousSublesson: number | undefined;
 };
+
+type t = RecursiveNormalize<SublessonInstructionsDataFragment>['attributes'];
+type tr = RecursiveNormalize<SublessonInstructionsDataFragment>;
 
 export const SublessonInstructions = React.memo(
   ({

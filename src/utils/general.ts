@@ -87,6 +87,11 @@ export type RecursiveNormalizeSingular<O extends object> = {
     O[P]
   >;
 };
+// so when it gets here, 'attributes' is the key and therefore the value inside isn't recognizeable as a FlattenStrapiParam.
+// In this case I believe we need to check the key
+// But not only that, I believe that we need to handle it in a different way
+// NormalizeStrapi also isn't built to handle it, it's meant to handle an object containing attributes/data, not the value of attributes itself.
+// However, perhaps we could add an extra check before the object iteration runs to check if the object itself is a data/attributes object
 
 export type RecursiveNormalize<O extends object> = O extends Array<infer inner>
   ? inner extends object
@@ -108,8 +113,6 @@ export type FlattenData<O> = O extends { data: Array<infer dataObj> }
     NonNullable<dataObj>
   : never;
 
-// export type NormalizeStrapiDeep = No
-
 // I'm also assuming that if data is singular and null it's because of weird typing stuff from strapi's part and just get rid of it. Technically, this could lead to errors, but I can't imagine any situation right now where it would. But still, stay on the lookout
 export type NormalizeStrapiCollectionWithData<
   O extends StrapiCollectionWithDataResponse,
@@ -119,34 +122,12 @@ export type NormalizeStrapiCollectionWithData<
   ? FlattenAttributes<FlattenData<O>>
   : never;
 
-type base = NonNullable<GetLessonDataQuery['lessons']>['data'][number];
-// type baseTest = NonNullable<NonNullable<NonNullable<base>['attributes']>['sublessons']>['data'];
-// type baseTest = FlattenAttributes<NonNullable<base>>['sublessons'];
-
-// type test = {data: [null, {attributes: {name: 'efwe'}}]};
-// type t = NormalizeStrapiCollectionWithData<test>;
-
 export type NormalizeStrapi<O extends FlattenStrapiParam> =
   O extends StrapiCollectionWithDataResponse
     ? NormalizeStrapiCollectionWithData<O>
     : O extends StrapiAttributesObject
     ? FlattenAttributes<O>
     : null;
-
-// export type test<O extends FlattenStrapiParam> =
-//   O extends StrapiCollectionWithDataResponse
-//     ? NormalizeStrapiCollectionWithData<O>
-//     : O extends StrapiAttributesObject
-//     ? FlattenAttributes<O>
-//     : null;
-
-// const tol = null as test<{attributes: {name: 'aef'}}>;
-
-// export type NormalizeStrapiCollectionResponse<O extends FlattenStrapiParam> =
-
-// next step is to separate NormalizeStrapi into a NoramlizeOuterDataObject type or something, and then make it handle both attributes or Data
-
-// export type FlattenStrapiDeep<O> = O extends NestedStrapiCollectionWithData ? FlattenStrapiDeep<
 
 // you have to call the inner part and access it
 // and actually you'll have to go through every key too
@@ -171,30 +152,12 @@ export const notEmpty = <TValue>(
   return value !== null && value !== undefined;
 };
 
-type thing = { attributes: object | null };
-
 function flatMap<T, U>(
   array: T[],
   callbackfn: (value: T, index: number, array: T[]) => U[],
 ): U[] {
   return Array.prototype.concat(...array.map(callbackfn));
 }
-
-// export const normalize = <T extends { data: thing | thing[] }>(
-//   arg: T,
-// ): T['data'] extends Array<infer Item> ? FlattenAttributes<T>[] : (FlattenAttributes<T>) => {
-//   const data = arg?.data;
-
-//   if (!data) {
-//     // temporary
-//     return [] as FlattenAttributes<T>[];
-
-//   } else if (Array.isArray(data)) {
-//     return flatMap(data, ({attributes}) => attributes ? [attributes] : []) as FlattenAttributes<T>[];
-//   } else {
-//     return data.attributes as FlattenAttributes<T>;
-//   }
-// };
 
 const isStrapiCollectionWithData = (
   arg: object,
