@@ -7,7 +7,8 @@ import { failChallenge, passChallenge } from 'src/state/challenge/challenge';
 import { challengeAttemptStatusVar } from 'src/state/challenge/challenge.reactiveVariables';
 import { ChallengeAttemptStatusEnum } from 'src/state/challenge/challenge.types';
 import { multipleChoiceOptionSelectionsVar } from 'src/state/challenge/multipleChoiceChallenge/multipleChoiceChallenge.reactiveVariables';
-import { NormalizeStrapi, notEmpty } from 'src/utils/general';
+import { removeEmpty } from 'src/utils/general';
+import { FlattenStrapi } from 'src/utils/normalizeStrapi';
 import {
   ChallengeButton,
   ChallengeMarkdown,
@@ -15,7 +16,7 @@ import {
 import { MultipleChoiceChallengeOption } from 'components/Challenges/MultipleChoiceChallenge/MultipleChoiceChallengeOption';
 
 type props = {
-  challenge: NormalizeStrapi<MultipleChoiceChallengeDataFragment>;
+  challenge: FlattenStrapi<MultipleChoiceChallengeDataFragment>;
   nextButtonText: string;
   onClickNext: () => void;
 };
@@ -34,9 +35,11 @@ export const MultipleChoiceChallenge = ({
     Boolean(options?.[index]?.isCorrect) === Boolean(optionSelections[index]);
 
   const shouldShowOptionIncorrectExplanation = (index: number) =>
-    challengeAttemptStatus === ChallengeAttemptStatusEnum.failed &&
-    options?.[index]?.incorrectChoiceExplanation &&
-    !isOptionCorrect(index);
+    Boolean(
+      challengeAttemptStatus === ChallengeAttemptStatusEnum.failed &&
+        options?.[index]?.incorrectChoiceExplanation &&
+        !isOptionCorrect(index),
+    );
 
   useEffect(() => {
     multipleChoiceOptionSelectionsVar([]);
@@ -73,7 +76,7 @@ export const MultipleChoiceChallenge = ({
       </Text>
       <ChallengeMarkdown>{prompt}</ChallengeMarkdown>
       {options
-        ?.filter(notEmpty)
+        ?.filter(removeEmpty)
         .map(({ incorrectChoiceExplanation, text }, index) => (
           <MultipleChoiceChallengeOption
             text={text}
@@ -83,7 +86,6 @@ export const MultipleChoiceChallenge = ({
             showOptionIncorrectExplanation={shouldShowOptionIncorrectExplanation(
               index,
             )}
-            useMarkdown={true}
             key={text}
           />
         ))}

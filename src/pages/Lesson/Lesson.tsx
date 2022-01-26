@@ -12,10 +12,7 @@ import { SublessonInstructions } from 'src/pages/Lesson/_SublessonInstructions/S
 import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
 import { resetLesson } from 'src/state/lesson/lesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
-import {
-  recursiveNormalize,
-  RecursiveNormalize,
-} from 'src/utils/normalizeStrapi';
+import { flattenStrapi, FlattenStrapi } from 'src/utils/normalizeStrapi';
 import { Editor } from 'components/Editor/Editor';
 import { layoutStyles } from 'components/Layout/Layout.styles';
 import { Navbar } from 'components/Navbar/Navbar';
@@ -25,7 +22,7 @@ export interface ILessonRouteParams {
 }
 
 export type LessonType = NonNullable<
-  RecursiveNormalize<GetLessonDataQuery>['lessons']
+  FlattenStrapi<GetLessonDataQuery>['lessons']
 >[number];
 
 interface IProps {
@@ -90,11 +87,11 @@ export const LessonPageContainer = () => {
         throw new Error('No lessons found');
       }
       console.log('lesson', result?.lessons);
-      console.log('another test', recursiveNormalize(result.lessons));
-      console.log('recursive ', recursiveNormalize(result));
+      console.log('another test', flattenStrapi(result.lessons));
+      console.log('recursive ', flattenStrapi(result));
       console.log(
         'this is what it would be',
-        recursiveNormalize({
+        flattenStrapi({
           __typename: 'LessonEntityResponseCollection',
           data: [
             {
@@ -201,7 +198,7 @@ export const LessonPageContainer = () => {
       );
 
       // This query should be changed to just return one, which I think is now possible anyways with v4
-      const [lessonData] = recursiveNormalize(result)?.lessons || [];
+      const [lessonData] = flattenStrapi(result)?.lessons || [];
 
       /**
        * It's important that the lesson completion data is reset

@@ -43,13 +43,14 @@ export const Register = () => {
       },
     })
       .then((response) => {
-        if (!response) {
+        const jwt = response.data?.register.jwt;
+
+        if (!response || !jwt) {
           throw new Error(
             "Request failed somehow. Gotta investigate this further. If you're a user pleeeease share with us that this happened! (Share this specific messsage)",
           );
         }
 
-        const jwt = response.data.register.jwt;
         console.log('completed!', response);
         setAuthToken(jwt);
         closeAuthModal();

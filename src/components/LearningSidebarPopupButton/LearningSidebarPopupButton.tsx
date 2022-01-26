@@ -15,7 +15,7 @@ export const LearningSidebarPopupButton = ({
   buttonTooltip,
 }: ILearningSidebarPopupButtonProps) => {
   const { isOpen, onClose, onToggle } = useDisclosure();
-  const ref = useRef();
+  const ref = useRef(null);
   useOutsideClick({
     ref,
     handler: onClose,

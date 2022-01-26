@@ -1,5 +1,5 @@
 import { GetSyntaxHandbookDataQuery } from 'src/generated/graphql';
-import { notEmpty } from 'src/utils/general';
+import { removeEmpty } from 'src/utils/general';
 
 function flatMap<T, U>(
   array: T[],
@@ -20,7 +20,7 @@ export const getSyntaxHandbookEntriesFromQueryData = (
     (
       data?.courses?.data?.[0].attributes?.modules?.data?.[0]?.attributes
         ?.moduleLessons || []
-    ).filter(notEmpty),
+    ).filter(removeEmpty),
     ({ lesson }) => (lesson?.data?.attributes ? [lesson.data.attributes] : []),
   );
 

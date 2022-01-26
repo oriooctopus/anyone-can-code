@@ -17,11 +17,6 @@ export const runTestEvaluator = async ({
   internalTest,
   removeComments,
 }: runTestEvaluatorProps) => {
-  // TODO: abstract this to a util
-  if (typeof self === 'undefined') {
-    return;
-  }
-
   let userPassed = true;
   let evaluationError;
   const formattedCode = getCode(code, removeComments);

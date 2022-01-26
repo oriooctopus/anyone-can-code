@@ -13,7 +13,7 @@ import { contentPanelScrollToTopFunctionVar } from 'src/state/general/general.re
 import { updateCurrentEditorValue } from 'src/state/lessonCompletion/lessonCompletion';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { getSublessonStartingCode } from 'src/state/sublesson/sublesson.utils';
-import { RecursiveNormalize } from 'src/utils/normalizeStrapi';
+import { FlattenStrapi } from 'src/utils/normalizeStrapi';
 import { Challenge } from 'components/Challenges/Challenge';
 import { ChallengeButton } from 'components/Challenges/Challenge.styles';
 import { ContentPanel } from 'components/ContentPanel/ContentPanel';
@@ -21,7 +21,7 @@ import Markdown from 'components/Markdown/Markdown';
 
 type props = {
   // so sublesson would be normalized
-  sublesson: RecursiveNormalize<SublessonInstructionsDataFragment>;
+  sublesson: FlattenStrapi<SublessonInstructionsDataFragment>;
   totalSublessons: number;
   /*
    * When a user presses 'go back' at the beginning of a sublesson,

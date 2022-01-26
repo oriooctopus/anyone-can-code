@@ -1,26 +1,25 @@
 import { O } from 'ts-toolbelt';
+import { flatMap } from 'src/utils/general';
 
-export type RecursiveNormalize<O extends object> = O extends Array<infer inner>
+export type FlattenStrapi<O extends object> = O extends Array<infer inner>
   ? inner extends object
-    ? RecursiveNormalizeStrapiObject<NonNullable<inner>>[]
+    ? NormalizeStrapiObject<NonNullable<inner>>[]
     : inner extends Nullable<object>
-    ? RecursiveNormalizeStrapiObject<NonNullable<inner>>[] | null
+    ? NormalizeStrapiObject<NonNullable<inner>>[] | null
     : never
-  : RecursiveNormalizeStrapiObject<O>;
+  : NormalizeStrapiObject<O>;
 
-export const recursiveNormalize = <T extends object>(
-  param: T,
-): RecursiveNormalize<T> => {
+export const flattenStrapi = <T extends object>(param: T): FlattenStrapi<T> => {
   if (Array.isArray(param)) {
     return param.map((item) =>
       // @ts-expect-error I don't think this is actually a problem. We'll see
-      recursiveNormalize(item),
-    ) as RecursiveNormalize<T>;
+      flattenStrapi(item),
+    ) as FlattenStrapi<T>;
   } else if (isFlattenStrapiParam(param)) {
-    return recursiveNormalize(
+    return flattenStrapi(
       // I think this should be cast as something else
-      normalizeStrapiData(param) as RecursiveNormalize<T>,
-    ) as RecursiveNormalize<T>;
+      normalizeStrapiData(param) as FlattenStrapi<T>,
+    ) as FlattenStrapi<T>;
   }
 
   return Object.fromEntries(
@@ -31,19 +30,12 @@ export const recursiveNormalize = <T extends object>(
       return [
         key,
         isFlattenStrapiParam(val) || key === 'data' || key === 'attributes'
-          ? recursiveNormalize(normalizeStrapiData(val))
+          ? flattenStrapi(normalizeStrapiData(val))
           : val,
       ];
     }),
-  ) as RecursiveNormalize<T>;
+  ) as FlattenStrapi<T>;
 };
-
-function flatMap<T, U>(
-  array: T[],
-  callbackfn: (value: T, index: number, array: T[]) => U[],
-): U[] {
-  return Array.prototype.concat(...array.map(callbackfn));
-}
 
 type StrapiAttributesObject = {
   attributes: any;
@@ -66,11 +58,18 @@ type NullableTernary<typeToBeTested, extensionToTest, exprIfTrue, exprIfFalse> =
     ? exprIfTrue | null
     : exprIfFalse;
 
-type FlattenAttributes<O extends object> = O extends StrapiAttributesObject[]
-  ? (O[number]['attributes'] & O.Omit<O[number], 'attributes'>)[]
-  : O extends StrapiAttributesObject
-  ? O.Omit<O, 'attributes'> & O['attributes']
-  : never;
+type FlattenAttributesParam =
+  | StrapiAttributesObject
+  | Array<StrapiAttributesObject>;
+
+export type FlattenAttributes<param extends FlattenAttributesParam> =
+  param extends Array<infer inner>
+    ? inner extends StrapiAttributesObject
+      ? Array<FlattenAttributes<inner>>
+      : never
+    : param extends StrapiAttributesObject
+    ? O.Omit<param, 'attributes' | '__typename'> & param['attributes']
+    : never;
 
 type FlattenStrapiParam =
   | StrapiCollectionWithDataResponse
@@ -79,10 +78,6 @@ type FlattenStrapiParam =
 
 type StrapiCollectionWithData = {
   data: StrapiAttributesObject[] | StrapiAttributesObject | [] | null;
-};
-
-type RecursiveFlattenParam = {
-  [key: string]: FlattenStrapiParam;
 };
 
 // perhaps FlattenStrapiParamSingular idk?
@@ -95,21 +90,21 @@ type StrapiCollectionWithDataResponse =
   | StrapiCollectionWithData;
 
 // Ok I think I need to make this handle objects not just FlattenStrapi to handle double nested situations like with challenge
-type RecursiveNormalizeStrapiObject<O extends object> =
+type NormalizeStrapiObject<O extends object> =
   O extends StrapiFlattenableObjectTempName
-    ? RecursiveNormalize<NormalizeStrapi<O>>
+    ? FlattenStrapi<NormalizeStrapiSingleLayer<O>>
     : {
         [P in keyof O]: NullableTernary<
           O[P],
           FlattenStrapiParam,
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error
-          RecursiveNormalize<NormalizeStrapi<O[P]>>,
+          FlattenStrapi<NormalizeStrapiSingleLayer<O[P]>>,
           O[P]
         >;
       };
 
-type FlattenData<O> = O extends { data: Array<infer dataObj> }
+export type FlattenData<O> = O extends { data: Array<infer dataObj> }
   ? Array<NonNullable<dataObj>>
   : O extends { data: infer dataObj }
   ? /**
@@ -130,7 +125,8 @@ type NormalizeStrapiCollectionWithData<
   ? FlattenAttributes<FlattenData<O>>
   : never;
 
-type NormalizeStrapi<O extends FlattenStrapiParam> =
+// Normalizes the outer layer of the parameter passed in
+export type NormalizeStrapiSingleLayer<O extends FlattenStrapiParam> =
   O extends StrapiCollectionWithDataResponse
     ? NormalizeStrapiCollectionWithData<O>
     : O extends StrapiAttributesObject
@@ -141,9 +137,9 @@ type NormalizeStrapi<O extends FlattenStrapiParam> =
 // should be more explicit/configurable. Will revisit later
 const normalizeStrapiData = <T extends FlattenStrapiParam>(
   param: T,
-): NormalizeStrapi<T> => {
+): NormalizeStrapiSingleLayer<T> => {
   if (param === null) {
-    return null as NormalizeStrapi<T>;
+    return null as NormalizeStrapiSingleLayer<T>;
   } else if (isStrapiAttributesObject(param)) {
     return isFlattenStrapiParam(param.attributes)
       ? normalizeStrapiData(param.attributes)
@@ -154,12 +150,12 @@ const normalizeStrapiData = <T extends FlattenStrapiParam>(
     if (Array.isArray(data)) {
       return flatMap(data, (item) =>
         item.attributes ? [item.attributes] : [],
-      ) as NormalizeStrapi<T>;
+      ) as NormalizeStrapiSingleLayer<T>;
     }
 
-    return data?.attributes as NormalizeStrapi<T>;
+    return data?.attributes as NormalizeStrapiSingleLayer<T>;
   } else {
-    return param.map(normalizeStrapiData) as NormalizeStrapi<T>;
+    return param.map(normalizeStrapiData) as NormalizeStrapiSingleLayer<T>;
   }
 };
 

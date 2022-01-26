@@ -98,8 +98,12 @@ export const getCode = (code = '', removeComments?: boolean) =>
   removeComments ? removeJSComments(code) : code;
 
 export const getConsoleLogsFromCodeEvaluation = (
-  code: string,
+  code: string | undefined,
 ): Array<string> => {
+  if (code === undefined) {
+    return [];
+  }
+
   const context = getEvaluationContext(code);
   const logs = [] as Array<string>;
 

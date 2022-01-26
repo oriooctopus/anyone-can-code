@@ -1,9 +1,7 @@
-import { RecursiveNormalize } from 'src/utils/normalizeStrapi';
-
-type t = RecursiveNormalize<typeof data>;
+import { CodeChallengeDataFragment } from 'src/generated/graphql';
 
 const data = {
-  __typename: 'Sublesson',
+  __typename: 'Sublesson' as const,
   name: 'Camel Casing',
   description:
     'In Javascript, the standard way to write our variables is called camel casing. Camel casing means having no spaces between words, and capitalizing every word besides the first word. Here are some examples. On the left side is how we might write it in English, and on the right is how it will look when camel-cased:\n\n- my full name -> myFullName\n- total lessons -> totalLessons\n- a very long sentence about camel-casing -> aVeryLongSentenceAboutCamelCasing',

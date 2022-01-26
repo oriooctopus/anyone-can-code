@@ -7,7 +7,7 @@ import { ISublessonCompletionData } from 'src/state/lessonCompletion/lessonCompl
 import { setSublessonIndex } from 'src/state/sublesson/sublesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { ProgressStateEnum } from 'src/types/generalTypes';
-import { NormalizeStrapi } from 'src/utils/general';
+import { FlattenStrapi } from 'src/utils/normalizeStrapi';
 import { IProgressStepperStep } from 'components/ProgressStepper/ProgressStepper';
 
 const isSublessonComplete = (sublessonCompletion: ISublessonCompletionData) => {
@@ -64,7 +64,7 @@ const useGetLessonCompletionProgressStates = () => {
 };
 
 export const useGetLessonSidebarProgressStepperData = (
-  sublessons: Array<NormalizeStrapi<LessonSidebarDataFragment>>,
+  sublessons: Array<FlattenStrapi<LessonSidebarDataFragment>>,
 ) => {
   const { allSublessonCompletions, currentSublessonCompletion } =
     useGetLessonCompletionProgressStates();

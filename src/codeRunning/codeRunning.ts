@@ -1,5 +1,6 @@
 import pMap from 'p-map';
 import { TTestResult } from 'src/codeRunning/codeRunning.types';
+import { removeEmpty } from 'src/utils/general';
 import { runTestEvaluator } from 'src/workers/test-evaluator';
 import { CodeChallengeTests } from 'components/Challenges/CodeChallenge/CodeChallenge.types';
 
@@ -7,7 +8,7 @@ const executeTests = async (
   code: string,
   tests: CodeChallengeTests,
 ): Promise<Array<TTestResult>> => {
-  return pMap(tests, async (test) => {
+  return pMap(tests?.filter(removeEmpty) || [], async (test) => {
     const { label, internalTest } = test;
     const newTest = { pass: true, label, internalTest } as TTestResult;
 
@@ -17,6 +18,7 @@ const executeTests = async (
     });
 
     if (!pass) {
+      // @ts-expect-error will fix later
       const { message, stack } = error;
 
       newTest.pass = false;

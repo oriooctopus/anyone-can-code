@@ -7,7 +7,8 @@ import { CodeChallengeDataFragment } from 'src/generated/graphql';
 import { getCodeChallengeStartingCode } from 'src/state/challenge/codeChallenge/codeChallenge';
 import { testResultsVar } from 'src/state/challenge/codeChallenge/codeChallenge.reactiveVariables';
 import { updateCurrentEditorValue } from 'src/state/lessonCompletion/lessonCompletion';
-import { RecursiveNormalize } from 'src/utils/normalizeStrapi';
+import { removeEmpty } from 'src/utils/general';
+import { FlattenStrapi } from 'src/utils/normalizeStrapi';
 import { ChallengeHints } from 'components/ChallengeHints/ChallengeHints';
 import {
   ChallengeButton,
@@ -20,7 +21,7 @@ import {
 import TestCaseResult from 'components/TestCaseResult/TestCaseResult';
 
 export type CodeChallengeProps = {
-  challenge: RecursiveNormalize<CodeChallengeDataFragment>;
+  challenge: FlattenStrapi<CodeChallengeDataFragment>;
   nextButtonText: string;
   onClickNext: () => void;
 };
@@ -41,7 +42,7 @@ export const CodeChallenge = ({
   };
   const testResultsValue = useReactiveVar(testResultsVar);
   const canProceed = hasPassedCodeChallenge(tests, testResultsValue);
-  const showHints = Boolean(hints?.length);
+  const showHints = hints?.length;
 
   useEffect(resetChallenge, [id]);
 
@@ -53,7 +54,11 @@ export const CodeChallenge = ({
         {prompt}
       </ChallengeMarkdown>
       <Box mb="20px" w="100%">
-        {showHints ? <ChallengeHints hints={hints} /> : <Divider opacity={1} />}
+        {showHints ? (
+          <ChallengeHints hints={hints.filter(removeEmpty)} />
+        ) : (
+          <Divider opacity={1} />
+        )}
         <Tests tests={tests} />
       </Box>
       <Flex spacing={6} mt="auto">
@@ -83,7 +88,7 @@ export const CodeChallenge = ({
 };
 
 interface ITestsProps {
-  tests: CodeChallengeProps['challenge']['attributes']['tests'];
+  tests: CodeChallengeProps['challenge']['tests'];
 }
 
 const Tests = ({ tests }: ITestsProps) => {
@@ -95,7 +100,7 @@ const Tests = ({ tests }: ITestsProps) => {
         Tests
       </Heading>
       <VStack spacing="12px" align="left">
-        {tests?.map(({ label }, index) => (
+        {tests?.filter(removeEmpty).map(({ label }, index) => (
           <TestCaseResult
             passed={testResults[index]?.pass}
             label={label}

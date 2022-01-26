@@ -2,11 +2,11 @@ import {
   CodeChallengeDataFragment,
   MultipleChoiceChallengeDataFragment,
 } from 'src/generated/graphql';
-import { RecursiveNormalize } from 'src/utils/normalizeStrapi';
+import { FlattenStrapi } from 'src/utils/normalizeStrapi';
 
 // export type UnparsedChallengeFragment = ComponentSublessonchallengeChallenge.
 
-export type ChallengeFragment = RecursiveNormalize<
+export type ChallengeFragment = FlattenStrapi<
   MultipleChoiceChallengeDataFragment | CodeChallengeDataFragment
 >;
 

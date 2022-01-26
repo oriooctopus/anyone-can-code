@@ -13,8 +13,8 @@ import { updateSublessonIntroductionCompletion } from 'src/state/lessonCompletio
 import { resetSublesson } from 'src/state/sublesson/sublesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { ChallengeFragment } from 'src/types/generalTypes';
-import { notEmpty } from 'src/utils/general';
-import { RecursiveNormalize } from 'src/utils/normalizeStrapi';
+import { removeEmpty } from 'src/utils/general';
+import { FlattenStrapi } from 'src/utils/normalizeStrapi';
 import { NN } from 'src/utils/typescriptUtils';
 
 /*
@@ -24,17 +24,19 @@ import { NN } from 'src/utils/typescriptUtils';
  * convert it to the Challenge union type
  */
 export const getChallengeFromSublessonChallenge = (
-  sublessonChallenge: NN<
-    NN<
-      NN<SublessonInstructionsDataFragment['attributes']>['challenges']
+  sublessonChallenge: NonNullable<
+    NonNullable<
+      FlattenStrapi<SublessonInstructionsDataFragment>['challenges']
     >[number]
   >,
 ): ChallengeFragment => {
   // TODO: make this code more elegant
-  if (sublessonChallenge.codeChallenge?.data) {
-    return sublessonChallenge.codeChallenge.data;
-  } else if (sublessonChallenge.multipleChoiceChallenge?.data) {
-    return sublessonChallenge.multipleChoiceChallenge.data;
+  if (sublessonChallenge.codeChallenge?.data?.attributes) {
+    // @ts-expect-error will fix later
+    return sublessonChallenge.codeChallenge.data?.attributes;
+  } else if (sublessonChallenge.multipleChoiceChallenge?.data?.attributes) {
+    // @ts-expect-error will fix later
+    return sublessonChallenge.multipleChoiceChallenge.data?.attributes;
   }
 
   throw new Error(
@@ -46,7 +48,7 @@ export const getChallengesFromSublessonChallenges = (
   challenges: NN<SublessonInstructionsDataFragment['attributes']>['challenges'],
 ): Array<ChallengeFragment> => {
   return (challenges || [])
-    .filter(notEmpty)
+    .filter(removeEmpty)
     .flatMap(getChallengeFromSublessonChallenge);
 };
 
@@ -58,7 +60,7 @@ export const setSublessonIndex = (lessonIndex: number) => {
 };
 
 type useSublessonNavigationProps = {
-  sublesson: RecursiveNormalize<SublessonInstructionsDataFragment>;
+  sublesson: FlattenStrapi<SublessonInstructionsDataFragment>;
   totalSublessons: number;
 };
 

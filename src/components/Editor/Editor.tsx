@@ -16,12 +16,14 @@ import editorOptions from 'components/Editor/editor-options';
 
 export const Editor = () => {
   const currentLog = useReactiveVar(currentLogVar);
-  const { code, startingCode } = useGetLearningStepCompletionData() || {};
-  const codeEditorValue = code === undefined ? startingCode : code;
+  const { code: existingCode, startingCode } =
+    useGetLearningStepCompletionData() || {};
+  const codeEditorValue =
+    existingCode === undefined ? startingCode : existingCode;
 
   const onChangeEditorValue = (newValue: string | undefined) => {
     resetTestResults();
-    updateCurrentEditorValue(newValue);
+    updateCurrentEditorValue(newValue || '');
   };
 
   useDebounced(

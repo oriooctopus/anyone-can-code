@@ -8,7 +8,7 @@ import { ContentPanelNavigationIndicators } from 'components/ContentPanel/Conten
 import { LessonSettings } from 'components/LessonSettings/LessonSettings';
 
 type props = {
-  onGoBack?: () => void | undefined;
+  onGoBack?: () => void;
   /*
    * Accessible by scrolling down below the mainContent. An arrow
    * is shown when secondaryContent exists to indicate to the user
@@ -25,11 +25,11 @@ const ContentPanelHeight = `calc(100vh - ${rem(mainNavbarHeight)} - ${rem(
 
 export const ContentPanel = memo(
   ({ includeSettings, children, onGoBack, secondaryContent }: props) => {
-    const containerRef = useRef(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
       contentPanelScrollToTopFunctionVar(() =>
-        containerRef?.current?.scrollTo(0, 0),
+        containerRef?.current?.scrollTo?.(0, 0),
       );
     }, []);
 

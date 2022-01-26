@@ -4,7 +4,7 @@ import DownArrow from 'src/assets/DownArrow.svg';
 import LeftArrow from 'src/assets/LeftArrow.svg';
 
 type TProps = {
-  onGoBack: () => void;
+  onGoBack: (() => void) | undefined;
   scrollIndicator: boolean;
 } & BoxProps;
 

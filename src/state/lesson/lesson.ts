@@ -8,8 +8,8 @@ import { getCodeChallengeStartingCode } from 'src/state/challenge/codeChallenge/
 import { lessonCompletionDataVar } from 'src/state/lessonCompletion/lessonCompletion.reactiveVariables';
 import { lessonCompletionDataType } from 'src/state/lessonCompletion/lessonCompletion.types';
 import { resetSublesson } from 'src/state/sublesson/sublesson';
-import { notEmpty } from 'src/utils/general';
-import { RecursiveNormalize } from 'src/utils/normalizeStrapi';
+import { removeEmpty } from 'src/utils/general';
+import { FlattenStrapi } from 'src/utils/normalizeStrapi';
 
 // I stopped in the middle of converting the lesson stuff
 export const resetLesson = ({ sublessons }: LessonType) => {
@@ -19,13 +19,13 @@ export const resetLesson = ({ sublessons }: LessonType) => {
 
   const newLessonCompletionData: lessonCompletionDataType = sublessons.map(
     ({ challenges }) => ({
-      challenges: (challenges || []).filter(notEmpty).map((challenge) => {
+      challenges: (challenges || []).filter(removeEmpty).map((challenge) => {
         const formattedChallenge =
           getChallengeFromSublessonChallenge(challenge);
         const startingCode =
-          formattedChallenge.__typename === 'CodeChallengeEntity'
+          formattedChallenge.__typename === 'CodeChallenge'
             ? getCodeChallengeStartingCode(
-                formattedChallenge as RecursiveNormalize<CodeChallengeDataFragment>,
+                formattedChallenge as FlattenStrapi<CodeChallengeDataFragment>,
                 false,
               )
             : '';

@@ -5,7 +5,7 @@ import * as React from 'react';
 import { BsJournals } from 'react-icons/bs';
 import { LessonSidebarDataFragment } from 'src/generated/graphql';
 import { rem } from 'src/styles/typography/font';
-import { NormalizeStrapi } from 'src/utils/general';
+import { FlattenStrapi } from 'src/utils/normalizeStrapi';
 import { LearningSidebarPopupButton } from 'components/LearningSidebarPopupButton/LearningSidebarPopupButton';
 import { LessonExternalResources } from 'components/LessonExternalResources/LessonExternalResources';
 import { useGetLessonSidebarProgressStepperData } from 'components/LessonSidebar/LessonSidebar.utils';
@@ -13,7 +13,7 @@ import { ProgressStepper } from 'components/ProgressStepper/ProgressStepper';
 import { SyntaxHandbook } from 'components/SyntaxHandbook/SyntaxHandbook';
 
 interface IProps {
-  sublessons: NormalizeStrapi<LessonSidebarDataFragment>[];
+  sublessons: FlattenStrapi<LessonSidebarDataFragment>[];
 }
 
 export const LessonSidebar = React.memo(({ sublessons }: IProps) => {

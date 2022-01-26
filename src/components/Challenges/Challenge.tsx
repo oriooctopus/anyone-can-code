@@ -1,10 +1,10 @@
 import { ChallengeFragment } from 'src/types/generalTypes';
-import { RecursiveNormalize } from 'src/utils/normalizeStrapi';
+import { FlattenStrapi } from 'src/utils/normalizeStrapi';
 import { CodeChallenge } from 'components/Challenges/CodeChallenge/CodeChallenge';
 import { MultipleChoiceChallenge } from 'components/Challenges/MultipleChoiceChallenge/MultipleChoiceChallenge';
 
 export type ChallengeProps = {
-  challenge: RecursiveNormalize<ChallengeFragment>;
+  challenge: FlattenStrapi<ChallengeFragment>;
   nextButtonText: string;
   onClickNext: () => void;
 };
@@ -14,15 +14,7 @@ export const Challenge = ({
   nextButtonText,
   onClickNext,
 }: ChallengeProps) => {
-  debugger;
-  return (
-    <MultipleChoiceChallenge
-      challenge={challenge}
-      nextButtonText={nextButtonText}
-      onClickNext={onClickNext}
-    />
-  );
-  if (challenge.__typename === 'CodeChallengeEntity') {
+  if (challenge.__typename === 'CodeChallenge') {
     return (
       <CodeChallenge
         challenge={challenge}
@@ -30,7 +22,7 @@ export const Challenge = ({
         onClickNext={onClickNext}
       />
     );
-  } else if (challenge.__typename === 'MultipleChoiceChallengeEntity') {
+  } else if (challenge.__typename === 'MultipleChoiceChallenge') {
     return (
       <MultipleChoiceChallenge
         challenge={challenge}

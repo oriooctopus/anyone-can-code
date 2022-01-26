@@ -7,10 +7,9 @@ import { rem } from 'src/styles/typography/font';
 import Markdown from 'components/Markdown/Markdown';
 
 interface IProps {
-  incorrectChoiceExplanation: string;
+  incorrectChoiceExplanation: string | null;
   isOptionSelected: boolean;
   showOptionIncorrectExplanation: boolean;
-  useMarkdown: boolean;
   onClickOption: () => void;
   text: string;
 }
@@ -29,7 +28,6 @@ export const MultipleChoiceChallengeOption = ({
   onClickOption,
   showOptionIncorrectExplanation,
   text,
-  useMarkdown,
 }: IProps) => {
   const color = isOptionSelected ? 'white' : 'black';
 
@@ -49,37 +47,30 @@ export const MultipleChoiceChallengeOption = ({
         border="1px solid #6A6A6A"
         onClick={onClickOption}
         key={text}
-        {...(useMarkdown
-          ? {
-              height: '100%',
-              padding: 0,
-              textAlign: 'left',
-            }
-          : {
-              py: '22px',
-            })}
+        height="100%"
+        padding={0}
+        textAlign="left"
       >
-        {useMarkdown ? (
-          <Markdown
-            codeTheme={isOptionSelected ? darcula : defaultTheme}
-            forceMultiLine
-            markdownCSSOverrides={{
-              '> *': {
-                marginBottom: 0,
-              },
-            }}
-            multiLineCodePropOverrides={{
-              customStyle: {
-                margin: 0,
-                padding: `${rem(12)} ${rem(10)}`,
-              },
-            }}
-          >
-            {text}
-          </Markdown>
-        ) : (
-          text
-        )}
+        <Markdown
+          codeTheme={isOptionSelected ? darcula : defaultTheme}
+          forceMultiLine
+          markdownCSSOverrides={{
+            '> *': {
+              marginBottom: 0,
+            },
+            '> p': {
+              padding: '9px 16px',
+            },
+          }}
+          multiLineCodePropOverrides={{
+            customStyle: {
+              margin: 0,
+              padding: `${rem(12)} ${rem(10)}`,
+            },
+          }}
+        >
+          {text}
+        </Markdown>
       </Button>
       {showOptionIncorrectExplanation && (
         <Text color="red" fontSize="14px" mt="2px">

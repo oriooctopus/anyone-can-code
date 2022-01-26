@@ -5,7 +5,7 @@ import {
   SublessonEntity,
   useGetSyntaxHandbookDataQuery,
 } from 'src/generated/graphql';
-import { recursiveNormalize } from 'src/utils/normalizeStrapi';
+import { flattenStrapi } from 'src/utils/normalizeStrapi';
 import { NN } from 'src/utils/typescriptUtils';
 import { LearningSidebarPopupButton } from 'components/LearningSidebarPopupButton/LearningSidebarPopupButton';
 import Markdown from 'components/Markdown/Markdown';

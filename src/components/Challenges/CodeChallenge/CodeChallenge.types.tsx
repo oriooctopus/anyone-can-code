@@ -1,4 +1,5 @@
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
+import { FlattenStrapi } from 'src/utils/normalizeStrapi';
 
 export type CodeChallengeTests =
-  CodeChallengeDataFragment['attributes']['tests'];
+  FlattenStrapi<CodeChallengeDataFragment>['tests'];

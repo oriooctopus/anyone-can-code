@@ -26,41 +26,44 @@ const Markdown = ({
   multiLineCodePropOverrides = {},
   markdownCSSOverrides = {},
   containerOverrides = {},
-}: MarkdownProps) => (
-  <Box w="100%" {...containerOverrides}>
-    <StyledMarkdown
-      children={markdownChildren}
-      cssOverrides={markdownCSSOverrides}
-      components={{
-        img({ src, ...props }) {
-          // TODO: Make this more dynamic once you migrate to v4 of strapi
-          return <img src={`http://localhost:1337${src}`} {...props} />;
-        },
-        code({ node, inline, children, ...props }) {
-          return inline && !forceMultiLine ? (
-            <InlineCode {...props}>{children}</InlineCode>
-          ) : (
-            <MultiLineCodeBlock
-              children={stripNewlines(children)}
-              theme={codeTheme}
-              {...props}
-              {...multiLineCodePropOverrides}
-            />
-          );
-        },
-        a: ({ node, children, href, ...props }) => {
-          return (
-            <FlLink
-              children={children[0]}
-              {...props}
-              href={href}
-              target="_blank"
-            />
-          );
-        },
-      }}
-    />
-  </Box>
-);
+}: MarkdownProps) => {
+  console.log('markdown', markdownCSSOverrides);
+  return (
+    <Box w="100%" {...containerOverrides}>
+      <StyledMarkdown
+        children={markdownChildren}
+        sx={markdownCSSOverrides}
+        components={{
+          img({ src, ...props }) {
+            // TODO: Make this more dynamic once you migrate to v4 of strapi
+            return <img src={`http://localhost:1337${src}`} {...props} />;
+          },
+          code({ node, inline, children, ...props }) {
+            return inline && !forceMultiLine ? (
+              <InlineCode {...props}>{children}</InlineCode>
+            ) : (
+              <MultiLineCodeBlock
+                children={stripNewlines(children)}
+                theme={codeTheme}
+                {...props}
+                {...multiLineCodePropOverrides}
+              />
+            );
+          },
+          a: ({ node, children, href, ...props }) => {
+            return (
+              <FlLink
+                children={children[0]}
+                {...props}
+                href={href}
+                target="_blank"
+              />
+            );
+          },
+        }}
+      />
+    </Box>
+  );
+};
 
 export default Markdown;

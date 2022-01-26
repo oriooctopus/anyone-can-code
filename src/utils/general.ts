@@ -34,8 +34,15 @@ export const renderSvgToCss = (svg: React.ReactElement) => {
 };
 
 // to be passed into filter
-export const notEmpty = <TValue>(
+export const removeEmpty = <TValue>(
   value: TValue | null | undefined,
 ): value is TValue => {
   return value !== null && value !== undefined;
 };
+
+export function flatMap<T, U>(
+  array: T[],
+  callbackfn: (value: T, index: number, array: T[]) => U[],
+): U[] {
+  return Array.prototype.concat(...array.map(callbackfn));
+}
