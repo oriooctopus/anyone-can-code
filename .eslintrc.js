@@ -13,6 +13,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
   ],
   parser: '@typescript-eslint/parser',
@@ -27,6 +28,9 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'unused-imports/no-unused-imports': 'error',
-    'max-len': 80,
+    'max-len': [
+      'warn',
+      { code: 80, tabWidth: 4, ignoreUrls: true, ignoreStrings: true },
+    ],
   },
 };
