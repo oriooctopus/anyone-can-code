@@ -30,7 +30,7 @@ module.exports = {
     'unused-imports/no-unused-imports': 'error',
     'max-len': [
       'warn',
-      { code: 80, tabWidth: 4, ignoreUrls: true, ignoreStrings: true },
+      { code: 80, tabWidth: 2, ignoreUrls: true, ignoreStrings: true },
     ],
   },
 };
