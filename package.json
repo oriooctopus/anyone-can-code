@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "yarn develop",
     "develop": "BACKEND_URL=https://acc-v-4-obk5u.ondigitalocean.app/graphql vite",
-    "build": "tsc && BACKEND_URL=http://143.198.120.197:1337/graphql vite build",
-    "serve": "BASE_URL=/anyone-can-code BACKEND_URL=http://143.198.120.197:1337/graphql vite preview",
+    "build": "tsc && BACKEND_URL=https://acc-v-4-obk5u.ondigitalocean.app/graphql vite build",
+    "serve": "BASE_URL=/anyone-can-code BACKEND_URL=https://acc-v-4-obk5u.ondigitalocean.app/graphql vite preview",
     "codegen": "graphql-codegen --config codegen.yml",
     "codegen:watch": "graphql-codegen --config codegen.yml --watch",
     "build:workers:watch": "node --max_old_space_size=7168 node_modules/webpack-cli/bin/cli --config ./config/webpack-workers.js --watch",
