@@ -1,8 +1,8 @@
 name: 'Deployment Workflow!'
 
 on:
-  release:
-    types: [published]
+  push:
+  pull_request:
 
 jobs:
   deploy:
