@@ -6,8 +6,12 @@ on:
 
 jobs:
   deploy:
-    name: 'Deploy to Netlify'
-    uses: jsmrcaga/action-netlify-deploy@v1.1.0
-    with:
-      NETLIFY_AUTH_TOKEN: ewfwefw
-      NETLIFY_DEPLOY_TO_PROD: true
+    name: Run linters
+    runs-on: ubuntu-latest
+
+    steps:
+      name: 'Deploy to Netlify'
+      uses: jsmrcaga/action-netlify-deploy@v1.1.0
+      with:
+        NETLIFY_AUTH_TOKEN: ewfwefw
+        NETLIFY_DEPLOY_TO_PROD: true
