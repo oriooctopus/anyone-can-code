@@ -1,30 +1,14 @@
-name: Lint & prettier
+name: Lint & prettier!
 
 on:
   push:
   pull_request:
 
 jobs:
-  run-linters:
-    name: Run linters
-    runs-on: ubuntu-latest
-
+  deploy:
+    name: 'Deploy to Netlify'
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2-beta
+      - uses: jsmrcaga/action-netlify-deploy@v1.1.0
         with:
-          node-version: 12
-
-      - name: Install Node.js dependencies
-        run: yarn install
-      - name: Lint
-        run: yarn lint
-
-      - name: Run linters
-        uses: wearerequired/lint-action@v1
-        with:
-          eslint: true
-          prettier: true
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN_SECRET }}
+          NETLIFY_DEPLOY_TO_PROD: true
