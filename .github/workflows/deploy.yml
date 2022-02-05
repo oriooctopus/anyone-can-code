@@ -11,4 +11,4 @@ jobs:
 
     steps:
       name: 'Deploy to Netlify'
-      uses: jsmrcaga/action-netlify-deploy@v1.1.0
+      uses: actions/checkout@v2
