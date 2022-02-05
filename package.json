@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "yarn develop",
     "develop": "BACKEND_URL=https://acc-v-4-obk5u.ondigitalocean.app/graphql vite",
-    "build": "tsc && BACKEND_URL=https://acc-v-4-obk5u.ondigitalocean.app/graphql vite build",
+    "build": "tsc && BACKEND_URL=https://acc-v-4-obk5u.ondigitalocean.app/graphql vite build && cp _redirects dist/_redirects",
     "serve": "BASE_URL=/anyone-can-code BACKEND_URL=https://acc-v-4-obk5u.ondigitalocean.app/graphql vite preview",
     "codegen": "graphql-codegen --config codegen.yml",
     "codegen:watch": "graphql-codegen --config codegen.yml --watch",
