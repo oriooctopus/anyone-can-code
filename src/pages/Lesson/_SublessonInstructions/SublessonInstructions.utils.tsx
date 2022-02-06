@@ -33,11 +33,15 @@ export const getChallengeFromSublessonChallenge = (
 ): ChallengeFragment => {
   // TODO: make this code more elegant
   if (sublessonChallenge.codeChallenge?.data?.attributes) {
-    // @ts-expect-error will fix later
-    return sublessonChallenge.codeChallenge.data?.attributes;
+    return {
+      id: sublessonChallenge.codeChallenge.data?.id,
+      ...sublessonChallenge.codeChallenge.data?.attributes,
+    };
   } else if (sublessonChallenge.multipleChoiceChallenge?.data?.attributes) {
-    // @ts-expect-error will fix later
-    return sublessonChallenge.multipleChoiceChallenge.data?.attributes;
+    return {
+      id: sublessonChallenge.multipleChoiceChallenge.data?.id,
+      ...sublessonChallenge.multipleChoiceChallenge.data?.attributes,
+    };
   }
 
   throw new Error(
