@@ -36,8 +36,6 @@ export const SublessonInstructions = React.memo(
     sublesson,
     totalSublessons,
   }: props) => {
-    debugger;
-    console.log('sublesson', sublesson);
     const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
     const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
     const contentPanelScrollToTopFunction = useReactiveVar(

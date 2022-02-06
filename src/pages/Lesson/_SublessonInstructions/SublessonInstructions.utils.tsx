@@ -1,7 +1,8 @@
 import { useReactiveVar } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 import {
-  SublessonInstructionsDataFragment, // useGetSublessonNavigationDataQuery,
+  SublessonInstructionsDataFragment,
+  useGetSublessonNavigationDataQuery,
 } from 'src/generated/graphql';
 import { setChallengeIndex } from 'src/state/challenge/challenge';
 import {
@@ -71,14 +72,12 @@ export const useSublessonNavigation = ({
   const history = useHistory();
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
   const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
-  const useGetSublessonNavigationDataQuery = () => {
-    return { data: {} };
-  };
 
-  // @ts-expect-error nextLesson temporary silence
+  console.log('lesson', lesson);
   const { data } = useGetSublessonNavigationDataQuery({
     variables: { currentLessonId: Number(lesson?.id) },
   });
+  console.log('data', data);
 
   const isLastChallenge = currentChallengeIndex + 1 === challenges?.length;
   const isLastSublesson = currentSublessonIndex + 1 === totalSublessons;
@@ -97,7 +96,6 @@ export const useSublessonNavigation = ({
     } else if (!isLastSublesson) {
       setSublessonIndex(currentSublessonIndex + 1);
     } else {
-      // @ts-expect-error nextLesson temporary silence
       history.push(`/lesson/${data?.nextLessonSlug}`);
     }
   };

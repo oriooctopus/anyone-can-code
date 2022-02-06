@@ -30,6 +30,7 @@ interface IProps {
 }
 
 const LessonPage = ({ lesson }: IProps) => {
+  console.log('lesson!!', lesson);
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
   useEffect(() => {
     // TODO: set types for these

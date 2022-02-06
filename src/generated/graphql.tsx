@@ -1,38 +1,10 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-import { Object } from 'ts-toolbelt';
-
-type ObjKeyof<T> = T extends object ? keyof T : never;
-type KeyofKeyof<T> = ObjKeyof<T> | { [K in keyof T]: ObjKeyof<T[K]> }[keyof T];
-type StripNever<T> = Pick<
-  T,
-  { [K in keyof T]: [T[K]] extends [never] ? never : K }[keyof T]
->;
-type Lookup<T, K> = T extends any ? (K extends keyof T ? T[K] : never) : never;
-type SimpleFlatten<T> = T extends object
-  ? StripNever<
-      {
-        [K in KeyofKeyof<T>]:
-          | Exclude<K extends keyof T ? T[K] : never, object>
-          | { [P in keyof T]: Lookup<T[P], K> }[keyof T];
-      }
-    >
-  : T;
-
-type FlattenAttributes<O extends object> = O extends { attributes: any }
-  ? Object.Omit<O, 'attributes'> & O['attributes']
-  : // ? Object.Omit<O, 'attributes'> & SimpleFlatten<O['attributes']>
-    O;
-
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions = {};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions =  {}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -77,16 +49,19 @@ export type CodeChallenge = {
   getStartingCodeFromPreviousChallenge: Maybe<Scalars['Boolean']>;
   hints: Maybe<Array<Maybe<ComponentChallengeChallengeHints>>>;
   prompt: Scalars['String'];
+  publishedAt: Maybe<Scalars['DateTime']>;
   startingCode: Maybe<Scalars['String']>;
   tests: Maybe<Array<Maybe<ComponentChallengeCodeChallengeTest>>>;
   updatedAt: Maybe<Scalars['DateTime']>;
 };
+
 
 export type CodeChallengeHintsArgs = {
   filters: Maybe<ComponentChallengeChallengeHintsFiltersInput>;
   pagination?: Maybe<PaginationArg>;
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
+
 
 export type CodeChallengeTestsArgs = {
   filters: Maybe<ComponentChallengeCodeChallengeTestFiltersInput>;
@@ -121,6 +96,7 @@ export type CodeChallengeFiltersInput = {
   not: Maybe<CodeChallengeFiltersInput>;
   or: Maybe<Array<Maybe<CodeChallengeFiltersInput>>>;
   prompt: Maybe<StringFilterInput>;
+  publishedAt: Maybe<DateTimeFilterInput>;
   startingCode: Maybe<StringFilterInput>;
   updatedAt: Maybe<DateTimeFilterInput>;
 };
@@ -131,6 +107,7 @@ export type CodeChallengeInput = {
   internalLabel: Maybe<Scalars['String']>;
   internalNotes: Maybe<Scalars['String']>;
   prompt: Maybe<Scalars['String']>;
+  publishedAt: Maybe<Scalars['DateTime']>;
   startingCode: Maybe<Scalars['String']>;
   tests: Maybe<Array<Maybe<ComponentChallengeCodeChallengeTestInput>>>;
 };
@@ -277,6 +254,7 @@ export type Course = {
   updatedAt: Maybe<Scalars['DateTime']>;
 };
 
+
 export type CourseModulesArgs = {
   filters: Maybe<ModuleFiltersInput>;
   pagination?: Maybe<PaginationArg>;
@@ -373,25 +351,7 @@ export type FloatFilterInput = {
   startsWith: Maybe<Scalars['Float']>;
 };
 
-export type GenericMorph =
-  | CodeChallenge
-  | ComponentChallengeChallengeHints
-  | ComponentChallengeCodeChallengeTest
-  | ComponentChallengeMultipleChoiceOptions
-  | ComponentContentChallenges
-  | ComponentContentExternalResource
-  | ComponentMiscModuleLesson
-  | Course
-  | I18NLocale
-  | Lesson
-  | Module
-  | MultipleChoiceChallenge
-  | Sublesson
-  | SyntaxEntry
-  | UploadFile
-  | UsersPermissionsPermission
-  | UsersPermissionsRole
-  | UsersPermissionsUser;
+export type GenericMorph = CodeChallenge | ComponentChallengeChallengeHints | ComponentChallengeCodeChallengeTest | ComponentChallengeMultipleChoiceOptions | ComponentContentChallenges | ComponentContentExternalResource | ComponentMiscModuleLesson | Course | I18NLocale | Lesson | Module | MultipleChoiceChallenge | Sublesson | SyntaxEntry | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -513,15 +473,18 @@ export type Lesson = {
   updatedAt: Maybe<Scalars['DateTime']>;
 };
 
+
 export type LessonExternalResourcesArgs = {
   filters: Maybe<ComponentContentExternalResourceFiltersInput>;
   pagination?: Maybe<PaginationArg>;
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
+
 export type LessonSublessonsArgs = {
   filters: Maybe<SublessonFiltersInput>;
   pagination?: Maybe<PaginationArg>;
+  publicationState?: Maybe<PublicationState>;
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
@@ -586,12 +549,14 @@ export type Module = {
   updatedAt: Maybe<Scalars['DateTime']>;
 };
 
+
 export type ModuleLessonsArgs = {
   filters: Maybe<LessonFiltersInput>;
   pagination?: Maybe<PaginationArg>;
   publicationState?: Maybe<PublicationState>;
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
+
 
 export type ModuleModuleLessonsArgs = {
   filters: Maybe<ComponentMiscModuleLessonFiltersInput>;
@@ -650,6 +615,7 @@ export type MultipleChoiceChallenge = {
   publishedAt: Maybe<Scalars['DateTime']>;
   updatedAt: Maybe<Scalars['DateTime']>;
 };
+
 
 export type MultipleChoiceChallengeOptionsArgs = {
   filters: Maybe<ComponentChallengeMultipleChoiceOptionsFiltersInput>;
@@ -748,97 +714,121 @@ export type Mutation = {
   upload: UploadFileEntityResponse;
 };
 
+
 export type MutationCreateCodeChallengeArgs = {
   data: CodeChallengeInput;
 };
+
 
 export type MutationCreateCourseArgs = {
   data: CourseInput;
 };
 
+
 export type MutationCreateLessonArgs = {
   data: LessonInput;
 };
+
 
 export type MutationCreateModuleArgs = {
   data: ModuleInput;
 };
 
+
 export type MutationCreateMultipleChoiceChallengeArgs = {
   data: MultipleChoiceChallengeInput;
 };
+
 
 export type MutationCreateSublessonArgs = {
   data: SublessonInput;
 };
 
+
 export type MutationCreateSyntaxEntryArgs = {
   data: SyntaxEntryInput;
 };
+
 
 export type MutationCreateUploadFileArgs = {
   data: UploadFileInput;
 };
 
+
 export type MutationCreateUsersPermissionsRoleArgs = {
   data: UsersPermissionsRoleInput;
 };
+
 
 export type MutationCreateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
 };
 
+
 export type MutationDeleteCodeChallengeArgs = {
   id: Scalars['ID'];
 };
+
 
 export type MutationDeleteCourseArgs = {
   id: Scalars['ID'];
 };
 
+
 export type MutationDeleteLessonArgs = {
   id: Scalars['ID'];
 };
+
 
 export type MutationDeleteModuleArgs = {
   id: Scalars['ID'];
 };
 
+
 export type MutationDeleteMultipleChoiceChallengeArgs = {
   id: Scalars['ID'];
 };
+
 
 export type MutationDeleteSublessonArgs = {
   id: Scalars['ID'];
 };
 
+
 export type MutationDeleteSyntaxEntryArgs = {
   id: Scalars['ID'];
 };
+
 
 export type MutationDeleteUploadFileArgs = {
   id: Scalars['ID'];
 };
 
+
 export type MutationDeleteUsersPermissionsRoleArgs = {
   id: Scalars['ID'];
 };
+
 
 export type MutationDeleteUsersPermissionsUserArgs = {
   id: Scalars['ID'];
 };
 
+
 export type MutationEmailConfirmationArgs = {
   confirmation: Scalars['String'];
 };
+
 
 export type MutationForgotPasswordArgs = {
   email: Scalars['String'];
 };
 
+
 export type MutationLoginArgs = {
   input: UsersPermissionsLoginInput;
 };
+
 
 export type MutationMultipleUploadArgs = {
   field: Maybe<Scalars['String']>;
@@ -847,13 +837,16 @@ export type MutationMultipleUploadArgs = {
   refId: Maybe<Scalars['ID']>;
 };
 
+
 export type MutationRegisterArgs = {
   input: UsersPermissionsRegisterInput;
 };
 
+
 export type MutationRemoveFileArgs = {
   id: Scalars['ID'];
 };
+
 
 export type MutationResetPasswordArgs = {
   code: Scalars['String'];
@@ -861,60 +854,72 @@ export type MutationResetPasswordArgs = {
   passwordConfirmation: Scalars['String'];
 };
 
+
 export type MutationUpdateCodeChallengeArgs = {
   data: CodeChallengeInput;
   id: Scalars['ID'];
 };
+
 
 export type MutationUpdateCourseArgs = {
   data: CourseInput;
   id: Scalars['ID'];
 };
 
+
 export type MutationUpdateFileInfoArgs = {
   id: Scalars['ID'];
   info: Maybe<FileInfoInput>;
 };
+
 
 export type MutationUpdateLessonArgs = {
   data: LessonInput;
   id: Scalars['ID'];
 };
 
+
 export type MutationUpdateModuleArgs = {
   data: ModuleInput;
   id: Scalars['ID'];
 };
+
 
 export type MutationUpdateMultipleChoiceChallengeArgs = {
   data: MultipleChoiceChallengeInput;
   id: Scalars['ID'];
 };
 
+
 export type MutationUpdateSublessonArgs = {
   data: SublessonInput;
   id: Scalars['ID'];
 };
+
 
 export type MutationUpdateSyntaxEntryArgs = {
   data: SyntaxEntryInput;
   id: Scalars['ID'];
 };
 
+
 export type MutationUpdateUploadFileArgs = {
   data: UploadFileInput;
   id: Scalars['ID'];
 };
+
 
 export type MutationUpdateUsersPermissionsRoleArgs = {
   data: UsersPermissionsRoleInput;
   id: Scalars['ID'];
 };
 
+
 export type MutationUpdateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
   id: Scalars['ID'];
 };
+
 
 export type MutationUploadArgs = {
   field: Maybe<Scalars['String']>;
@@ -941,7 +946,7 @@ export type PaginationArg = {
 
 export enum PublicationState {
   Live = 'LIVE',
-  Preview = 'PREVIEW',
+  Preview = 'PREVIEW'
 }
 
 export type Query = {
@@ -959,6 +964,7 @@ export type Query = {
   modules: Maybe<ModuleEntityResponseCollection>;
   multipleChoiceChallenge: Maybe<MultipleChoiceChallengeEntityResponse>;
   multipleChoiceChallenges: Maybe<MultipleChoiceChallengeEntityResponseCollection>;
+  nextLessonSlug: Maybe<Scalars['String']>;
   sublesson: Maybe<SublessonEntityResponse>;
   sublessons: Maybe<SublessonEntityResponseCollection>;
   syntaxEntries: Maybe<SyntaxEntryEntityResponseCollection>;
@@ -971,19 +977,24 @@ export type Query = {
   usersPermissionsUsers: Maybe<UsersPermissionsUserEntityResponseCollection>;
 };
 
+
 export type QueryCodeChallengeArgs = {
   id: Maybe<Scalars['ID']>;
 };
 
+
 export type QueryCodeChallengesArgs = {
   filters: Maybe<CodeChallengeFiltersInput>;
   pagination?: Maybe<PaginationArg>;
+  publicationState?: Maybe<PublicationState>;
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
+
 
 export type QueryCourseArgs = {
   id: Maybe<Scalars['ID']>;
 };
+
 
 export type QueryCoursesArgs = {
   filters: Maybe<CourseFiltersInput>;
@@ -992,9 +1003,11 @@ export type QueryCoursesArgs = {
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
+
 export type QueryI18NLocaleArgs = {
   id: Maybe<Scalars['ID']>;
 };
+
 
 export type QueryI18NLocalesArgs = {
   filters: Maybe<I18NLocaleFiltersInput>;
@@ -1002,9 +1015,11 @@ export type QueryI18NLocalesArgs = {
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
+
 export type QueryLessonArgs = {
   id: Maybe<Scalars['ID']>;
 };
+
 
 export type QueryLessonsArgs = {
   filters: Maybe<LessonFiltersInput>;
@@ -1013,9 +1028,11 @@ export type QueryLessonsArgs = {
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
+
 export type QueryModuleArgs = {
   id: Maybe<Scalars['ID']>;
 };
+
 
 export type QueryModulesArgs = {
   filters: Maybe<ModuleFiltersInput>;
@@ -1024,9 +1041,11 @@ export type QueryModulesArgs = {
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
+
 export type QueryMultipleChoiceChallengeArgs = {
   id: Maybe<Scalars['ID']>;
 };
+
 
 export type QueryMultipleChoiceChallengesArgs = {
   filters: Maybe<MultipleChoiceChallengeFiltersInput>;
@@ -1035,15 +1054,24 @@ export type QueryMultipleChoiceChallengesArgs = {
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
+
+export type QueryNextLessonSlugArgs = {
+  currentLessonId: Maybe<Scalars['Int']>;
+};
+
+
 export type QuerySublessonArgs = {
   id: Maybe<Scalars['ID']>;
 };
 
+
 export type QuerySublessonsArgs = {
   filters: Maybe<SublessonFiltersInput>;
   pagination?: Maybe<PaginationArg>;
+  publicationState?: Maybe<PublicationState>;
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
+
 
 export type QuerySyntaxEntriesArgs = {
   filters: Maybe<SyntaxEntryFiltersInput>;
@@ -1052,13 +1080,16 @@ export type QuerySyntaxEntriesArgs = {
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
+
 export type QuerySyntaxEntryArgs = {
   id: Maybe<Scalars['ID']>;
 };
 
+
 export type QueryUploadFileArgs = {
   id: Maybe<Scalars['ID']>;
 };
+
 
 export type QueryUploadFilesArgs = {
   filters: Maybe<UploadFileFiltersInput>;
@@ -1066,9 +1097,11 @@ export type QueryUploadFilesArgs = {
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
+
 export type QueryUsersPermissionsRoleArgs = {
   id: Maybe<Scalars['ID']>;
 };
+
 
 export type QueryUsersPermissionsRolesArgs = {
   filters: Maybe<UsersPermissionsRoleFiltersInput>;
@@ -1076,9 +1109,11 @@ export type QueryUsersPermissionsRolesArgs = {
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
+
 export type QueryUsersPermissionsUserArgs = {
   id: Maybe<Scalars['ID']>;
 };
+
 
 export type QueryUsersPermissionsUsersArgs = {
   filters: Maybe<UsersPermissionsUserFiltersInput>;
@@ -1121,9 +1156,11 @@ export type Sublesson = {
   description: Scalars['String'];
   lesson: Maybe<LessonEntityResponse>;
   name: Scalars['String'];
+  publishedAt: Maybe<Scalars['DateTime']>;
   syntaxEntry: Maybe<SyntaxEntryEntityResponse>;
   updatedAt: Maybe<Scalars['DateTime']>;
 };
+
 
 export type SublessonChallengesArgs = {
   filters: Maybe<ComponentContentChallengesFiltersInput>;
@@ -1133,15 +1170,9 @@ export type SublessonChallengesArgs = {
 
 export type SublessonEntity = {
   __typename?: 'SublessonEntity';
-  attributes: Sublesson;
-  // attributes: { createdAt: string };
+  attributes: Maybe<Sublesson>;
   id: Maybe<Scalars['ID']>;
 };
-
-type test = FlattenAttributes<SublessonEntity>['challenges'];
-type test2 = SublessonEntity['attributes']['createdAt'];
-type test3 = Sublesson['createdAt'];
-// type test = FlattenAttributes<SublessonEntity>['lesson'];
 
 export type SublessonEntityResponse = {
   __typename?: 'SublessonEntityResponse';
@@ -1164,6 +1195,7 @@ export type SublessonFiltersInput = {
   name: Maybe<StringFilterInput>;
   not: Maybe<SublessonFiltersInput>;
   or: Maybe<Array<Maybe<SublessonFiltersInput>>>;
+  publishedAt: Maybe<DateTimeFilterInput>;
   syntaxEntry: Maybe<SyntaxEntryFiltersInput>;
   updatedAt: Maybe<DateTimeFilterInput>;
 };
@@ -1174,6 +1206,7 @@ export type SublessonInput = {
   internalNotes: Maybe<Scalars['String']>;
   lesson: Maybe<Scalars['ID']>;
   name: Maybe<Scalars['String']>;
+  publishedAt: Maybe<Scalars['DateTime']>;
   syntaxEntry: Maybe<Scalars['ID']>;
 };
 
@@ -1408,11 +1441,13 @@ export type UsersPermissionsRole = {
   users: Maybe<UsersPermissionsUserRelationResponseCollection>;
 };
 
+
 export type UsersPermissionsRolePermissionsArgs = {
   filters: Maybe<UsersPermissionsPermissionFiltersInput>;
   pagination?: Maybe<PaginationArg>;
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
+
 
 export type UsersPermissionsRoleUsersArgs = {
   filters: Maybe<UsersPermissionsUserFiltersInput>;
@@ -1532,500 +1567,157 @@ export type LoginMutationVariables = Exact<{
   input: UsersPermissionsLoginInput;
 }>;
 
-export type LoginMutation = {
-  __typename?: 'Mutation';
-  login: { __typename?: 'UsersPermissionsLoginPayload'; jwt: string | null };
-};
+
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UsersPermissionsLoginPayload', jwt: string | null } };
 
 export type RegisterMutationVariables = Exact<{
   input: UsersPermissionsRegisterInput;
 }>;
 
-export type RegisterMutation = {
-  __typename?: 'Mutation';
-  register: { __typename?: 'UsersPermissionsLoginPayload'; jwt: string | null };
-};
 
-export type ChallengeHintFragment = {
-  __typename?: 'ComponentChallengeChallengeHints';
-  text: string;
-  recommendedTimeBeforeViewing: number | null;
-};
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UsersPermissionsLoginPayload', jwt: string | null } };
 
-export type CodeChallengeDataFragment = {
-  __typename?: 'CodeChallengeEntity';
-  id: string | null;
-  attributes: {
-    __typename?: 'CodeChallenge';
-    getStartingCodeFromPreviousChallenge: boolean | null;
-    startingCode: string | null;
-    prompt: string;
-    tests: Array<{
-      __typename?: 'ComponentChallengeCodeChallengeTest';
-      internalTest: string;
-      label: string;
-    } | null> | null;
-    hints: Array<{
-      __typename?: 'ComponentChallengeChallengeHints';
-      text: string;
-      recommendedTimeBeforeViewing: number | null;
-    } | null> | null;
-  } | null;
-};
+export type ChallengeHintFragment = { __typename?: 'ComponentChallengeChallengeHints', text: string, recommendedTimeBeforeViewing: number | null };
 
-export type MultipleChoiceChallengeDataFragment = {
-  __typename?: 'MultipleChoiceChallengeEntity';
-  id: string | null;
-  attributes: {
-    __typename?: 'MultipleChoiceChallenge';
-    prompt: string;
-    canSelectMultipleOptions: boolean | null;
-    options: Array<{
-      __typename?: 'ComponentChallengeMultipleChoiceOptions';
-      text: string;
-      isCorrect: boolean | null;
-      incorrectChoiceExplanation: string | null;
-    } | null> | null;
-  } | null;
-};
+export type CodeChallengeDataFragment = { __typename?: 'CodeChallengeEntity', id: string | null, attributes: { __typename?: 'CodeChallenge', getStartingCodeFromPreviousChallenge: boolean | null, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentChallengeCodeChallengeTest', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeChallengeHints', text: string, recommendedTimeBeforeViewing: number | null } | null> | null } | null };
+
+export type MultipleChoiceChallengeDataFragment = { __typename?: 'MultipleChoiceChallengeEntity', id: string | null, attributes: { __typename?: 'MultipleChoiceChallenge', prompt: string, canSelectMultipleOptions: boolean | null, options: Array<{ __typename?: 'ComponentChallengeMultipleChoiceOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null };
 
 export type GetLessonExternalResourcesDataQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
-export type GetLessonExternalResourcesDataQuery = {
-  __typename?: 'Query';
-  lessons: {
-    __typename?: 'LessonEntityResponseCollection';
-    data: Array<{
-      __typename?: 'LessonEntity';
-      attributes: {
-        __typename?: 'Lesson';
-        externalResources: Array<{
-          __typename?: 'ComponentContentExternalResource';
-          name: string | null;
-          link: string;
-          type: string | null;
-        } | null> | null;
-      } | null;
-    }>;
-  } | null;
-};
 
-export type LessonSidebarDataFragment = {
-  __typename?: 'SublessonEntity';
-  attributes: {
-    __typename?: 'Sublesson';
-    name: string;
-    challenges: Array<{
-      __typename?: 'ComponentContentChallenges';
-      codeChallenge: {
-        __typename?: 'CodeChallengeEntityResponse';
-        data: {
-          __typename?: 'CodeChallengeEntity';
-          id: string | null;
-          attributes: {
-            __typename?: 'CodeChallenge';
-            getStartingCodeFromPreviousChallenge: boolean | null;
-            startingCode: string | null;
-            prompt: string;
-            tests: Array<{
-              __typename?: 'ComponentChallengeCodeChallengeTest';
-              internalTest: string;
-              label: string;
-            } | null> | null;
-            hints: Array<{
-              __typename?: 'ComponentChallengeChallengeHints';
-              text: string;
-              recommendedTimeBeforeViewing: number | null;
-            } | null> | null;
-          } | null;
-        } | null;
-      } | null;
-      multipleChoiceChallenge: {
-        __typename?: 'MultipleChoiceChallengeEntityResponse';
-        data: {
-          __typename?: 'MultipleChoiceChallengeEntity';
-          id: string | null;
-          attributes: {
-            __typename?: 'MultipleChoiceChallenge';
-            prompt: string;
-            canSelectMultipleOptions: boolean | null;
-            options: Array<{
-              __typename?: 'ComponentChallengeMultipleChoiceOptions';
-              text: string;
-              isCorrect: boolean | null;
-              incorrectChoiceExplanation: string | null;
-            } | null> | null;
-          } | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-};
+export type GetLessonExternalResourcesDataQuery = { __typename?: 'Query', lessons: { __typename?: 'LessonEntityResponseCollection', data: Array<{ __typename?: 'LessonEntity', attributes: { __typename?: 'Lesson', externalResources: Array<{ __typename?: 'ComponentContentExternalResource', name: string | null, link: string, type: string | null } | null> | null } | null }> } | null };
+
+export type LessonSidebarDataFragment = { __typename?: 'SublessonEntity', attributes: { __typename?: 'Sublesson', name: string, challenges: Array<{ __typename?: 'ComponentContentChallenges', codeChallenge: { __typename?: 'CodeChallengeEntityResponse', data: { __typename?: 'CodeChallengeEntity', id: string | null, attributes: { __typename?: 'CodeChallenge', getStartingCodeFromPreviousChallenge: boolean | null, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentChallengeCodeChallengeTest', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeChallengeHints', text: string, recommendedTimeBeforeViewing: number | null } | null> | null } | null } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallengeEntityResponse', data: { __typename?: 'MultipleChoiceChallengeEntity', id: string | null, attributes: { __typename?: 'MultipleChoiceChallenge', prompt: string, canSelectMultipleOptions: boolean | null, options: Array<{ __typename?: 'ComponentChallengeMultipleChoiceOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null } | null } | null> | null } | null };
 
 export type GetCourseMapOverlayDataQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
-export type GetCourseMapOverlayDataQuery = {
-  __typename?: 'Query';
-  courses: {
-    __typename?: 'CourseEntityResponseCollection';
-    data: Array<{
-      __typename?: 'CourseEntity';
-      attributes: {
-        __typename?: 'Course';
-        name: string;
-        modules: {
-          __typename?: 'ModuleRelationResponseCollection';
-          data: Array<{
-            __typename?: 'ModuleEntity';
-            attributes: {
-              __typename?: 'Module';
-              name: string;
-              moduleLessons: Array<{
-                __typename?: 'ComponentMiscModuleLesson';
-                lesson: {
-                  __typename?: 'LessonEntityResponse';
-                  data: {
-                    __typename?: 'LessonEntity';
-                    attributes: {
-                      __typename?: 'Lesson';
-                      name: string;
-                      slug: string;
-                    } | null;
-                  } | null;
-                } | null;
-              } | null> | null;
-            } | null;
-          }>;
-        } | null;
-      } | null;
-    }>;
-  } | null;
-};
+
+export type GetCourseMapOverlayDataQuery = { __typename?: 'Query', courses: { __typename?: 'CourseEntityResponseCollection', data: Array<{ __typename?: 'CourseEntity', attributes: { __typename?: 'Course', name: string, modules: { __typename?: 'ModuleRelationResponseCollection', data: Array<{ __typename?: 'ModuleEntity', attributes: { __typename?: 'Module', name: string, moduleLessons: Array<{ __typename?: 'ComponentMiscModuleLesson', lesson: { __typename?: 'LessonEntityResponse', data: { __typename?: 'LessonEntity', attributes: { __typename?: 'Lesson', name: string, slug: string } | null } | null } | null } | null> | null } | null }> } | null } | null }> } | null };
 
 export type GetSyntaxHandbookDataQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
-export type GetSyntaxHandbookDataQuery = {
-  __typename?: 'Query';
-  courses: {
-    __typename?: 'CourseEntityResponseCollection';
-    data: Array<{
-      __typename?: 'CourseEntity';
-      attributes: {
-        __typename?: 'Course';
-        modules: {
-          __typename?: 'ModuleRelationResponseCollection';
-          data: Array<{
-            __typename?: 'ModuleEntity';
-            attributes: {
-              __typename?: 'Module';
-              moduleLessons: Array<{
-                __typename?: 'ComponentMiscModuleLesson';
-                lesson: {
-                  __typename?: 'LessonEntityResponse';
-                  data: {
-                    __typename?: 'LessonEntity';
-                    attributes: {
-                      __typename?: 'Lesson';
-                      syntaxEntry: {
-                        __typename?: 'SyntaxEntryEntityResponse';
-                        data: {
-                          __typename?: 'SyntaxEntryEntity';
-                          attributes: {
-                            __typename?: 'SyntaxEntry';
-                            content: string;
-                            name: string;
-                            maxWidth: number | null;
-                          } | null;
-                        } | null;
-                      } | null;
-                      sublessons: {
-                        __typename?: 'SublessonRelationResponseCollection';
-                        data: Array<{
-                          __typename?: 'SublessonEntity';
-                          attributes: {
-                            __typename?: 'Sublesson';
-                            syntaxEntry: {
-                              __typename?: 'SyntaxEntryEntityResponse';
-                              data: {
-                                __typename?: 'SyntaxEntryEntity';
-                                attributes: {
-                                  __typename?: 'SyntaxEntry';
-                                  content: string;
-                                  name: string;
-                                  maxWidth: number | null;
-                                } | null;
-                              } | null;
-                            } | null;
-                          } | null;
-                        }>;
-                      } | null;
-                    } | null;
-                  } | null;
-                } | null;
-              } | null> | null;
-            } | null;
-          }>;
-        } | null;
-      } | null;
-    }>;
-  } | null;
-};
+
+export type GetSyntaxHandbookDataQuery = { __typename?: 'Query', courses: { __typename?: 'CourseEntityResponseCollection', data: Array<{ __typename?: 'CourseEntity', attributes: { __typename?: 'Course', modules: { __typename?: 'ModuleRelationResponseCollection', data: Array<{ __typename?: 'ModuleEntity', attributes: { __typename?: 'Module', moduleLessons: Array<{ __typename?: 'ComponentMiscModuleLesson', lesson: { __typename?: 'LessonEntityResponse', data: { __typename?: 'LessonEntity', attributes: { __typename?: 'Lesson', syntaxEntry: { __typename?: 'SyntaxEntryEntityResponse', data: { __typename?: 'SyntaxEntryEntity', attributes: { __typename?: 'SyntaxEntry', content: string, name: string, maxWidth: number | null } | null } | null } | null, sublessons: { __typename?: 'SublessonRelationResponseCollection', data: Array<{ __typename?: 'SublessonEntity', attributes: { __typename?: 'Sublesson', syntaxEntry: { __typename?: 'SyntaxEntryEntityResponse', data: { __typename?: 'SyntaxEntryEntity', attributes: { __typename?: 'SyntaxEntry', content: string, name: string, maxWidth: number | null } | null } | null } | null } | null }> } | null } | null } | null } | null } | null> | null } | null }> } | null } | null }> } | null };
 
 export type GetLessonDataQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
-export type GetLessonDataQuery = {
-  __typename?: 'Query';
-  lessons: {
-    __typename?: 'LessonEntityResponseCollection';
-    data: Array<{
-      __typename?: 'LessonEntity';
-      id: string | null;
-      attributes: {
-        __typename?: 'Lesson';
-        name: string;
-        sublessons: {
-          __typename?: 'SublessonRelationResponseCollection';
-          data: Array<{
-            __typename?: 'SublessonEntity';
-            id: string | null;
-            attributes: {
-              __typename?: 'Sublesson';
-              name: string;
-              description: string;
-              lesson: {
-                __typename?: 'LessonEntityResponse';
-                data: {
-                  __typename?: 'LessonEntity';
-                  id: string | null;
-                  attributes: { __typename?: 'Lesson'; name: string } | null;
-                } | null;
-              } | null;
-              challenges: Array<{
-                __typename?: 'ComponentContentChallenges';
-                id: string;
-                codeChallenge: {
-                  __typename?: 'CodeChallengeEntityResponse';
-                  data: {
-                    __typename?: 'CodeChallengeEntity';
-                    id: string | null;
-                    attributes: {
-                      __typename?: 'CodeChallenge';
-                      getStartingCodeFromPreviousChallenge: boolean | null;
-                      startingCode: string | null;
-                      prompt: string;
-                      tests: Array<{
-                        __typename?: 'ComponentChallengeCodeChallengeTest';
-                        internalTest: string;
-                        label: string;
-                      } | null> | null;
-                      hints: Array<{
-                        __typename?: 'ComponentChallengeChallengeHints';
-                        text: string;
-                        recommendedTimeBeforeViewing: number | null;
-                      } | null> | null;
-                    } | null;
-                  } | null;
-                } | null;
-                multipleChoiceChallenge: {
-                  __typename?: 'MultipleChoiceChallengeEntityResponse';
-                  data: {
-                    __typename?: 'MultipleChoiceChallengeEntity';
-                    id: string | null;
-                    attributes: {
-                      __typename?: 'MultipleChoiceChallenge';
-                      prompt: string;
-                      canSelectMultipleOptions: boolean | null;
-                      options: Array<{
-                        __typename?: 'ComponentChallengeMultipleChoiceOptions';
-                        text: string;
-                        isCorrect: boolean | null;
-                        incorrectChoiceExplanation: string | null;
-                      } | null> | null;
-                    } | null;
-                  } | null;
-                } | null;
-              } | null> | null;
-            } | null;
-          }>;
-        } | null;
-      } | null;
-    }>;
-  } | null;
-};
 
-export type SublessonInstructionsDataFragment = {
-  __typename?: 'SublessonEntity';
-  id: string | null;
-  attributes: {
-    __typename?: 'Sublesson';
-    name: string;
-    description: string;
-    lesson: {
-      __typename?: 'LessonEntityResponse';
-      data: {
-        __typename?: 'LessonEntity';
-        id: string | null;
-        attributes: { __typename?: 'Lesson'; name: string } | null;
-      } | null;
-    } | null;
-    challenges: Array<{
-      __typename?: 'ComponentContentChallenges';
-      id: string;
-      codeChallenge: {
-        __typename?: 'CodeChallengeEntityResponse';
-        data: {
-          __typename?: 'CodeChallengeEntity';
-          id: string | null;
-          attributes: {
-            __typename?: 'CodeChallenge';
-            getStartingCodeFromPreviousChallenge: boolean | null;
-            startingCode: string | null;
-            prompt: string;
-            tests: Array<{
-              __typename?: 'ComponentChallengeCodeChallengeTest';
-              internalTest: string;
-              label: string;
-            } | null> | null;
-            hints: Array<{
-              __typename?: 'ComponentChallengeChallengeHints';
-              text: string;
-              recommendedTimeBeforeViewing: number | null;
-            } | null> | null;
-          } | null;
-        } | null;
-      } | null;
-      multipleChoiceChallenge: {
-        __typename?: 'MultipleChoiceChallengeEntityResponse';
-        data: {
-          __typename?: 'MultipleChoiceChallengeEntity';
-          id: string | null;
-          attributes: {
-            __typename?: 'MultipleChoiceChallenge';
-            prompt: string;
-            canSelectMultipleOptions: boolean | null;
-            options: Array<{
-              __typename?: 'ComponentChallengeMultipleChoiceOptions';
-              text: string;
-              isCorrect: boolean | null;
-              incorrectChoiceExplanation: string | null;
-            } | null> | null;
-          } | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-};
+export type GetLessonDataQuery = { __typename?: 'Query', lessons: { __typename?: 'LessonEntityResponseCollection', data: Array<{ __typename?: 'LessonEntity', id: string | null, attributes: { __typename?: 'Lesson', name: string, sublessons: { __typename?: 'SublessonRelationResponseCollection', data: Array<{ __typename?: 'SublessonEntity', id: string | null, attributes: { __typename?: 'Sublesson', name: string, description: string, lesson: { __typename?: 'LessonEntityResponse', data: { __typename?: 'LessonEntity', id: string | null, attributes: { __typename?: 'Lesson', name: string } | null } | null } | null, challenges: Array<{ __typename?: 'ComponentContentChallenges', id: string, codeChallenge: { __typename?: 'CodeChallengeEntityResponse', data: { __typename?: 'CodeChallengeEntity', id: string | null, attributes: { __typename?: 'CodeChallenge', getStartingCodeFromPreviousChallenge: boolean | null, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentChallengeCodeChallengeTest', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeChallengeHints', text: string, recommendedTimeBeforeViewing: number | null } | null> | null } | null } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallengeEntityResponse', data: { __typename?: 'MultipleChoiceChallengeEntity', id: string | null, attributes: { __typename?: 'MultipleChoiceChallenge', prompt: string, canSelectMultipleOptions: boolean | null, options: Array<{ __typename?: 'ComponentChallengeMultipleChoiceOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null } | null } | null> | null } | null }> } | null } | null }> } | null };
+
+export type SublessonInstructionsDataFragment = { __typename?: 'SublessonEntity', id: string | null, attributes: { __typename?: 'Sublesson', name: string, description: string, lesson: { __typename?: 'LessonEntityResponse', data: { __typename?: 'LessonEntity', id: string | null, attributes: { __typename?: 'Lesson', name: string } | null } | null } | null, challenges: Array<{ __typename?: 'ComponentContentChallenges', id: string, codeChallenge: { __typename?: 'CodeChallengeEntityResponse', data: { __typename?: 'CodeChallengeEntity', id: string | null, attributes: { __typename?: 'CodeChallenge', getStartingCodeFromPreviousChallenge: boolean | null, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentChallengeCodeChallengeTest', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeChallengeHints', text: string, recommendedTimeBeforeViewing: number | null } | null> | null } | null } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallengeEntityResponse', data: { __typename?: 'MultipleChoiceChallengeEntity', id: string | null, attributes: { __typename?: 'MultipleChoiceChallenge', prompt: string, canSelectMultipleOptions: boolean | null, options: Array<{ __typename?: 'ComponentChallengeMultipleChoiceOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null } | null } | null> | null } | null };
+
+export type GetSublessonNavigationDataQueryVariables = Exact<{
+  currentLessonId: Scalars['Int'];
+}>;
+
+
+export type GetSublessonNavigationDataQuery = { __typename?: 'Query', nextLessonSlug: string | null };
 
 export const ChallengeHintFragmentDoc = gql`
-  fragment challengeHint on ComponentChallengeChallengeHints {
-    text
-    recommendedTimeBeforeViewing
-  }
-`;
+    fragment challengeHint on ComponentChallengeChallengeHints {
+  text
+  recommendedTimeBeforeViewing
+}
+    `;
 export const CodeChallengeDataFragmentDoc = gql`
-  fragment codeChallengeData on CodeChallengeEntity {
-    id
-    attributes {
-      tests {
-        internalTest
-        label
-      }
-      hints {
-        ...challengeHint
-      }
-      getStartingCodeFromPreviousChallenge
-      startingCode
-      prompt
+    fragment codeChallengeData on CodeChallengeEntity {
+  id
+  attributes {
+    tests {
+      internalTest
+      label
     }
+    hints {
+      ...challengeHint
+    }
+    getStartingCodeFromPreviousChallenge
+    startingCode
+    prompt
   }
-  ${ChallengeHintFragmentDoc}
-`;
+}
+    ${ChallengeHintFragmentDoc}`;
 export const MultipleChoiceChallengeDataFragmentDoc = gql`
-  fragment multipleChoiceChallengeData on MultipleChoiceChallengeEntity {
-    id
-    attributes {
-      prompt
-      options {
-        text
-        isCorrect
-        incorrectChoiceExplanation
-      }
-      canSelectMultipleOptions
+    fragment multipleChoiceChallengeData on MultipleChoiceChallengeEntity {
+  id
+  attributes {
+    prompt
+    options {
+      text
+      isCorrect
+      incorrectChoiceExplanation
     }
+    canSelectMultipleOptions
   }
-`;
+}
+    `;
 export const LessonSidebarDataFragmentDoc = gql`
-  fragment lessonSidebarData on SublessonEntity {
-    attributes {
-      name
-      challenges {
-        codeChallenge {
-          data {
-            ...codeChallengeData
-          }
-        }
-        multipleChoiceChallenge {
-          data {
-            ...multipleChoiceChallengeData
-          }
-        }
-      }
-    }
-  }
-  ${CodeChallengeDataFragmentDoc}
-  ${MultipleChoiceChallengeDataFragmentDoc}
-`;
-export const SublessonInstructionsDataFragmentDoc = gql`
-  fragment sublessonInstructionsData on SublessonEntity {
-    id
-    attributes {
-      name
-      description
-      lesson {
+    fragment lessonSidebarData on SublessonEntity {
+  attributes {
+    name
+    challenges {
+      codeChallenge {
         data {
-          id
-          attributes {
-            name
-          }
+          ...codeChallengeData
         }
       }
-      challenges {
+      multipleChoiceChallenge {
+        data {
+          ...multipleChoiceChallengeData
+        }
+      }
+    }
+  }
+}
+    ${CodeChallengeDataFragmentDoc}
+${MultipleChoiceChallengeDataFragmentDoc}`;
+export const SublessonInstructionsDataFragmentDoc = gql`
+    fragment sublessonInstructionsData on SublessonEntity {
+  id
+  attributes {
+    name
+    description
+    lesson {
+      data {
         id
-        codeChallenge {
-          data {
-            ...codeChallengeData
-          }
+        attributes {
+          name
         }
-        multipleChoiceChallenge {
-          data {
-            ...multipleChoiceChallengeData
-          }
+      }
+    }
+    challenges {
+      id
+      codeChallenge {
+        data {
+          ...codeChallengeData
+        }
+      }
+      multipleChoiceChallenge {
+        data {
+          ...multipleChoiceChallengeData
         }
       }
     }
   }
-  ${CodeChallengeDataFragmentDoc}
-  ${MultipleChoiceChallengeDataFragmentDoc}
-`;
+}
+    ${CodeChallengeDataFragmentDoc}
+${MultipleChoiceChallengeDataFragmentDoc}`;
 export const LoginDocument = gql`
-  mutation login($input: UsersPermissionsLoginInput!) {
-    login(input: $input) {
-      jwt
-    }
+    mutation login($input: UsersPermissionsLoginInput!) {
+  login(input: $input) {
+    jwt
   }
-`;
-export type LoginMutationFn = Apollo.MutationFunction<
-  LoginMutation,
-  LoginMutationVariables
->;
+}
+    `;
+export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
 
 /**
  * __useLoginMutation__
@@ -2044,35 +1736,21 @@ export type LoginMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useLoginMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    LoginMutation,
-    LoginMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<LoginMutation, LoginMutationVariables>(
-    LoginDocument,
-    options,
-  );
-}
+export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
+      }
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
-export type LoginMutationOptions = Apollo.BaseMutationOptions<
-  LoginMutation,
-  LoginMutationVariables
->;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const RegisterDocument = gql`
-  mutation register($input: UsersPermissionsRegisterInput!) {
-    register(input: $input) {
-      jwt
-    }
+    mutation register($input: UsersPermissionsRegisterInput!) {
+  register(input: $input) {
+    jwt
   }
-`;
-export type RegisterMutationFn = Apollo.MutationFunction<
-  RegisterMutation,
-  RegisterMutationVariables
->;
+}
+    `;
+export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
 
 /**
  * __useRegisterMutation__
@@ -2091,39 +1769,28 @@ export type RegisterMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useRegisterMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    RegisterMutation,
-    RegisterMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(
-    RegisterDocument,
-    options,
-  );
-}
+export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
+      }
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
-export type RegisterMutationOptions = Apollo.BaseMutationOptions<
-  RegisterMutation,
-  RegisterMutationVariables
->;
+export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
 export const GetLessonExternalResourcesDataDocument = gql`
-  query getLessonExternalResourcesData($slug: String!) {
-    lessons(filters: { slug: { eq: $slug } }) {
-      data {
-        attributes {
-          externalResources {
-            name
-            link
-            type
-          }
+    query getLessonExternalResourcesData($slug: String!) {
+  lessons(filters: {slug: {eq: $slug}}) {
+    data {
+      attributes {
+        externalResources {
+          name
+          link
+          type
         }
       }
     }
   }
-`;
+}
+    `;
 
 /**
  * __useGetLessonExternalResourcesDataQuery__
@@ -2141,57 +1808,33 @@ export const GetLessonExternalResourcesDataDocument = gql`
  *   },
  * });
  */
-export function useGetLessonExternalResourcesDataQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    GetLessonExternalResourcesDataQuery,
-    GetLessonExternalResourcesDataQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    GetLessonExternalResourcesDataQuery,
-    GetLessonExternalResourcesDataQueryVariables
-  >(GetLessonExternalResourcesDataDocument, options);
-}
-export function useGetLessonExternalResourcesDataLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetLessonExternalResourcesDataQuery,
-    GetLessonExternalResourcesDataQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    GetLessonExternalResourcesDataQuery,
-    GetLessonExternalResourcesDataQueryVariables
-  >(GetLessonExternalResourcesDataDocument, options);
-}
-export type GetLessonExternalResourcesDataQueryHookResult = ReturnType<
-  typeof useGetLessonExternalResourcesDataQuery
->;
-export type GetLessonExternalResourcesDataLazyQueryHookResult = ReturnType<
-  typeof useGetLessonExternalResourcesDataLazyQuery
->;
-export type GetLessonExternalResourcesDataQueryResult = Apollo.QueryResult<
-  GetLessonExternalResourcesDataQuery,
-  GetLessonExternalResourcesDataQueryVariables
->;
+export function useGetLessonExternalResourcesDataQuery(baseOptions: Apollo.QueryHookOptions<GetLessonExternalResourcesDataQuery, GetLessonExternalResourcesDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLessonExternalResourcesDataQuery, GetLessonExternalResourcesDataQueryVariables>(GetLessonExternalResourcesDataDocument, options);
+      }
+export function useGetLessonExternalResourcesDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLessonExternalResourcesDataQuery, GetLessonExternalResourcesDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLessonExternalResourcesDataQuery, GetLessonExternalResourcesDataQueryVariables>(GetLessonExternalResourcesDataDocument, options);
+        }
+export type GetLessonExternalResourcesDataQueryHookResult = ReturnType<typeof useGetLessonExternalResourcesDataQuery>;
+export type GetLessonExternalResourcesDataLazyQueryHookResult = ReturnType<typeof useGetLessonExternalResourcesDataLazyQuery>;
+export type GetLessonExternalResourcesDataQueryResult = Apollo.QueryResult<GetLessonExternalResourcesDataQuery, GetLessonExternalResourcesDataQueryVariables>;
 export const GetCourseMapOverlayDataDocument = gql`
-  query getCourseMapOverlayData($slug: String!) {
-    courses(filters: { slug: { eq: $slug } }) {
-      data {
-        attributes {
-          name
-          modules {
-            data {
-              attributes {
-                name
-                moduleLessons {
-                  lesson {
-                    data {
-                      attributes {
-                        name
-                        slug
-                      }
+    query getCourseMapOverlayData($slug: String!) {
+  courses(filters: {slug: {eq: $slug}}) {
+    data {
+      attributes {
+        name
+        modules {
+          data {
+            attributes {
+              name
+              moduleLessons {
+                lesson {
+                  data {
+                    attributes {
+                      name
+                      slug
                     }
                   }
                 }
@@ -2202,7 +1845,8 @@ export const GetCourseMapOverlayDataDocument = gql`
       }
     }
   }
-`;
+}
+    `;
 
 /**
  * __useGetCourseMapOverlayDataQuery__
@@ -2220,71 +1864,47 @@ export const GetCourseMapOverlayDataDocument = gql`
  *   },
  * });
  */
-export function useGetCourseMapOverlayDataQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    GetCourseMapOverlayDataQuery,
-    GetCourseMapOverlayDataQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    GetCourseMapOverlayDataQuery,
-    GetCourseMapOverlayDataQueryVariables
-  >(GetCourseMapOverlayDataDocument, options);
-}
-export function useGetCourseMapOverlayDataLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetCourseMapOverlayDataQuery,
-    GetCourseMapOverlayDataQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    GetCourseMapOverlayDataQuery,
-    GetCourseMapOverlayDataQueryVariables
-  >(GetCourseMapOverlayDataDocument, options);
-}
-export type GetCourseMapOverlayDataQueryHookResult = ReturnType<
-  typeof useGetCourseMapOverlayDataQuery
->;
-export type GetCourseMapOverlayDataLazyQueryHookResult = ReturnType<
-  typeof useGetCourseMapOverlayDataLazyQuery
->;
-export type GetCourseMapOverlayDataQueryResult = Apollo.QueryResult<
-  GetCourseMapOverlayDataQuery,
-  GetCourseMapOverlayDataQueryVariables
->;
+export function useGetCourseMapOverlayDataQuery(baseOptions: Apollo.QueryHookOptions<GetCourseMapOverlayDataQuery, GetCourseMapOverlayDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCourseMapOverlayDataQuery, GetCourseMapOverlayDataQueryVariables>(GetCourseMapOverlayDataDocument, options);
+      }
+export function useGetCourseMapOverlayDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCourseMapOverlayDataQuery, GetCourseMapOverlayDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCourseMapOverlayDataQuery, GetCourseMapOverlayDataQueryVariables>(GetCourseMapOverlayDataDocument, options);
+        }
+export type GetCourseMapOverlayDataQueryHookResult = ReturnType<typeof useGetCourseMapOverlayDataQuery>;
+export type GetCourseMapOverlayDataLazyQueryHookResult = ReturnType<typeof useGetCourseMapOverlayDataLazyQuery>;
+export type GetCourseMapOverlayDataQueryResult = Apollo.QueryResult<GetCourseMapOverlayDataQuery, GetCourseMapOverlayDataQueryVariables>;
 export const GetSyntaxHandbookDataDocument = gql`
-  query getSyntaxHandbookData($slug: String!) {
-    courses(filters: { slug: { eq: $slug } }) {
-      data {
-        attributes {
-          modules {
-            data {
-              attributes {
-                moduleLessons {
-                  lesson {
-                    data {
-                      attributes {
-                        syntaxEntry {
-                          data {
-                            attributes {
-                              content
-                              name
-                              maxWidth
-                            }
+    query getSyntaxHandbookData($slug: String!) {
+  courses(filters: {slug: {eq: $slug}}) {
+    data {
+      attributes {
+        modules {
+          data {
+            attributes {
+              moduleLessons {
+                lesson {
+                  data {
+                    attributes {
+                      syntaxEntry {
+                        data {
+                          attributes {
+                            content
+                            name
+                            maxWidth
                           }
                         }
-                        sublessons {
-                          data {
-                            attributes {
-                              syntaxEntry {
-                                data {
-                                  attributes {
-                                    content
-                                    name
-                                    maxWidth
-                                  }
+                      }
+                      sublessons {
+                        data {
+                          attributes {
+                            syntaxEntry {
+                              data {
+                                attributes {
+                                  content
+                                  name
+                                  maxWidth
                                 }
                               }
                             }
@@ -2301,7 +1921,8 @@ export const GetSyntaxHandbookDataDocument = gql`
       }
     }
   }
-`;
+}
+    `;
 
 /**
  * __useGetSyntaxHandbookDataQuery__
@@ -2319,60 +1940,36 @@ export const GetSyntaxHandbookDataDocument = gql`
  *   },
  * });
  */
-export function useGetSyntaxHandbookDataQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    GetSyntaxHandbookDataQuery,
-    GetSyntaxHandbookDataQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    GetSyntaxHandbookDataQuery,
-    GetSyntaxHandbookDataQueryVariables
-  >(GetSyntaxHandbookDataDocument, options);
-}
-export function useGetSyntaxHandbookDataLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetSyntaxHandbookDataQuery,
-    GetSyntaxHandbookDataQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    GetSyntaxHandbookDataQuery,
-    GetSyntaxHandbookDataQueryVariables
-  >(GetSyntaxHandbookDataDocument, options);
-}
-export type GetSyntaxHandbookDataQueryHookResult = ReturnType<
-  typeof useGetSyntaxHandbookDataQuery
->;
-export type GetSyntaxHandbookDataLazyQueryHookResult = ReturnType<
-  typeof useGetSyntaxHandbookDataLazyQuery
->;
-export type GetSyntaxHandbookDataQueryResult = Apollo.QueryResult<
-  GetSyntaxHandbookDataQuery,
-  GetSyntaxHandbookDataQueryVariables
->;
+export function useGetSyntaxHandbookDataQuery(baseOptions: Apollo.QueryHookOptions<GetSyntaxHandbookDataQuery, GetSyntaxHandbookDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSyntaxHandbookDataQuery, GetSyntaxHandbookDataQueryVariables>(GetSyntaxHandbookDataDocument, options);
+      }
+export function useGetSyntaxHandbookDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSyntaxHandbookDataQuery, GetSyntaxHandbookDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSyntaxHandbookDataQuery, GetSyntaxHandbookDataQueryVariables>(GetSyntaxHandbookDataDocument, options);
+        }
+export type GetSyntaxHandbookDataQueryHookResult = ReturnType<typeof useGetSyntaxHandbookDataQuery>;
+export type GetSyntaxHandbookDataLazyQueryHookResult = ReturnType<typeof useGetSyntaxHandbookDataLazyQuery>;
+export type GetSyntaxHandbookDataQueryResult = Apollo.QueryResult<GetSyntaxHandbookDataQuery, GetSyntaxHandbookDataQueryVariables>;
 export const GetLessonDataDocument = gql`
-  query getLessonData($slug: String!) {
-    lessons(filters: { slug: { eq: $slug } }) {
-      data {
-        id
-        attributes {
-          name
-          sublessons {
-            data {
-              ...sublessonInstructionsData
-              ...lessonSidebarData
-            }
+    query getLessonData($slug: String!) {
+  lessons(filters: {slug: {eq: $slug}}) {
+    data {
+      id
+      attributes {
+        name
+        sublessons {
+          data {
+            ...sublessonInstructionsData
+            ...lessonSidebarData
           }
         }
       }
     }
   }
-  ${SublessonInstructionsDataFragmentDoc}
-  ${LessonSidebarDataFragmentDoc}
-`;
+}
+    ${SublessonInstructionsDataFragmentDoc}
+${LessonSidebarDataFragmentDoc}`;
 
 /**
  * __useGetLessonDataQuery__
@@ -2390,37 +1987,47 @@ export const GetLessonDataDocument = gql`
  *   },
  * });
  */
-export function useGetLessonDataQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    GetLessonDataQuery,
-    GetLessonDataQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetLessonDataQuery, GetLessonDataQueryVariables>(
-    GetLessonDataDocument,
-    options,
-  );
+export function useGetLessonDataQuery(baseOptions: Apollo.QueryHookOptions<GetLessonDataQuery, GetLessonDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLessonDataQuery, GetLessonDataQueryVariables>(GetLessonDataDocument, options);
+      }
+export function useGetLessonDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLessonDataQuery, GetLessonDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLessonDataQuery, GetLessonDataQueryVariables>(GetLessonDataDocument, options);
+        }
+export type GetLessonDataQueryHookResult = ReturnType<typeof useGetLessonDataQuery>;
+export type GetLessonDataLazyQueryHookResult = ReturnType<typeof useGetLessonDataLazyQuery>;
+export type GetLessonDataQueryResult = Apollo.QueryResult<GetLessonDataQuery, GetLessonDataQueryVariables>;
+export const GetSublessonNavigationDataDocument = gql`
+    query getSublessonNavigationData($currentLessonId: Int!) {
+  nextLessonSlug(currentLessonId: $currentLessonId)
 }
-export function useGetLessonDataLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetLessonDataQuery,
-    GetLessonDataQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetLessonDataQuery, GetLessonDataQueryVariables>(
-    GetLessonDataDocument,
-    options,
-  );
-}
-export type GetLessonDataQueryHookResult = ReturnType<
-  typeof useGetLessonDataQuery
->;
-export type GetLessonDataLazyQueryHookResult = ReturnType<
-  typeof useGetLessonDataLazyQuery
->;
-export type GetLessonDataQueryResult = Apollo.QueryResult<
-  GetLessonDataQuery,
-  GetLessonDataQueryVariables
->;
+    `;
+
+/**
+ * __useGetSublessonNavigationDataQuery__
+ *
+ * To run a query within a React component, call `useGetSublessonNavigationDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSublessonNavigationDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSublessonNavigationDataQuery({
+ *   variables: {
+ *      currentLessonId: // value for 'currentLessonId'
+ *   },
+ * });
+ */
+export function useGetSublessonNavigationDataQuery(baseOptions: Apollo.QueryHookOptions<GetSublessonNavigationDataQuery, GetSublessonNavigationDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSublessonNavigationDataQuery, GetSublessonNavigationDataQueryVariables>(GetSublessonNavigationDataDocument, options);
+      }
+export function useGetSublessonNavigationDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSublessonNavigationDataQuery, GetSublessonNavigationDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSublessonNavigationDataQuery, GetSublessonNavigationDataQueryVariables>(GetSublessonNavigationDataDocument, options);
+        }
+export type GetSublessonNavigationDataQueryHookResult = ReturnType<typeof useGetSublessonNavigationDataQuery>;
+export type GetSublessonNavigationDataLazyQueryHookResult = ReturnType<typeof useGetSublessonNavigationDataLazyQuery>;
+export type GetSublessonNavigationDataQueryResult = Apollo.QueryResult<GetSublessonNavigationDataQuery, GetSublessonNavigationDataQueryVariables>;
