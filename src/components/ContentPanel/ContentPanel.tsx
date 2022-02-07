@@ -33,6 +33,7 @@ export const ContentPanel = memo(
       );
     }, []);
 
+    
     return (
       <Box
         bgColor="white"
