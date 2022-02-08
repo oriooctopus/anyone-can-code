@@ -77,16 +77,16 @@ export const useSublessonNavigation = ({
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
   const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
 
-  console.log('lesson', lesson);
   const { data } = useGetSublessonNavigationDataQuery({
     variables: { currentLessonId: Number(lesson?.id) },
   });
-  console.log('data', data);
 
   const isLastChallenge = currentChallengeIndex + 1 === challenges?.length;
   const isLastSublesson = currentSublessonIndex + 1 === totalSublessons;
   const isEndOfLesson = isLastChallenge && isLastSublesson;
   const isIntroduction = isSublessonIntroduction(currentChallengeIndex);
+  const nextLessonSlug = data?.nextLessonSlug;
+  console.log('next lesson slug', nextLessonSlug, data);
 
   const onClickNext = () => {
     challengeAttemptStatusVar(ChallengeAttemptStatusEnum.notAttempted);
@@ -100,7 +100,7 @@ export const useSublessonNavigation = ({
     } else if (!isLastSublesson) {
       setSublessonIndex(currentSublessonIndex + 1);
     } else {
-      history.push(`/lesson/${data?.nextLessonSlug}`);
+      history.push(`/lesson/${nextLessonSlug}`);
     }
   };
 
