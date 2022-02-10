@@ -61,7 +61,7 @@ export const StyledMarkdown = chakra(ReactMarkdown, {
       textDecoration: 'underline',
     },
     ' li': {
-      listStyle: 'inside',
+      marginLeft: '8px',
       listStyleType: "'- '",
     },
     '> *:not(:last-child)': {

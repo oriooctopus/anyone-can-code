@@ -42,6 +42,7 @@ export const MultipleChoiceChallengeOption = ({
         // TODO: it feels dirty to have to override the hover like this. Probably need to create a variant
         _hover={{ color }}
         fontWeight="normal"
+        whiteSpace="normal"
         d="flex"
         outline="none"
         border="1px solid #6A6A6A"
