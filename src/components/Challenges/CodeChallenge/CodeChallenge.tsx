@@ -46,6 +46,20 @@ export const CodeChallenge = ({
 
   useEffect(resetChallenge, [id]);
 
+  // passes test when control & enter keys are pressed together
+  const handleUserKeyPress = (e: KeyboardEvent) => {
+    if (((e.ctrlKey || e.metaKey) && e.code === "Enter")) {
+      runTests();
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('keypress', handleUserKeyPress);
+    return () => {
+      window.removeEventListener('keypress', handleUserKeyPress);
+    }}, []);
+
+
   return (
     <>
       <Box mt="15px" />
@@ -111,3 +125,5 @@ const Tests = ({ tests }: ITestsProps) => {
     </Box>
   );
 };
+
+
