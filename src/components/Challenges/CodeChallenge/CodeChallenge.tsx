@@ -57,8 +57,7 @@ export const CodeChallenge = ({
     window.addEventListener('keypress', handleUserKeyPress);
     return () => {
       window.removeEventListener('keypress', handleUserKeyPress);
-    }
-  }, [])
+    }}, []);
 
 
   return (
