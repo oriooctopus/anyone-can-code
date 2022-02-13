@@ -207,7 +207,7 @@ export type ComponentContentExternalResource = {
   id: Scalars['ID'];
   link: Scalars['String'];
   name: Maybe<Scalars['String']>;
-  type: Maybe<Scalars['String']>;
+  type: Maybe<Enum_Componentcontentexternalresource_Type>;
 };
 
 export type ComponentContentExternalResourceFiltersInput = {
@@ -223,7 +223,7 @@ export type ComponentContentExternalResourceInput = {
   id: Maybe<Scalars['ID']>;
   link: Maybe<Scalars['String']>;
   name: Maybe<Scalars['String']>;
-  type: Maybe<Scalars['String']>;
+  type: Maybe<Enum_Componentcontentexternalresource_Type>;
 };
 
 export type ComponentMiscModuleLesson = {
@@ -321,6 +321,12 @@ export type DateTimeFilterInput = {
   or: Maybe<Array<Maybe<Scalars['DateTime']>>>;
   startsWith: Maybe<Scalars['DateTime']>;
 };
+
+export enum Enum_Componentcontentexternalresource_Type {
+  Image = 'image',
+  Text = 'text',
+  Video = 'video'
+}
 
 export type FileInfoInput = {
   alternativeText: Maybe<Scalars['String']>;
@@ -484,7 +490,6 @@ export type LessonExternalResourcesArgs = {
 export type LessonSublessonsArgs = {
   filters: Maybe<SublessonFiltersInput>;
   pagination?: Maybe<PaginationArg>;
-  publicationState?: Maybe<PublicationState>;
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
@@ -1068,7 +1073,6 @@ export type QuerySublessonArgs = {
 export type QuerySublessonsArgs = {
   filters: Maybe<SublessonFiltersInput>;
   pagination?: Maybe<PaginationArg>;
-  publicationState?: Maybe<PublicationState>;
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
@@ -1156,7 +1160,6 @@ export type Sublesson = {
   description: Scalars['String'];
   lesson: Maybe<LessonEntityResponse>;
   name: Scalars['String'];
-  publishedAt: Maybe<Scalars['DateTime']>;
   syntaxEntry: Maybe<SyntaxEntryEntityResponse>;
   updatedAt: Maybe<Scalars['DateTime']>;
 };
@@ -1195,7 +1198,6 @@ export type SublessonFiltersInput = {
   name: Maybe<StringFilterInput>;
   not: Maybe<SublessonFiltersInput>;
   or: Maybe<Array<Maybe<SublessonFiltersInput>>>;
-  publishedAt: Maybe<DateTimeFilterInput>;
   syntaxEntry: Maybe<SyntaxEntryFiltersInput>;
   updatedAt: Maybe<DateTimeFilterInput>;
 };
@@ -1206,7 +1208,6 @@ export type SublessonInput = {
   internalNotes: Maybe<Scalars['String']>;
   lesson: Maybe<Scalars['ID']>;
   name: Maybe<Scalars['String']>;
-  publishedAt: Maybe<Scalars['DateTime']>;
   syntaxEntry: Maybe<Scalars['ID']>;
 };
 
@@ -1588,7 +1589,7 @@ export type GetLessonExternalResourcesDataQueryVariables = Exact<{
 }>;
 
 
-export type GetLessonExternalResourcesDataQuery = { __typename?: 'Query', lessons: { __typename?: 'LessonEntityResponseCollection', data: Array<{ __typename?: 'LessonEntity', attributes: { __typename?: 'Lesson', externalResources: Array<{ __typename?: 'ComponentContentExternalResource', name: string | null, link: string, type: string | null } | null> | null } | null }> } | null };
+export type GetLessonExternalResourcesDataQuery = { __typename?: 'Query', lessons: { __typename?: 'LessonEntityResponseCollection', data: Array<{ __typename?: 'LessonEntity', attributes: { __typename?: 'Lesson', externalResources: Array<{ __typename?: 'ComponentContentExternalResource', name: string | null, link: string, type: Enum_Componentcontentexternalresource_Type | null } | null> | null } | null }> } | null };
 
 export type LessonSidebarDataFragment = { __typename?: 'SublessonEntity', attributes: { __typename?: 'Sublesson', name: string, challenges: Array<{ __typename?: 'ComponentContentChallenges', codeChallenge: { __typename?: 'CodeChallengeEntityResponse', data: { __typename?: 'CodeChallengeEntity', id: string | null, attributes: { __typename?: 'CodeChallenge', getStartingCodeFromPreviousChallenge: boolean | null, startingCode: string | null, prompt: string, tests: Array<{ __typename?: 'ComponentChallengeCodeChallengeTest', internalTest: string, label: string } | null> | null, hints: Array<{ __typename?: 'ComponentChallengeChallengeHints', text: string, recommendedTimeBeforeViewing: number | null } | null> | null } | null } | null } | null, multipleChoiceChallenge: { __typename?: 'MultipleChoiceChallengeEntityResponse', data: { __typename?: 'MultipleChoiceChallengeEntity', id: string | null, attributes: { __typename?: 'MultipleChoiceChallenge', prompt: string, canSelectMultipleOptions: boolean | null, options: Array<{ __typename?: 'ComponentChallengeMultipleChoiceOptions', text: string, isCorrect: boolean | null, incorrectChoiceExplanation: string | null } | null> | null } | null } | null } | null } | null> | null } | null };
 

@@ -1,5 +1,5 @@
 import { useReactiveVar } from '@apollo/client';
-import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem, Heading } from '@chakra-ui/react';
 import '@fontsource/roboto';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
@@ -8,6 +8,7 @@ import {
   GetLessonDataQuery,
   useGetLessonDataQuery,
 } from 'src/generated/graphql';
+import { NotAvailableOnMobile } from 'src/pages/Lesson/NotAvailableOnMobile';
 import { SublessonInstructions } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions';
 import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
 import { resetLesson } from 'src/state/lesson/lesson';
@@ -30,7 +31,6 @@ interface IProps {
 }
 
 const LessonPage = ({ lesson }: IProps) => {
-  console.log('lesson!!', lesson);
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
   useEffect(() => {
     // TODO: set types for these
@@ -213,6 +213,7 @@ export const LessonPageContainer = () => {
 
   return (
     <Flex {...layoutStyles} overflow="hidden">
+      <NotAvailableOnMobile />
       <Box pl="2px" mr={{ md: '20px', lg: '30px', xl: '40px' }}>
         <Navbar />
         <LessonPage lesson={lesson} />
