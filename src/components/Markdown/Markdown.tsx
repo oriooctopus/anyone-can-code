@@ -18,7 +18,6 @@ export interface MarkdownProps {
   forceMultiLine?: boolean;
   multiLineCodePropOverrides?: Partial<MultiLineCodeProps>;
 } 
-// #8B95A7 #808080
 
 
 const Markdown = ({
