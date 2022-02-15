@@ -17,7 +17,9 @@ export interface MarkdownProps {
   markdownCSSOverrides?: Record<string, React.CSSProperties | string | number>;
   forceMultiLine?: boolean;
   multiLineCodePropOverrides?: Partial<MultiLineCodeProps>;
-}
+} 
+// #8B95A7 #808080
+
 
 const Markdown = ({
   children: markdownChildren,
@@ -27,7 +29,7 @@ const Markdown = ({
   markdownCSSOverrides = {},
   containerOverrides = {},
 }: MarkdownProps) => {
-  console.log('markdown', markdownCSSOverrides);
+  console.log('markdown', markdownCSSOverrides) 
   return (
     <Box w="100%" {...containerOverrides}>
       <StyledMarkdown
