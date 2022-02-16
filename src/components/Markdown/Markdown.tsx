@@ -28,7 +28,6 @@ const Markdown = ({
   markdownCSSOverrides = {},
   containerOverrides = {},
 }: MarkdownProps) => {
-  console.log('markdown', markdownCSSOverrides) 
   return (
     <Box w="100%" {...containerOverrides}>
       <StyledMarkdown
