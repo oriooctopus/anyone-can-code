@@ -40,6 +40,13 @@ export const removeEmpty = <TValue>(
   return value !== null && value !== undefined;
 };
 
+export const getBaseUrl = (string: string) => {
+  const pathArray = string.split('/');
+  const protocol = pathArray[0];
+  const host = pathArray[2];
+  return `${protocol}//${host}`;
+};
+
 export function flatMap<T, U>(
   array: T[],
   callbackfn: (value: T, index: number, array: T[]) => U[],

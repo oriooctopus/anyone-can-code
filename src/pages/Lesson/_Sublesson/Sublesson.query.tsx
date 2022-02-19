@@ -2,10 +2,11 @@ import gql from 'graphql-tag';
 import {
   codeChallengeData,
   multipleChoiceChallengeData,
-} from 'components/Challenges/Challenge.query';
+  playgroundData,
+} from 'components/Step/Step.query';
 
-export const sublessonInstructionsData = gql`
-  fragment sublessonInstructionsData on SublessonEntity {
+export const sublessonData = gql`
+  fragment sublessonData on SublessonEntity {
     id
     attributes {
       name
@@ -18,7 +19,7 @@ export const sublessonInstructionsData = gql`
           }
         }
       }
-      challenges {
+      steps {
         id
         codeChallenge {
           data {
@@ -30,9 +31,15 @@ export const sublessonInstructionsData = gql`
             ...multipleChoiceChallengeData
           }
         }
+        playground {
+          data {
+            ...playgroundData
+          }
+        }
       }
     }
   }
   ${codeChallengeData}
   ${multipleChoiceChallengeData}
+  ${playgroundData}
 `;

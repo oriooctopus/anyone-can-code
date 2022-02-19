@@ -16,13 +16,13 @@ import {
 } from '@chakra-ui/react';
 import { Formik } from 'formik';
 import {
-  sublessonChallengeFrequencyVar,
+  sublessonStepFrequencyVar,
   sublessonTextLengthPreferenceVar,
 } from 'src/state/general/general.reactiveVariables';
 import { LessonSettingsButtonGroup } from 'components/LessonSettings/LessonSettings.styles';
 import {
   lessonSettingsSaveOptions,
-  sublessonChallengeFrequencyOptions,
+  sublessonStepFrequencyOptions,
   sublessonTextLengthPreferenceOptions,
   LessonSettingsSaveOptionsEnum,
 } from 'components/LessonSettings/LessonSettings.utils';
@@ -35,20 +35,18 @@ export const LessonSettings = ({ ...boxProps }: props) => {
   const sublessonTextLengthPreference = useReactiveVar(
     sublessonTextLengthPreferenceVar,
   );
-  const sublessonChallengeFrequency = useReactiveVar(
-    sublessonChallengeFrequencyVar,
-  );
+  const sublessonStepFrequency = useReactiveVar(sublessonStepFrequencyVar);
 
   const initialValues = {
     lessonSaveOption: LessonSettingsSaveOptionsEnum.everywhere,
     sublessonTextLengthPreference,
-    sublessonChallengeFrequency,
+    sublessonStepFrequency,
   };
   // @ts-expect-error will fix later
   const onSubmit = (values) => {
     // in future we will use the save preferences to determine how we update
     sublessonTextLengthPreferenceVar(values.sublessonTextLengthPreference);
-    sublessonChallengeFrequencyVar(values.sublessonChallengeFrequency);
+    sublessonStepFrequencyVar(values.sublessonStepFrequency);
     onClose();
   };
 
@@ -78,10 +76,10 @@ export const LessonSettings = ({ ...boxProps }: props) => {
                   thing
                 </Text>
                 <LessonSettingsButtonGroup
-                  options={sublessonChallengeFrequencyOptions}
-                  currentValue={values.sublessonChallengeFrequency}
+                  options={sublessonStepFrequencyOptions}
+                  currentValue={values.sublessonStepFrequency}
                   onClick={(val) =>
-                    setFieldValue('sublessonChallengeFrequency', val)
+                    setFieldValue('sublessonStepFrequency', val)
                   }
                   label="Exercise Frequency:"
                 />

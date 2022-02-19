@@ -6,7 +6,7 @@ export interface ILearningStepCompletionData {
 
 export interface ISublessonCompletionData {
   introduction: ILearningStepCompletionData;
-  challenges: Array<ILearningStepCompletionData>;
+  steps: Array<ILearningStepCompletionData>;
 }
 
 export type lessonCompletionDataType = Array<ISublessonCompletionData>;

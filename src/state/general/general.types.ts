@@ -4,7 +4,7 @@ export enum SublessonTextLengthPreferenceEnum {
   long = 'long',
 }
 
-export enum SublessonChallengeFrequencyEnum {
+export enum SublessonStepFrequencyEnum {
   low = 'low',
   medium = 'medium',
   high = 'high',

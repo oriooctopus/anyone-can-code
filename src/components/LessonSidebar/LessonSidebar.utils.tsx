@@ -1,9 +1,9 @@
 import { useReactiveVar } from '@apollo/client';
 import { LessonSidebarDataFragment } from 'src/generated/graphql';
-import { setChallengeIndex } from 'src/state/challenge/challenge';
-import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
 import { lessonCompletionDataVar } from 'src/state/lessonCompletion/lessonCompletion.reactiveVariables';
 import { ISublessonCompletionData } from 'src/state/lessonCompletion/lessonCompletion.types';
+import { setStepIndex } from 'src/state/step/step';
+import { currentStepIndexVar } from 'src/state/step/step.reactiveVariables';
 import { setSublessonIndex } from 'src/state/sublesson/sublesson';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { ProgressStateEnum } from 'src/types/generalTypes';
@@ -13,13 +13,13 @@ import { IProgressStepperStep } from 'components/ProgressStepper/ProgressStepper
 const isSublessonComplete = (sublessonCompletion: ISublessonCompletionData) => {
   return (
     sublessonCompletion.introduction.completed &&
-    sublessonCompletion.challenges?.every(({ completed }) => completed)
+    sublessonCompletion.steps?.every(({ completed }) => completed)
   );
 };
 
 const useGetLessonCompletionProgressStates = () => {
   const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
-  const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
+  const currentStepIndex = useReactiveVar(currentStepIndexVar);
   const lessonCompletionData = useReactiveVar(lessonCompletionDataVar);
 
   const allSublessonCompletions = lessonCompletionData.map(
@@ -34,10 +34,10 @@ const useGetLessonCompletionProgressStates = () => {
     },
   );
 
-  const currentSublessonChallengeCompletions =
-    lessonCompletionData[currentSublessonIndex]?.challenges?.map(
-      ({ completed }, challengeIndex) => {
-        if (challengeIndex === currentChallengeIndex) {
+  const currentSublessonStepCompletions =
+    lessonCompletionData[currentSublessonIndex]?.steps?.map(
+      ({ completed }, stepIndex) => {
+        if (stepIndex === currentStepIndex) {
           return ProgressStateEnum.CURRENT;
         }
 
@@ -47,13 +47,13 @@ const useGetLessonCompletionProgressStates = () => {
       },
     ) || [];
   const currentSublessonIntroductionCompletion =
-    currentChallengeIndex === -1
+    currentStepIndex === -1
       ? ProgressStateEnum.CURRENT
       : lessonCompletionData?.[currentSublessonIndex].introduction.completed
       ? ProgressStateEnum.COMPLETE
       : ProgressStateEnum.INCOMPLETE;
   const currentSublessonCompletion = {
-    challenges: currentSublessonChallengeCompletions,
+    steps: currentSublessonStepCompletions,
     introduction: currentSublessonIntroductionCompletion,
   };
 
@@ -71,15 +71,17 @@ export const useGetLessonSidebarProgressStepperData = (
 
   const sublessonIntroductionStep: IProgressStepperStep = {
     hoverText: 'Introduction',
-    onClick: () => setChallengeIndex(-1),
+    onClick: () => setStepIndex(-1),
     state: currentSublessonCompletion.introduction,
   };
-  const currentSublessonChallengeStepperData =
-    currentSublessonCompletion.challenges.map((_challenge, challengeIndex) => ({
-      hoverText: `Challenge ${challengeIndex + 1}`,
-      onClick: () => setChallengeIndex(challengeIndex),
-      state: currentSublessonCompletion.challenges?.[challengeIndex],
-    }));
+  const currentSublessonStepStepperData = currentSublessonCompletion.steps.map(
+    (_step, stepIndex) => ({
+      // probably need to tweak this because it probaby works but is weird now. I guess it does make sense though as a combination of 0-indexing and the sublesson text
+      hoverText: `Step ${stepIndex + 2}`,
+      onClick: () => setStepIndex(stepIndex),
+      state: currentSublessonCompletion.steps?.[stepIndex],
+    }),
+  );
 
   const allSublessonsStepperData = sublessons.map(
     ({ name }, sublessonIndex) => ({
@@ -90,7 +92,7 @@ export const useGetLessonSidebarProgressStepperData = (
   );
   const currentSublessonStepperData = [
     sublessonIntroductionStep,
-    ...currentSublessonChallengeStepperData,
+    ...currentSublessonStepStepperData,
   ];
 
   return {

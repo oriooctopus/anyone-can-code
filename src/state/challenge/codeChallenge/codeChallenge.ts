@@ -10,14 +10,15 @@ export const resetTestResults = () => {
   testResultsVar([]);
 };
 
+// needs to be generalized
 export const getCodeChallengeStartingCode = (
   challenge: FlattenStrapi<CodeChallengeDataFragment>,
-  ignoreCurrentChallengeStoredCode?: boolean,
+  ignoreCurrentStepStoredCode?: boolean,
 ) => {
   const { startingCode, getStartingCodeFromPreviousChallenge } =
     challenge || {};
   const storedCode = getLearningStepCompletionData({})?.code;
-  const previousChallengeStoredCode =
+  const previousStepStoredCode =
     getStartingCodeFromPreviousChallenge &&
     getStoredCodeFromLastChallengeData();
 
@@ -27,12 +28,12 @@ export const getCodeChallengeStartingCode = (
     );
   } else if (!challenge) {
     return '';
-  } else if (storedCode && !ignoreCurrentChallengeStoredCode) {
+  } else if (storedCode && !ignoreCurrentStepStoredCode) {
     return storedCode;
   } else if (startingCode) {
     return startingCode;
-  } else if (previousChallengeStoredCode) {
-    return previousChallengeStoredCode;
+  } else if (previousStepStoredCode) {
+    return previousStepStoredCode;
   } else {
     return '';
   }

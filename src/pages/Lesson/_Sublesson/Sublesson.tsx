@@ -2,41 +2,36 @@ import { useReactiveVar } from '@apollo/client';
 import { Text } from '@chakra-ui/layout';
 import '@fontsource/roboto';
 import React, { useEffect } from 'react';
-import { SublessonInstructionsDataFragment } from 'src/generated/graphql';
+import { SublessonDataFragment } from 'src/generated/graphql';
 import {
-  getChallengesFromSublessonChallenges,
+  parseSublessonSteps,
   isSublessonIntroduction,
   useSublessonNavigation,
-} from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
-import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
+} from 'src/pages/Lesson/_Sublesson/Sublesson.utils';
 import { contentPanelScrollToTopFunctionVar } from 'src/state/general/general.reactiveVariables';
 import { updateCurrentEditorValue } from 'src/state/lessonCompletion/lessonCompletion';
+import { currentStepIndexVar } from 'src/state/step/step.reactiveVariables';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { getSublessonStartingCode } from 'src/state/sublesson/sublesson.utils';
 import { FlattenStrapi } from 'src/utils/normalizeStrapi';
-import { Challenge } from 'components/Challenges/Challenge';
-import { ChallengeButton } from 'components/Challenges/Challenge.styles';
 import { ContentPanel } from 'components/ContentPanel/ContentPanel';
 import Markdown from 'components/Markdown/Markdown';
+import { Step } from 'components/Step/Step';
+import { StepButton } from 'components/Step/Step.styles';
 
 type props = {
-  // so sublesson would be normalized
-  sublesson: FlattenStrapi<SublessonInstructionsDataFragment>;
+  sublesson: FlattenStrapi<SublessonDataFragment>;
   totalSublessons: number;
   /*
    * When a user presses 'go back' at the beginning of a sublesson,
    * they go to the end of the previous sublesson
    */
-  lastChallengeIndexOfPreviousSublesson: number | undefined;
+  lastStepIndexOfPreviousSublesson: number | undefined;
 };
 
-export const SublessonInstructions = React.memo(
-  ({
-    lastChallengeIndexOfPreviousSublesson,
-    sublesson,
-    totalSublessons,
-  }: props) => {
-    const currentChallengeIndex = useReactiveVar(currentChallengeIndexVar);
+export const Sublesson = React.memo(
+  ({ lastStepIndexOfPreviousSublesson, sublesson, totalSublessons }: props) => {
+    const currentStepIndex = useReactiveVar(currentStepIndexVar);
     const currentSublessonIndex = useReactiveVar(currentSublessonIndexVar);
     const contentPanelScrollToTopFunction = useReactiveVar(
       contentPanelScrollToTopFunctionVar,
@@ -46,16 +41,17 @@ export const SublessonInstructions = React.memo(
       totalSublessons,
     });
 
-    const { challenges, description, name, lesson } = sublesson;
+    const { steps, description, name, lesson } = sublesson;
 
-    const parsedChallenges = getChallengesFromSublessonChallenges(challenges);
-    const currentChallenge = parsedChallenges[currentChallengeIndex];
+    // probably should just be something like parseSublessonSteps
+    const parsedSteps = parseSublessonSteps(steps);
+    const currentStep = parsedSteps[currentStepIndex];
     const nextButtonText = isEndOfLesson ? 'Go to next lesson' : 'Next';
-    const isIntroduction = isSublessonIntroduction(currentChallengeIndex);
+    const isIntroduction = isSublessonIntroduction(currentStepIndex);
 
     const showGoBackIndicator = !isIntroduction || currentSublessonIndex !== 0;
 
-    const sublessonText = (
+    const sublessonIntroductionText = (
       <>
         <Text fontSize="26px">{name}</Text>
         <Markdown containerOverrides={{ mb: '35px', mt: '10px' }}>
@@ -63,9 +59,10 @@ export const SublessonInstructions = React.memo(
         </Markdown>
 
         {isIntroduction && (
-          <ChallengeButton onClick={onClickNext}>
-            {challenges?.length ? 'Begin Challenges' : nextButtonText}
-          </ChallengeButton>
+          // could probably have a better name
+          <StepButton onClick={onClickNext}>
+            {steps?.length ? 'Begin' : nextButtonText}
+          </StepButton>
         )}
       </>
     );
@@ -73,9 +70,9 @@ export const SublessonInstructions = React.memo(
     const onGoBack = () => {
       if (isIntroduction) {
         currentSublessonIndexVar(currentSublessonIndex - 1);
-        currentChallengeIndexVar(lastChallengeIndexOfPreviousSublesson);
+        currentStepIndexVar(lastStepIndexOfPreviousSublesson);
       } else {
-        currentChallengeIndexVar(currentChallengeIndex - 1);
+        currentStepIndexVar(currentStepIndex - 1);
       }
     };
 
@@ -83,25 +80,22 @@ export const SublessonInstructions = React.memo(
       updateCurrentEditorValue(getSublessonStartingCode());
     }, [sublesson.id]);
 
-    useEffect(contentPanelScrollToTopFunction, [
-      sublesson.id,
-      currentChallenge?.id,
-    ]);
+    useEffect(contentPanelScrollToTopFunction, [sublesson.id, currentStep?.id]);
 
     return (
       <ContentPanel
         onGoBack={showGoBackIndicator ? onGoBack : undefined}
-        secondaryContent={!isIntroduction && sublessonText}
+        secondaryContent={!isIntroduction && sublessonIntroductionText}
       >
         <>
           <Text fontSize="13px" textTransform="uppercase">
             {lesson?.name}
           </Text>
           {isIntroduction ? (
-            sublessonText
+            sublessonIntroductionText
           ) : (
-            <Challenge
-              challenge={parsedChallenges[currentChallengeIndex]}
+            <Step
+              step={parsedSteps[currentStepIndex]}
               onClickNext={onClickNext}
               nextButtonText={nextButtonText}
             />
@@ -112,4 +106,4 @@ export const SublessonInstructions = React.memo(
   },
 );
 
-SublessonInstructions.displayName = 'SublessonInstructions';
+Sublesson.displayName = 'Sublesson';

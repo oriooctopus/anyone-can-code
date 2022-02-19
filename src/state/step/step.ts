@@ -1,13 +1,13 @@
-import {
-  challengeAttemptStatusVar,
-  currentChallengeIndexVar,
-} from 'src/state/challenge/challenge.reactiveVariables';
-import { ChallengeAttemptStatusEnum } from 'src/state/challenge/challenge.types';
 import { resetTestResults } from 'src/state/challenge/codeChallenge/codeChallenge';
 import { updateLearningStepCompletionData } from 'src/state/lessonCompletion/lessonCompletion';
+import {
+  challengeAttemptStatusVar,
+  currentStepIndexVar,
+} from 'src/state/step/step.reactiveVariables';
+import { ChallengeAttemptStatusEnum } from 'src/state/step/step.types';
 
-export const setChallengeIndex = (challengeIndex: number) => {
-  currentChallengeIndexVar(challengeIndex);
+export const setStepIndex = (stepIndex: number) => {
+  currentStepIndexVar(stepIndex);
   resetTestResults();
 };
 

@@ -1,7 +1,8 @@
 import { Button, ButtonProps } from '@chakra-ui/button';
-import Markdown, { MarkdownProps } from 'components/Markdown/Markdown';
+import Markdown from 'components/Markdown/Markdown';
+import { MarkdownProps } from 'components/Markdown/Markdown.types';
 
-export const ChallengeMarkdown = ({
+export const StepMarkdown = ({
   containerOverrides = {},
   ...props
 }: MarkdownProps) => (
@@ -16,7 +17,7 @@ export const ChallengeMarkdown = ({
   />
 );
 
-export const ChallengeButton = (props: ButtonProps) => (
+export const StepButton = (props: ButtonProps) => (
   <Button
     px="35px"
     py="25px"

@@ -1,14 +1,14 @@
 import update, { CustomCommands, Spec } from 'immutability-helper';
-import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
 import { lessonCompletionDataVar } from 'src/state/lessonCompletion/lessonCompletion.reactiveVariables';
 import { ILearningStepCompletionData } from 'src/state/lessonCompletion/lessonCompletion.types';
+import { currentStepIndexVar } from 'src/state/step/step.reactiveVariables';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 
 /**
- * helper for modifying the data of the current challenge within
+ * helper for modifying the data of the current step within
  * the lessonCompletionData. This could be modified in the future
- * to take in a challengeIndex if necessary
- * @param spec pass in the spec for the modification of the challenge data
+ * to take in a stepIndex if necessary
+ * @param spec pass in the spec for the modification of the step data
  */
 export const updateLearningStepCompletionData = <
   C extends CustomCommands<object> = never,
@@ -17,20 +17,20 @@ export const updateLearningStepCompletionData = <
 ) => {
   const lessonCompletionData = lessonCompletionDataVar();
   const currentSublessonIndex = currentSublessonIndexVar();
-  const currentChallengeIndex = currentChallengeIndexVar();
+  const currentStepIndex = currentStepIndexVar();
 
   const updateSpec =
-    currentChallengeIndex === -1
+    currentStepIndex === -1
       ? {
           introduction: spec,
         }
       : {
-          challenges: {
-            [currentChallengeIndex]: spec,
+          steps: {
+            [currentStepIndex]: spec,
           },
         };
 
-  // @ts-expect-error will fix later. Interesting that when I forget to include challenges it had no error
+  // @ts-expect-error will fix later. Interesting that when I forget to include steps it had no error
   const newLessonCompletionData = update(lessonCompletionData, {
     [currentSublessonIndex]: updateSpec,
   });

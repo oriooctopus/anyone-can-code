@@ -15,6 +15,7 @@ export default defineConfig({
     }),
     EnvironmentPlugin({
       backendURL: process.env.BACKEND_URL,
+      isProd: process.env.IS_PROD,
     }),
   ],
   resolve: {
