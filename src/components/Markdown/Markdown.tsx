@@ -8,25 +8,8 @@ import { stripNewlines } from 'components/Markdown/Markdown.utils';
 import {
   InlineCode,
   MultiLineCodeBlock,
-<<<<<<< HEAD
-  MultiLineCodeProps,
-} from 'components/Markdown/Markdown.styles';
-import { stripNewlines } from 'components/Markdown/Markdown.utils';
-
-export interface MarkdownProps {
-  children: string;
-  codeTheme?: any;
-  containerOverrides?: BoxProps;
-  // TODO: There must be an actual type made for this. Find that instead of recreating it
-  markdownCSSOverrides?: Record<string, React.CSSProperties | string | number>;
-  forceMultiLine?: boolean;
-  multiLineCodePropOverrides?: Partial<MultiLineCodeProps>;
-} 
-
-=======
   getMarkdownInputComponent,
 } from 'components/Markdown/MarkdownComponents';
->>>>>>> origin/master
 
 const Markdown = ({
   children: markdownChildren,
