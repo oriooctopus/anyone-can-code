@@ -71,9 +71,9 @@ export const StyledMarkdown = chakra(ReactMarkdown, {
       padding: `0 ${rem(3)}`,
     },
     ' blockquote': {
-      borderLeft:`${rem(3)} solid #d6d6d6`,
-      backgroundColor:"#F9F9F9",
-      padding:3,
+      borderLeft: `${rem(3)} solid #d6d6d6`,
+      backgroundColor: "#F9F9F9",
+      padding: `${rem(3)}`,
     }
   },
 });
