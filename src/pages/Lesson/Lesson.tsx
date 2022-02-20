@@ -1,5 +1,5 @@
 import { useReactiveVar } from '@apollo/client';
-import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem, Heading } from '@chakra-ui/react';
 import '@fontsource/roboto';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
@@ -8,9 +8,10 @@ import {
   GetLessonDataQuery,
   useGetLessonDataQuery,
 } from 'src/generated/graphql';
-import { SublessonInstructions } from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions';
-import { currentChallengeIndexVar } from 'src/state/challenge/challenge.reactiveVariables';
+import { NotAvailableOnMobile } from 'src/pages/Lesson/NotAvailableOnMobile';
+import { Sublesson } from 'src/pages/Lesson/_Sublesson/Sublesson';
 import { resetLesson } from 'src/state/lesson/lesson';
+import { currentStepIndexVar } from 'src/state/step/step.reactiveVariables';
 import { currentSublessonIndexVar } from 'src/state/sublesson/sublesson.reactiveVariables';
 import { flattenStrapi, FlattenStrapi } from 'src/utils/normalizeStrapi';
 import { Editor } from 'components/Editor/Editor';
@@ -36,7 +37,7 @@ const LessonPage = ({ lesson }: IProps) => {
     // @ts-expect-error will fix later
     window.setSublesson = currentSublessonIndexVar;
     // @ts-expect-error will fix later
-    window.setChallenge = currentChallengeIndexVar;
+    window.setChallenge = currentStepIndexVar;
   }, []);
 
   const sublessons = lesson?.sublessons || [];
@@ -48,9 +49,9 @@ const LessonPage = ({ lesson }: IProps) => {
    * find the last challenge of the last sublesson and that's where you'll go, but what we
    * should just do is have it be -1 or something
    */
-  const lastChallengeIndexOfPreviousSublesson =
+  const lastStepIndexOfPreviousSublesson =
     currentSublessonIndex > 0
-      ? (sublessons?.[currentSublessonIndex - 1]?.challenges?.length || 0) - 1
+      ? (sublessons?.[currentSublessonIndex - 1]?.steps?.length || 0) - 1
       : undefined;
 
   if (!currentSublesson) {
@@ -60,12 +61,10 @@ const LessonPage = ({ lesson }: IProps) => {
   return (
     <Grid templateColumns="repeat(12, 1fr)" gap={{ md: '20px' }}>
       <GridItem colSpan={5}>
-        <SublessonInstructions
+        <Sublesson
           sublesson={currentSublesson}
           totalSublessons={totalSublessons}
-          lastChallengeIndexOfPreviousSublesson={
-            lastChallengeIndexOfPreviousSublesson
-          }
+          lastStepIndexOfPreviousSublesson={lastStepIndexOfPreviousSublesson}
         />
       </GridItem>
       <GridItem colSpan={7} mt="10px">
@@ -212,6 +211,7 @@ export const LessonPageContainer = () => {
 
   return (
     <Flex {...layoutStyles} overflow="hidden">
+      <NotAvailableOnMobile />
       <Box pl="2px" mr={{ md: '20px', lg: '30px', xl: '40px' }}>
         <Navbar />
         <LessonPage lesson={lesson} />

@@ -1,8 +1,10 @@
 import { Box, Divider, Text } from '@chakra-ui/layout';
+import { NotAvailableOnMobile } from 'src/pages/Lesson/NotAvailableOnMobile';
 import { Layout } from 'components/Layout/Layout';
 
 export const Home = () => (
   <Layout>
+    <NotAvailableOnMobile />
     <Box mx={10} color="white">
       <Text fontSize="3xl">
         If you are not embarrassed by the first version of your product, you've

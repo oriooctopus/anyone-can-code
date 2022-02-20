@@ -1,6 +1,6 @@
 import {
   SublessonTextLengthPreferenceEnum,
-  SublessonChallengeFrequencyEnum,
+  SublessonStepFrequencyEnum,
   AuthModalStateEnum,
 } from './general.types';
 import { makeVar } from '@apollo/client';
@@ -10,8 +10,8 @@ import { makeVar } from '@apollo/client';
 export const sublessonTextLengthPreferenceVar = makeVar(
   SublessonTextLengthPreferenceEnum.medium,
 );
-export const sublessonChallengeFrequencyVar = makeVar(
-  SublessonChallengeFrequencyEnum.medium,
+export const sublessonStepFrequencyVar = makeVar(
+  SublessonStepFrequencyEnum.medium,
 );
 export const contentPanelScrollToTopFunctionVar = makeVar(() => {});
 export const authModalStateVar = makeVar(AuthModalStateEnum.NOT_OPEN);

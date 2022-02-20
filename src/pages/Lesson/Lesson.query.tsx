@@ -11,7 +11,7 @@ export const getLessonData = gql`
           name
           sublessons {
             data {
-              ...sublessonInstructionsData
+              ...sublessonData
               ...lessonSidebarData
             }
           }

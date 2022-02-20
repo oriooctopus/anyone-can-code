@@ -1,3 +1,4 @@
+import omit from 'lodash/omit';
 import { O } from 'ts-toolbelt';
 import { flatMap } from 'src/utils/general';
 
@@ -133,8 +134,12 @@ export type NormalizeStrapiSingleLayer<O extends FlattenStrapiParam> =
     ? FlattenAttributes<O>
     : null;
 
+// const removeAttributes
+
 // I am pretty sure I'm stripping null. Which is good, but it
 // should be more explicit/configurable. Will revisit later
+
+// ok so all I need to do here is have it flatten but not strip everything else which can be achiveved by returning the full object with the attributes/data swapped for inner contents
 const normalizeStrapiData = <T extends FlattenStrapiParam>(
   param: T,
 ): NormalizeStrapiSingleLayer<T> => {
@@ -143,17 +148,24 @@ const normalizeStrapiData = <T extends FlattenStrapiParam>(
   } else if (isStrapiAttributesObject(param)) {
     return isFlattenStrapiParam(param.attributes)
       ? normalizeStrapiData(param.attributes)
-      : param.attributes;
+      : //  create a removeAttributes function
+        { ...param.attributes, ...omit(param, 'attributes') };
   } else if (isStrapiCollectionWithData(param)) {
     const { data } = param;
 
     if (Array.isArray(data)) {
       return flatMap(data, (item) =>
-        item.attributes ? [item.attributes] : [],
+        //  create a removeAttributes function
+        item.attributes
+          ? [{ ...item.attributes, ...omit(item, 'attributes') }]
+          : [],
       ) as NormalizeStrapiSingleLayer<T>;
     }
 
-    return data?.attributes as NormalizeStrapiSingleLayer<T>;
+    return {
+      ...data?.attributes,
+      ...omit(data, 'attributes'),
+    } as NormalizeStrapiSingleLayer<T>;
   } else {
     return param.map(normalizeStrapiData) as NormalizeStrapiSingleLayer<T>;
   }

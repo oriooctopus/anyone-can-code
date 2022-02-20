@@ -1,10 +1,14 @@
-/* eslint-disable */
-import { Box, BoxProps } from '@chakra-ui/layout';
+import { Box } from '@chakra-ui/layout';
+import remarkGfm from 'remark-gfm';
+import { getBaseUrl } from 'src/utils/general';
 import { FlLink } from 'components/Link/FlLink';
+import { StyledMarkdown } from 'components/Markdown/Markdown.styles';
+import { MarkdownProps } from 'components/Markdown/Markdown.types';
+import { stripNewlines } from 'components/Markdown/Markdown.utils';
 import {
-  StyledMarkdown,
   InlineCode,
   MultiLineCodeBlock,
+<<<<<<< HEAD
   MultiLineCodeProps,
 } from 'components/Markdown/Markdown.styles';
 import { stripNewlines } from 'components/Markdown/Markdown.utils';
@@ -19,9 +23,14 @@ export interface MarkdownProps {
   multiLineCodePropOverrides?: Partial<MultiLineCodeProps>;
 } 
 
+=======
+  getMarkdownInputComponent,
+} from 'components/Markdown/MarkdownComponents';
+>>>>>>> origin/master
 
 const Markdown = ({
   children: markdownChildren,
+  components,
   codeTheme,
   forceMultiLine,
   multiLineCodePropOverrides = {},
@@ -32,11 +41,12 @@ const Markdown = ({
     <Box w="100%" {...containerOverrides}>
       <StyledMarkdown
         children={markdownChildren}
+        remarkPlugins={[remarkGfm]}
         sx={markdownCSSOverrides}
         components={{
           img({ src, ...props }) {
-            // TODO: Make this more dynamic once you migrate to v4 of strapi
-            return <img src={`http://localhost:1337${src}`} {...props} />;
+            const baseUrl = getBaseUrl(process.env.BACKEND_URL!);
+            return <img src={`${baseUrl}/${src}`} {...props} />;
           },
           code({ node, inline, children, ...props }) {
             return inline && !forceMultiLine ? (
@@ -60,6 +70,8 @@ const Markdown = ({
               />
             );
           },
+          input: getMarkdownInputComponent(),
+          ...components,
         }}
       />
     </Box>

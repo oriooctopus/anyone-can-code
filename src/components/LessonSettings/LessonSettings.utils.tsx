@@ -1,5 +1,5 @@
 import {
-  SublessonChallengeFrequencyEnum,
+  SublessonStepFrequencyEnum,
   SublessonTextLengthPreferenceEnum,
 } from 'src/state/general/general.types';
 import { LessonSettingsButtonGroupOption } from 'components/LessonSettings/LessonSettings.types';
@@ -10,19 +10,19 @@ export enum LessonSettingsSaveOptionsEnum {
   everywhere = 'everywhere',
 }
 
-export const sublessonChallengeFrequencyOptions: Array<LessonSettingsButtonGroupOption> =
+export const sublessonStepFrequencyOptions: Array<LessonSettingsButtonGroupOption> =
   [
     {
       label: 'Low',
-      value: SublessonChallengeFrequencyEnum.low,
+      value: SublessonStepFrequencyEnum.low,
     },
     {
       label: 'Medium',
-      value: SublessonChallengeFrequencyEnum.medium,
+      value: SublessonStepFrequencyEnum.medium,
     },
     {
       label: 'High',
-      value: SublessonChallengeFrequencyEnum.high,
+      value: SublessonStepFrequencyEnum.high,
     },
   ];
 

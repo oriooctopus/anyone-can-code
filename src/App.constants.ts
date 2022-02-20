@@ -3,4 +3,4 @@ export const LOCAL_STORAGE_KEYS = {
 };
 
 // starts at -1 because there is a lesson introduction before any challenges
-export const sublessonChallengeStartingIndex = -1;
+export const sublessonStepStartingIndex = -1;

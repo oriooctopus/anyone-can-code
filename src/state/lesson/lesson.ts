@@ -1,9 +1,9 @@
 import { CodeChallengeDataFragment } from 'src/generated/graphql';
 import { LessonType } from 'src/pages/Lesson/Lesson';
 import {
-  getChallengeFromSublessonChallenge,
+  getStepFromSublessonStep,
   setSublessonIndex,
-} from 'src/pages/Lesson/_SublessonInstructions/SublessonInstructions.utils';
+} from 'src/pages/Lesson/_Sublesson/Sublesson.utils';
 import { getCodeChallengeStartingCode } from 'src/state/challenge/codeChallenge/codeChallenge';
 import { lessonCompletionDataVar } from 'src/state/lessonCompletion/lessonCompletion.reactiveVariables';
 import { lessonCompletionDataType } from 'src/state/lessonCompletion/lessonCompletion.types';
@@ -18,14 +18,13 @@ export const resetLesson = ({ sublessons }: LessonType) => {
   }
 
   const newLessonCompletionData: lessonCompletionDataType = sublessons.map(
-    ({ challenges }) => ({
-      challenges: (challenges || []).filter(removeEmpty).map((challenge) => {
-        const formattedChallenge =
-          getChallengeFromSublessonChallenge(challenge);
+    ({ steps }) => ({
+      steps: (steps || []).filter(removeEmpty).map((step) => {
+        const formattedStep = getStepFromSublessonStep(step);
         const startingCode =
-          formattedChallenge.__typename === 'CodeChallenge'
+          formattedStep.__typename === 'CodeChallenge'
             ? getCodeChallengeStartingCode(
-                formattedChallenge as FlattenStrapi<CodeChallengeDataFragment>,
+                formattedStep as FlattenStrapi<CodeChallengeDataFragment>,
                 false,
               )
             : '';

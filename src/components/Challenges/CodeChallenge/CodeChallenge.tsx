@@ -11,13 +11,10 @@ import { removeEmpty } from 'src/utils/general';
 import { FlattenStrapi } from 'src/utils/normalizeStrapi';
 import { ChallengeHints } from 'components/ChallengeHints/ChallengeHints';
 import {
-  ChallengeButton,
-  ChallengeMarkdown,
-} from 'components/Challenges/Challenge.styles';
-import {
   hasPassedCodeChallenge,
   useCodeChallengeTests,
 } from 'components/Challenges/CodeChallenge/CodeChallenge.utils';
+import { StepButton, StepMarkdown } from 'components/Step/Step.styles';
 import TestCaseResult from 'components/TestCaseResult/TestCaseResult';
 
 export type CodeChallengeProps = {
@@ -34,9 +31,9 @@ export const CodeChallenge = ({
   const { id, hints, tests, prompt } = challenge;
   const { runTests } = useCodeChallengeTests(tests);
   // I now need to differentiate two functions. Reset challenge which is truly to reset it, and another function to get the when a challenge loads.
-  const resetChallenge = (ignoreCurrentChallengeStoredCode?: boolean) => {
+  const resetChallenge = (ignoreCurrentStepStoredCode?: boolean) => {
     updateCurrentEditorValue(
-      getCodeChallengeStartingCode(challenge, ignoreCurrentChallengeStoredCode),
+      getCodeChallengeStartingCode(challenge, ignoreCurrentStepStoredCode),
     );
     testResultsVar([]);
   };
@@ -48,25 +45,23 @@ export const CodeChallenge = ({
 
   // passes test when control & enter keys are pressed together
   const handleUserKeyPress = (e: KeyboardEvent) => {
-    if (((e.ctrlKey || e.metaKey) && e.code === "Enter")) {
+    if ((e.ctrlKey || e.metaKey) && e.code === 'Enter') {
       runTests();
     }
-  }
+  };
 
   useEffect(() => {
-    window.addEventListener('keypress', handleUserKeyPress);
+    window.addEventListener('keydown', handleUserKeyPress);
     return () => {
-      window.removeEventListener('keypress', handleUserKeyPress);
-    }}, []);
-
+      window.removeEventListener('keydown', handleUserKeyPress);
+    };
+  }, []);
 
   return (
     <>
       <Box mt="15px" />
       {/* we give text flex grow so that the tests are on the bottom */}
-      <ChallengeMarkdown containerOverrides={{ flexGrow: 1 }}>
-        {prompt}
-      </ChallengeMarkdown>
+      <StepMarkdown containerOverrides={{ flexGrow: 1 }}>{prompt}</StepMarkdown>
       <Box mb="20px" w="100%">
         {showHints ? (
           <ChallengeHints hints={hints.filter(removeEmpty)} />
@@ -77,16 +72,16 @@ export const CodeChallenge = ({
       </Box>
       <Flex spacing={6} mt="auto">
         {canProceed ? (
-          <ChallengeButton colorScheme="green" onClick={onClickNext} mr="20px">
+          <StepButton colorScheme="green" onClick={onClickNext} mr="20px">
             {nextButtonText}
-          </ChallengeButton>
+          </StepButton>
         ) : (
-          <ChallengeButton colorScheme="green" onClick={runTests} mr="20px">
+          <StepButton colorScheme="green" onClick={runTests} mr="20px">
             Run Tests
-          </ChallengeButton>
+          </StepButton>
         )}
 
-        <ChallengeButton
+        <StepButton
           colorScheme="red"
           onClick={() => resetChallenge(true)}
           variant="ghost"
@@ -95,7 +90,7 @@ export const CodeChallenge = ({
             <Reset />
             <Text fontWeight="medium">Reset Code</Text>
           </HStack>
-        </ChallengeButton>
+        </StepButton>
       </Flex>
     </>
   );
@@ -125,5 +120,3 @@ const Tests = ({ tests }: ITestsProps) => {
     </Box>
   );
 };
-
-

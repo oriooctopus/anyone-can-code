@@ -3,17 +3,14 @@ import { Text } from '@chakra-ui/layout';
 import { Box } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { MultipleChoiceChallengeDataFragment } from 'src/generated/graphql';
-import { failChallenge, passChallenge } from 'src/state/challenge/challenge';
-import { challengeAttemptStatusVar } from 'src/state/challenge/challenge.reactiveVariables';
-import { ChallengeAttemptStatusEnum } from 'src/state/challenge/challenge.types';
 import { multipleChoiceOptionSelectionsVar } from 'src/state/challenge/multipleChoiceChallenge/multipleChoiceChallenge.reactiveVariables';
+import { failChallenge, passChallenge } from 'src/state/step/step';
+import { challengeAttemptStatusVar } from 'src/state/step/step.reactiveVariables';
+import { ChallengeAttemptStatusEnum } from 'src/state/step/step.types';
 import { removeEmpty } from 'src/utils/general';
 import { FlattenStrapi } from 'src/utils/normalizeStrapi';
-import {
-  ChallengeButton,
-  ChallengeMarkdown,
-} from 'components/Challenges/Challenge.styles';
 import { MultipleChoiceChallengeOption } from 'components/Challenges/MultipleChoiceChallenge/MultipleChoiceChallengeOption';
+import { StepButton, StepMarkdown } from 'components/Step/Step.styles';
 
 type props = {
   challenge: FlattenStrapi<MultipleChoiceChallengeDataFragment>;
@@ -74,7 +71,7 @@ export const MultipleChoiceChallenge = ({
       <Text fontStyle="italic" opacity="65%" color="black" mb="30px" mt="10px">
         Select the correct option:
       </Text>
-      <ChallengeMarkdown>{prompt}</ChallengeMarkdown>
+      <StepMarkdown>{prompt}</StepMarkdown>
       {options
         ?.filter(removeEmpty)
         .map(({ incorrectChoiceExplanation, text }, index) => (
@@ -91,11 +88,9 @@ export const MultipleChoiceChallenge = ({
         ))}
       <Box mt="auto" position="relative" width="100%">
         {hasUserPassed ? (
-          <ChallengeButton onClick={onClickNext}>
-            {nextButtonText}
-          </ChallengeButton>
+          <StepButton onClick={onClickNext}>{nextButtonText}</StepButton>
         ) : (
-          <ChallengeButton onClick={onSubmit}>Submit</ChallengeButton>
+          <StepButton onClick={onSubmit}>Submit</StepButton>
         )}
         {challengeAttemptStatus === ChallengeAttemptStatusEnum.passed && (
           <Text color="green" fontSize="14px" position="absolute" top="53px">

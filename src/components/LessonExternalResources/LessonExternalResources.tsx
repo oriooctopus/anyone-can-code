@@ -49,7 +49,7 @@ export const LessonExternalResources = () => {
   return (
     <LearningSidebarPopupButton
       popupContent={popup}
-      buttonTooltip="External Resources"
+      buttonTooltip="Additional Resources"
     >
       <IconButton
         aria-label="Toggle Syntax Handbook"

@@ -1,13 +1,14 @@
 import {
   CodeChallengeDataFragment,
   MultipleChoiceChallengeDataFragment,
+  PlaygroundDataFragment,
 } from 'src/generated/graphql';
 import { FlattenStrapi } from 'src/utils/normalizeStrapi';
 
-// export type UnparsedChallengeFragment = ComponentSublessonchallengeChallenge.
-
-export type ChallengeFragment = FlattenStrapi<
-  MultipleChoiceChallengeDataFragment | CodeChallengeDataFragment
+export type StepFragment = FlattenStrapi<
+  | MultipleChoiceChallengeDataFragment
+  | CodeChallengeDataFragment
+  | PlaygroundDataFragment
 >;
 
 export enum ProgressStateEnum {

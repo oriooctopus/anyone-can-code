@@ -20,6 +20,15 @@ export const codeChallengeData = gql`
   ${challengeHintsData}
 `;
 
+export const playgroundData = gql`
+  fragment playgroundData on PlaygroundEntity {
+    id
+    attributes {
+      prompt
+    }
+  }
+`;
+
 export const multipleChoiceChallengeData = gql`
   fragment multipleChoiceChallengeData on MultipleChoiceChallengeEntity {
     id

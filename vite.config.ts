@@ -1,8 +1,11 @@
 import react from '@vitejs/plugin-react';
+import dotenv from 'dotenv';
 import path from 'path';
 import { defineConfig } from 'vite';
 import EnvironmentPlugin from 'vite-plugin-environment';
 import reactSvgPlugin from 'vite-plugin-react-svg';
+
+dotenv.config();
 
 export default defineConfig({
   plugins: [
@@ -11,7 +14,8 @@ export default defineConfig({
       defaultExport: 'component',
     }),
     EnvironmentPlugin({
-      backendURL: process.env.BACKEND_URL || 'http://localhost:1337/graphql',
+      backendURL: process.env.BACKEND_URL,
+      isProd: process.env.IS_PROD,
     }),
   ],
   resolve: {
