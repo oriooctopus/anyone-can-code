@@ -1,7 +1,6 @@
 import { Box, Heading } from '@chakra-ui/react';
 
 export const NotAvailableOnMobile = () => {
-  console.log('process.env.isProd', process.env);
   if (process.env.isProd !== 'true') {
     return null;
   }
