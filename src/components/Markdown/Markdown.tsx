@@ -28,10 +28,15 @@ const Markdown = ({
         sx={markdownCSSOverrides}
         components={{
           img({ src, ...props }) {
-            const baseUrl = getBaseUrl(process.env.BACKEND_URL!);
-            return <img src={`${baseUrl}/${src}`} {...props} />;
+            const backendUrl = process.env.backendUrl;
+
+            if (!backendUrl) {
+              throw new Error('No backend URL');
+            }
+
+            return <img src={`${backendUrl}${src}`} {...props} />;
           },
-          code({ node, inline, children, ...props }) {
+          code({ inline, children, ...props }) {
             return inline && !forceMultiLine ? (
               <InlineCode {...props}>{children}</InlineCode>
             ) : (

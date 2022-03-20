@@ -24,7 +24,7 @@ export const ProgressStepper = ({ steps, title }: IProgressStepperProps) => {
       <Flex align="center" justify="center" mb={rem(10)}>
         <Text>{title}</Text>
       </Flex>
-      <HStack justify="center" spacing="3px">
+      <HStack align="flex-end" justify="center" spacing="3px">
         {steps.map(({ hoverText, state, onClick }) => (
           <FlLink onClick={onClick} key={hoverText}>
             <Tooltip label={hoverText}>

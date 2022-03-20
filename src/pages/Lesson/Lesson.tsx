@@ -1,5 +1,5 @@
 import { useReactiveVar } from '@apollo/client';
-import { Box, Flex, Grid, GridItem, Heading } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import '@fontsource/roboto';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
@@ -44,10 +44,11 @@ const LessonPage = ({ lesson }: IProps) => {
   const currentSublesson = sublessons[currentSublessonIndex];
   const totalSublessons = sublessons.length;
   /*
-   * This actually has to be fixed as it doesn't make sense when there aren't challenges
-   * The idea is when going back from the beginning of a sublesson to the end of another,
-   * find the last challenge of the last sublesson and that's where you'll go, but what we
-   * should just do is have it be -1 or something
+   * This actually has to be fixed as it doesn't make sense when
+   * there aren't challenges The idea is when going back from
+   * the beginning of a sublesson to the end of another, find the
+   * last challenge of the last sublesson and that's where you'll
+   * go, but what we should just do is have it be -1 or something
    */
   const lastStepIndexOfPreviousSublesson =
     currentSublessonIndex > 0
@@ -85,118 +86,11 @@ export const LessonPageContainer = () => {
       if (!result?.lessons) {
         throw new Error('No lessons found');
       }
-      console.log('lesson', result?.lessons);
-      console.log('another test', flattenStrapi(result.lessons));
-      console.log('recursive ', flattenStrapi(result));
-      console.log(
-        'this is what it would be',
-        flattenStrapi({
-          __typename: 'LessonEntityResponseCollection',
-          data: [
-            {
-              __typename: 'LessonEntity',
-              id: '6',
-              attributes: {
-                __typename: 'Lesson',
-                name: 'Getting Started with Variables',
-                sublessons: {
-                  __typename: 'SublessonRelationResponseCollection',
-                  data: [
-                    {
-                      __typename: 'SublessonEntity',
-                      id: '5',
-                      attributes: {
-                        __typename: 'Sublesson',
-                        name: 'Camel Casing',
-                        description:
-                          'In Javascript, the standard way to write our variables is called camel casing. Camel casing means having no spaces between words, and capitalizing every word besides the first word. Here are some examples. On the left side is how we might write it in English, and on the right is how it will look when camel-cased:\n\n- my full name -> myFullName\n- total lessons -> totalLessons\n- a very long sentence about camel-casing -> aVeryLongSentenceAboutCamelCasing',
-                        lesson: {
-                          __typename: 'LessonEntityResponse',
-                          data: {
-                            __typename: 'LessonEntity',
-                            id: '6',
-                            attributes: {
-                              __typename: 'Lesson',
-                              name: 'Getting Started with Variables',
-                            },
-                          },
-                        },
-                        challenges: [
-                          {
-                            __typename: 'ComponentContentChallenges',
-                            id: '10',
-                            codeChallenge: {
-                              __typename: 'CodeChallengeEntityResponse',
-                              data: null,
-                            },
-                            multipleChoiceChallenge: {
-                              __typename:
-                                'MultipleChoiceChallengeEntityResponse',
-                              data: {
-                                __typename: 'MultipleChoiceChallengeEntity',
-                                id: '10',
-                                attributes: {
-                                  __typename: 'MultipleChoiceChallenge',
-                                  prompt:
-                                    'Which of the following variable names is camel cased? Select all that apply',
-                                  options: [
-                                    {
-                                      __typename:
-                                        'ComponentChallengeMultipleChoiceOptions',
-                                      text: 'MyCoolHouse',
-                                      isCorrect: false,
-                                      incorrectChoiceExplanation:
-                                        'This casing is known as PascalCase',
-                                    },
-                                    {
-                                      __typename:
-                                        'ComponentChallengeMultipleChoiceOptions',
-                                      text: 'nextLesson',
-                                      isCorrect: true,
-                                      incorrectChoiceExplanation: null,
-                                    },
-                                    {
-                                      __typename:
-                                        'ComponentChallengeMultipleChoiceOptions',
-                                      text: 'my_city',
-                                      isCorrect: false,
-                                      incorrectChoiceExplanation:
-                                        'This casing is known as snake_case',
-                                    },
-                                    {
-                                      __typename:
-                                        'ComponentChallengeMultipleChoiceOptions',
-                                      text: 'TOTAL_REFRIGERATORS',
-                                      isCorrect: false,
-                                      incorrectChoiceExplanation:
-                                        'THIS CASING IS KNOWN AS UPPER_CASE_SNAKE_CASE',
-                                    },
-                                    {
-                                      __typename:
-                                        'ComponentChallengeMultipleChoiceOptions',
-                                      text: 'favorite-animal',
-                                      isCorrect: false,
-                                      incorrectChoiceExplanation:
-                                        'This casing is known as kebab-case',
-                                    },
-                                  ],
-                                  canSelectMultipleOptions: true,
-                                },
-                              },
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                },
-              },
-            },
-          ],
-        }),
-      );
 
-      // This query should be changed to just return one, which I think is now possible anyways with v4
+      /**
+       * This query should be changed to just return one, which
+       * I think is now possible anyways with v4
+       */
       const [lessonData] = flattenStrapi(result)?.lessons || [];
 
       /**
@@ -212,7 +106,7 @@ export const LessonPageContainer = () => {
   return (
     <Flex {...layoutStyles} overflow="hidden">
       <NotAvailableOnMobile />
-      <Box pl="2px" mr={{ md: '20px', lg: '30px', xl: '40px' }}>
+      <Box pl="2px" mr={{ md: '20px', lg: '30px', xl: '40px' }} flexGrow={1}>
         <Navbar />
         <LessonPage lesson={lesson} />
       </Box>

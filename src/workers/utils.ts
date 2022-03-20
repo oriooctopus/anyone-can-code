@@ -30,7 +30,7 @@ interface IFindFirstPassingLineForCondition {
 }
 
 const getCodeEvaluationHelpers = (
-  logs: Array<Array<unknown>>,
+  logs: Array<Array<unknown>>, //
   codeString: string,
 ) => {
   const helpers = {
@@ -41,6 +41,8 @@ const getCodeEvaluationHelpers = (
     wasFunctionInvoked: (functionName: string) => {
       return codeString.trim().includes(`${functionName}()`);
     },
+    isDefined: (variableName: string) =>
+      eval(`typeof ${variableName} !== 'undefined'`),
     /**
      * Evaluates a condition for each line of the provided code.
      * Upon finding a line that passes it returns that line's index
@@ -129,15 +131,11 @@ export const getConsoleLogsFromCodeEvaluation = (
 
 // TODO: type context
 export const evaluateWithContext = (code: string, context = {}) => {
-  return function evaluateEval() {
-    const contextStr = Object.keys(context)
-      .map((key) => `${key} = this.${key}`)
-      .join(',');
-    const contextDef = contextStr ? `let ${contextStr};` : '';
-
-    const evalString = `${contextDef}${code}`;
-
-    const result = eval(evalString);
-    return result;
-  }.call(context);
+  const contextStr = Object.keys(context).length
+    ? Object.entries(context)
+        .map(([key, value]) => `${key} = ${value}`)
+        .join(',')
+    : '';
+  const evalString = `${contextStr}${code}`;
+  return eval(evalString);
 };
