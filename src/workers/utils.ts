@@ -30,7 +30,7 @@ interface IFindFirstPassingLineForCondition {
 }
 
 const getCodeEvaluationHelpers = (
-  logs: Array<Array<unknown>>, //
+  logs: Array<Array<unknown>>,
   codeString: string,
 ) => {
   const helpers = {
@@ -50,7 +50,6 @@ const getCodeEvaluationHelpers = (
     findFirstPassingLineForCondition: ({
       condition,
     }: IFindFirstPassingLineForCondition) => {
-      debugger;
       const splitCodeString = codeString.split('\n');
       let codeToEvaluate = '';
 
@@ -131,11 +130,20 @@ export const getConsoleLogsFromCodeEvaluation = (
 
 // TODO: type context
 export const evaluateWithContext = (code: string, context = {}) => {
+  // Create an args definition list e.g. "arg1 = this.arg1, arg2 = this.arg2"
   const contextStr = Object.keys(context).length
-    ? Object.entries(context)
-        .map(([key, value]) => `${key} = ${value}`)
-        .join(',')
+    ? `let ${Object.keys(context)
+        .map((key) => `${key} = this.${key}`)
+        .join(',')}`
     : '';
   const evalString = `${contextStr}${code}`;
-  return eval(evalString);
+  /**
+   * Call is used to define where "this" within the evaluated code
+   * should reference. eval does not accept the likes of
+   * eval.call(...) or eval.apply(...) and cannot be an arrow function
+   * because of how arrow functions handle 'this'
+   */
+  return function anonymousFunction() {
+    return eval(evalString);
+  }.call(context);
 };
