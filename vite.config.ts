@@ -14,7 +14,7 @@ export default defineConfig({
       defaultExport: 'component',
     }),
     EnvironmentPlugin({
-      backendURL: process.env.BACKEND_URL,
+      backendUrl: process.env.BACKEND_URL,
       isProd: process.env.IS_PROD,
     }),
   ],

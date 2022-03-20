@@ -1,7 +1,7 @@
 overwrite: true
 schema:
   - client-schema.graphql
-  - ${BACKEND_URL}
+  - ${BACKEND_URL}/graphql
 documents:
   - 'src/**/*.graphql'
   - 'src/**/*.query.{ts,tsx}'
