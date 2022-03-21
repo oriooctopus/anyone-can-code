@@ -1,7 +1,8 @@
 import { useReactiveVar } from '@apollo/client';
 import { Text } from '@chakra-ui/layout';
 import { Box } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { Button } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
 import { MultipleChoiceChallengeDataFragment } from 'src/generated/graphql';
 import { multipleChoiceOptionSelectionsVar } from 'src/state/challenge/multipleChoiceChallenge/multipleChoiceChallenge.reactiveVariables';
 import { failChallenge, passChallenge } from 'src/state/step/step';
@@ -19,10 +20,17 @@ type props = {
 };
 
 export const MultipleChoiceChallenge = ({
-  challenge: { id, canSelectMultipleOptions, options = [], prompt },
+  challenge: {
+    id,
+    canSelectMultipleOptions,
+    optionsInitiallyHidden,
+    options = [],
+    prompt,
+  },
   nextButtonText,
   onClickNext,
 }: props) => {
+  const [showOptions, setShowOptions] = useState(optionsInitiallyHidden);
   const challengeAttemptStatus = useReactiveVar(challengeAttemptStatusVar);
   const optionSelections = useReactiveVar(multipleChoiceOptionSelectionsVar);
   const hasUserPassed =
@@ -72,20 +80,31 @@ export const MultipleChoiceChallenge = ({
         Select the correct option:
       </Text>
       <StepMarkdown>{prompt}</StepMarkdown>
-      {options
-        ?.filter(removeEmpty)
-        .map(({ incorrectChoiceExplanation, text }, index) => (
-          <MultipleChoiceChallengeOption
-            text={text}
-            incorrectChoiceExplanation={incorrectChoiceExplanation}
-            isOptionSelected={isOptionSelected(index)}
-            onClickOption={() => onClickOption(index)}
-            showOptionIncorrectExplanation={shouldShowOptionIncorrectExplanation(
-              index,
-            )}
-            key={text}
-          />
-        ))}
+      {showOptions && (
+        <Button
+          colorScheme="blue"
+          size="md"
+          marginBottom="40px"
+          onClick={() => setShowOptions(!showOptions)}
+        >
+          Show options
+        </Button>
+      )}
+      {showOptions &&
+        options
+          ?.filter(removeEmpty)
+          .map(({ incorrectChoiceExplanation, text }, index) => (
+            <MultipleChoiceChallengeOption
+              text={text}
+              incorrectChoiceExplanation={incorrectChoiceExplanation}
+              isOptionSelected={isOptionSelected(index)}
+              onClickOption={() => onClickOption(index)}
+              showOptionIncorrectExplanation={shouldShowOptionIncorrectExplanation(
+                index,
+              )}
+              key={text}
+            />
+          ))}
       <Box mt="auto" position="relative" width="100%">
         {hasUserPassed ? (
           <StepButton onClick={onClickNext}>{nextButtonText}</StepButton>

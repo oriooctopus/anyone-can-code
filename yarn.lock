@@ -6124,16 +6124,6 @@ csstype@^3.0.2, csstype@^3.0.6, csstype@^3.0.9:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.9.tgz#6410af31b26bd0520933d02cbc64fce9ce3fbf0b"
   integrity sha512-rpw6JPxK6Rfg1zLOYCSwle2GFOOsnjmDYDaBwEcwoOg4qlsIVCN789VkBZDJAGi4T07gI4YSutR43t9Zz4Lzuw==
 
-csv-parse@^4.15.3:
-  version "4.16.3"
-  resolved "https://registry.yarnpkg.com/csv-parse/-/csv-parse-4.16.3.tgz#7ca624d517212ebc520a36873c3478fa66efbaf7"
-  integrity sha512-cO1I/zmz4w2dcKHVvpCr7JVRu8/FymG5OEpmvsZYlccYolPBLoVGKUHgNoc4ZGkFeFlWGEDmMyBM+TTqRdW/wg==
-
-csv-string@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/csv-string/-/csv-string-4.0.1.tgz#1fb4a88c869badad056d55247f57336e1e748b00"
-  integrity sha512-nCdK+EWDbqLvZ2MmVQhHTmidMEsHbK3ncgTJb4oguNRpkmH5OOr+KkDRB4nqsVrJ7oK0AdO1QEsBp0+z7KBtGQ==
-
 d@1, d@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/d/-/d-1.0.1.tgz#8698095372d58dbee346ffd0c7093f99f8f9eb5a"
@@ -12672,11 +12662,6 @@ react-router@5.2.1:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-simple-code-editor@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/react-simple-code-editor/-/react-simple-code-editor-0.11.0.tgz#bb57c7c29b570f2ab229872599eac184f5bc673c"
-  integrity sha512-xGfX7wAzspl113ocfKQAR8lWPhavGWHL3xSzNLeseDRHysT+jzRBi/ExdUqevSMos+7ZtdfeuBOXtgk9HTwsrw==
-
 react-spring@8.0.23:
   version "8.0.23"
   resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-8.0.23.tgz#2a0ddaeb0816ea9e21898d04d3b8da7d1a3daa14"
@@ -13758,16 +13743,6 @@ static-extend@^0.1.1:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
   integrity sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
-
-strapi-plugin-import-export-content@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/strapi-plugin-import-export-content/-/strapi-plugin-import-export-content-0.4.1.tgz#548e166b811f6a73d1804f99a54c1d8cceaa5953"
-  integrity sha512-RfXE0Cuzc4BkmzF7g4+5xKCpNl5SijcEDUwWHske58XmItJlqL62AGw8HOlqEdAjJfB7pWTpmul9Z2F4RefDkQ==
-  dependencies:
-    csv-parse "^4.15.3"
-    csv-string "^4.0.1"
-    prismjs "^1.23.0"
-    react-simple-code-editor "^0.11.0"
 
 string-env-interpolation@1.0.1, string-env-interpolation@^1.0.1:
   version "1.0.1"
