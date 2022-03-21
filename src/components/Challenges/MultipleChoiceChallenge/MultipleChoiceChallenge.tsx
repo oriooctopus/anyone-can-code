@@ -80,7 +80,7 @@ export const MultipleChoiceChallenge = ({
         Select the correct option:
       </Text>
       <StepMarkdown>{prompt}</StepMarkdown>
-      {showOptions && (
+      {!showOptions && (
         <Button
           colorScheme="blue"
           size="md"
