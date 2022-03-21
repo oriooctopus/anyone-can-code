@@ -41,6 +41,8 @@ const getCodeEvaluationHelpers = (
     wasFunctionInvoked: (functionName: string) => {
       return codeString.trim().includes(`${functionName}()`);
     },
+    isDefined: (variableName: string) =>
+      eval(`typeof ${variableName} !== 'undefined'`),
     /**
      * Evaluates a condition for each line of the provided code.
      * Upon finding a line that passes it returns that line's index
@@ -48,7 +50,6 @@ const getCodeEvaluationHelpers = (
     findFirstPassingLineForCondition: ({
       condition,
     }: IFindFirstPassingLineForCondition) => {
-      debugger;
       const splitCodeString = codeString.split('\n');
       let codeToEvaluate = '';
 
@@ -129,15 +130,20 @@ export const getConsoleLogsFromCodeEvaluation = (
 
 // TODO: type context
 export const evaluateWithContext = (code: string, context = {}) => {
-  return function evaluateEval() {
-    const contextStr = Object.keys(context)
-      .map((key) => `${key} = this.${key}`)
-      .join(',');
-    const contextDef = contextStr ? `let ${contextStr};` : '';
-
-    const evalString = `${contextDef}${code}`;
-
-    const result = eval(evalString);
-    return result;
+  // Create an args definition list e.g. "arg1 = this.arg1, arg2 = this.arg2"
+  const contextStr = Object.keys(context).length
+    ? `let ${Object.keys(context)
+        .map((key) => `${key} = this.${key}`)
+        .join(',')}`
+    : '';
+  const evalString = `${contextStr}${code}`;
+  /**
+   * Call is used to define where "this" within the evaluated code
+   * should reference. eval does not accept the likes of
+   * eval.call(...) or eval.apply(...) and cannot be an arrow function
+   * because of how arrow functions handle 'this'
+   */
+  return function anonymousFunction() {
+    return eval(evalString);
   }.call(context);
 };

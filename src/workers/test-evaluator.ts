@@ -20,7 +20,6 @@ export const runTestEvaluator = async ({
   let userPassed = true;
   let evaluationError;
   const formattedCode = getCode(code, removeComments);
-
   const logs = [] as Array<unknown>;
 
   overrideConsoleLog((args) => {
