@@ -80,17 +80,7 @@ export const MultipleChoiceChallenge = ({
         Select the correct option:
       </Text>
       <StepMarkdown>{prompt}</StepMarkdown>
-      {!showOptions && (
-        <Button
-          colorScheme="blue"
-          size="md"
-          marginBottom="40px"
-          onClick={() => setShowOptions(!showOptions)}
-        >
-          Show options
-        </Button>
-      )}
-      {showOptions &&
+      {showOptions ? (
         options
           ?.filter(removeEmpty)
           .map(({ incorrectChoiceExplanation, text }, index) => (
@@ -104,7 +94,17 @@ export const MultipleChoiceChallenge = ({
               )}
               key={text}
             />
-          ))}
+          ))
+      ) : (
+        <Button
+          colorScheme="blue"
+          size="md"
+          marginBottom="40px"
+          onClick={() => setShowOptions(!showOptions)}
+        >
+          Show options
+        </Button>
+      )}
       <Box mt="auto" position="relative" width="100%">
         {hasUserPassed ? (
           <StepButton onClick={onClickNext}>{nextButtonText}</StepButton>
