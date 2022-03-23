@@ -134,7 +134,7 @@ export const evaluateWithContext = (code: string, context = {}) => {
   const contextStr = Object.keys(context).length
     ? `let ${Object.keys(context)
         .map((key) => `${key} = this.${key}`)
-        .join(',')}`
+        .join(',')};`
     : '';
   const evalString = `${contextStr}${code}`;
   /**
