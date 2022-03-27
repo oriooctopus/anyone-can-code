@@ -12,6 +12,9 @@ export const StyledMarkdown = chakra(ReactMarkdown, {
       color: '#172A4E',
       textDecoration: 'underline',
     },
+    ' p': {
+      fontSize: rem(16),
+    },
     [` li:not(${taskListItemSelector})`]: {
       marginLeft: '11px',
       listStyleType: "'- '",
@@ -28,11 +31,12 @@ export const StyledMarkdown = chakra(ReactMarkdown, {
     },
     ' code': {
       padding: `0 ${rem(3)}`,
+      fontSize: '90%',
     },
     ' blockquote': {
       borderLeft: `${rem(3)} solid #d6d6d6`,
-      backgroundColor: "#F9F9F9",
-      padding: `${rem(3)}`,
-    }
+      backgroundColor: '#F9F9F9',
+      padding: `${rem(10)}`,
+    },
   },
 });
