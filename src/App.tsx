@@ -9,7 +9,13 @@ import { SidebarOverlayContext } from 'components/SidebarOverlays/SidebarOverlay
 
 function App() {
   const [overlayState, setOverlayState] = useState<TSidebarOverlayState>();
-
+  console.log('one');
+  const ww = process.env.NODE_ENV.trim.toLowerCase();
+  if (ww === 'production') {
+    console.log('Another one');
+  } else {
+    console.log('test');
+  }
   return (
     <Router>
       <SidebarOverlayContext.Provider value={{ overlayState, setOverlayState }}>
@@ -18,9 +24,7 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/about">
-           test1234
-           </Route>
+          <Route path="/about">test1234</Route>
           <Route path="/lesson/:slug">
             <LessonPageContainer />
           </Route>

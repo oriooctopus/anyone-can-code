@@ -26,6 +26,7 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'unused-imports'],
   rules: {
+    'no-console': 'off',
     'react/react-in-jsx-scope': 'off',
     'unused-imports/no-unused-imports': 'error',
     'max-len': [
