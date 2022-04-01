@@ -36,8 +36,6 @@ interface CheckboxProps
 export const Checkbox = ({ onCheckboxToggle, ...props }: CheckboxProps) => {
   const [isChecked, setIsChecked] = useState(false);
 
-
-
   return (
     <input
       {...props}

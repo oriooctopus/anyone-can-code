@@ -9,7 +9,6 @@ import { SidebarOverlayContext } from 'components/SidebarOverlays/SidebarOverlay
 
 function App() {
   const [overlayState, setOverlayState] = useState<TSidebarOverlayState>();
-
   return (
     <Router>
       <SidebarOverlayContext.Provider value={{ overlayState, setOverlayState }}>
@@ -18,9 +17,7 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/about">
-           test1234
-           </Route>
+          <Route path="/about">test1234</Route>
           <Route path="/lesson/:slug">
             <LessonPageContainer />
           </Route>
