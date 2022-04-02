@@ -1,16 +1,7 @@
 {
-  "arrowParens": "avoid",
-  "bracketSpacing": true,
-  "endOfLine": "auto",
   "importOrder": ["^src/(.*)$", "^components/(.*)$"],
   "jsonRecursiveSort": true,
-  "jsxBracketSameLine": true,
-  "jsxSingleQuote": false,
   "printWidth": 80,
-  "quoteProps": "as-needed",
-  "semi": true,
   "singleQuote": true,
-  "tabWidth": 2,
-  "trailingComma": "all",
-  "useTabs": false
+  "trailingComma": "all"
 }
