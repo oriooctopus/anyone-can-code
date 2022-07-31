@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "yarn develop",
-    "develop": "BACKEND_URL=https://acc-v-4-obk5u.ondigitalocean.app/graphql vite",
+    "develop": "BACKEND_URL=http://0.0.0.0:1337/graphql vite",
     "build": "tsc && BACKEND_URL=http://143.198.120.197:1337/graphql vite build",
     "serve": "BASE_URL=/anyone-can-code BACKEND_URL=http://143.198.120.197:1337/graphql vite preview",
     "codegen": "graphql-codegen --config codegen.yml",
